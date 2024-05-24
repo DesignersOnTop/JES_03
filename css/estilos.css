@@ -186,7 +186,7 @@ body img {
     width: 94%;
     margin: 0 auto;
     position: absolute;
-    top: 40%;
+    top: 50%;
     left: 3%;
     display: flex;
     z-index: 1;
@@ -207,8 +207,4 @@ body img {
 
 .boton-curso-derecho {
     border-radius: 0 2px 2px 0;
-}
-
-.botones-cursos *:hover {
-    background-color: aqua;
 }
