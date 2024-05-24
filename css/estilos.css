@@ -68,11 +68,17 @@ body img {
     color: white;
     border: 1px solid rgba(255, 255, 255, 0.162);
     display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* ------------------------------------------------------------------------------------- */
 .identidad-art-container{
     border-radius: 5px 0 0 5px;
+}
+
+[alt="abrir-perfil"] {
+    width: 26px;
 }
 
 /* ------------------------------------------------------------------------------------- */
@@ -112,7 +118,7 @@ body img {
     position: relative;
     z-index: 2;
     top: 5px;
-    color: #ffc83d5e;
+    color: #fff;
 }
 
 .cursos-container {
@@ -153,6 +159,7 @@ body img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transform: rotate(46deg);
 }
 
 .fondo-material-container{
@@ -187,6 +194,9 @@ body img {
     color: white;
 }
 
+.hidden-text {
+    font-weight: 600;
+}
 
 .linea-material {
     width: 40px;
@@ -197,7 +207,7 @@ body img {
     width: 94%;
     margin: 0 auto;
     position: absolute;
-    top: 50%;
+    top: 45%;
     left: 3%;
     display: flex;
     z-index: 1;
@@ -205,19 +215,24 @@ body img {
 }
 
 .botones-cursos * {
-    padding: 15px 10px;
-    background-color: #ffc83d5e;
+    padding: 25px 10px;
+    background-color: rgba(0, 0, 0, 0.43);
     color: white;
     font-weight: bold;
     border: none;
 }
 
 .boton-curso-izquierdo {
-    border-radius: 2px 0 0 2px;
+    border-radius: 5px 0 0 5px;
 }
 
 .boton-curso-derecho {
-    border-radius: 0 2px 2px 0;
+    border-radius: 0 5px 5px 0;
+}
+
+.boton-curso-derecho:hover, .boton-curso-izquierdo:hover {
+    background-color: #ffc83d8e;
+    transition:linear 0.5s;
 }
 /* ------------------------------------------------------------------------------------- */
 .section-ca-ho {
