@@ -71,11 +71,17 @@ body img {
 
 .calendario-container {
     flex-basis: 25%;
-    border-radius: 0px 5px 5px 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .asistencia-art-container, .identidad-art-container {
     flex-basis: 37%;
+}
+
+.asistencia-art-container {
+    border-radius: 0px 5px 5px 0px;
 }
 
 .asistencia-art-container .barra-circular {
@@ -83,24 +89,40 @@ body img {
     height: 100px;
 }
 
-.cursos-container {
-    background-color: rgba(0, 0, 0, 0.43);
-    width: 90%;
+.section-cursos {
+    width: 80%;
     height: 190px;
-    /* border: 1px solid white; */
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+}
+
+.cursos-h {
+    position: relative;
+    z-index: 2;
+    top: 5px;
+    color: #ffc83d5e;
+}
+
+.cursos-container {
+    width: 88%;
+    height: 90%;
     display: flex;
     margin: 0 auto;
+    margin-top: 10px;
     align-items: center;
     justify-content: center;
     position: relative;
     overflow: hidden;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.43);
 }
 
 .material-container{
     min-width: 200px;
     height: 140px;
     margin: 0 1%;
-    margin-top: 16px;
+    margin-top: 10px;
     color: white;
     text-align: center;
     backdrop-filter: blur(40px);
@@ -137,15 +159,15 @@ body img {
 }
 
 .overlay {
-  position: absolute;
-  color: transparent;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    position: absolute;
+    color: transparent;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .overlay:hover {
@@ -160,10 +182,33 @@ body img {
     color: white;
 }
 
-.cursos-h {
+.botones-cursos{
+    width: 94%;
+    margin: 0 auto;
     position: absolute;
-    top: 0;
-    /* right: 45%; */
-    left: auto;
-    color: #ffc83d5e;
+    top: 40%;
+    left: 3%;
+    display: flex;
+    z-index: 1;
+    justify-content: space-between;
+}
+
+.botones-cursos * {
+    padding: 15px 10px;
+    background-color: #ffc83d5e;
+    color: white;
+    font-weight: bold;
+    border: none;
+}
+
+.boton-curso-izquierdo {
+    border-radius: 2px 0 0 2px;
+}
+
+.boton-curso-derecho {
+    border-radius: 0 2px 2px 0;
+}
+
+.botones-cursos *:hover {
+    background-color: aqua;
 }
