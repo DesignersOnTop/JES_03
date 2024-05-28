@@ -1,5 +1,10 @@
 @import url(./reset.css);
 
+* {
+    list-style-type: none;
+    text-decoration: none;
+}
+
 html {
     height: 100%;
     width: 100%;
@@ -710,4 +715,63 @@ header {
     position: absolute;
     top: 5%;
     right: 5%;
+}
+
+/* ADMIN */
+
+.main-container-admin {
+    height: 500px;
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 2%;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+
+.seg-admin {
+    background-color: #ffffff1a;
+    backdrop-filter: blur(10px);
+    color: #FFF;
+    height: 150px;
+    border-radius: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* .seg-admin a {
+    color: #FFF;
+} */
+
+.seg-admin img {
+    height: 50px;
+}
+
+.seg-admin figure {
+    width: 200px;
+    height: 100px;
+    margin: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.seg-admin figcaption {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.seg-admin:hover {
+    transition: all .7s;
+    /* background-color: rgba(255, 255, 255, 0.3); */
+    background-color: #0000000a;
+}
+
+.seg-admin-estudiantes, .seg-admin-profesores {
+    width: 0;
+    flex-basis: 42.7%;
 }
