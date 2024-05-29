@@ -11,7 +11,7 @@ function deseleccionarBotones() {
 // Añade el evento 'click' a cada botón de calificaciones
 Array.from(botonesCalificaciones).forEach((boton) => {
     boton.addEventListener('click', () => {
-        document.querySelector('.ca-ho-scroll').scrollLeft -= 806;
+        document.querySelector('.ca-ho-scroll').scrollLeft -= 966;
         deseleccionarBotones(); // Deselecciona todos los botones
         boton.classList.add('btn-selected'); // Selecciona el botón actual
     });
@@ -20,7 +20,7 @@ Array.from(botonesCalificaciones).forEach((boton) => {
 // Añade el evento 'click' a cada botón de horario
 Array.from(botonesHorario).forEach((boton) => {
     boton.addEventListener('click', () => {
-        document.querySelector('.ca-ho-scroll').scrollLeft += 806;
+        document.querySelector('.ca-ho-scroll').scrollLeft += 966;
         deseleccionarBotones(); // Deselecciona todos los botones
         boton.classList.add('btn-selected'); // Selecciona el botón actual
     });
