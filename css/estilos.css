@@ -775,3 +775,37 @@ header {
     width: 0;
     flex-basis: 42.7%;
 }
+
+/* Tabla de registro */
+
+.tabla-registro {
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #FFF;
+    margin: 0 auto;
+    margin-top: 40px;
+    overflow: hidden;
+    border-radius: 5px;
+    width: 60%;
+    height: 300px;
+    text-align: center;
+    border-collapse: collapse;
+}
+
+.tabla-registro th {
+    height: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.tabla-registro td {
+    background-color: #000;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+    height: 40px;
+}
+
+.tabla-registro td img {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    object-fit: cover;
+}
