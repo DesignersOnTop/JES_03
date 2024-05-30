@@ -1,10 +1,9 @@
-let modals_container = document.getElementsByClassName('modals-container')[0];
-let perfil = document.getElementsByClassName('modal-perfil')[0];
-
-document.addEventListener('click', (event) => {
-    // Aquí puedes agregar lógica para determinar cuándo mostrar el modal.
-    // Por ejemplo, si haces clic en un botón específico:
-    if (event.target.matches('.nav-perfil')) {
-        modals_container.style.display = 'block';
-    }
+document.querySelector('.li-perfil').addEventListener('click', function() {
+    document.querySelector('.modals-container').style.display = 'flex';
 });
+    document.querySelector('.modals-container').addEventListener('click', function(event) {
+        // Check if the click is outside the modal content
+        if (event.target === this) {
+            this.style.display = 'none';
+        }
+    });
