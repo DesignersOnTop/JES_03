@@ -1,30 +1,34 @@
-// Selecciona todos los elementos con la clase 'btn-calificaciones' y 'btn-horario'
-let botonesCalificaciones = document.getElementsByClassName('btn-calificaciones');
-let botonesHorario = document.getElementsByClassName('btn-horario');
-let scroll_calificaciones = document.getElementsByClassName('botones-container');
+// Selecciona todos los botones con las clases 'btn-calificaciones' y 'btn-horario'
+const botones = document.querySelectorAll('.btn-calificaciones, .btn-horario');
+const scrollContainer = document.querySelector('.ca-ho-scroll'); // Selecciona el contenedor que se desplazará
+const botonesContainer = document.querySelector('.botones-container'); // Selecciona el contenedor con la clase 'botones-container'
 
 // Función para deseleccionar todos los botones
 function deseleccionarBotones() {
-    Array.from(botonesCalificaciones).forEach(boton => boton.classList.remove('btn-selected'));
-    Array.from(botonesHorario).forEach(boton => boton.classList.remove('btn-selected'));
+    // Remueve la clase 'btn-selected' de cada botón en la lista 'botones'
+    botones.forEach(boton => boton.classList.remove('btn-selected'));
 }
 
-// Añade el evento 'click' a cada botón de calificaciones
-Array.from(botonesCalificaciones).forEach((boton) => {
-    boton.addEventListener('click', () => {
-        document.querySelector('.ca-ho-scroll').scrollLeft -= 966;
-        deseleccionarBotones(); // Deselecciona todos los botones
-        boton.classList.add('btn-selected'); // Selecciona el botón actual
-        scroll_calificaciones[0].style.display = 'flex'; // display flex para que se muestre
-    });
-});
+// Función para manejar el clic en los botones
+function manejarClick(event) {
+    const boton = event.target; // Obtiene el botón que fue clickeado
+    // Determina la dirección del desplazamiento basado en la clase del botón
+    const desplazamiento = boton.classList.contains('btn-calificaciones') ? -966 : 966;
+    
+    // Desplaza el contenedor en la dirección determinada
+    scrollContainer.scrollLeft += desplazamiento;
+    deseleccionarBotones(); // Deselecciona todos los botones
+    boton.classList.add('btn-selected'); // Selecciona (añade la clase) el botón clickeado
 
-// Añade el evento 'click' a cada botón de horario
-Array.from(botonesHorario).forEach((boton) => {
-    boton.addEventListener('click', () => {
-        document.querySelector('.ca-ho-scroll').scrollLeft += 966;
-        deseleccionarBotones(); // Deselecciona todos los botones
-        boton.classList.add('btn-selected'); // Selecciona el botón actual
-        scroll_calificaciones[0].style.display = 'none'; //display none para ocultar
-    });
+    // Si se hizo clic en un botón de horario, oculta el contenedor 'botones-container'
+    if (boton.classList.contains('btn-horario')) {
+        botonesContainer.style.display = 'none';
+    } else {
+        botonesContainer.style.display = 'flex';
+    }
+}
+
+// Añade el evento 'click' a cada botón en la lista 'botones'
+botones.forEach(boton => {
+    boton.addEventListener('click', manejarClick);
 });

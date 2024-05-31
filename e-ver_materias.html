@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Material</title>
+    <link rel="stylesheet" href="./css/estilos.css">
+    <link rel="icon" href="./imagenes/recursos/logo-jes.png">
+</head>
+<body>
+    <div class="body-container">
+        <header>
+            <div class="header-container">
+                <figure class="jesIMG-container">
+                    <img src="./imagenes/recursos/logo-jes.png" alt="JES-LOGO">
+                </figure>            
+                <div class="jes-titulo">
+                    <h2>JES</h2>
+                    <h3>Junior Explorers System</h3>                
+                </div>
+                <nav class="nav-container">
+                    <ul>
+                        <li class="nav-perfil">
+                            <a href="#" class="li-perfil"><figure><img src="imagenes/recursos/perfil-masculino-2.jpg" alt="perfil"></figure></a>
+                        </li>
+                        <li class="nav-menu">
+                            <a href="#" class="menu"><figure><img src="imagenes/iconos/menu.svg" alt="menu"></figure></a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <main class="main-container main-curso-material">    
+            <div class="materia-clases-elegir">
+                <form>
+                    <select name="select-materia" id="select-materia">
+                        <option value="">Clase 1</option>
+                    </select>
+                </form>
+            </div>            
+            <div class="imagen-de-fondo-curso">
+                <figure>
+                    <img src="imagenes/recursos/Auditorio-img-fondo.jpg" alt="imagen-de-fondo">
+                    <figcaption>
+                        Matemáticas
+                    </figcaption>
+                </figure>
+            </div>
+            <section class="curso-material-container">
+                <div class="c-curso-izquierdo">
+                    <article class="curso-descargar">
+                        <h3>Descargar Archivo</h3>
+                        <a href="#" download="#">Click</a>
+                    </article>
+                    <article class="curso-subir-tarea">
+                        <form action="#">
+                            <label for="subir-tarea">Subir Tarea</label>
+                            <input type="file" id="subir-tarea" name="subir-tarea">
+                        </form>
+                    </article>
+                    <form class="botones-curso">
+                        <input type='submit' value="Enviar">
+                        <input type="reset" value="Deshacer">
+                    </form>
+                </div>
+                <div class="c-curso-central">
+                    <article class="curso-main">
+                        <div class="informacion-profesor-material">
+                            <figure>
+                                <img src="imagenes/recursos/perfil-masculino-2.jpg" alt="profesor">
+                            </figure>
+                            <h3><span class="profesor-material-span">Profesor:</span>Miguel Enrique Martinez</h3>
+                        </div>
+                        <div class="contenedor-material-curso">
+                            <div class="descripcion-material-curso">
+                                <p>Las matemáticas son una ciencia que estudia los números, las formas, las estructuras y los patrones. Se utilizan para contar, medir, describir el tamaño y la forma de los objetos, y analizar cómo cambian las cosas. Las matemáticas incluyen áreas como la aritmética, el álgebra, la geometría y el cálculo, y son fundamentales para resolver problemas en ciencias, ingeniería, economía y muchos otros campos. En resumen, las matemáticas nos ayudan a entender y describir el mundo que nos rodea mediante números y símbolos</p>
+                            </div>
+                            <nav class="nav-c-enlaces">
+                                <ul class="ul-c-enlaces">
+                                    <li>
+                                        <a href="https://discord.com/" class="a-c-discord" target="_blank">
+                                            <figure><img src="imagenes/recursos/discord.png" alt="discord" title="Discord"></figure>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href='https://classroom.google.com/' class="a-c-classroom" target="_blank">
+                                            <figure><img src="imagenes/recursos/google-classroom.png" alt="classroom" title="Classroom"></figure>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </main>
+        <section class="modals-container">
+            <article class="modal-perfil">
+                <div class="perfil-izquierda">
+                    <h4 class="titulo-perfil">Estudiante</h4>
+                    <figure class="perfil-estudiante perfil-profesor">
+                        <img src="./imagenes/recursos/perfil-femenino.jpg" alt="img-perfil">
+                    </figure>
+                    <div class="perfil-izquierda-abajo">
+                        <h6>Grado</h6>
+                        <h4>1ro A </h4>
+                    </div>
+                </div>
+                <div class="perfil-derecho">
+                    <div class="perfil-derecha-arriba">
+                        <h2>Emmy Garcia</h2>
+                        <p>1-22-0500</p>
+                    </div>
+                    <div class="datos datos1">
+                        <h3>Email</h3>
+                        <p>emmyMaria@gmail.com</p>
+                    </div>
+                    <div class="datos">
+                        <h3>Fecha de Nacimiento</h3>
+                        <p>10-05-2009</p>
+                    </div>
+                    <div class="datos">
+                        <h3>Genero</h3>
+                        <p>Femenino</p>
+                    </div>
+                    <div class="datos">
+                        <h3>Dirección</h3>
+                        <p>Calle 16 de Agosto #01</p>
+                    </div>
+                    <div class="datos">
+                        <h3>Telefono</h3>
+                        <p>809-101-0000</p>
+                    </div>
+                    <!-- <button class="perfil-cerrar-sesion">Cerrar sesion</button> -->
+                </div>
+            </article>
+        </section>
+    </div>
+    <script src="js/menu.js"></script>
+    <script src="js/modales.js"></script>
+    <script src="js/ca-ho.js"></script>
+    <script src="js/scroll_calificacion.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+</html>
