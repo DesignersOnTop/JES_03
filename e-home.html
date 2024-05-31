@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     <link rel="stylesheet" href="./css/estilos.css">
+    <link rel="icon" href="./imagenes/recursos/logo-jes.png">
 </head>
 <body>
     <div class="body-container">
@@ -23,7 +24,7 @@
                             <a href="#" class="li-perfil"><figure><img src="imagenes/recursos/perfil-masculino-2.jpg" alt="perfil"></figure></a>
                         </li>
                         <li class="nav-menu">
-                            <a href="#"><figure><img src="imagenes/iconos/menu.svg" alt="menu"></figure></a>
+                            <a href="#" class="menu"><figure><img src="imagenes/iconos/menu.svg" alt="menu"></figure></a>
                         </li>
                     </ul>
                 </nav>
@@ -45,7 +46,7 @@
                     </div>
                 </article>
                 <article class="material-container">
-                    <a href="#">
+                    <a href="e-material_estudio.html">
                         <figure class="material-figure"><img src="./imagenes/iconos/capas.svg" alt="perfil-estudiante"></figure>
                         <h2>Material De Estudio</h2>                        
                     </a>
@@ -233,13 +234,48 @@
                         <h3>Telefono</h3>
                         <p>809-101-0000</p>
                     </div>
-                    <button class="perfil-cerrar-sesion">Cerrar sesion</button>
+                </div>
+            </article>
+            <article id="modal-recordatorio">
+                <div id="calendar-container">
+                    <div id="calendar-header">
+                        <button id="mes-anterior">Anterior</button>
+                        <h2 id="mes-reciente"></h2>
+                        <button id="mes-siguiente">Siguiente</button>
+                    </div>
+                    <table id="calendario">
+                        <thead>
+                            <tr>
+                                <th>Dom</th>
+                                <th>Lun</th>
+                                <th>Mar</th>
+                                <th>Mié</th>
+                                <th>Jue</th>
+                                <th>Vie</th>
+                                <th>Sáb</th>
+                            </tr>
+                        </thead>
+                        <tbody id="calendario-body"></tbody>
+                    </table>
+                </div>            
+                <!-- Modal para notas -->
+                <div id="modal" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <h2 id="modal-date"></h2>
+                        <textarea id="note-text"></textarea>
+                        <button id="save-note">Guardar Nota</button>
+                        <button id="delete-note">Eliminar Nota</button>
+                    </div>
                 </div>
             </article>
         </section>
     </div>
-    <script src="js/perfil-modal.js"></script>
     <script src="js/ca-ho.js"></script>
     <script src="js/scroll_calificacion.js"></script>
+    <script src="js/modales.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="js/calendario.js"></script>
 </body>
 </html>

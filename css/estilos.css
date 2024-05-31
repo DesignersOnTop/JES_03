@@ -161,10 +161,6 @@ body {
     box-shadow: 2px 2px rgba(255, 255, 255, 0.123);
 }
 
-.classes-eme {
-    width: 200px;
-}
-
 .confirm-eme {
     background-color: black;
     border: 1px solid #FFC93D;
@@ -197,6 +193,37 @@ body {
 .menu-navegador-eme a {
     border: none;
     color: #FFC93D;
+}
+
+/* ------------------------------------------------------------------------------------- */
+
+.classes-eme {
+    width: 40%;
+    height: 50%;
+    background-color: transparent;
+}
+
+.a-eme {
+    /* color: #ffc83d63; */
+    color: #FFF;
+    text-decoration: none;
+}
+
+.cerrar-eme::before {
+    content: url('../imagenes/iconos/salir2.svg');
+    position: relative;
+    right: 5px;
+    top: 5px;
+}
+
+.cerrar-eme:hover {
+    color: red;
+    transition:all 0.5s;
+}
+
+
+.li-eme {
+    margin: 10px 0;
 }
 
 /* ------------------------------------------------------------------------------------- */
@@ -235,17 +262,23 @@ header {
     width: 60px;
     position: relative;
     left: 70px;
+    margin-right: 10px;
 }
-
 /* ----------------------------------------------------- */
 .nav-container img {
     object-fit: cover;
+}
+
+.nav-container a {
+    width: 100%;
+    height: 100%;
 }
 
 .nav-perfil figure, .nav-perfil img, .nav-menu figure, .nav-menu img {
     width: 40px;
     height: 40px;
     border-radius: 100%;
+    margin: 0 auto;
 }
 
 .jesIMG-container img {
@@ -629,33 +662,6 @@ header {
     font-size: 16px;
 }
 
-.perfil-cerrar-sesion {
-    position: absolute;
-    bottom: 20px;
-    right: 25%;
-    padding: 10px 40px;
-    border: none;
-    background-color: transparent;
-    color: rgba(255, 255, 255, 0.184);
-    border-bottom: 1px solid #ffffff4c;
-}
-
-.perfil-cerrar-sesion:hover::before {
-    content: url(../imagenes/iconos/salir2.svg);
-    position: relative;
-    right:10px;
-    top: 3px;
-}
-
-.perfil-cerrar-sesion:hover {
-    background-color: #ffc83d3a;
-    border: 1px solid #ffc83d3a;
-    border-radius: 10px;
-    color: #fff;
-    transition:ease 1s;
-}
-
-
 /* ------------------------------------------------------------------------------------- */
 
 .modals-container {
@@ -677,6 +683,67 @@ header {
     position: absolute;
     top: 5%;
     right: 5%;
+}
+
+/* -------------------------------------------------------------------------------------- */
+
+#modal-recordatorio {
+    width: 50%;
+    height: 50%;
+    background-color: #00000043;
+    border-radius: 10px;
+    border: 1px solid #ffffff2d;
+    margin: 0 auto;
+}
+
+#calendar-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+#calendar-header {
+    color: #ffc83d7d;
+    /* background-color: #fff; */
+    display: flex;
+    flex-direction: row; 
+    justify-content: space-between;
+    width: 50%;
+    margin: 0 auto;
+    margin-top: 2%;
+}
+
+#calendar-header button {
+    background-color: transparent;
+    color: white;
+    border: 1px solid #ffc83d33;
+    padding: 5px 10px;
+}
+
+#calendar-header button:nth-of-type(1) {
+    border-radius: 5px 0 0 5px;
+}
+
+#calendar-header button:nth-of-type(2) {
+    border-radius:0 5px 5px 0;
+}
+
+#calendario {
+    /* background-color: #ffffff11; */
+    width: 60%;
+    height: 60%;
+    text-align: justify;
+}
+
+#calendario thead {
+    color: #fff;
+}
+
+#calendario tbody {
+    color: #ffc83d4f;
 }
 
 /* ------------------------------------------------------------------------------------- */
@@ -776,71 +843,144 @@ header {
 
 /* ----------------------------------------------------------- */
 
-.imagen-de-fondo-curso {
+.materia-clases-elegir {
+    margin: 0 auto;
+    width: fit-content;
+    margin-bottom: 1%;
+}
 
-    width: 80%;
-    height: 160px;
+.materia-clases-elegir select{
+    background-color: transparent;
+    color: white;
+    border: 1px solid white;
+    padding: 5px 10px;
     border-radius: 10px;
-    /* overflow: hidden; */
+}
+
+
+.imagen-de-fondo-curso {
+    width: 98%;
+    height: 100px;
+    border-radius: 5px;
+    overflow: hidden;
     margin: 0 auto;    
     position: relative;
-    right: 2.5%;
+    right: 1%;
+    margin-bottom: 1.4%;
+    border: 1px solid rgba(255, 255, 255, 0.145);
 }
 
 .imagen-de-fondo-curso figure {
     width: 100%;
     height: 100%;
+    margin: 0 auto;
 }
 
 .imagen-de-fondo-curso img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: inline-block;
+    opacity: 0.7;
 }
 
 .imagen-de-fondo-curso figcaption {
     position: absolute;
     top: 40%;
-    left: 50%;
+    left: 45%;
     font-weight: bold;
-    font-size: 22px;
+    font-size: 30px;
     color: white;
 }
 
 /* ------------------------------------------------- */
 
 .curso-material-container{
-    width: 80%;
+    width: 100%;
     margin: 0 auto;
     margin-top: 1%;
     display: flex;
     flex-direction: row;
     overflow: hidden;
-    gap: 10px;
+    gap: 5px;
 }
 
-.informacion-profesor-material img, .curso-enlaces img {
-    width: 20px;
+.main-curso-material {    
+    margin: 0 auto;
+    margin-top: 3%;
+    width: 80%;
+
 }
 
 /* ---------------------------------------------------------- */
 .c-curso-izquierdo {
-    background: #000;
+    /* background: #000; */
     height: 300px;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: space-between;
     color: white;
+    min-width: 20%;
 }
 
 .curso-descargar {
-    border: 1px solid white;
+    border: 1px solid #ffffff45;
     height: 40%;
+    backdrop-filter: blur(20px);
+    background-color: #00000049;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.curso-descargar a {
+    color: #ffc83da2;
+    text-decoration: none;
+    padding: 4px 15px;
+    border-radius: 5px;
+    border: 1px solid #ffffff33;
+}
+
+.curso-descargar a:hover {
+    border: 1px solid #fff;
 }
 
 .curso-subir-tarea {
     height: 40%;
-    border: 1px solid white;
+    border: 1px solid #ffffff45;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(20px);
+    background-color: #00000049;
+    overflow: hidden;
+}
+
+.curso-subir-tarea [type='file']{
+    position: absolute;
+    color: transparent;
+    z-index: -3;
+    left: 100%;
+    display: none;
+}
+
+.botones-curso * {
+    background-color: #00000049;
+    backdrop-filter: blur(20px);
+    color: #ffc83da2;
+    border: 1px solid #ffffff48;
+    width: 40%;
+    padding: 5px 0;
+}
+
+.botones-curso [type='submit'] {
+    border-radius: 5px 0 0 5px;
+}
+
+.botones-curso [type='reset'] {
+    border-radius: 0 5px 5px 0;
 }
 
 .botones-curso {
@@ -852,19 +992,96 @@ header {
 /* ---------------------------------------- */
 
 .c-curso-central {
-    border: 1px solid red;
-    width: 80%;
-    background-color: #000;
+    /* border: 1px solid red; */
+    max-width: 78%;
+    background-color: #00000049;
+    backdrop-filter: blur(20px);
+    border: 1px solid #ffffff45;
     color: white;
 }
 
-/* ---------------------------------------- */
+.informacion-profesor-material {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    color: #ffc83da2;
+}
 
-.c-curso-derecho{
-    background-color: #000;
-    border: 1px solid white;
-    color: wheat;
+.informacion-profesor-material h3 {
+    position: relative;
+    right: 15px;
 }
-.curso-enlaces {
-    background-color: red;
+
+.profesor-material-span {
+    margin-right: 5px;
+    color: white;
 }
+
+.informacion-profesor-material img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 100%;
+}
+
+.descripcion-material-curso {
+    width: 100%;
+    height: 90%;
+    margin: 0 auto;
+    background-color: #ffffff08;
+    padding: 20px;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+.curso-main {
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.contenedor-material-curso {
+    display: flex;
+    height: 100%;
+}
+
+.nav-c-enlaces {
+    max-width: 15%;
+    height: 60%;
+    margin: auto 0;
+}
+
+
+.ul-c-enlaces img {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+}
+
+.ul-c-enlaces {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ul-c-enlaces li {
+    width: 100%;
+    margin-left: 5px;
+}
+
+/* .ul-c-enlaces li:nth-of-type(1):before {
+    content: 'Discord';
+    position: relative;
+    left: 20%;
+}
+
+.ul-c-enlaces li:nth-of-type(2):before {
+    content: 'Classroom';
+    position: relative;
+    left: 18%;
+    margin-top: 5px;
+} */
+
+/* ---------------------------------------- */

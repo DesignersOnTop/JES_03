@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Material</title>
     <link rel="stylesheet" href="./css/estilos.css">
+    <link rel="icon" href="./imagenes/recursos/logo-jes.png">
 </head>
 <body>
     <div class="body-container">
@@ -23,16 +24,23 @@
                             <a href="#" class="li-perfil"><figure><img src="imagenes/recursos/perfil-masculino-2.jpg" alt="perfil"></figure></a>
                         </li>
                         <li class="nav-menu">
-                            <a href="#"><figure><img src="imagenes/iconos/menu.svg" alt="menu"></figure></a>
+                            <a href="#" class="menu"><figure><img src="imagenes/iconos/menu.svg" alt="menu"></figure></a>
                         </li>
                     </ul>
                 </nav>
             </div>
         </header>
-        <main class="main-container">                
+        <main class="main-container main-curso-material">    
+            <div class="materia-clases-elegir">
+                <form>
+                    <select name="select-materia" id="select-materia">
+                        <option value="">Clase 1</option>
+                    </select>
+                </form>
+            </div>            
             <div class="imagen-de-fondo-curso">
                 <figure>
-                    <img src="imagenes/star8k.jpg" alt="imagen-de-fondo">
+                    <img src="imagenes/recursos/Auditorio-img-fondo.jpg" alt="imagen-de-fondo">
                     <figcaption>
                         Matemáticas
                     </figcaption>
@@ -61,24 +69,27 @@
                             <figure>
                                 <img src="imagenes/recursos/perfil-masculino-2.jpg" alt="profesor">
                             </figure>
-                            <h3><span>Profesor:</span>Miguel Enrique Martinez</h3>
+                            <h3><span class="profesor-material-span">Profesor:</span>Miguel Enrique Martinez</h3>
                         </div>
-                        <div class="descripcion-material-curso">
-                            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ab quos eius unde ea ut eos? Blanditiis laboriosam ab necessitatibus eligendi optio voluptatem delectus sunt architecto aperiam ratione harum quaerat consequatur impedit asperiores, neque ipsam eum, at mollitia error omnis! Sit aliquid consectetur obcaecati suscipit autem nam cupiditate debitis distinctio dolor eveniet nesciunt laborum amet natus nostrum, similique iusto officiis in quia aperiam voluptatum illo delectus! Modi dolores facilis maxime explicabo saepe vero! Reiciendis quia corrupti qui commodi nobis odit dicta?</p>
+                        <div class="contenedor-material-curso">
+                            <div class="descripcion-material-curso">
+                                <p>Las matemáticas son una ciencia que estudia los números, las formas, las estructuras y los patrones. Se utilizan para contar, medir, describir el tamaño y la forma de los objetos, y analizar cómo cambian las cosas. Las matemáticas incluyen áreas como la aritmética, el álgebra, la geometría y el cálculo, y son fundamentales para resolver problemas en ciencias, ingeniería, economía y muchos otros campos. En resumen, las matemáticas nos ayudan a entender y describir el mundo que nos rodea mediante números y símbolos</p>
+                            </div>
+                            <nav class="nav-c-enlaces">
+                                <ul class="ul-c-enlaces">
+                                    <li>
+                                        <a href="https://discord.com/" class="a-c-discord" target="_blank">
+                                            <figure><img src="imagenes/recursos/discord.png" alt="discord" title="Discord"></figure>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href='https://classroom.google.com/' class="a-c-classroom" target="_blank">
+                                            <figure><img src="imagenes/recursos/google-classroom.png" alt="classroom" title="Classroom"></figure>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
                         </div>
-                    </article>
-                </div>
-                <div class="c-curso-derecho">
-                    <article class="curso-enlaces">
-                        <h2>
-                            Enlances a los chats del grupo
-                        </h2>
-                        <nav class="nav-c-derecho">
-                            <ul class="ul-c-derecho">
-                                <li><a href="#" class="a-c-discord"><figure><img src="imagenes/recursos/discord.png" alt="discord"></figure></a></li>
-                                <li><a href="#" class="a-c-classroom"><figure><img src="imagenes/recursos/google-classroom.png" alt="classroom"></figure></a></li>
-                            </ul>
-                        </nav>
                     </article>
                 </div>
             </section>
@@ -120,13 +131,15 @@
                         <h3>Telefono</h3>
                         <p>809-101-0000</p>
                     </div>
-                    <button class="perfil-cerrar-sesion">Cerrar sesion</button>
+                    <!-- <button class="perfil-cerrar-sesion">Cerrar sesion</button> -->
                 </div>
             </article>
         </section>
     </div>
-    <script src="js/perfil-modal.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="js/modales.js"></script>
     <script src="js/ca-ho.js"></script>
     <script src="js/scroll_calificacion.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>
