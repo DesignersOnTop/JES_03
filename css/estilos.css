@@ -809,3 +809,55 @@ header {
     border-radius: 100%;
     object-fit: cover;
 }
+
+/* TABLA PARA CONTROLAR ASISTENCIAS */
+
+.tabla-asistencia {
+    background-color: #00000025;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 8px #0005;
+    border-radius: 10px;
+    margin: 0 auto;
+    margin-top: 40px;
+    border-collapse: collapse;
+    width: 80%;
+    height: 50%;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+.tabla-asistencia tr:nth-child(even) {
+    background-color: #00000036;
+}
+
+.tabla-asistencia tr:hover {
+    background-color: #FFF2;
+}
+
+.tabla-asistencia td {
+    color: #FFF;
+    height: 50px;
+    width: 100px;
+    text-align: center;
+}
+
+.tabla-asistencia td input {
+    color: #FFF;
+    background: none;
+    text-align: center;
+    width: 100px;
+    height: 50px;
+    border: none;
+}
+
+.tabla-asistencia th {
+    color: #ffc83d73;
+    text-align: center;
+    width: 100px;
+    padding: 10px;
+}
+
+/* .tabla-asistencia tr {
+    display: flex;
+    justify-content: space-between;
+} */
