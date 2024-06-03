@@ -6,9 +6,9 @@ if(user === "admin" && password =="admin"){
     window.location="a-home.html";
 
 } else if(user === "estudiante" && password === "estudiante"){
-        window.location="/estudiante/e-home.html";
+        window.location="./estudiante/e-home.html";
     }else if(user === "profesor" && password === "profesor"){
-        window.location = "/profesor/p-home-a.html"
+        window.location = "./profesor/p-home-a.html"
     }else if(user === "" && password === "") {
         Swal.fire({
             html: '<span class="white">"Por favor, asegúrate de completar todos los campos necesarios para acceder al sistema!"</span',
