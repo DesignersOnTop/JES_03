@@ -202,6 +202,7 @@ body {
     width: 40%;
     height: 50%;
     background-color: transparent;
+    overflow: hidden;
 }
 
 .a-eme {
