@@ -1,37 +1,24 @@
-function calcularAsistencia() {
-    var table = document.querySelector('.tabla-asistencia');
-    var rows = table.getElementsByTagName('tr');
+const rows = document.querySelectorAll('.tabla-asistencia tr');
 
-    for (var i = 1; i < rows.length; i++) {
-        var inputs = rows[i].getElementsByTagName('input');
-        var totalAsistencias = 0;
+// Función para actualizar el total de asistencias
+function updateTotal() {
+    rows.forEach(row => {
+        const inputs = row.querySelectorAll('.input-row'); // Obtiene los inputs de la fila
+        let total = 0;
 
-        for (var j = 0; j < inputs.length; j++) {
-            var porcentaje = parseInt(inputs[j].value);
-            if (!isNaN(porcentaje)) {
-                totalAsistencias += porcentaje;
-            }
-        }
+        // Suma los valores de los inputs en la fila
+        inputs.forEach(input => {
+            total += parseInt(input.value) || 0; // Si el valor no es un número, se toma como 0
+        });
 
-        // Calcular porcentaje de asistencia
-        var porcentajeAsistencia = (totalAsistencias / (inputs.length - 1)).toFixed(2);
-
-        // Agregar el total de asistencias y porcentaje de asistencia a la fila actual
-        var totalAsistenciasCell = rows[i].getElementsByTagName('td')[8];
-        var porcentajeAsistenciaCell = rows[i].getElementsByTagName('td')[9];
-
-        // Llenar el atributo value si está vacío
-        if (totalAsistenciasCell.getElementsByTagName('input')[0].value === "") {
-            totalAsistenciasCell.getElementsByTagName('input')[0].value = totalAsistencias + '%';
-        }
-
-        if (porcentajeAsistenciaCell.getElementsByTagName('input')[0].value === "") {
-            porcentajeAsistenciaCell.getElementsByTagName('input')[0].value = porcentajeAsistencia + '%';
-        }
-    }
+        // Divide el total por 5 y lo asigna al input de la última celda de la fila
+        const totalInput = row.querySelector('.total-row');
+        totalInput.value = total / 5;
+    });
 }
 
-// Llamar a la función al cargar la página
-window.onload = function() {
-    calcularAsistencia();
-};
+// Asigna el evento input a todos los inputs
+const inputFields = document.querySelectorAll('.input-row input');
+inputFields.forEach(input => {
+    input.addEventListener('input', updateTotal);
+});
