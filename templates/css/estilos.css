@@ -674,7 +674,7 @@ header {
 
 /* ------------------------------------------------------------------------------------- */
 
-.modals-container, .modal-c-enviada-container, .modal-material, .modal-recurso-de-estudio-container {
+.modals-container, .modal-c-enviada-container, .modal-material, .modal-recurso-de-estudio-container,.modal-p-estudiantes {
     position: absolute;
     top: 0%;
     bottom: 0%;
