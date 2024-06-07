@@ -912,8 +912,9 @@ header {
 .cabecera-agg-material form {
     background: #00000018;
     backdrop-filter: blur(20px);
-    padding: 20px 0;
     border-radius: 5px;
+    border: 1px solid #ffc83d27;
+    padding: 20px 0;
 }
 
 .cabecera-agg-material select {
@@ -950,15 +951,16 @@ header {
     margin: 0 auto;
     width: fit-content;
     margin-bottom: 1%;
+    color: #ffc83d5e;
 }
 
-.materia-clases-elegir select{
+/* .materia-clases-elegir select{
     background-color: transparent;
     color: white;
     border: 1px solid white;
     padding: 5px 10px;
     border-radius: 10px;
-}
+} */
 
 
 .imagen-de-fondo-curso {
@@ -1135,15 +1137,14 @@ header {
 
 .descripcion-material-curso {
     position: relative;
-    width: 100%;
+    max-width: 90%;
     height: 80%;
-    text-overflow: ellipsis;
     margin: 0 auto;
     background-color: #ffffff08;
-    padding: 20px;
+    padding: 10px;
     padding-top: 40px;
     border-radius: 5px;
-    margin-left: 10px;
+    margin-left: 3%;
 }
 
 .curso-main {

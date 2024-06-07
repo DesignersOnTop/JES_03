@@ -32,11 +32,7 @@
         </header>
         <main class="main-container main-curso-material">    
             <div class="materia-clases-elegir">
-                <form>
-                    <select name="select-materia" id="select-materia">
-                        <option value="">Tarea 1 - Investigaci&oacute;n</option>
-                    </select>
-                </form>
+                <h2>Tarea 1 - Investigaci&oacute;n</h2>
             </div>            
             <div class="imagen-de-fondo-curso">
                 <figure>
@@ -56,11 +52,12 @@
                         <form action="#">
                             <label for="subir-tarea">Subir Tarea</label>
                             <input type="file" id="subir-tarea" name="subir-tarea">
+                            <div id="previsualizacion"></div>
                         </form>
                     </article>
                     <form class="botones-curso">
                         <input type='submit' value="Enviar">
-                        <input type="reset" value="Deshacer">
+                        <input type="reset" value="Deshacer" onclick="recargarPagina()">
                     </form>
                 </div>
                 <div class="c-curso-central">
@@ -75,20 +72,6 @@
                             <div class="descripcion-material-curso">
                                 <p>Las matemáticas son una ciencia que estudia los números, las formas, las estructuras y los patrones. Se utilizan para contar, medir, describir el tamaño y la forma de los objetos, y analizar cómo cambian las cosas. Las matemáticas incluyen áreas como la aritmética, el álgebra, la geometría y el cálculo, y son fundamentales para resolver problemas en ciencias, ingeniería, economía y muchos otros campos. En resumen, las matemáticas nos ayudan a entender y describir el mundo que nos rodea mediante números y símbolos</p>
                             </div>
-                            <!-- <nav class="nav-c-enlaces">
-                                <ul class="ul-c-enlaces">
-                                    <li>
-                                        <a href="https://discord.com/" class="a-c-discord" target="_blank">
-                                            <figure><img src="../imagenes/recursos/discord.png" alt="discord" title="Discord"></figure>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href='https://classroom.google.com/' class="a-c-classroom" target="_blank">
-                                            <figure><img src="../imagenes/recursos/google-classroom.png" alt="classroom" title="Classroom"></figure>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav> -->
                         </div>
                     </article>
                 </div>
@@ -139,5 +122,7 @@
     <script src="../js/menu.js"></script>
     <script src="../js/perfil-modal.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../js/previsualizar_archivos.js"></script>
+    <script src="../js/recargar_paginas.js"></script>
 </body>
 </html>
