@@ -856,3 +856,74 @@ header {
     width: 100px;
     padding: 10px;
 }
+
+.tabla-intercambiable {
+    background-color: #00000025;
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px #0005;
+    margin: 0 auto;
+    margin-top: 40px;
+    width: 80%;
+    height: 500px;
+    overflow: auto;
+}
+
+.tabla-intercambiable::-webkit-scrollbar {
+    width: 10px;
+    height: 80px;
+}
+
+.tabla-intercambiable::-webkit-scrollbar-thumb {
+    background-color: #FFF4;
+    border-radius: 20px;
+}
+
+.botones_tabla-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.botones-container1 {
+    width: 350px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.botones-container1 a {
+    color: #FFF;
+    height: 40px;
+    width: 150px;
+    border: 1px solid #ffc83d44;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tabla-intercambiable table {
+    margin-top: 20px;
+    margin: 0 auto;
+    color: #FFF;
+    width: 100%;
+    height: fit-content;
+    padding-bottom: 5px;
+}
+
+.tabla-intercambiable table tr {
+    background-color: #d9d9d93d;
+    height: 50px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.tabla-intercambiable table tr:hover {
+    background-color: rgba(255, 255, 255, 0.493);
+}
+
+.tabla-intercambiable table tr:nth-child(even) {
+    background-color: #00000036;
+}
