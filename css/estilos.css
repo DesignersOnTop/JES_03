@@ -857,7 +857,7 @@ header {
     padding: 10px;
 }
 
-.tabla-intercambiable {
+.header-cursos {
     background-color: #00000025;
     backdrop-filter: blur(10px);
     border-radius: 10px;
@@ -865,18 +865,6 @@ header {
     margin: 0 auto;
     margin-top: 40px;
     width: 80%;
-    height: 500px;
-    overflow: auto;
-}
-
-.tabla-intercambiable::-webkit-scrollbar {
-    width: 10px;
-    height: 80px;
-}
-
-.tabla-intercambiable::-webkit-scrollbar-thumb {
-    background-color: #FFF4;
-    border-radius: 20px;
 }
 
 .botones_tabla-container {
@@ -903,27 +891,42 @@ header {
     justify-content: center;
 }
 
-.tabla-intercambiable table {
-    margin-top: 20px;
-    margin: 0 auto;
-    color: #FFF;
-    width: 100%;
-    height: fit-content;
-    padding-bottom: 5px;
+.tabla-cursos-container {
+    margin: 20px 80px;
+    width: 90%;
 }
 
-.tabla-intercambiable table tr {
-    background-color: #d9d9d93d;
+.tabla-cursos {
+    background-color: #00000021;
+    margin: 0 auto;
+    color: #FFF;
+    width: 80%;
+    height: fit-content;
+    padding-bottom: 5px;
+    overflow: auto;
+}
+
+.tabla-cursos::-webkit-scrollbar {
+    width: 10px;
+    height: 80px;
+}
+
+.tabla-cursos::-webkit-scrollbar-thumb {
+    background-color: #FFF4;
+    border-radius: 20px;
+}
+
+.tabla-cursos tr {
     height: 50px;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
 }
 
-.tabla-intercambiable table tr:hover {
-    background-color: rgba(255, 255, 255, 0.493);
+.tabla-cursos tr:nth-child(even) {
+    background-color: #00000036;
 }
 
-.tabla-intercambiable table tr:nth-child(even) {
-    background-color: #00000036;
+.tabla-cursos tr:hover {
+    background-color: #FFF2;
 }
