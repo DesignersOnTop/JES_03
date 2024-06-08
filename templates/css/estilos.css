@@ -260,12 +260,13 @@ header {
     display: flex;
 }
 
-.nav-perfil, .nav-menu {
+.nav-perfil, .nav-menu, .nav-home {
     width: 60px;
     position: relative;
     left: 70px;
     margin-right: 10px;
 }
+
 /* ----------------------------------------------------- */
 .nav-container img {
     object-fit: cover;
@@ -423,10 +424,6 @@ header {
     justify-content: center;
     gap: 30px;
     padding: 10px 0;
-    /* background-color: transparent;
-    backdrop-filter: blur(20px); */
-    /* border-radius: 7px;
-    border: 1px solid #ffc83d22;  */
 }
 
 .ca-ho-botones * {
@@ -910,7 +907,7 @@ header {
     margin-bottom: 1%;
 }
 
-.cabecera-agg-material form {
+.form-agg-material {
     background: #00000018;
     backdrop-filter: blur(20px);
     border-radius: 5px;
@@ -1411,3 +1408,90 @@ header {
 }
 
 /* ------------------------------------------------------ */
+
+.cabecera-agg-refuerzo {
+    background-color: #00000022;
+    height: 40px;
+    padding: 10px 0;
+    backdrop-filter: blur(20px);
+    border: 1px solid #ffc83d27;
+    border-radius: 5px;
+    width: 90%;
+    position: relative;
+}
+
+.titulo-refuerzo {
+    text-align: center;
+    margin-top: 0.5%;
+    color: #ffc83d27;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.cabecera-agg-refuerzo a:nth-of-type(1) {
+    margin-left: 10px;
+}
+
+.cabecera-agg-refuerzo a {
+    background-color: transparent;
+    border: 2px solid #ffc83d22;
+    color: white;
+    /* width: 140px; */
+    padding: 2px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-left: 5px;
+    margin-bottom: 0.4%;
+}
+/* --------------------------------------- */
+
+.libros-refuerzo {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.libros-refuerzo table {
+    width: 100%;
+    margin: 0 auto;
+    background-color: #00000021;
+    backdrop-filter: blur(20px);
+    text-align: center;
+    height: fit-content;
+    padding: 10px 0;
+    max-height: 600px;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+.libros-refuerzo tr {
+    border-top: 1px solid rgba(255, 255, 255, 0.119);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.119);
+}
+
+.libros-refuerzo th{
+    color:  #ffc83d22;
+    padding: 5px;
+}
+
+.libros-refuerzo td {
+    color: white;
+    padding: 10px;
+}
+
+.libros-refuerzo a {
+    text-decoration: none;
+    color: white;
+    background-color: #ffc83d1f;
+    padding: 3px 5px;
+}
+
+.cabecera-agg-refuerzo select {
+    position: absolute;
+    right: 1%;
+    bottom: 22%;
+}
+
+#recurrente-a-refuerzo {
+    background-color: #ffc83d0c;
+    border: 1px solid rgba(255, 255, 255, 0.152);
+}

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Material De Estudio</title>
+    <link rel="stylesheet" href="../css/estilos.css">
+    <link rel="icon" href="../imagenes/recursos/logo-jes.png">
+</head>
+<body>
+    <div class="body-container">
+        <header>
+            <div class="header-container">
+                <figure class="jesIMG-container">
+                    <img src="../imagenes/recursos/logo-jes.png" alt="JES-LOGO">
+                </figure>            
+                <div class="jes-titulo">
+                    <h2>JES</h2>
+                    <h3>Junior Explorers System</h3>                
+                </div>
+                <nav class="nav-container">
+                    <ul>
+                        <li class="nav-perfil">
+                            <a href="#" class="li-perfil"><figure><img src="../imagenes/recursos/perfil-femenino.jpg" alt="perfil"></figure></a>
+                        </li>
+                        <li class="nav-menu">
+                            <a href="#" class="menu"><figure><img src="../imagenes/iconos/menu.svg" alt="menu"></figure></a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <main class="main-container">
+            <section class="section-materiales">
+                <div class="cabecera-agg-material cabecera-agg-refuerzo">
+                    <h2 class="titulo-refuerzo">Recursos de Estudio</h2>
+                    <a href="e-refuerzo-libros.html">Libros</a>
+                    <a href="#" id="recurrente-a-refuerzo">Videos</a>
+                    <form action="#">
+                        <select name="materias-refuerzo" id="materias-refuerzo">
+                            <option value="">Todos</option>
+                            <option value="">L. Española</option>
+                            <option value="">Matemáticas</option>
+                        </select>
+                    </form>
+                </div>
+                <article class="libros-refuerzo">
+                    <table>
+                        <tr>
+                            <th>Titulo</th>
+                            <th>Materia</th>
+                            <th>fuente|link</th>                      
+                        </tr>
+                        <tr>
+                            <td>Don quijote</td>
+                            <td>L. Español</td>
+                            <td><a href="#">link</a></td>
+                        </tr>
+                        <tr>
+                            <td>Don quijote</td>
+                            <td>L. Español</td>
+                            <td><a href="#">link</a></td>
+                        </tr>
+                        <tr>
+                            <td>Don quijote</td>
+                            <td>L. Español</td>
+                            <td><a href="#">link</a></td>
+                        </tr>
+                    </table>
+                </article>
+            </section>
+        </main>
+        <section class="modals-container">
+            <article class="modal-perfil">
+                <div class="perfil-izquierda">
+                    <h4 class="titulo-perfil">Estudiante</h4>
+                    <figure class="perfil-estudiante perfil-profesor">
+                        <img src="../imagenes/recursos/perfil-femenino.jpg" alt="img-perfil">
+                    </figure>
+                    <div class="perfil-izquierda-abajo">
+                        <h6>Grado</h6>
+                        <h4>1ro A </h4>
+                    </div>
+                </div>
+                <div class="perfil-derecho">
+                    <div class="perfil-derecha-arriba">
+                        <h2>Emmy Garcia</h2>
+                        <p>1-22-0500</p>
+                    </div>
+                    <div class="datos datos1">
+                        <h3>Email</h3>
+                        <p>emmyMaria@gmail.com</p>
+                    </div>
+                    <div class="datos">
+                        <h3>Fecha de Nacimiento</h3>
+                        <p>10-05-2009</p>
+                    </div>
+                    <div class="datos">
+                        <h3>Genero</h3>
+                        <p>Femenino</p>
+                    </div>
+                    <div class="datos">
+                        <h3>Dirección</h3>
+                        <p>Calle 16 de Agosto #01</p>
+                    </div>
+                    <div class="datos">
+                        <h3>Telefono</h3>
+                        <p>809-101-0000</p>
+                    </div>
+                </div>
+            </article>
+        </section>
+    </div>
+    <script src="../js/perfil-modal.js"></script>
+    <script src="../js/menu.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+</html>
