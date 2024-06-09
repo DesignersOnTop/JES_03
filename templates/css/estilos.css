@@ -252,19 +252,23 @@ header {
 }
 
 .nav-container {
-    /* background-color: aqua; */
-    width: 20%;
+    width: fit-content;
+    position: relative;
+    right: 1%;
 }
 
 .nav-container ul {
     display: flex;
 }
 
-.nav-perfil, .nav-menu, .nav-home {
+.nav-perfil, .nav-menu, .nav-home, .nav-menu-home {
     width: 60px;
+    margin: 0 10px;
+}
+
+.nav-menu img {
     position: relative;
-    left: 70px;
-    margin-right: 10px;
+    top: 20%;
 }
 
 /* ----------------------------------------------------- */
@@ -277,7 +281,7 @@ header {
     height: 100%;
 }
 
-.nav-perfil figure, .nav-perfil img, .nav-menu figure, .nav-menu img {
+.nav-perfil figure, .nav-perfil img, .nav-menu-home figure, .nav-menu-home img, .nav-menu figure, .nav-menu img {
     width: 40px;
     height: 40px;
     border-radius: 100%;
@@ -682,7 +686,7 @@ header {
     display: flex;
     align-items: center;
     z-index: 2;
-    display: none;
+    /* display: none; */
 }
 
 .modals-container::after, .modal-c-enviada-container::after{

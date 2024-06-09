@@ -1,0 +1,49 @@
+~<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil</title>
+    <link rel="stylesheet" href="../css/estilos.css">
+</head>
+<body>
+    <main class="main-container">
+        <section class="modals-container">
+            <article id="modal-recordatorio">
+                <div id="calendar-container">
+                    <div id="calendar-header">
+                        <button id="mes-anterior">Anterior</button>
+                        <h2 id="mes-reciente"></h2>
+                        <button id="mes-siguiente">Siguiente</button>
+                    </div>
+                    <table id="calendario">
+                        <thead>
+                            <tr>
+                                <th>Dom</th>
+                                <th>Lun</th>
+                                <th>Mar</th>
+                                <th>Mié</th>
+                                <th>Jue</th>
+                                <th>Vie</th>
+                                <th>Sáb</th>
+                            </tr>
+                        </thead>
+                        <tbody id="calendario-body"></tbody>
+                    </table>
+                </div>            
+                <!-- Modal para notas -->
+                <div id="modal" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <h2 id="modal-date"></h2>
+                        <textarea id="note-text"></textarea>
+                        <button id="save-note">Guardar Nota</button>
+                        <button id="delete-note">Eliminar Nota</button>
+                    </div>
+                </div> 
+            </article>
+        </section>
+    </main>
+    <script src="../js/"></script>
+</body>
+</html>
