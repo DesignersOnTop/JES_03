@@ -850,11 +850,13 @@ header {
 }
 
 .material-estudio {
-    min-width: 32%;
+    min-width: 25%;
     /* width: fit-content; */
+    /* padding-right: 30px; */
     height: 200px;
     border: 1px solid #ffc83d27;
     backdrop-filter: blur(10px);
+    background-color: #00000013;
     display: flex;
     flex-direction: row;
     margin-left: 5px;
@@ -870,6 +872,7 @@ header {
     flex-basis: 60%;
     margin: 0 auto;
     position: relative;
+    overflow: hidden;
 }
 
 .materia-del-material{
@@ -879,8 +882,13 @@ header {
     position: absolute;
     right: 20%;
     left: 0;
-    width: 52%;
+    width: 47.8%;
     z-index: 2;
+}
+
+.material-material-p {
+    max-width: 45%;
+    width: 45%;
 }
 
 .materia-del-material h3 {
@@ -891,7 +899,7 @@ header {
 
 
 .material-estudio img {
-    /* width: 100%; */
+    width: 100%;
     height: 99%;
     object-fit: cover;
 }
@@ -902,10 +910,11 @@ header {
     justify-content: space-evenly;
     color: white;
     height:100%;
-    background-color: #00000013;
+    /* background-color: #00000013; */
     text-align: center;
     width:100%;
-    padding: 0 15%;
+    padding: 0 6%;
+    flex-basis: 50%;
 }
 
 .contenedor-material a{
@@ -1235,8 +1244,8 @@ header {
 
 .descripcion-m-c-editar {
     position: absolute;
-    right: -4%;
-    top: -3%;
+    right: -6%;
+    top: -24%;
 }
 
 /* ---------------------------------------- */
@@ -1511,10 +1520,16 @@ header {
 
 .cabecera-libro a {
     position: relative;
-    bottom: 10px;
+    bottom: 15px;
     border: none;
-    border: 2px solid #ffc83d22;
+    font-style: italic;
+    /* border: 2px solid #ffc83d22; */
     padding-bottom: 5px;
+}
+
+.cabecera-libro a:hover {
+    color: #ffc83d22;
+    transition: 0.8s;
 }
 
 /* --------------------------------------- */
@@ -1583,3 +1598,70 @@ header {
     border: 1px solid rgba(255, 255, 255, 0.152);
 }
 /* ------------------------------------------------ */
+.agregar-material-fieldset {
+    background-color: #0000000f;
+    backdrop-filter: blur(20px);
+    width: 800px;
+    padding: 10px 20px;
+    height: max-content;
+    margin: 0 auto;
+    display: flex;
+    flex-flow: wrap;
+    align-items: center;
+    /* flex-direction: column; */
+    color: #fff;
+    border: 1px solid #ffc83d43;
+}
+
+.dato-material {
+    flex-basis: 50%;
+    margin-top: 20px;
+}
+
+
+.dato-material input {
+    height: 20px;
+}
+
+.dato-material textarea, .dato-material input {
+    background-color: #00000052;
+    border: 1px solid #ffffff22;
+    border-radius: 2px;
+    color: white;
+    margin-top: 4px;
+    padding: 2px 10px;
+}
+
+.dato-material textarea {
+    resize: vertical;
+    min-height: 80px;
+    width: 300px;
+}
+
+.dato-material label {
+    color: #ffc83d43;
+}
+
+.dato-fecha {
+    display: flex;
+    gap: 10px;
+}
+
+.dato-material-textarea {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin: 0 auto;
+    margin-top: 40px;
+}
+
+.imagen-de-fondo-curso input {
+    display: none;
+}
+
+.imagen-de-fondo-curso {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
