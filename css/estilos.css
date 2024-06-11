@@ -867,6 +867,8 @@ header {
     width: 80%;
 }
 
+/* Botones para la tabla  */
+
 .botones_tabla-container {
     display: flex;
     justify-content: space-between;
