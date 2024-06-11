@@ -3,15 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Home</title>
     <link rel="stylesheet" href="./css/estilos.css">
-    <style>
-        article {
-            flex-basis: 20%;
-            height: 120px;
-            background-color: rgba(255, 228, 196, 0.358);
-        }
-    </style>
 </head>
 <body>
     <div class="body-container">
@@ -36,56 +29,38 @@
                 </nav>
             </div>
         </header>
-        <main>
-            <section class="main-container main-container-admin">
-                <article class="seg-admin seg-admin-estudiantes">
+        <main class="main-container">
+            <section class="section-top-container">
+                <article class="material-container">
                     <a href="#">
-                        <figure>
-                            <img src="imagenes/iconos/reloj-blanco.svg" alt="">
-                            <figcaption>Estudiantes</figcaption>
-                        </figure>
+                        <figure class="material-figure"><img src="./imagenes/iconos/capas.svg" alt="perfil-estudiante"></figure>
+                        <h2>Cursos</h2>                        
                     </a>
                 </article>
-                <article class="seg-admin seg-admin-profesores">
+                <article class="material-container">
                     <a href="#">
-                        <figure>
-                            <img src="imagenes/iconos/reloj-blanco.svg" alt="">
-                            <figcaption>Profesores</figcaption>
-                        </figure>
+                        <figure class="material-figure"><img src="./imagenes/iconos/capas.svg" alt="perfil-estudiante"></figure>
+                        <h2>Registro</h2>                        
                     </a>
                 </article>
-                <article class="seg-admin seg-admin-asistencia">
+                <article class="material-container">
                     <a href="#">
-                        <figure>
-                            <img src="imagenes/iconos/reloj-blanco.svg" alt="">
-                            <figcaption>Asistencia</figcaption>
-                        </figure>
+                        <figure class="material-figure"><img src="./imagenes/iconos/capas.svg" alt="perfil-estudiante"></figure>
+                        <h2>Reportes</h2>                        
                     </a>
                 </article>
-                <article class="seg-admin seg-admin-materiales">
-                    <a href="#">
-                        <figure>
-                            <img src="imagenes/iconos/reloj-blanco.svg" alt="">
-                            <figcaption>Materiales</figcaption>
-                        </figure>
-                    </a>
-                </article>
-                <article class="seg-admin seg-admin-cursos">
-                    <a href="#">
-                        <figure>
-                            <img src="imagenes/iconos/reloj-blanco.svg" alt="">
-                            <figcaption>Cursos</figcaption>
-                        </figure>
-                    </a>
-                </article>
-                <article class="seg-admin seg-admin-registro">
-                    <a href="#">
-                        <figure>
-                            <img src="imagenes/iconos/reloj-blanco.svg" alt="">
-                            <figcaption>Registro</figcaption>
-                        </figure>
-                    </a>
-                </article>
+            </section>
+            <section class="ca-ho-section">
+                <div class="ca-ho-botones">
+                    <button class="btn-calificaciones btn-caho-active">Estudiantes</button>
+                    <button class="btn-horario">Profesores</button>
+                    <button class="btn-horario">Asistencia</button>
+                    <button class="btn-horario">Materiales</button>
+                </div>
+                <div class="ca-ho-container">
+                    <div class="ca-ho-scroll">   
+                    </div>
+                </div>
             </section>
         </main>
         <section class="modals-container">

@@ -930,3 +930,69 @@ header {
 .tabla-cursos tr:hover {
     background-color: #FFF2;
 }
+
+/* TABLA ESTUDIANTES / PROFESOR - ADMIN HOME */
+
+.article-t-e {
+    width: 80%;
+    margin: 0 auto;
+    box-shadow: 1px 1px 10px #ffffff19;
+    background-color: #0000007b;
+}
+
+.article-t-e-p {
+    width: 90%;
+}
+
+.info-e {
+    overflow: hidden;
+    overflow-y: scroll;
+    width: 100%;
+    max-height: 352px;
+    margin-top: 50px;
+}
+
+.info-e::-webkit-scrollbar {
+    display: none;
+}
+
+.tabla-estudiante tr {
+    border-bottom: 2px solid #ffffff15;
+}
+
+.tabla-estudiante img {
+    width: 35px;
+    height: 35px;
+    object-fit: cover;
+}
+
+
+.tabla-estudiante tr {
+    max-height: 30px;
+    margin-bottom: 20px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+}
+
+.tabla-estudiante tr:nth-child(even) {
+    background-color: #0007;
+}
+
+.tabla-estudiante td, .tabla-estudiante th {
+    width: 18%;
+    margin-bottom: 15px;
+}
+
+.tabla-estudiante th {
+    color: #ffc83daa;
+}
+
+.tabla-estudiante td {
+    color: white;
+}
+
+.tabla-estudiante {
+    width: 100%;
+    backdrop-filter: blur(15px);
+}
