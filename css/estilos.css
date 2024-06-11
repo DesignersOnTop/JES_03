@@ -1,5 +1,10 @@
 @import url(./reset.css);
 
+* {
+    list-style-type: none;
+    text-decoration: none;
+}
+
 html {
     height: 100%;
     width: 100%;
@@ -710,4 +715,218 @@ header {
     position: absolute;
     top: 5%;
     right: 5%;
+}
+
+/* ADMIN */
+
+.main-container-admin {
+    height: 500px;
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 2%;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+
+.seg-admin {
+    background-color: #ffffff1a;
+    backdrop-filter: blur(10px);
+    color: #FFF;
+    height: 150px;
+    border-radius: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* .seg-admin a {
+    color: #FFF;
+} */
+
+.seg-admin img {
+    height: 50px;
+}
+
+.seg-admin figure {
+    width: 200px;
+    height: 100px;
+    margin: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.seg-admin figcaption {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.seg-admin:hover {
+    transition: all .7s;
+    /* background-color: rgba(255, 255, 255, 0.3); */
+    background-color: #0000000a;
+}
+
+.seg-admin-estudiantes, .seg-admin-profesores {
+    width: 0;
+    flex-basis: 42.7%;
+}
+
+/* Tabla de registro */
+
+.tabla-registro {
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #FFF;
+    margin: 0 auto;
+    margin-top: 40px;
+    overflow: hidden;
+    border-radius: 5px;
+    width: 60%;
+    height: 300px;
+    text-align: center;
+    border-collapse: collapse;
+}
+
+.tabla-registro th {
+    height: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.tabla-registro td {
+    background-color: #000;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+    height: 40px;
+}
+
+.tabla-registro td img {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    object-fit: cover;
+}
+
+/* TABLA PARA CONTROLAR ASISTENCIAS */
+
+.tabla-asistencia {
+    background-color: #00000025;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 8px #0005;
+    border-radius: 10px;
+    margin: 0 auto;
+    margin-top: 40px;
+    border-collapse: collapse;
+    width: 80%;
+    height: 50%;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+.tabla-asistencia tr:nth-child(even) {
+    background-color: #00000036;
+}
+
+.tabla-asistencia tr:hover {
+    background-color: #FFF2;
+}
+
+.tabla-asistencia td {
+    color: #FFF;
+    height: 50px;
+    width: 100px;
+    text-align: center;
+}
+
+.tabla-asistencia td input {
+    color: #FFF;
+    background: none;
+    text-align: center;
+    width: 100px;
+    height: 50px;
+    border: none;
+}
+
+.tabla-asistencia th {
+    color: #ffc83d73;
+    text-align: center;
+    width: 100px;
+    padding: 10px;
+}
+
+.header-cursos {
+    background-color: #00000025;
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px #0005;
+    margin: 0 auto;
+    margin-top: 40px;
+    width: 80%;
+}
+
+.botones_tabla-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.botones-container1 {
+    width: 350px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.botones-container1 a {
+    color: #FFF;
+    height: 40px;
+    width: 150px;
+    border: 1px solid #ffc83d44;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tabla-cursos-container {
+    margin: 20px 80px;
+    width: 90%;
+}
+
+.tabla-cursos {
+    background-color: #00000021;
+    margin: 0 auto;
+    color: #FFF;
+    width: 80%;
+    height: fit-content;
+    padding-bottom: 5px;
+    overflow: auto;
+}
+
+.tabla-cursos::-webkit-scrollbar {
+    width: 10px;
+    height: 80px;
+}
+
+.tabla-cursos::-webkit-scrollbar-thumb {
+    background-color: #FFF4;
+    border-radius: 20px;
+}
+
+.tabla-cursos tr {
+    height: 50px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.tabla-cursos tr:nth-child(even) {
+    background-color: #00000036;
+}
+
+.tabla-cursos tr:hover {
+    background-color: #FFF2;
 }
