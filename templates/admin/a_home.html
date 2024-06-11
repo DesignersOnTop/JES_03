@@ -1,114 +1,70 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-    <link rel="stylesheet" href="../css/estilos.css">
+    <link rel="stylesheet" href="../../templates/css/estilos.css">
 </head>
 <body>
     <div class="body-container">
         <header>
             <div class="header-container">
                 <figure class="jesIMG-container">
-                    <img src="./imagenes/recursos/logo-jes.png" alt="JES-LOGO">
+                    <img src="../imagenes/recursos/logo-jes.png" alt="JES-LOGO">
                 </figure>            
                 <div class="jes-titulo">
                     <h2>JES</h2>
-                    <h3>Junior Explorers System</h3>
+                    <h3>Junior Explorers System</h3>                
                 </div>
                 <nav class="nav-container">
                     <ul>
                         <li class="nav-perfil">
-                            <a href="#"><figure><img src="imagenes/recursos/perfil-masculino-2.jpg" alt="perfil"></figure></a>
+                            <a href="#"><figure><img src="../imagenes/recursos/perfil-masculino-2.jpg" alt="perfil"></figure></a>
                         </li>
                         <li class="nav-menu">
-                            <a href="#"><figure><img src="imagenes/iconos/menu.svg" alt="menu"></figure></a>
+                            <a href="#"><figure><img src="../imagenes/iconos/menu.svg" alt="menu"></figure></a>
                         </li>
                     </ul>
                 </nav>
             </div>
         </header>
-        <main>
-            <section class="main-container main-container-admin">
-                <article class="seg-admin seg-admin-profesores">
+        <main class="main-container">
+            <section class="section-top-container">
+                <article class="material-container">
                     <a href="#">
-                        <figure>
-                            <img src="imagenes/iconos/reloj-blanco.svg" alt="">
-                            <figcaption>Profesores</figcaption>
-                        </figure>
+                        <figure class="material-figure"><img src="../imagenes/iconos/capas.svg" alt="perfil-estudiante"></figure>
+                        <h2>Cursos</h2>                        
                     </a>
                 </article>
-                <article class="seg-admin seg-admin-materiales">
-                    <a href="#">
-                        <figure>
-                            <img src="imagenes/iconos/reloj-blanco.svg" alt="">
-                            <figcaption>Recursos</figcaption>
-                        </figure>
+                <article class="material-container">
+                    <a href="registro.html">
+                        <figure class="material-figure"><img src="../imagenes/iconos/capas.svg" alt="perfil-estudiante"></figure>
+                        <h2>Registro</h2>                        
                     </a>
                 </article>
-                <article class="seg-admin seg-admin-cursos">
+                <article class="material-container">
                     <a href="#">
-                        <figure>
-                            <img src="#" alt="">
-                            <figcaption>Cursos</figcaption>
-                        </figure>
-                    </a>
-                </article>             
-                <article class="seg-admin seg-admin-estudiantes">
-                    <a href="#">
-                        <figure>
-                            <img src="imagenes/iconos/reloj-blanco.svg" alt="">
-                            <figcaption>Estudiantes</figcaption>
-                        </figure>
+                        <figure class="material-figure"><img src="../imagenes/iconos/capas.svg" alt="perfil-estudiante"></figure>
+                        <h2>Reportes</h2>                        
                     </a>
                 </article>
             </section>
+            <section class="ca-ho-section">
+                <div class="ca-ho-botones">
+                    <button class="btn-calificaciones btn-caho-active">Estudiantes</button>
+                    <button class="btn-horario">Profesores</button>
+                    <button class="btn-horario">Asistencia</button>
+                    <button class="btn-horario">Materiales</button>
+                </div>
+                <div class="ca-ho-container">
+                    <div class="ca-ho-scroll">   
+                    </div>
+                </div>
+            </section>
         </main>
-        <section class="modals-container">
-            <article class="modal-perfil">
-                <div class="perfil-izquierda">
-                    <h4 class="titulo-perfil">Estudiante</h4>
-                    <figure class="perfil-estudiante perfil-profesor">
-                        <img src="./imagenes/recursos/perfil-femenino.jpg" alt="img-perfil">
-                    </figure>
-                    <div class="perfil-izquierda-abajo">
-                        <h6>Grado</h6>
-                        <h4>1ro A </h4>
-                    </div>
-                </div>
-                <div class="perfil-derecho">
-                    <div class="perfil-derecha-arriba">
-                        <h2>Emmy Garcia</h2>
-                        <p>1-22-0500</p>
-                    </div>
-                    <div class="datos datos1">
-                        <h3>Email</h3>
-                        <p>emmyMaria@gmail.com</p>
-                    </div>
-                    <div class="datos">
-                        <h3>Fecha de Nacimiento</h3>
-                        <p>10-05-2009</p>
-                    </div>
-                    <div class="datos">
-                        <h3>Genero</h3>
-                        <p>Femenino</p>
-                    </div>
-                    <div class="datos">
-                        <h3>Dirección</h3>
-                        <p>Calle 16 de Agosto #01</p>
-                    </div>
-                    <div class="datos">
-                        <h3>Telefono</h3>
-                        <p>809-101-0000</p>
-                    </div>
-                    <button class="perfil-cerrar-sesion">Cerrar sesion</button>
-                </div>
-            </article>
-        </section>
     </div>
-    <script src="js/perfil-modal.js"></script>
-    <script src="js/ca-ho.js"></script>
-    <script src="js/scroll_calificacion.js"></script>
+    <script src="../js/ca-ho.js"></script>
+    <script src="../js/scroll_calificacion.js"></script>
 </body>
 </html>
