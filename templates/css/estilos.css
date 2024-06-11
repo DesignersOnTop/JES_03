@@ -840,19 +840,9 @@ header {
     margin-top: 1%;
 }
 
-.titulo-materiales {
-    width: 80%;
-    padding: 5px 0;
-    text-align: justify;
-    /* color: #ffc83d; */
-    color: white;
-    margin: 0 auto;
-}
-
-.material-estudio {
-    min-width: 25%;
-    /* width: fit-content; */
-    /* padding-right: 30px; */
+.contenedor-material {
+    max-width: 30%;
+    width: 30%;
     height: 200px;
     border: 1px solid #ffc83d27;
     backdrop-filter: blur(10px);
@@ -865,44 +855,41 @@ header {
 
 .contenedor-material {
     display: flex;
-    flex-direction: row;
-}
-
-.material-estudio figure {
-    flex-basis: 60%;
-    margin: 0 auto;
-    position: relative;
-    overflow: hidden;
-}
-
-.materia-del-material{
-    background-color: #0000000e;
-    backdrop-filter: blur(10px);
-    height: 20%;
-    position: absolute;
-    right: 20%;
-    left: 0;
-    width: 47.8%;
-    z-index: 2;
-}
-
-.material-material-p {
-    max-width: 45%;
-    width: 45%;
+    flex-direction: column;
 }
 
 .materia-del-material h3 {
     color: #ffc83d5e;
     text-align: center;
-    margin-top: 10px;
+    position: absolute;
+    width: 100%;
+    height: 20px;
+    padding: 5px 0;
+    backdrop-filter: blur(20px);
+    z-index: 3;
 }
 
+.contenido-material figure {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #000;
+}
 
-.material-estudio img {
+.fondo-material-estudio{
+    background-color: #0000000e;
+    backdrop-filter: blur(10px);
+    height: 70%;
+    margin: 0 auto;
     width: 100%;
-    height: 99%;
+}
+
+.fondo-material-estudio img {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
 }
+
 
 .contenido-material {
     display: flex;
@@ -910,18 +897,28 @@ header {
     justify-content: space-evenly;
     color: white;
     height:100%;
-    /* background-color: #00000013; */
     text-align: center;
     width:100%;
     padding: 0 6%;
     flex-basis: 50%;
 }
 
-.contenedor-material a{
+.link-material {
+    width: 100%;
+    height: 60%;
+    position: relative;
+    top: 125%;
+    right: 5%;
+    /* background-color: #000; */
+}
+
+.link-material a{
     text-decoration: none;
     color: #ffc83d5e;
     text-align: center;
     white-space: nowrap;
+    position: relative;
+    top: 10px;
 }
 
 .contenedor-material a:hover {
@@ -934,24 +931,6 @@ header {
     right: 5px;
     top: 5px;
 }
-
-.contenido-material h3 {
-    color: #fff;
-}
-
-/* .contenido-material p {
-    margin: 0 auto;
-    text-align: center;
-    position: relative;
-    bottom: 6%;
-    width: 200px;
-    height: 40px;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    line-height: 1.2em;
-} */
 
 /* ----------------------------------------------------------- */
 .cabecera-agg-material{
