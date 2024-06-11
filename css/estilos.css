@@ -930,3 +930,85 @@ header {
 .tabla-cursos tr:hover {
     background-color: #FFF2;
 }
+
+/* Tabla de estudiantes */
+
+.tabla-estudiante img {
+    width: 35px;
+    height: 35px;
+    object-fit: cover;
+}
+
+
+.tabla-estudiante tr {
+    max-height: 30px;
+    padding: 5px 0;
+    margin-bottom: 20px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    /* flex-direction: column; */
+}
+
+.tabla-estudiante td, .tabla-estudiante th {
+    width: 18%;
+    margin-bottom: 15px;
+}
+
+.tabla-estudiante th {
+    color: #ffc83daa;
+}
+
+.tabla-estudiante td {
+    color: white;
+}
+
+.tabla-estudiante {
+    width: 100%;
+    backdrop-filter:blur(15px);
+    /* border-spacing: 20px; */
+    /* border-collapse: collapse; */
+}
+
+.article-t-e {
+    width: 80%;
+    margin: 0 auto;
+    box-shadow: 1px 1px 10px #ffffff19;
+    background-color: #0000007b;
+}
+
+.article-t-e-p {
+    width: 90%;
+}
+
+.info-e {
+    overflow: hidden;
+    overflow-y: scroll;
+    width: 100%;
+    max-height: 352px;
+    margin-top: 50px;
+}
+
+.info-e::-webkit-scrollbar {
+    display: none;
+}
+
+.tabla-estudiante tr {
+    border-bottom: 2px solid #ffffff15;
+}
+
+/* .tabla-estudiante tr:nth-last-of-type(1) {
+    border-bottom: none;
+} */
+
+
+.legend {
+    width: 100%;
+    border-bottom: 1px solid #ffffff2b;
+    margin: 20px 0 5px 0;
+    border-radius: 5px 5px 0px 0px;
+    padding: 5px 0;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+}
