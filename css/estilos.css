@@ -1010,20 +1010,26 @@ header {
 
 /* Botón para agregar */
 
- .boton-agregar {
-        background-color: #4CAF50;
-        border: none;
-        color: white;
-        padding: 15px 32px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        margin: 4px 2px;
-        cursor: pointer;
-        border-radius: 10px;
-    }
+.botones_tabla-container {
+    display: flex;
+    justify-content: space-between;
+}
 
-    .boton-agregar:hover {
-        background-color: #ffffff; 
-    }
+.botones-container1 {
+    width: 350px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.botones-container1 a {
+    color: #FFF;
+    height: 40px;
+    width: 150px;
+    border: 1px solid #ffc83d44;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
