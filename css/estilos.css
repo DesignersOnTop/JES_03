@@ -997,11 +997,6 @@ header {
     border-bottom: 2px solid #ffffff15;
 }
 
-/* .tabla-estudiante tr:nth-last-of-type(1) {
-    border-bottom: none;
-} */
-
-
 .legend {
     width: 100%;
     border-bottom: 1px solid #ffffff2b;
@@ -1012,3 +1007,23 @@ header {
     text-align: center;
     font-weight: bold;
 }
+
+/* Botón para agregar */
+
+ .boton-agregar {
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 10px;
+    }
+
+    .boton-agregar:hover {
+        background-color: #ffffff; 
+    }
