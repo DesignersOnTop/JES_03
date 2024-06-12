@@ -239,9 +239,7 @@ header {
 
 .jes-titulo {
     color: #ffc83d5e;
-    position: relative;
-    left: 4%;
-}
+}    
 
 .header-container {
     background-color: transparent;
@@ -1135,8 +1133,13 @@ header {
 
 .botones-curso-p *{
     width: 80%;
-    color: rgba(255, 0, 0, 0.521);
+    color: rgba(255, 0, 0, 0.438);
     border-radius: 5px;
+}
+
+.botones-curso-p *:hover {
+    color: red;
+    transition: all 0.4s;
 }
 
 /* ---------------------------------------- */
@@ -1583,12 +1586,16 @@ header {
 }
 
 .td-eliminar-libros{
-    color: rgba(148, 4, 4, 0.603);
+    color: rgba(148, 4, 4, 0.932);
+    cursor: pointer;
+    border-color: rgba(255, 255, 255, 0.055);
+    background-color: transparent;
 }
 
 .td-eliminar-libros:hover {
     color: red;
     transition: 0.5s;
+    background-color: rgba(255, 0, 0, 0.055);
 }
 
 .agregar-refuerzo-a {
