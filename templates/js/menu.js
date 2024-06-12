@@ -10,8 +10,8 @@ menu.addEventListener('click',() => {
             container: 'container-eme conta-eme'
         },
         imageUrl: '../imagenes/recursos/logo-jes.png',
-        imageWidth: '120px',
-        imageHeight: '120px',
+        imageWidth: '100px',
+        imageHeight: '100px',
         imageAlt: 'Logo-JES',
         buttonsStyling: false,
         showCloseButton: false,

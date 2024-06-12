@@ -200,7 +200,7 @@ body {
 
 .classes-eme {
     width: 40%;
-    height: 80%;
+    height: 76%;
     /* background-color: transparent; */
     background-color: #00000020;
     overflow: hidden;
@@ -1641,7 +1641,7 @@ header {
 .dato-material textarea {
     resize: vertical;
     min-height: 80px;
-    width: 300px;
+    min-width: 100%;
 }
 
 .dato-material label {
@@ -1670,4 +1670,27 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+/* Estilos para el párrafo */
+#texto-material-curso {
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    padding: inherit;
+    border: inherit;
+    width: 100%;
+}
+
+/* Estilos para el textarea */
+textarea.editable {
+    font-size: inherit;
+    color: inherit;
+    padding: inherit;
+    border: inherit;
+    width: 100%;
+    width: 96%;
+    max-width: 96%;
+    min-height: 150px;
+    background-color: transparent;
 }

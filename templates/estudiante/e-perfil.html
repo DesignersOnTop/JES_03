@@ -8,7 +8,7 @@
 </head>
 <body>
     <main class="main-container">
-        <section class="modals-container" onclick="history.back()">
+        <section class="modals-container">
             <article class="modal-perfil">
                 <div class="perfil-izquierda">
                     <h4 class="titulo-perfil">Estudiante</h4>
@@ -49,5 +49,22 @@
             </article>
         </section>
     </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const modalsContainer = document.querySelector('.modals-container');
+
+            modalsContainer.addEventListener('click', function(event) {
+                if (event.target === modalsContainer) {
+                    window.history.back();
+                }
+            });
+
+            const modalPerfil = document.querySelector('.modal-perfil');
+
+            modalPerfil.addEventListener('click', function(event) {
+                event.stopPropagation(); // Evita que el evento se propague al contenedor
+            });
+        });
+    </script>
 </body>
 </html>
