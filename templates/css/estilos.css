@@ -1,5 +1,10 @@
 @import url(./reset.css);
 
+* {
+    list-style-type: none;
+    text-decoration: none;
+}
+
 html {
     height: 100%;
     width: 100%;
@@ -1650,11 +1655,20 @@ header {
 .header-cursos {
     background-color: #00000025;
     backdrop-filter: blur(10px);
-    border-radius: 10px;
+    border-bottom: 1px solid #FFC93D;
     box-shadow: 0 4px 8px #0005;
     margin: 0 auto;
-    margin-top: 40px;
-    width: 80%;
+    width: 90%;
+    height: 50px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.header-cursos img {
+    position: absolute;
+    right: 100px;
+    bottom: 15px;
 }
 
 .botones_tabla-container {
@@ -1666,11 +1680,11 @@ header {
     width: 350px;
     padding: 20px;
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-end;
     align-items: center;
 }
 
-.botones-container1 a {
+/* .botones-container1 a {
     color: #FFF;
     height: 40px;
     width: 150px;
@@ -1679,11 +1693,11 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
-}
+} */
 
 .tabla-cursos-container {
     height: 400px;
-    margin: 20px 80px;
+    margin: 0 auto;
     width: 90%;
     overflow: auto;
 }
@@ -1702,7 +1716,7 @@ header {
     background-color: #00000021;
     margin: 0 auto;
     color: #FFF;
-    width: 80%;
+    width: 100%;
     padding-bottom: 5px;
     overflow: auto;
 }
@@ -1714,6 +1728,7 @@ header {
 }
 
 .tabla-cursos th {
+    color: #FFC93D;
     font-size: 16px;
     padding: 10px;
 }
@@ -1764,6 +1779,20 @@ header {
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
+}
+
+/* BUSCADOR PARA BUSCAR ESTUDIANTES / PROFESORES DIRECTAMENTE */
+
+#buscador {
+    background-color: #D9D9D9;
+    color: #FFF;
+    width: 150px;
+    height: 80%;
+    border-radius: 30px;
+    border: none;
+    text-align: center;
+    padding-right: 20px;
+    position: relative;
 }
 
 /* SELECT PARA CAMBIAR DE CURSOS */
