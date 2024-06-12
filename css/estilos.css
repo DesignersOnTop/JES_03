@@ -985,7 +985,7 @@ header {
     overflow: hidden;
     overflow-y: scroll;
     width: 100%;
-    max-height: 352px;
+    max-height: 390px;
     margin-top: 50px;
 }
 
@@ -1010,26 +1010,18 @@ header {
 
 /* Botón para agregar */
 
-.botones_tabla-container {
-    display: flex;
-    justify-content: space-between;
-}
-
-.botones-container1 {
-    width: 350px;
-    padding: 20px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-}
-
-.botones-container1 a {
-    color: #FFF;
-    height: 40px;
-    width: 150px;
-    border: 1px solid #ffc83d44;
+.cabecera-agg-refuerzo a {
+    background-color: transparent;
+    border: 2px solid #ffc83d22;
+    color: white;
+    padding: 2px 20px;
     border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    text-decoration: none;
+    margin-left: 5px;
+    margin-bottom: 0.4%;
+}
+
+.p-agregar-material {
+    position: relative;
+    left: 30px;
 }
