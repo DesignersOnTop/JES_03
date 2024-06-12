@@ -945,6 +945,8 @@ header {
     border-radius: 5px;
     border: 1px solid #ffc83d27;
     padding: 20px 0;
+    width: 92%;
+    margin: 0 auto;
 }
 
 .cabecera-agg-material select {
