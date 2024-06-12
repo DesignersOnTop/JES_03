@@ -7,8 +7,12 @@ menu.addEventListener('click',() => {
         customClass: {
             popup: 'emergente-class classes-eme',
             confirmButton: 'confirm-eme',
-            container: 'container-eme conta-eme'
-        },
+            container: 'container-eme conta-eme',
+        },            
+        imageUrl: '../imagenes/recursos/logo-jes.png',
+        imageWidth: '120px',
+        imageHeight: '120px',
+        imageAlt: 'Logo-JES',
         buttonsStyling: false,
         showCloseButton: false,
         // closeButtonAriaLabel: "cerrar",

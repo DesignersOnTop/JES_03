@@ -200,7 +200,7 @@ body {
 
 .classes-eme {
     width: 40%;
-    height: 60%;
+    height: 80%;
     /* background-color: transparent; */
     background-color: #00000020;
     overflow: hidden;
@@ -676,8 +676,8 @@ header {
 }
 
 /* ------------------------------------------------------------------------------------- */
-
-.modals-container, .modal-c-enviada-container, .modal-material, .modal-recurso-de-estudio-container,.modal-p-estudiantes {
+/* .modal-c-enviada-container, .modal-material, .modal-recurso-de-estudio-container,.modal-p-estudiantes */
+.modals-container, .modal-c-enviada-container, .modal-recurso-de-estudio-container  {
     position: absolute;
     top: 0%;
     bottom: 0%;
@@ -687,7 +687,7 @@ header {
     backdrop-filter: blur(30px);
     display: flex;
     align-items: center;
-    z-index: 2;
+    z-index: 2; 
     /* display: none; */
 }
 
@@ -716,19 +716,19 @@ header {
 
 /* Modal material */
 
-.modal-material {
+/* .modal-material {
     backdrop-filter: blur(10px);
     background-color: #00000033;
-}
+} */
 
-.modal-material textarea {
+/* .modal-material textarea {
     width: 100%;
     height: 100%;
     background-color: transparent;
     color: white;
-}
+} */
 
-.botones-modal-material {
+/* .botones-modal-material {
     width: 40%;
     margin: 0 auto;
     display: flex;
@@ -740,11 +740,11 @@ header {
     margin-top: 10px;
     border: 2px solid #ffc83d2d;
     color: white;
-}
+} */
 
 /* -------------------------------------------------------------------------------------- */
 
-#modal-recordatorio {
+/* #modal-recordatorio {
     width: 50%;
     height: 50%;
     background-color: #00000043;
@@ -764,7 +764,6 @@ header {
 
 #calendar-header {
     color: #ffc83d7d;
-    /* background-color: #fff; */
     display: flex;
     flex-direction: row; 
     justify-content: space-between;
@@ -789,7 +788,6 @@ header {
 }
 
 #calendario {
-    /* background-color: #ffffff11; */
     width: 60%;
     height: 60%;
     text-align: justify;
@@ -822,7 +820,7 @@ header {
     color: white;
     padding: 10px;
     border: 1px solid #ffc83d22;
-}
+} */
 
 /* ------------------------------------------------------------------------------------- */
 
@@ -975,6 +973,10 @@ header {
     top: 40px;
     left: 43%;
     color: #fff;
+}
+
+#cabecera-material_estudio {
+    width: 92%;
 }
 
 /* ----------------------------------------------------------- */
@@ -1382,7 +1384,7 @@ header {
 
 .ver-estudiante-p figure{
     padding: 5px;
-    width: 60%;
+    width: 30%;
     margin: 0 auto;
     background-color: #ffc83d11;
 }
@@ -1430,6 +1432,7 @@ header {
 
 .tabla-estudiante-material td, .tabla-estudiante-material th {
     padding: 10px;
+    text-align: center;
 }
 
 .tabla-estudiante-material th {
@@ -1576,7 +1579,29 @@ header {
     background-color: #ffc83d0c;
     border: 1px solid rgba(255, 255, 255, 0.152);
 }
+
+.td-eliminar-libros{
+    color: rgba(148, 4, 4, 0.603);
+}
+
+.td-eliminar-libros:hover {
+    color: red;
+    transition: 0.5s;
+}
+
+.agregar-refuerzo-a {
+    position: absolute;
+    right: 2%;
+    top: 40%;
+    /* padding: 5px; */
+}
+
 /* ------------------------------------------------ */
+
+.agregar-material-section form {
+    margin: 0 auto;
+}
+
 .agregar-material-fieldset {
     background-color: #0000000f;
     backdrop-filter: blur(20px);
