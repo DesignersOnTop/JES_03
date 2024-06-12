@@ -1482,7 +1482,6 @@ header {
     background-color: transparent;
     border: 2px solid #ffc83d22;
     color: white;
-    /* width: 140px; */
     padding: 2px 20px;
     border-radius: 5px;
     text-decoration: none;
@@ -1502,7 +1501,6 @@ header {
     bottom: 15px;
     border: none;
     font-style: italic;
-    /* border: 2px solid #ffc83d22; */
     padding-bottom: 5px;
 }
 
