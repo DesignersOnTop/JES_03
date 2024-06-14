@@ -576,14 +576,16 @@ header {
 /* Tabla horario central */
 /* ------------------------------------------------------------------------------------- */
 .tabla-horario-centrar {
-    height: auto;
+    height: fit-content;
     min-width: 966px;
-    position: relative;
+    padding-bottom: 10px;
 }
 
 .tabla-horario {
     border-radius: 5px;
     overflow: hidden;
+    position: relative;
+    top: 20px;
 }
 
 /* Aqui termina las tablas horario y calificaciones */
