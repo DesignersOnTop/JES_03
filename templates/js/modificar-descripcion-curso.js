@@ -7,7 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const pElement = editableElement;
             const pContent = pElement.textContent;
             const textarea = document.createElement('textarea');
-
+            textarea.style.resize = 'none'
+            // textarea.style.minWidth = '930px'
             textarea.id = 'texto-material-curso';
             textarea.value = pContent;
             textarea.className = 'editable'; // Para mantener la clase y el estilo del CSS
