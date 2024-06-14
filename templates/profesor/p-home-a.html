@@ -63,7 +63,7 @@
             <section class="ca-ho-section">
                 <div class="ca-ho-botones">
                     <button class="btn-calificaciones btn-caho-active">Calificaciones</button>
-                    <button class="btn-horario">asistencia</button>
+                    <button class="btn-horario">Asistencia</button>
                 </div>
                 <div class="ca-ho-container asis-cal-p-container">
                     <div class="ca-ho-scroll asis-cal-p-container">
@@ -139,7 +139,7 @@
                                     <th>May-Junio</th>
                                     <th>Total de Asistencias</th>
                                 </tr>
-                                <tr class="fila-calificacion">
+                                <tr class="fila-asistencia">
                                     <td>1010</td>
                                     <td>Albiery</td>
                                     <td>Rodriguez</td>
@@ -149,9 +149,9 @@
                                     <td><input type="text"></td>
                                     <td><input type="text"></td>
                                     <td><input type="text"></td>
-                                    <td><input type="text" value="" oninput="sumarCalificaciones()"></td>
+                                    <td><input type="text" value="" oninput="calcularPorcentaje()"></td>
                                 </tr>
-                                <tr class="fila-calificacion">
+                                <tr class="fila-asistencia">
                                     <td>1011</td>
                                     <td>Smailyn</td>
                                     <td>Burgos</td>
@@ -161,9 +161,9 @@
                                     <td><input type="text"></td>
                                     <td><input type="text"></td>
                                     <td><input type="text"></td>
-                                    <td><input type="text" value="" oninput="sumarCalificaciones()"></td>
+                                    <td><input type="text" value="" oninput="calcularPorcentaje()"></td>
                                 </tr>
-                                <tr class="fila-calificacion">
+                                <tr class="fila-asistencia">
                                     <td>1012</td>
                                     <td>Massiel</td>
                                     <td>Rodriguez</td>
@@ -173,8 +173,8 @@
                                     <td><input type="text"></td>
                                     <td><input type="text"></td>
                                     <td><input type="text"></td>
-                                    <td><input type="text" value="" oninput="sumarCalificaciones()"></td>
-                                <tr class="fila-calificacion">
+                                    <td><input type="text" value="" oninput="calcularPorcentaje()"></td>
+                                <tr class="fila-asistencia">
                                     <td>1013</td>
                                     <td>Faury</td>
                                     <td>Garcia</td>
@@ -184,53 +184,13 @@
                                     <td><input type="text" ></td>
                                     <td><input type="text" ></td>
                                     <td><input type="text"></td>
-                                    <td><input type="text" value="" oninput="sumarCalificaciones()"></td>
+                                    <td><input type="text" value="" oninput="calcularPorcentaje()"></td>
                                 </tr>
                             </table>
                         </article>
                     </div>
                 </div>
             </section>
-            <!-- <div class="modal-p-estudiantes">
-                <article class="modal-perfil">
-                    <div class="perfil-izquierda">
-                        <h4 class="titulo-perfil">Estudiante</h4>
-                        <figure class="perfil-estudiante perfil-profesor">
-                            <img src="../imagenes/recursos/perfil-femenino.jpg" alt="img-perfil">
-                        </figure>
-                        <div class="perfil-izquierda-abajo">
-                            <h6>Grado</h6>
-                            <h4>1ro A </h4>
-                        </div>
-                    </div>
-                    <div class="perfil-derecho">
-                        <div class="perfil-derecha-arriba">
-                            <h2>Emmy Garcia</h2>
-                            <p>1-22-0500</p>
-                        </div>
-                        <div class="datos datos1">
-                            <h3>Email</h3>
-                            <p>emmyMaria@gmail.com</p>
-                        </div>
-                        <div class="datos">
-                            <h3>Fecha de Nacimiento</h3>
-                            <p>10-05-2009</p>
-                        </div>
-                        <div class="datos">
-                            <h3>Genero</h3>
-                            <p>Femenino</p>
-                        </div>
-                        <div class="datos">
-                            <h3>Dirección</h3>
-                            <p>Calle 16 de Agosto #01</p>
-                        </div>
-                        <div class="datos">
-                            <h3>Telefono</h3>
-                            <p>809-101-0000</p>
-                        </div>
-                    </div>
-                </article>
-            </div> -->
         </main>
     </div>
     <script src="../js/cambiar-cursos.js"></script>
@@ -239,5 +199,6 @@
     <script src="../js/ca-ho.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../js/promedio-calificacion.js"></script>
+    <script src="../js/promedio-asistencia.js"></script>
 </body>
 </html>
