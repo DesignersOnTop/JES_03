@@ -16,7 +16,7 @@ function calcularPorcentaje() {
 
     if (cantidadAsistencias === 5) {
         var promedioAsistencias = totalAsistencias / 5; 
-        var resultado = promedioAsistencias.toFixed(1) + '%'; 
+        var resultado = promedioAsistencias.toFixed(0) + '%'; 
         fila.lastElementChild.textContent = resultado; 
     } else {
         fila.lastElementChild.textContent = '';
