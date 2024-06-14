@@ -502,6 +502,16 @@ header {
     align-items: center;
     position: relative;
     z-index: 1;
+    overflow-x: scroll;
+}
+
+.tabla-calificacion::-webkit-scrollbar{
+    background-color: transparent;
+}
+
+.tabla-calificacion::-webkit-scrollbar-thumb {
+    background-color: #ffc83d65;
+    border-radius: 15px;
 }
 
 .tabla-calificacion td, .tabla-calificacion th {
@@ -859,12 +869,13 @@ header {
 }
 
 .materia-del-material h3 {
-    color: #ffc83d5e;
+    color: #ffc83dcc;
     text-align: center;
     position: absolute;
     width: 100%;
     height: 20px;
     padding: 5px 0;
+    background-color: #00000036;
     backdrop-filter: blur(20px);
     z-index: 3;
 }
@@ -888,6 +899,10 @@ header {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.section-libros-refuerzo-e .fondo-material-estudio img  {
+    opacity: 0.5;
 }
 
 
@@ -1562,7 +1577,7 @@ header {
 }
 
 .libros-refuerzo th{
-    color:  #ffc83d22;
+    color:  #ffc83d85;
     padding: 5px;
 }
 
