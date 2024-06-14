@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Material</title>
+    <link rel="stylesheet" href="../css/estilos.css">
+    <link rel="icon" href="../imagenes/recursos/logo-jes.png">
+</head>
+<body>
+    <div class="body-container">
+        <main class="main-container main-curso-material">            
+            <section class="modals-container agregar-material-section">
+                <form action="#">
+                    <fieldset class="agregar-material-fieldset">
+                        <legend>Agregar Material 1ro - B</legend>
+                        <div class="imagen-de-fondo-curso">
+                            <label for="fondo-material">Tema de fondo</label>
+                            <input type="file" id="fondo-material">
+                        </div>
+                        <div class="dato-material info-material">
+                            <label for="nombre-material">Titulo del Material</label>
+                            <input type="text" id="nombre-material">
+                        </div>
+                        <div class="dato-material dato-valor-material">
+                            <label for="valor-material">Puntuac&iacute;on del material</label>
+                            <input type="number" id="valor-material">
+                        </div>
+                        <div class="dato-material">
+                            <label for="recurso-de-estudio">Subir Material</label>
+                            <input type="file" id="recurso-de-estudio">
+                        </div>
+                        <div class="dato-material dato-fecha">
+                            <div class="fecha-desde-material">
+                                <label for="desde-material">Desde:</label>
+                                <input type="date" id="desde">
+                            </div>
+                            <div class="fecha-hasta-material">
+                                <label for="hasta-material">Hasta:</label>
+                                <input type="date" id="hasta-material">
+                            </div>
+                        </div>
+                        <div class="dato-material dato-material-textarea">
+                            <label for="con-material">Descripci&oacute;n del Material</label>
+                            <textarea name="con-material" id="con-material"></textarea>
+                        </div>
+                    </fieldset>
+                    <div class="botones-agg-material">
+                        <input type="submit" value="Enviar">
+                        <input type="reset" value="Rehacer">
+                    </div>
+                </form>
+            </section>
+        </main>
+    </div>
+    <script src="../js/menu-profesor-a.js"></script>
+    <!-- <script src="../js/perfil-modal.js"></script> -->
+    <script src="../js/cerrar-modal-agg-material.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+</html>
