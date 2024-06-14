@@ -1567,11 +1567,12 @@ header {
     padding: 15px;
 }
 
-.libros-refuerzo a {
+.libros-refuerzo a button {
     text-decoration: none;
     color: white;
     background-color: #ffc83d1f;
-    padding: 3px 5px;
+    padding: 5px 15px;
+    border: 1px solid #ffffff1c;
 }
 
 .cabecera-agg-refuerzo select {
@@ -1626,6 +1627,32 @@ header {
     border: 1px solid #ffc83d43;
 }
 
+.botones-agg-material {
+    position: relative;
+    width: 25%;
+    margin: 0 auto;
+    top: 10px;
+    display: flex;
+    justify-content: space-between;
+    backdrop-filter: blur(20px);
+}
+
+.botones-agg-material * {
+    background-color: transparent;
+    border: 1px solid #ffc83d43;
+    color: white;
+    padding: 5px 10px;
+}
+
+.botones-agg-material input:nth-of-type(1) {
+    border-radius: 5px 0 0 5px ;
+    padding-right: 15px;
+}
+
+.botones-agg-material input:nth-of-type(2) {
+    border-radius: 0 5px 5px 0 ;
+}
+
 .dato-material {
     flex-basis: 50%;
     margin-top: 20px;
@@ -1636,13 +1663,19 @@ header {
     height: 20px;
 }
 
-.dato-material textarea, .dato-material input {
+.dato-material textarea, .dato-material input, .dato-material select {
     background-color: #00000052;
     border: 1px solid #ffffff22;
     border-radius: 2px;
     color: white;
     margin-top: 4px;
     padding: 2px 10px;
+}
+
+.dato-material select {
+    padding: 4px 20px;
+    margin-bottom: 5px;
+    max-width: 20%;
 }
 
 .dato-material textarea {
@@ -1653,6 +1686,16 @@ header {
 
 .dato-material label {
     color: #ffc83d43;
+}
+
+#url-video {
+    width: 80%;
+}
+
+.dato-video-url {
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .dato-fecha {
@@ -1701,3 +1744,5 @@ textarea.editable {
     min-height: 150px;
     background-color: transparent;
 }
+
+/* ------------------------ */
