@@ -1758,7 +1758,7 @@ textarea.editable {
     color: inherit;
     padding: inherit;
     border: inherit;
-    min-width: 96%;
+    width: 96%;
     max-width: 96%;
     min-height: 150px;
     background-color: transparent;
