@@ -1712,6 +1712,24 @@ header {
     margin-top: 40px;
 }
 
+.dato-report {
+    width: 40%;
+    border: 1px solid rgba(255, 255, 255, 0.123);
+    height: 80px;
+    margin: 0 10px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    left: 6%;
+}
+
+.dato-report input[type='file'] {
+    display: none;
+}
+
+/*----------------------------------------------------- */
 .imagen-de-fondo-curso input {
     display: none;
 }
