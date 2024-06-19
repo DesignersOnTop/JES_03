@@ -1344,7 +1344,7 @@ header {
 /* ---------------------------------------- */
 /* Tabla de registro */
 
-.tabla-registro {
+/* .tabla-registro {
     background-color: rgba(0, 0, 0, 0.7);
     color: #FFF;
     margin: 0 auto;
@@ -1374,7 +1374,7 @@ header {
     height: 40px;
     border-radius: 100%;
     object-fit: cover;
-}
+} */
 
 /* TABLA PARA CONTROLAR ASISTENCIAS */
 
@@ -1786,3 +1786,46 @@ textarea.editable {
 }
 
 /* ------------------------ */
+
+.cabecera-tabla-estudiantes-a {
+    background-color: rgba(0, 0, 0, 0.145);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 2%;
+    padding: 8px 0;
+    border: 1px solid #ffffff1a;
+    border-bottom: none;
+}
+
+.cabecera-tabla-estudiantes-a input {
+    height: 30px;
+    padding: 10px 5px;
+    padding-right: 30px;
+    position: relative;
+    border-radius: 5px;
+    right: 2%;
+    border: 1px solid #ffc83d2a;
+    background-color: #0000003a;
+    color: #FFF;
+}
+
+.cabecera-tabla-estudiantes-a button {
+    height: 65%;
+    position: absolute;
+    z-index: 3;
+    background-color: #00000054;
+    right: 0.5%;
+    border: 1px solid #ffc83d21;
+    border-radius: 0 5px  5px 0;
+    border-left: none;
+}
+
+.cabecera-tabla-estudiantes-a figure {
+    margin: 0 auto;
+}
+
+.tabla-admin-e {
+    margin-top: 0;
+}
