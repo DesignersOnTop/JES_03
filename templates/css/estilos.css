@@ -1829,3 +1829,265 @@ textarea.editable {
 .tabla-admin-e {
     margin-top: 0;
 }
+
+/* cursos */
+
+.cambiar-curso-admin {
+    /* background-color: #000; */
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.cambiar-curso-admin select {
+    background-color: transparent;
+    backdrop-filter: blur(20px);
+    padding: 5px 10px;
+    border-radius: 10px;
+    border: 1px solid #ffc83d33;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.cambiar-curso-admin option {
+    background-color: #000000d6;
+    color: #fff;
+}
+
+.cambiar-curso-admin hr {
+    background-color: #FFF;
+}
+
+.profesor-principal {
+    background-color: #00000031;
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    width: 40%;
+    height: 140px;
+    margin: 0 auto;
+    display: flex;
+    color: #FFF;
+    padding: 10px 10px;
+    box-shadow: 2px 2px rgba(128, 128, 128, 0.33);
+    border: 1px solid #ffffff1a;
+}
+
+.imagen-profesor-principal {
+    flex-basis: 60%;
+}
+
+.imagen-profesor-principal figure {
+    margin: 0;
+    margin-left: 10px;
+    width: 50%;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+}
+
+.imagen-profesor-principal img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.descripcion-profesor-admin {
+    /* background-color: blue; */
+    width: 60%;
+    height: fit-content;
+    text-align: center;
+    margin: auto 0;
+    position: relative;
+    right: 30px;
+}
+
+.descripcion-profesor-admin h3, .descripcion-profesor-admin h2 {
+    width: 60%;
+    white-space: nowrap;
+}
+
+.descripcion-profesor-admin h3 {
+    font-size: 16px;
+    color: #ffc83d68;
+}
+
+.descripcion-profesor-admin h2 {
+    padding-bottom: 3px;
+    border-bottom: 3px solid gray;
+    margin-bottom: 5px;
+    font-size: 18px;
+    width: 80%;
+}
+
+
+.cabecera-curso-admin {
+    justify-content: space-between;
+}
+
+.cabecera-curso-admin a{
+    color: white;
+    text-decoration: none;
+    border: 1px solid #ffc83d5b;
+    padding: 5px 20px;
+    margin: 0 10px;
+    border-radius: 4px;
+} 
+
+.cabecera-curso-admin a:hover {
+    background-color: #ffc83d5b;
+    transition: all 0.6s ease;
+}
+
+.identificador-curso {
+    margin: 2% auto;
+    width: fit-content;
+    color: #fff;
+}
+
+.identificador-apartado-curso {
+    color: #ffc83d7a;
+    /* Esto es un h2 */
+}
+
+.btn-eliminar {
+    background-color: #00000022;
+    border: none;
+    color: rgba(255, 0, 0, 0.452);
+    position: relative;
+    bottom: 10px;
+    padding: 6px 12px;
+}
+
+.btn-eliminar:hover {
+    color: red;
+    transition: all 0.7s;
+}
+
+/* a-horario */
+
+#t-admin-horario input{
+    /* padding: auto; */
+    background-color: transparent;
+    color: white;
+    text-align: center;
+    padding: 2px 0;
+    border-color: transparent;
+}
+
+#t-admin-horario td:hover {
+    background-color: rgba(0, 0, 0, 0.849);
+    border: none;
+}
+
+/* FORMULARIO DE REGISTRO ADMIN */
+
+.subir-imagen-registro input[type="file"] {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.form-container label {
+    color:  #ffc83da5;
+    font-weight: 400;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.subir-imagen-registro label {
+    border: 1px solid white; 
+    background-color: #000000d2;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    right: 50px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-align: center;
+    width: 100px;
+    padding: 42px 0;
+    border-radius: 100%;
+}
+
+.subir-imagen-registro label:hover {
+    box-shadow: 2px 2px gray;
+    transition: all .3s;
+}
+
+.form-container {
+    background-color: rgba(0, 0, 0, 0.706);
+    margin: 0 auto;
+    width: 80%;
+    height: 480px;
+    padding: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; 
+    border-radius: 10px;
+    flex-flow: row wrap;
+    margin-bottom: 50px;
+}
+
+.form-container legend {
+    color:white; 
+    font-weight: bold;
+    font-style: italic;
+}
+
+.formulario-de-registro {
+    width: 30%;
+    margin: 10px 0;
+    margin-left: 10px;
+} 
+
+.formulario-de-registro input, .formulario-de-registro select {
+    border: none;
+    border-radius: 2px;
+    border-bottom: 1px solid #fff;
+    background-color: transparent;
+    color: white;
+    width: 70%;
+    height: 30px;
+    padding: 0 5px;
+}
+
+.formulario-de-registro select:focus{
+    background-color: #0f1113;
+    color: white;
+}
+
+.submit-registro {
+    flex-basis: 40%;
+    margin: 0 auto;
+}
+
+.submit-registro input {
+    background-color: black;
+    border: 1px solid #ffc83d70;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-top: 20px;
+    width: 60%;
+    height: 30px;
+    margin-left: 60px;
+}
+/* Flecha de regreso */
+.regresar-registro {
+    width: 20px; 
+    position: relative; 
+    left: 5px; 
+    top: 15px;
+    z-index: 3;
+    transform: translateX(-130px);
+}
+
+.regresar-registro img {
+    width: 30px; 
+    height: 30px;
+}
+
+/* ----------------------- */
