@@ -2091,3 +2091,54 @@ textarea.editable {
 }
 
 /* ----------------------- */
+
+#materias-admin-select {
+    padding: 5px 20px;
+    margin-right: 1%;
+}
+
+.section-materias-admin .cabecera-agg-refuerzo {
+    width: 80%;
+    margin-top: 5%;
+}
+
+.materias-container {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    /* background-color: #00000020; */
+}
+
+.contenedor-materias-admin {
+    flex-basis: 24%;
+    border: 1px solid rgba(255, 255, 255, 0.079);
+    box-shadow: 2px 2px rgba(255, 255, 255, 0.079);
+    color: white;
+    background-color: #00000020;
+    backdrop-filter: blur(10px);
+    margin-left: 0.5%;
+    margin-bottom: 0.5%;
+}
+
+.h-titular-materia {
+    background-color: #0000002d;
+    backdrop-filter: blur(20px);
+    padding: 4px 0;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    text-align: center;
+    z-index: 2;
+}
+
+.btn-eliminar-materias {
+    /* margin-top: 10%; */
+    padding: 3px 20px;
+    background-color: #00000036;
+    color: rgba(255, 0, 0, 0.429);
+    border: 1px solid #ffffff22;
+    position: relative;
+    left: 34%;
+    top: 10px;
+}
