@@ -2142,3 +2142,22 @@ textarea.editable {
     left: 34%;
     top: 10px;
 }
+
+/* a-asistencia-reporte */
+
+.article-reporte-iframe {
+    background-color: #00000022;
+    backdrop-filter: blur(20px);
+}
+
+.article-reporte-iframe iframe {
+    width: 90%;
+    height: 600px;
+    position: relative;
+    left: 5%;
+}
+
+#cabecera-admin-reporte {
+    margin-bottom: 0.4%;
+    background-color: transparent;
+}
