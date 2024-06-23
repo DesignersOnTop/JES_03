@@ -1881,6 +1881,8 @@ textarea.editable {
     width: 50%;
     aspect-ratio: 1/1;
     overflow: hidden;
+    position: relative;
+    top: 5%;
 }
 
 .imagen-profesor-principal img {
@@ -2160,4 +2162,17 @@ textarea.editable {
 #cabecera-admin-reporte {
     margin-bottom: 0.4%;
     background-color: transparent;
+}
+
+/* tabla-admin-e */
+
+.tabla-admin-legend {
+    margin-top: 2%;
+    background-color: #00000022;
+    backdrop-filter: blur(20px);
+    color: white;
+    text-align: center;
+    padding: 3px 0;
+    border: 1px solid #ffffff1a;
+    border-bottom: none;
 }
