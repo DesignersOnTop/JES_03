@@ -608,6 +608,11 @@ header {
     border-radius: 100%;
 }
 
+#perfil-admin-img {
+    position: relative;
+    bottom: 40px;
+}
+
 .perfil-izquierda  figure {
     padding-bottom: 25px;
     border-bottom: 2px solid white;
@@ -1116,6 +1121,22 @@ header {
     text-align: center;
 }
 
+#subir-recurso-estudio{
+    position: absolute;
+    bottom: 0%;
+    right: 0;
+    left: 0;
+    background-color: #00000067;
+    backdrop-filter: blur(20px);
+    padding: 5px 0;
+}
+
+#subir-recurso-estudio:hover {
+    border: 1px solid #ffffff10;
+    border-bottom: none;
+    background-color: #0000007f;
+}
+
 .curso-subir-tarea [type='file']{
     position: absolute;
     color: transparent;
@@ -1129,17 +1150,17 @@ header {
     backdrop-filter: blur(20px);
     color: #ffc83da2;
     border: 1px solid #ffffff48;
-    width: 40%;
+    width: 80%;
     padding: 5px 0;
 }
 
 .botones-curso [type='submit'] {
-    border-radius: 5px 0 0 5px;
+    border-radius: 5px;
 }
 
-.botones-curso [type='reset'] {
+/* .botones-curso [type='reset'] {
     border-radius: 0 5px 5px 0;
-}
+} */
 
 .botones-curso {
     display: flex;
