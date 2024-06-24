@@ -8,13 +8,9 @@ html {
 
 body {
     background-image: url(../imagenes/background\(BODY\).jpg);
-    /* background-color: #000; */
-    background-repeat: no-repeat;
     background-size: cover;
-}
-
-.body-container {
-    /* width: 100%; */
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     min-height: 100%;
 }
 
@@ -1069,7 +1065,6 @@ header {
     margin: 0 auto;
     margin-top: 3%;
     width: 80%;
-
 }
 
 /* ---------------------------------------------------------- */
@@ -2148,8 +2143,7 @@ textarea.editable {
 /* a-asistencia-reporte */
 
 .article-reporte-iframe {
-    background-color: #00000022;
-    backdrop-filter: blur(20px);
+    padding-bottom: 20px;
 }
 
 .article-reporte-iframe iframe {
@@ -2175,4 +2169,174 @@ textarea.editable {
     padding: 3px 0;
     border: 1px solid #ffffff1a;
     border-bottom: none;
+}
+
+#reporte-article {
+    width: 70%;
+}
+
+#tabla-reporte-profesor {
+    width: 80%;
+    margin: 0 auto;
+}
+
+#legend-reporte {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+/* ------------------------------ */
+
+.agg-materias-container {
+    width: 80%; margin: 0 auto; display: flex;flex-direction: column;
+}
+
+.materias-existente {
+    display: flex; 
+    flex-direction: row;
+    border: 1px solid rgba(255, 255, 255, 0.129);
+    max-width: 80%;
+    margin: 0 auto;
+    height: fit-content;
+    overflow-x: scroll;
+    background-color: #00000022;
+    backdrop-filter: blur(20px);
+    border-radius: 5px;
+    padding: 10px 0;
+}
+
+.materias-existente::-webkit-scrollbar{
+    background-color: transparent;
+    height: 10px;
+}
+
+.materias-existente::-webkit-scrollbar-thumb {
+    background-color: #ffc83d65;
+    border-radius: 15px;
+}
+
+.article-material-existente {
+    height: fit-content;
+    margin: 0 auto;
+    min-width: 20%;
+    text-align: center;
+    color: #fff;
+    padding-bottom: 2px;
+    border-left: 1px solid rgba(128, 128, 128, 0.189);
+}
+
+.materia-imagen{
+    width: 50%;
+    margin: 0 auto;
+}
+
+.materia-imagen img {
+    width: 40%;
+    height: 40%;
+    object-fit: cover;
+    border-radius: 100%;
+}
+
+.agregar-material-contenido {
+    color: white;
+    background-color: #00000022;
+    backdrop-filter: blur(20px);
+    width: 80%;
+    margin: 1% auto;
+    min-height: 100px;
+    border: 1px solid rgba(255, 255, 255, 0.129);
+    padding-bottom: 10px;
+}
+
+.dato-img-materia {
+    width: fit-content;
+    margin: 0 auto;
+    margin-top:1%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dato-img-materia input{
+    display: none;
+}
+
+.dato-img-materia label {
+    padding: 5px 20px;
+    margin-top: 10px;
+    border-radius: 3px;
+    background-color: #ffc83d14;
+    border: 1px solid rgba(128, 128, 128, 0.175);
+}
+
+#imagen-materia-js {
+    width: 80px;
+    height: 80px;
+    border-radius: 100%;
+    background-color: #ffffff76;
+    margin: 2% 0;
+}
+
+.materia-dato-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 64%;
+    margin: 0 auto;
+} 
+
+.materia-dato-container .materia-dato {
+    display: flex;
+    flex-direction: column;
+    margin: 2% 0;
+}
+
+.materia-dato-container input, .materia-dato-container select {
+    background-color: #00000028;
+    border: 1px solid #ffc83d23;
+    color: white;
+    padding: 4px 20px;
+    border-radius: 3px;
+    margin-top: 4px;
+}
+
+.materia-dato-container select {
+    padding: 4px 50px;
+}
+
+.materia-dato-container select option {
+    background-color: #000;
+}
+
+.titulo-agg-materia {
+    width: fit-content;
+    margin: 0 auto;
+    color: #ffc83d75;
+    margin-bottom: 2%;
+}
+
+#subir-materia {
+    background-color: #ffc83d14;
+    width: 24%;
+    padding: 4px 0;
+    position: relative;
+    left: 38%;
+    border-radius: 5px;
+    border: 1px solid #ffffff1c;
+    color: white;
+}
+
+/* --------------- */
+
+#regresar-admin {
+    max-width: 24px;
+    display: inline-block;
+    position: relative;
+    top: 100px;
+    left: 20%;
+}
+
+#regresar-admin figure{
+    width: 24px;
+    height: 24px;
 }
