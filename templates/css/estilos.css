@@ -2447,7 +2447,7 @@ textarea.editable {
         border-radius: 0;
         display: flex;
         flex-direction: column;
-        height: fit-content;
+        height: 90%;
     }
 
     .perfil-izquierda {
@@ -2488,6 +2488,20 @@ textarea.editable {
 
     .perfil-derecho {
         width: 100%;
+    }
+
+    /* modal-perfil-admin */
+
+    .modal-perfil-admin .perfil-izquierda figure {
+        top: 10px;
+    }
+
+    .modal-perfil-admin {
+        height: 90%;
+    }
+
+    .modal-perfil-admin .titulo-perfil {
+        margin-top: 20px;
     }
 
     /* Homes */
@@ -2565,6 +2579,37 @@ textarea.editable {
     .titulo-refuerzo {
         display: none;
     }
+
+    /* formulario de registro del admin */
+        .form-container {
+            position: relative;
+            padding-left: 20px;
+            padding-right: 20px;
+            width: 85%;
+        }
+        .form-container * {
+            margin-left: 15px;
+        }
+        .form-container input {
+            padding: 0 10px;
+            margin: 0 5px;
+        }
+        .form-container legend {
+            transform: translateX(-30px);
+        }
+        .submit-registro {
+            flex-basis: 60%;
+            position: relative;
+            left: 30%;
+        }
+    
+        .subir-imagen-registro label {
+            transform: translateX(30px);
+        }
+    
+        .regresar-registro {
+            transform: translateX(-55px) translateY(-12px);
+        }
 }
 
 /* Tablet */
@@ -2624,9 +2669,28 @@ textarea.editable {
     #introducir-id img {
         transform: translateX(-5px) translateY(-10px);
     }
+
+    /* perfil */
+
+    .modal-perfil {
+        width: 80%;
+    }
+
+    .perfil-izquierda {
+        padding-right: 20px;
+    }
+
+    .perfil-derecho .datos {
+        word-wrap: nowrap;
+        width: 100%;
+    }
+
 }
 
 /* Pantalla grande */
 @media screen and (min-width: 901px) and (max-width: 1200px) {
-    
+    /* Perfil */
+    .modal-perfil {
+        max-width: 80%;
+    }
 }
