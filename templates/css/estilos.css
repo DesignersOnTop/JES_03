@@ -991,8 +991,30 @@ header {
     color: #fff;
 }
 
+.titulo-refuerzo {
+    color: #fff;
+}
+
 #cabecera-material_estudio {
     width: 92%;
+}
+
+.article-reporte-iframe .cabecera-flex, .section-materiales .cabecera-flex {
+    display: flex;
+    width: 55%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.article-reporte-iframe .cabecera-flex, .section-p-material-estudio .cabecera-flex, .section-materias-admin .cabecera-flex{
+    position: relative;
+    top: 7px;
+}
+
+.section-p-refuerzo .cabecera-flex, .section-libros-refuerzo-e .cabecera-flex {
+    position: relative;
+    top: 33%;
+    width: 55%;
 }
 
 /* ----------------------------------------------------------- */
@@ -1499,18 +1521,17 @@ header {
     margin-top: 2%;
 }
 
-.titulo-refuerzo {
-    text-align: center;
-    margin-top: 0.5%;
-    color: #fff;
-    width: fit-content;
-    margin: 0 auto;
-    position: relative;
-    top: 30%;
+.cabecera-flex {
+    display: flex;
+    width: 50%;
+    align-items: center;
+    justify-content: space-between;
 }
+
 
 .titulo-libro {
     font-size: 18px;
+    color: #fff;
 }
 
 .cabecera-agg-refuerzo a:nth-of-type(1) {
@@ -1523,26 +1544,21 @@ header {
     color: white;
     /* width: 140px; */
     padding: 2px 20px;
+    padding-bottom: 6px;
     border-radius: 5px;
     text-decoration: none;
     margin-left: 5px;
-    margin-bottom: 0.4%;
 }
 
 .cabecera-libro a::before {
     content: url(../imagenes/iconos/flecha-regresar.svg);
     position: relative;
     right: 5px;
-    top: 15%;
+    top: 4px;
 }
 
 .cabecera-libro a {
-    position: relative;
-    bottom: 15px;
-    border: none;
     font-style: italic;
-    /* border: 2px solid #ffc83d22; */
-    padding-bottom: 5px;
 }
 
 .cabecera-libro a:hover {
@@ -1653,6 +1669,7 @@ header {
     display: flex;
     flex-flow: wrap;
     align-items: center;
+    justify-content: center;
     /* flex-direction: column; */
     color: #fff;
     border: 1px solid #ffc83d43;
@@ -1687,6 +1704,10 @@ header {
 .dato-material {
     flex-basis: 50%;
     margin-top: 20px;
+}
+
+#titulo-material {
+    flex-basis: 100%;
 }
 
 
@@ -2433,11 +2454,18 @@ textarea.editable {
     }
 
     .li-perfil {
-        /* display: none; */
+        display: none;
     }
 
     /* Perfil */
+
+    .modals-container-perfiles {
+        background-color: rgba(0, 0, 0, 0.547);
+        backdrop-filter: blur(20px);
+    }
     .modal-perfil {
+        background-color: #ffffff00;
+        backdrop-filter: blur(0px);
         position: absolute;
         bottom: 0;
         right: 0;
@@ -2563,53 +2591,64 @@ textarea.editable {
         width: 100%;
     }
 
-    .cabecera-agg-refuerzo {
-        margin-top: 10%;
-        height: 0;
-        padding: 30px 0;
-        display: flex;
-        align-items: center;
-    }
-
     .cabecera-agg-refuerzo select {
         bottom: 24%;
         right: 2%;
     }
 
-    .titulo-refuerzo {
-        display: none;
+    .cabecera-flex {
+        width: 70%;
+    }
+
+    .titulo-refuerzo, .titulo-libro {  
+        word-spacing: nowrap;
     }
 
     /* formulario de registro del admin */
-        .form-container {
-            position: relative;
-            padding-left: 20px;
-            padding-right: 20px;
-            width: 85%;
-        }
-        .form-container * {
-            margin-left: 15px;
-        }
-        .form-container input {
-            padding: 0 10px;
-            margin: 0 5px;
-        }
-        .form-container legend {
-            transform: translateX(-30px);
-        }
-        .submit-registro {
-            flex-basis: 60%;
-            position: relative;
-            left: 30%;
-        }
-    
-        .subir-imagen-registro label {
-            transform: translateX(30px);
-        }
-    
-        .regresar-registro {
-            transform: translateX(-55px) translateY(-12px);
-        }
+    .form-container {
+        position: relative;
+        padding-left: 20px;
+        padding-right: 20px;
+        width: 85%;
+    }
+    .form-container * {
+        margin-left: 15px;
+    }
+    .form-container input {
+        padding: 0 10px;
+        margin: 0 5px;
+    }
+    .form-container legend {
+        transform: translateX(-30px);
+    }
+    .submit-registro {
+        flex-basis: 60%;
+        position: relative;
+        left: 30%;
+    }
+
+    .subir-imagen-registro label {
+        transform: translateX(30px);
+    }
+
+    .regresar-registro {
+        transform: translateX(-55px) translateY(-12px);
+    }
+
+    /* ver material */
+    .curso-material-container {
+        /* flex-direction: column; */
+    }
+
+    /* a-curso */
+    .profesor-principal {
+        margin-top: 4%;
+        margin-bottom: 6%;
+        border-radius: 5px;
+        width: 80%;
+        height: 110px;
+        box-shadow: 1px 1px rgba(128, 128, 128, 0.33);
+    }
 }
 
 /* Tablet */
@@ -2684,6 +2723,8 @@ textarea.editable {
         word-wrap: nowrap;
         width: 100%;
     }
+
+
 
 }
 
