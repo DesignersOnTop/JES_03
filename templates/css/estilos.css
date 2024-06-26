@@ -445,10 +445,15 @@ header {
 }
 
 .ca-ho-scroll {
-    width: 966px;
+    width: 100%;
     margin: 0 auto;
     overflow: hidden;
     display: flex;
+    justify-content: space-between;
+}
+
+.ca-ho-scroll article {
+    flex-basis: 48%;
 }
 
 /* -------------------------------------------------------------------------------------------- */
@@ -462,7 +467,7 @@ header {
 
 
 .tabla-calificacion-centrar, .p-calificacion-container {
-    min-width: 966px;
+    min-width: 100%;
     margin: 0 auto;
     overflow-x: hidden;
     overflow-y: hidden;
@@ -2548,19 +2553,6 @@ textarea.editable {
 
     .ca-ho-section {
         width: 90%;
-    }
-
-    .ca-ho-container {
-        overflow-x: scroll;
-        /* width: 100%; */
-    }
-
-    .ca-ho-container::-webkit-scrollbar {
-        background-color: transparent;
-    }
-
-    .ca-ho-container::-webkit-scrollbar-thumb {
-        background-color: #ffc83d44;
     }
 
     .tabla-calificacion::-webkit-scrollbar {
