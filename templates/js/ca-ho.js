@@ -1,7 +1,8 @@
-// Selecciona todos los botones con las clases 'btn-calificaciones' y 'btn-horario'
-const botones = document.querySelectorAll('.btn-calificaciones, .btn-horario');
-const scrollContainer = document.querySelector('.ca-ho-scroll'); // Selecciona el contenedor que se desplazará
-const botonesContainer = document.querySelector('.botones-container'); // Selecciona el contenedor con la clase 'botones-container'
+const btnHorario = document.querySelector('.btn-horario');
+const btnCalificacion = document.querySelector('.btn-calificaciones');
+const tablaCalificacion = document.querySelector('.tabla-calificacion');
+const tablaHorario = document.querySelector('.tabla-horario');
+const ch_scroll = document.querySelector('.ca-ho-scroll');
 
 // Función para deseleccionar todos los botones
 function deseleccionarBotones() {
@@ -9,26 +10,22 @@ function deseleccionarBotones() {
     botones.forEach(boton => boton.classList.remove('btn-selected'));
 }
 
-// Función para manejar el clic en los botones
-function manejarClick(event) {
-    const boton = event.target; // Obtiene el botón que fue clickeado
-    // Determina la dirección del desplazamiento basado en la clase del botón
-    const desplazamiento = boton.classList.contains('btn-calificaciones') ? -966 : 966;
-    
-    // Desplaza el contenedor en la dirección determinada
-    scrollContainer.scrollLeft += desplazamiento;
-    deseleccionarBotones(); // Deselecciona todos los botones
-    boton.classList.add('btn-selected'); // Selecciona (añade la clase) el botón clickeado
+// Manejador de clic para el botón de Horario
+btnHorario.addEventListener('click', () => {
+    // Mostrar tabla de horario y ocultar tabla de calificación
+    tablaHorario.style.display = 'table';
+    tablaCalificacion.style.display = 'none';
 
-    // Si se hizo clic en un botón de horario, oculta el contenedor 'botones-container'
-    if (boton.classList.contains('btn-horario')) {
-        botonesContainer.style.display = 'none';
-    } else {
-        botonesContainer.style.display = 'flex';
-    }
-}
+    // Desplazarse 320px hacia abajo
+    ch_scroll.scrollTo({ top: ch_scroll.scrollTop + 330, behavior: 'smooth' });
+});
 
-// Añade el evento 'click' a cada botón en la lista 'botones'
-botones.forEach(boton => {
-    boton.addEventListener('click', manejarClick);
+// Manejador de clic para el botón de Calificaciones
+btnCalificacion.addEventListener('click', () => {
+    // Mostrar tabla de calificación y ocultar tabla de horario
+    tablaCalificacion.style.display = 'table';
+    tablaHorario.style.display = 'none';
+
+    // Volver al inicio (posición original)
+    ch_scroll.scrollTo({ top: 0, behavior: 'smooth' });
 });

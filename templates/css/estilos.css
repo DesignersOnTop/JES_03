@@ -438,149 +438,99 @@ header {
 }
 
 
-/* -------------------------------------------------------------------------------------------- */
-.ca-ho-container {
-    overflow: hidden;
-    /* background-color: #fff; */
+/* ------------------------------------------------------------------------------------- */
+.ca-ho-section {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 30px;
 }
 
-.ca-ho-scroll {
+.ca-ho-botones {
     width: 100%;
     margin: 0 auto;
-    overflow: hidden;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 30px;
+    padding: 10px 0;
 }
 
-.ca-ho-scroll article {
-    flex-basis: 48%;
+.ca-ho-botones * {
+    background-color: transparent;
+    border: 3px solid #ffc83d22;
+    color: white;
+    width: 140px;
+    padding: 10px 0;
+    border-radius: 5px;
 }
 
-/* -------------------------------------------------------------------------------------------- */
-/* E-CALIFICACIONES */
-
-.tabla-calificacion th {
-    height: 10px;
-    background-color: #000;
-    border-left: 1px solid rgba(255, 255, 255, 0.103);
+.ca-ho-botones *:hover {
+    background-color: #ffc83d22;
 }
 
-
-.tabla-calificacion-centrar, .p-calificacion-container {
-    min-width: 100%;
+.btn-selected {
+    background-color: #ffc83d22;
+}
+/* ------------------------------- */
+.ca-ho-scroll {
+    width: 90%;
     margin: 0 auto;
-    overflow-x: hidden;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    max-height: 340px;
     overflow-y: hidden;
-    border-radius: 10px;
-    max-height: 400px;
 }
 
-.p-calificacion-container {
-    overflow-y: scroll;
-}
-
-.p-calificacion-container::-webkit-scrollbar {
-    display: none;
-}
-
-.calificacion-centrar {
-    padding-top: 20px;
-}
+/* tabla calificaciones */
 
 .tabla-calificacion {
-    margin: 0 auto;
-    color: #FFF;
-    height: 100%;
-    border-radius: 10px;
+    width: 100%;
+    min-height: 330px;
     text-align: center;
-    display: flex;
-    align-items: center;
-    position: relative;
-    z-index: 1;
-    overflow-x: scroll;
-}
-
-.tabla-calificacion::-webkit-scrollbar{
-    background-color: transparent;
-}
-
-.tabla-calificacion::-webkit-scrollbar-thumb {
-    background-color: #ffc83d65;
-    border-radius: 15px;
-}
-
-.tabla-calificacion td, .tabla-calificacion th {
-    min-width: 160px;
-    padding: 20px 0;
-    border-radius: inherit;
-}
-
-.tabla-calificacion td {
-    background-color: rgba(0, 0, 0, 0.849);
-    border-left: 1px solid rgba(255, 255, 255, 0.103);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.103);
-    border-top: 1px solid rgba(255, 255, 255, 0.103);
-}
-
-.tabla-calificacion td:hover {
-    background-color: #ffc83d60;
-    backdrop-filter: blur(20px);
-}
-
-.tabla-cabecera th{
-    color: #ffc83daa;
-} 
-
-.botones-container {
-    display: flex;
-    height: 50px;
-    width: 20%;
-    justify-content: space-between;
-    position: absolute;
-    margin: 0 auto;
-    margin-top: 20px;
-    left: 40%;
-    background-color: #00000068;
-    backdrop-filter: blur(15px);
+    background-color: #00000025;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 8px #0005;
+    border: 1px solid #ffffff1a;
     border-radius: 5px;
-    z-index: 0;
-}
-
-.botones-container * {
-    padding: 10px 10px;
-    border: none;
-    background-color: #000000d2;
-    backdrop-filter: blur(5px);
-    color: #ffc83db6;
-    font-size: 16px;
-    font-weight: bolder;
-}
-
-.botones-container *:hover {
-    color: #fff;
-    background-color: #ffc83d60;
-}
-
-#scroll-izquierdo {
-    border-radius: 5px 0 0 5px;
-}
-
-#scroll-derecho {
-    border-radius: 0 5px 5px 0;
-}
-/* Tabla horario central */
-/* ------------------------------------------------------------------------------------- */
-.tabla-horario-centrar {
-    height: fit-content;
-    min-width: 966px;
+    margin: 0 auto;
+    border-collapse: collapse;
+    overflow-x: auto;
+    white-space: nowrap;
     padding-bottom: 10px;
 }
 
+.tabla-cabecera {
+    color: #ffc83daa;
+}
+
 .tabla-horario {
-    border-radius: 5px;
-    overflow: hidden;
-    position: relative;
-    top: 20px;
+    width: 100%;
+    min-height: 330px;
+    background-color: #00000025;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 8px #0005;
+    border: 1px solid #ffffff1a;
+    padding-bottom: 10px;
+}
+
+.tabla-calificacion td, .tabla-horario td {
+    color: #FFF;
+    padding: 15px 20px;
+    text-align: center;
+}
+
+.tabla-centrar th {
+    padding: 20px;
+}
+
+.tabla-centrar tr:nth-child(even) {
+    background-color: #00000036;
+}
+
+.tabla-centrar tr:hover {
+    background-color: #FFF2;
 }
 
 /* Aqui termina las tablas horario y calificaciones */
@@ -1052,6 +1002,12 @@ header {
     border: 1px solid rgba(255, 255, 255, 0.145);
 }
 
+#img-fondo-enviadas {
+    width: 90%;
+    right: 0;
+}
+
+
 .imagen-de-fondo-curso figure {
     width: 100%;
     height: 100%;
@@ -1379,39 +1335,6 @@ header {
 }
 
 /* ---------------------------------------- */
-/* Tabla de registro */
-
-/* .tabla-registro {
-    background-color: rgba(0, 0, 0, 0.7);
-    color: #FFF;
-    margin: 0 auto;
-    margin-top: 40px;
-    overflow: hidden;
-    border-radius: 5px;
-    width: 100%;
-    height: 300px;
-    text-align: center;
-    border-collapse: collapse;
-}
-
-.tabla-registro th {
-    height: 20px;
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-.tabla-registro td {
-    background-color: #000;
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 14px;
-    height: 40px;
-}
-
-.tabla-registro td img {
-    width: 40px;
-    height: 40px;
-    border-radius: 100%;
-    object-fit: cover;
-} */
 
 /* TABLA PARA CONTROLAR ASISTENCIAS */
 
@@ -1422,17 +1345,17 @@ header {
     border: 1px solid #ffffff1a;
     border-radius: 10px;
     margin: 0 auto;
-    margin-top: 40px;
     border-collapse: collapse;
-    width: 100%;
-    height: 50%;
+    min-width: 100%;
     overflow: hidden;
     overflow-y: scroll;
+    min-height: 330px;
+    text-align: center;
 }
 
 .tabla-asistencia tr:nth-child(even) {
     background-color: #00000036;
-}
+} 
 
 .tabla-asistencia tr:hover {
     background-color: #FFF2;
@@ -1440,14 +1363,13 @@ header {
 
 .tabla-asistencia td {
     color: #FFF;
-    height: 50px;
-    width: 100px;
+    padding: 10px;
     text-align: center;
 }
 
 .ver-estudiante-p figure{
     padding: 5px;
-    width: 30%;
+    width: 100%;
     margin: 0 auto;
     background-color: #ffc83d11;
 }
@@ -1456,17 +1378,15 @@ header {
     color: #FFF;
     background: none;
     text-align: center;
-    width: 100px;
-    height: 50px;
+    width: 100%;
     border: none;
 }
 
 .tabla-asistencia th {
     color: #ffc83d73;
     text-align: center;
-    width: 100px;
     padding: 10px;
-}
+} 
 
 /* -------------------------- */
 
