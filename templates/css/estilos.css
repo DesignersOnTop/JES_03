@@ -1667,7 +1667,8 @@ header {
 .agregar-material-fieldset {
     background-color: #0000000f;
     backdrop-filter: blur(20px);
-    width: 800px;
+    max-width: 800PX;
+    width: 80%;
     padding: 10px 20px;
     height: max-content;
     margin: 0 auto;
@@ -1707,7 +1708,7 @@ header {
 }
 
 .dato-material {
-    flex-basis: 50%;
+    flex-basis: 48%;
     margin-top: 20px;
 }
 
@@ -1758,6 +1759,7 @@ header {
 .dato-fecha {
     display: flex;
     gap: 10px;
+    margin-left: 1%;
 }
 
 .dato-material-textarea {
@@ -1767,7 +1769,9 @@ header {
     gap: 10px;
     margin: 0 auto;
     margin-top: 40px;
+    flex-basis: 70%;
 }
+
 
 .dato-report {
     width: 40%;
@@ -2301,6 +2305,10 @@ textarea.editable {
     padding-bottom: 10px;
 }
 
+.agregar-material-fieldset {
+    width: 800px;
+}
+
 .dato-img-materia {
     width: fit-content;
     margin: 0 auto;
@@ -2667,7 +2675,11 @@ textarea.editable {
     white-space: nowrap;
     position: relative;
     top: 2px;
-}
+    }
+
+    .dato-fecha {
+        margin-left: 1%;
+    }
 }
 
 /* Tablet */
@@ -2743,7 +2755,10 @@ textarea.editable {
         width: 100%;
     }
 
-
+    /* Material */
+    .agregar-material-fieldset {
+        max-width: 80%;
+    } 
 
 }
 
