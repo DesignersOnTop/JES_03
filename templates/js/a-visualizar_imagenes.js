@@ -7,7 +7,7 @@
     imgElement.src = e.target.result;
 
     const imageContainer = document.getElementById('imagen-materia-js');
-    imageContainer.innerHTML = ''; // Limpiar el contenedor antes de agregar la nueva imagen
+    imageContainer.innerHTML = ''; 
     imageContainer.appendChild(imgElement);
 };
 
