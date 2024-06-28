@@ -1025,7 +1025,8 @@ header {
 .imagen-de-fondo-curso figcaption {
     position: absolute;
     top: 40%;
-    left: 45%;
+    width: 100%;
+    text-align: center;
     font-weight: bold;
     font-size: 30px;
     color: white;
@@ -1039,14 +1040,14 @@ header {
     margin-top: 1%;
     display: flex;
     flex-direction: row;
-    overflow: hidden;
+    /* overflow: hidden; */
     gap: 5px;
 }
 
 .main-curso-material {    
     margin: 0 auto;
     margin-top: 3%;
-    width: 80%;
+    width: 90%;
 }
 
 /* ---------------------------------------------------------- */
@@ -2132,7 +2133,7 @@ textarea.editable {
 
 #cabecera-admin-reporte {
     margin-bottom: 0.4%;
-    background-color: transparent;
+    background-color: rgba(0, 0, 0, 0.119);
 }
 
 /* tabla-admin-e */
@@ -2158,14 +2159,26 @@ textarea.editable {
 }
 
 #legend-reporte {
-    width: 80%;
+    width: 99.6%;
     margin-left: auto;
     margin-right: auto;
+}
+
+#article-reporte-profesor {
+    width: 80%;
+    margin: 0 auto;
+}
+
+#article-reporte-profesor .ver-estudiante-p figure {
+    width: 40%;
 }
 /* ------------------------------ */
 
 .agg-materias-container {
-    width: 80%; margin: 0 auto; display: flex;flex-direction: column;
+    width: 80%; 
+    margin: 0 auto; 
+    display: flex;
+    flex-direction: column;
 }
 
 .materias-existente {
@@ -2195,7 +2208,7 @@ textarea.editable {
 .article-material-existente {
     height: fit-content;
     margin: 0 auto;
-    min-width: 20%;
+    min-width: 200px;
     text-align: center;
     color: #fff;
     padding-bottom: 2px;
@@ -2210,6 +2223,7 @@ textarea.editable {
 .materia-imagen img {
     width: 40%;
     height: 40%;
+    border: 1px solid white;
     object-fit: cover;
     border-radius: 100%;
 }
@@ -2555,11 +2569,6 @@ textarea.editable {
         transform: translateX(-55px) translateY(-12px);
     }
 
-    /* ver material */
-    /* .curso-material-container {
-        flex-direction: column; 
-    } */
-       
     /* a-curso */
     .profesor-principal {
         margin-top: 4%;
@@ -2599,6 +2608,27 @@ textarea.editable {
 
     .dato-fecha {
         margin-left: 1%;
+    }
+
+    /* a-agg-materias */
+    .materia-dato-container {
+        flex-direction: column;
+        margin-top: 10%;
+    } 
+
+    .agg-materias-container {
+        width: 80%; 
+        margin: 0 auto; 
+        display: flex;
+        flex-direction: column;
+    }
+
+    .materias-existente {
+        min-width: 100%;
+    }
+
+    .agregar-material-contenido {
+        width: 100%;
     }
 }
 
@@ -2678,7 +2708,20 @@ textarea.editable {
     /* Material */
     .agregar-material-fieldset {
         max-width: 80%;
+    }
+
+    /* a-agg-materias */
+    .materia-dato-container {
+        flex-direction: column;
+        margin-top: 5%;
     } 
+
+    .agg-materias-container {
+        width: 80%; 
+        margin: 0 auto; 
+        display: flex;
+        flex-direction: column;
+    }
 
 }
 
