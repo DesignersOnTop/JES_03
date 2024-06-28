@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="../css/estilos.css">
+    <link rel="icon" href="../imagenes/recursos/logo-jes.png">
+</head>
+<body>
+    <div class="body-container">
+        <header>
+            <div class="header-container">
+                <figure class="jesIMG-container">
+                    <img src="../imagenes/recursos/logo-jes.png" alt="JES-LOGO">
+                </figure>            
+                <div class="jes-titulo">
+                    <h2>JES</h2>
+                    <h3>Junior Explorers System</h3>
+                </div>
+                <nav class="nav-container">
+                    <ul>
+                        <li class="nav-perfil">
+                            <a href="a-perfil.html" class="li-perfil"><figure><img src="../imagenes/recursos/perfil-masculino-3.jpg" alt="perfil"></figure></a>
+                        </li>
+                        <li class="nav-menu-home">
+                            <a href="#" class="menu"><figure><img src="../imagenes/iconos/menu.svg" alt="menu"></figure></a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <main class="main-container"> 
+            <section class="section-top-container">
+                <article class="material-container">
+                    <a href="a-curso.html">
+                        <h2>Cursos</h2> 
+                        <figure><img src="../imagenes/iconos/formulario.svg" alt="refuerzo-de-clase-img"></figure>                     
+                    </a>
+                </article>
+                <article class="material-container">
+                    <a href="a-materias.html">
+                        <figure class="material-figure"><img src="../imagenes/iconos/capas.svg" alt="perfil-estudiante"></figure>
+                        <h2>Materias</h2>                        
+                    </a>
+                </article>
+                <article class="calendario-container">
+                    <a href="a-reporte-curso.html">
+                        <h2>Reportes de los cursos</h2> 
+                        <figure><img src="../imagenes/iconos/calendario-reloj.svg" alt="recordatorio"></figure>
+                    </a>
+                </article>
+            </section>
+            <section class="ca-ho-section">
+                <div class="ca-ho-botones">
+                    <button class="btn-calificaciones btn-caho-active">Estudiantes</button>
+                    <button class="btn-horario">Profesores</button>
+                </div>
+                <div class="ca-ho-scroll">
+                    <article class="tabla-centrar tabla-calificacion-centrar">
+                        <table class="tabla-calificacion tabla-asistencia">
+                            <div class="cabecera-tabla-estudiantes-a">
+                                <form action="#">
+                                    <button class="buscar-estudiante"><figure><img src="../imagenes/iconos/lupa.svg" alt=""></figure></button>
+                                    <input type="search" id="buscar-estudiante">
+                                </form>
+                            </div>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>F. Nacimiento</th>
+                                <th>Curso</th>
+                                <th>Secci&oacute;n</th>
+                            </tr>
+                            <tr class="fila-calificacion">
+                                <td>1010</td>
+                                <td>Albiery</td>
+                                <td>Rodriguez</td>
+                                <td>07/08/2003</td>
+                                <td>1ro</td>
+                                <td>A</td>
+                            </tr>
+                            <tr class="fila-calificacion">
+                                <td>1011</td>
+                                <td>Smailyn</td>
+                                <td>Burgos</td>
+                                <td>04/03/2003</td>
+                                <td>1ro</td>
+                                <td>A</td>
+                            </tr>
+                            <tr class="fila-calificacion">
+                                <td>1012</td>
+                                <td>Massiel</td>
+                                <td>Rodriguez</td>
+                                <td>04/01/2003</td>
+                                <td>1ro</td>
+                                <td>A</td>
+                            </tr>    
+                            <tr class="fila-calificacion">
+                                <td>1013</td>
+                                <td>Faury</td>
+                                <td>Garcia</td>
+                                <td>17/09/2004</td>
+                                <td>1ro</td>
+                                <td>A</td>
+                            </tr>
+                        </table>
+                    </article>
+                    <article class="tabla-centrar tabla-horario-centrar">
+                        <table class="tabla-horario tabla-asistencia">
+                            <div class="cabecera-tabla-estudiantes-a">
+                                <form action="#">
+                                    <button class="buscar-estudiante"><figure><img src="../imagenes/iconos/lupa.svg" alt=""></figure></button>
+                                    <input type="search" id="buscar-estudiante">
+                                </form>
+                            </div>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Ced&uacute;la</th>
+                                <th>Asignatura</th>
+                                <th>Curso</th>
+                            </tr>
+                            <tr class="fila-calificacion">
+                                <td>1010</td>
+                                <td>Miguel Enrique</td>
+                                <td>Martinez</td>
+                                <td>402-7798981-1</td>
+                                <td>Matem&aacute;ticas</td>
+                                <td>1ro</td>
+                            </tr>
+                            <tr class="fila-calificacion">
+                                <td>1011</td>
+                                <td>Smailyn</td>
+                                <td>Burgos</td>
+                                <td>402-7745981-1</td>
+                                <td>Educación Fisica</td>
+                                <td>4to</td>
+                            </tr>
+                            <tr class="fila-calificacion">
+                                <td>1012</td>
+                                <td>Massiel</td>
+                                <td>Rodriguez</td>
+                                <td>402-7710981-0</td>
+                                <td>Literatura</td>
+                                <td>3ro</td>
+                            </tr>    
+                            <tr class="fila-calificacion">
+                                <td>1013</td>
+                                <td>Faury</td>
+                                <td>Garcia</td>
+                                <td>402-7752981-1</td>
+                                <td>Informática</td>
+                                <td>2do</td>
+                            </tr>
+                        </table>
+                    </article>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="../js/cambiar-cursos.js"></script>
+    <script src="../js/menu-profesor-a.js"></script>
+    <script src="../js/profesor-ver-estudiante-modal.js"></script>
+    <script src="../js/ca-ho-admin.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../js/promedio-calificacion.js"></script>
+    <script src="../js/promedio-asistencia.js"></script>
+</body>
+</html>
