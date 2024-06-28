@@ -13,16 +13,9 @@
             <form action="#">
                 <fieldset class="form-container">
                     <legend>Profesor</legend>          
-                    <!-- <div class="regresar-perfil regresar-registro">
-                        <a onclick="history.back()">
-                            <figure>
-                                <img src="../imagenes/iconos/flecha-regresar.svg" alt="regresar">
-                            </figure>
-                        </a>
-                    </div> -->
                     <div class="subir-imagen-registro">
-                        <div class="imagen-registro-preview">
-                            
+                        <div class="imagen-registro-preview" id="preview">
+                           
                         </div>
                         <label for="subir-imagen">Subir Imagen</label>
                         <input type="file" id="subir-imagen" autocomplete="off">
@@ -96,5 +89,7 @@
             </form>
         </section>
     </main>
+    <script src="../js/js-cerrar-modals.js"></script>
+    <script src="../js/form-img-visualizar.js"></script>
 </body>
 </html>
