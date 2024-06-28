@@ -30,7 +30,7 @@
                 </nav>
             </div>
         </header>
-        <main class="main-container main-curso-material">    
+        <main class="main-container main-curso-material" id="ver-material-mobile">    
             <div class="materia-clases-elegir">
                 <h2>Tarea 1 - Investigaci&oacute;n</h2>
             </div>            
@@ -46,18 +46,18 @@
                 <div class="c-curso-izquierdo">
                     <article class="curso-descargar">
                         <h3>Descargar Archivo</h3>
-                        <a href="#" download="#">Click</a>
+                        <a href="../Ecuaciones1.pdf" download="#">Click</a>
                     </article>
                     <article class="curso-subir-tarea">
                         <form action="#">
-                            <label for="subir-tarea">Subir Tarea</label>
-                            <input type="file" id="subir-tarea" name="subir-tarea">
                             <div id="previsualizacion"></div>
+                            <label for="subir-tarea" id="subir-recurso-estudio">Subir Tarea</label>
+                            <input type="file" id="subir-tarea" name="subir-tarea">
                         </form>
                     </article>
                     <form class="botones-curso">
                         <input type='submit' value="Enviar">
-                        <input type="reset" value="Deshacer" onclick="recargarPagina()">
+                        <!-- <input type="reset" value="Deshacer" onclick="recargarPagina()"> -->
                     </form>
                 </div>
                 <div class="c-curso-central">

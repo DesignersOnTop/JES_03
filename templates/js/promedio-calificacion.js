@@ -1,19 +1,37 @@
 function sumarCalificaciones() {
-    var filas = document.getElementsByClassName('fila-calificacion');
+    var fila = this.parentElement.parentElement; // Obtiene la fila actual
+    var inputs = fila.getElementsByTagName('input');
+    var totalCalificaciones = 0;
+    var cantidadCalificaciones = 0;
 
-    for(var i = 0; i < filas.length; i++) {
-        var inputs = filas[i].getElementsByTagName('input');
-        var totalCalificaciones = 0;
-
-        for(var j = 0; j < inputs.length - 1; j++) {
+    for (var j = 0; j < inputs.length - 1; j++) {
+        if (inputs[j].value.trim() !== '') { // Verifica si el valor no está vacío
             var calificacion = parseFloat(inputs[j].value);
-            totalCalificaciones += isNaN(calificacion) ? 0 : calificacion;
+            if (!isNaN(calificacion)) {
+                totalCalificaciones += calificacion;
+                cantidadCalificaciones++;
+            }
         }
+    }
 
-        var cantidadCalificaciones = inputs.length - 1; 
-        var promedioCalificaciones = totalCalificaciones / cantidadCalificaciones;
-        var promedioCalificaciones = Math.round(promedioCalificaciones)
+    if (cantidadCalificaciones === 4) { // Asegura que haya exactamente cuatro calificaciones válidas
+        var promedioCalificaciones = totalCalificaciones / 4; // Calcula el promedio directamente
+        var promedioRedondeado = Math.round(promedioCalificaciones);
 
-        filas[i].lastElementChild.textContent = promedioCalificaciones.toFixed(0);
+        fila.lastElementChild.textContent = promedioRedondeado.toFixed(0);
+    } else {
+        fila.lastElementChild.textContent = ''; // Si no hay exactamente cuatro calificaciones válidas, deja el resultado en blanco
     }
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    var filas = document.getElementsByClassName('fila-calificacion');
+    for (var i = 0; i < filas.length; i++) {
+        var inputs = filas[i].getElementsByTagName('input');
+        inputs[3].addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                sumarCalificaciones.call(this);
+            }
+        });
+    }
+});
