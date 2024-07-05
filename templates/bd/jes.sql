@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-07-2024 a las 22:30:57
+-- Tiempo de generación: 05-07-2024 a las 22:50:52
 -- Versión del servidor: 10.1.37-MariaDB
 -- Versión de PHP: 7.2.13
 
@@ -120,7 +120,6 @@ CREATE TABLE `dias` (
 
 CREATE TABLE `estudiantes` (
   `id_estudiantes` int(11) NOT NULL,
-  `id_rol` int(111) NOT NULL,
   `matricula` char(10) COLLATE utf8_spanish_ci NOT NULL,
   `nombre` varchar(30) COLLATE utf8_spanish_ci NOT NULL,
   `apellidos` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
