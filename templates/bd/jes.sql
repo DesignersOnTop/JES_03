@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-07-2024 a las 22:09:07
+-- Tiempo de generación: 05-07-2024 a las 22:10:20
 -- Versión del servidor: 10.1.37-MariaDB
 -- Versión de PHP: 7.2.13
 
@@ -93,6 +93,17 @@ CREATE TABLE `calificaciones` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `dias`
+--
+
+CREATE TABLE `dias` (
+  `id_dias` int(10) NOT NULL,
+  `dia` varchar(10) COLLATE utf8_spanish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `estudiantes`
 --
 
@@ -109,6 +120,31 @@ CREATE TABLE `estudiantes` (
   `direccion` text COLLATE utf8_spanish_ci NOT NULL,
   `imagen_perfil` varchar(260) COLLATE utf8_spanish_ci NOT NULL,
   `contraseña` varchar(30) COLLATE utf8_spanish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `hora`
+--
+
+CREATE TABLE `hora` (
+  `id_hora` int(10) NOT NULL,
+  `hora` varchar(10) COLLATE utf8_spanish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `horario`
+--
+
+CREATE TABLE `horario` (
+  `id_horario` int(10) NOT NULL,
+  `id_horas` int(10) NOT NULL,
+  `id_cursos` int(10) NOT NULL,
+  `id_asignaturas` int(10) NOT NULL,
+  `id_dias` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -180,17 +216,6 @@ CREATE TABLE `refuerzo libros` (
   `imagen_libro` varchar(255) COLLATE utf8mb4_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `roles`
---
-
-CREATE TABLE `roles` (
-  `id_rol` int(10) NOT NULL,
-  `roles` varchar(20) COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
 --
 -- Índices para tablas volcadas
 --
@@ -214,10 +239,28 @@ ALTER TABLE `calificaciones`
   ADD PRIMARY KEY (`id_calificacion`);
 
 --
+-- Indices de la tabla `dias`
+--
+ALTER TABLE `dias`
+  ADD PRIMARY KEY (`id_dias`);
+
+--
 -- Indices de la tabla `estudiantes`
 --
 ALTER TABLE `estudiantes`
   ADD PRIMARY KEY (`id_estudiantes`);
+
+--
+-- Indices de la tabla `hora`
+--
+ALTER TABLE `hora`
+  ADD PRIMARY KEY (`id_hora`);
+
+--
+-- Indices de la tabla `horario`
+--
+ALTER TABLE `horario`
+  ADD PRIMARY KEY (`id_horario`);
 
 --
 -- Indices de la tabla `material estudio`
@@ -244,12 +287,6 @@ ALTER TABLE `refuerzo libros`
   ADD KEY `id_seccion` (`id_seccion`);
 
 --
--- Indices de la tabla `roles`
---
-ALTER TABLE `roles`
-  ADD PRIMARY KEY (`id_rol`);
-
---
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -272,10 +309,28 @@ ALTER TABLE `calificaciones`
   MODIFY `id_calificacion` int(10) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `dias`
+--
+ALTER TABLE `dias`
+  MODIFY `id_dias` int(10) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `estudiantes`
 --
 ALTER TABLE `estudiantes`
   MODIFY `id_estudiantes` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `hora`
+--
+ALTER TABLE `hora`
+  MODIFY `id_hora` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `horario`
+--
+ALTER TABLE `horario`
+  MODIFY `id_horario` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `material estudio`
@@ -294,12 +349,6 @@ ALTER TABLE `profesores`
 --
 ALTER TABLE `refuerzo libros`
   MODIFY `id_libro_refuerzo` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `roles`
---
-ALTER TABLE `roles`
-  MODIFY `id_rol` int(10) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
