@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-07-2024 a las 22:10:20
+-- Tiempo de generación: 05-07-2024 a las 22:30:57
 -- Versión del servidor: 10.1.37-MariaDB
 -- Versión de PHP: 7.2.13
 
@@ -93,6 +93,17 @@ CREATE TABLE `calificaciones` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `cursos`
+--
+
+CREATE TABLE `cursos` (
+  `id_curso` int(10) NOT NULL,
+  `nombre` varchar(30) COLLATE utf8_spanish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `dias`
 --
 
@@ -159,7 +170,7 @@ CREATE TABLE `material estudio` (
   `fecha_material` date NOT NULL,
   `material_subido` varchar(255) COLLATE utf8mb4_spanish_ci NOT NULL,
   `descripcion_material` text COLLATE utf8mb4_spanish_ci NOT NULL,
-  `id_materia` int(11) NOT NULL,
+  `id_asignatura` int(11) NOT NULL,
   `id_curso` int(11) NOT NULL,
   `id_seccion` int(11) NOT NULL,
   `fondo_material` varchar(255) COLLATE utf8mb4_spanish_ci NOT NULL
@@ -203,6 +214,18 @@ INSERT INTO `profesores` (`id_profesor`, `id_asignatura`, `matricula`, `nombre`,
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `profesor_asignado`
+--
+
+CREATE TABLE `profesor_asignado` (
+  `id_profesor-asignado` int(10) NOT NULL,
+  `id_curso` int(10) NOT NULL,
+  `id_profesor` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `refuerzo libros`
 --
 
@@ -212,7 +235,7 @@ CREATE TABLE `refuerzo libros` (
   `subir_libro` varchar(255) COLLATE utf8mb4_spanish_ci NOT NULL,
   `id_curso` int(11) NOT NULL,
   `id_seccion` int(11) NOT NULL,
-  `id_materia` int(11) NOT NULL,
+  `id_asignatura` int(11) NOT NULL,
   `imagen_libro` varchar(255) COLLATE utf8mb4_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
@@ -237,6 +260,12 @@ ALTER TABLE `asistencias`
 --
 ALTER TABLE `calificaciones`
   ADD PRIMARY KEY (`id_calificacion`);
+
+--
+-- Indices de la tabla `cursos`
+--
+ALTER TABLE `cursos`
+  ADD PRIMARY KEY (`id_curso`);
 
 --
 -- Indices de la tabla `dias`
@@ -267,7 +296,7 @@ ALTER TABLE `horario`
 --
 ALTER TABLE `material estudio`
   ADD PRIMARY KEY (`id_material`),
-  ADD KEY `id_materia` (`id_materia`),
+  ADD KEY `id_materia` (`id_asignatura`),
   ADD KEY `id_curso` (`id_curso`),
   ADD KEY `id_seccion` (`id_seccion`);
 
@@ -278,11 +307,19 @@ ALTER TABLE `profesores`
   ADD PRIMARY KEY (`id_profesor`);
 
 --
+-- Indices de la tabla `profesor_asignado`
+--
+ALTER TABLE `profesor_asignado`
+  ADD PRIMARY KEY (`id_profesor-asignado`),
+  ADD KEY `id_curso` (`id_curso`),
+  ADD KEY `id_profesor` (`id_profesor`);
+
+--
 -- Indices de la tabla `refuerzo libros`
 --
 ALTER TABLE `refuerzo libros`
   ADD PRIMARY KEY (`id_libro_refuerzo`),
-  ADD UNIQUE KEY `id_materia` (`id_materia`),
+  ADD UNIQUE KEY `id_materia` (`id_asignatura`),
   ADD KEY `id_curso` (`id_curso`),
   ADD KEY `id_seccion` (`id_seccion`);
 
@@ -307,6 +344,12 @@ ALTER TABLE `asistencias`
 --
 ALTER TABLE `calificaciones`
   MODIFY `id_calificacion` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `cursos`
+--
+ALTER TABLE `cursos`
+  MODIFY `id_curso` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `dias`
@@ -343,6 +386,12 @@ ALTER TABLE `material estudio`
 --
 ALTER TABLE `profesores`
   MODIFY `id_profesor` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10020;
+
+--
+-- AUTO_INCREMENT de la tabla `profesor_asignado`
+--
+ALTER TABLE `profesor_asignado`
+  MODIFY `id_profesor-asignado` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `refuerzo libros`
