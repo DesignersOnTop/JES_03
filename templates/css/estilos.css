@@ -480,7 +480,8 @@ header {
     display: flex;
     flex-direction: column;
     max-height: 340px;
-    overflow-y: hidden;
+    overflow: hidden;
+    gap: 10px;
 }
 
 /* tabla calificaciones */
@@ -2389,6 +2390,12 @@ textarea.editable {
     height: 24px;
 }
 
+/* Correpcion de errores */
+
+#e-scroll-calificacion, #e-scroll-horario {
+    overflow-x: scroll;
+}
+
 
 /* Movil */
 
@@ -2595,16 +2602,22 @@ textarea.editable {
         width: 90%;
     }
 
-    .tabla-calificacion::-webkit-scrollbar {
-        display: none;
+    .ca-ho-scroll{
+        width: 100%;
     }
 
-    .tabla-calificacion{
+    #e-scroll-calificacion {
         overflow-x: scroll;
     }
 
-    .ca-ho-scroll{
-        width: 100%;
+    #e-scroll-calificacion::-webkit-scrollbar, #e-scroll-horario::-webkit-scrollbar {
+        background-color: #00000005;
+        height: 6px;
+        padding-top: 2px;
+    }
+
+    #e-scroll-calificacion::-webkit-scrollbar-thumb, #e-scroll-horario::-webkit-scrollbar-thumb {
+        background-color: #ffc83d5e;
     }
 
     /* Agregar libros modal */
