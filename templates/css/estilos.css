@@ -2482,6 +2482,29 @@ textarea.editable {
     background-color: #ffc83d5e;
 }
 
+.scroll-calificacion-p {
+    overflow-x: scroll;
+    overflow-y: scroll;
+    height: fit-content;
+    max-height: 330px; 
+}
+
+.scroll-calificacion-p::-webkit-scrollbar {
+    width: 6px;
+    max-height: 6px;
+    background-color: transparent;
+}
+
+.scroll-calificacion-p::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    border-radius: 3px; 
+}
+
+.scroll-calificacion-p::-webkit-scrollbar-track {
+    background-color: transparent; 
+}
+
+
 /* Movil */
 
 @media screen and (min-width: 300px) and (max-width: 400px) {
@@ -2734,7 +2757,7 @@ textarea.editable {
         width: 70%;
     }
 
-    .titulo-refuerzo, .titulo-libro {  
+    .titulo-none {  
         display: none;
     }
 
@@ -2855,9 +2878,9 @@ textarea.editable {
     }
 
     /* Correcciones */
-    .section-margin-top {
-        margin-top: 6%;
-    }
+    /* .section-libros-refuerzo-e .cabecera-flex {
+        width: 80%;
+    } */
 }
 
 /* Tablet */
@@ -2952,6 +2975,10 @@ textarea.editable {
     }
 
     /* Correpcion de errores */
+
+    .titulo-none {  
+        display: none;
+    } 
 
     .asistencia-art-container {
         flex-direction: column;
