@@ -30,22 +30,29 @@
                 </nav>
             </div>
         </header>
-        <main class="main-container main-reporte-admin">    
-            <!-- <div class="seleccion-cursos-p">
-                <form action="#">
-                    <select name="cursos" id="cursos">
-                        <option value="" disabled selected>1ro - A</option>
-                    </select>
-                </form>
-            </div> -->
+        <main class="main-container main-reporte-admin">
             <div class="cabecera-agg-material">
                 <div class="cabecera-materiales-flex">
                     <h2 class="titulo-material">Reporte de Estudio</h2>
-                    <form action="#" class="form-agg-material">
+                    <form action="#" class="form-agg-material" id="form-a-reporte-curso">
                         <select name="seccion-cursos" id="seccion-cursos">
-                            <option value="secciones" disabled selected>Secciones</option>
-                            <option value="seccion-a">A</option>
-                            <option value="seccion-b">B</option>
+                            <optgroup label="Seccion-A">
+                                <option value="" selected disabled>cursos</option>
+                                <option value="1ro">1ro</option>
+                                <option value="2do">2do</option>
+                                <option value="3ro">3ro</option>
+                                <option value="4to">4to</option>
+                                <option value="5to">5to</option>
+                                <option value="6to">6to</option>
+                            </optgroup>
+                            <optgroup label="Seccion-B">
+                                <option value="1ro">1ro</option>
+                                <option value="2do">2do</option>
+                                <option value="3ro">3ro</option>
+                                <option value="4to">4to</option>
+                                <option value="5to">5to</option>
+                                <option value="6to">6to</option>
+                            </optgroup>
                         </select>                               
                     </form>                        
                 </div>

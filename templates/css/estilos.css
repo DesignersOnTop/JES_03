@@ -1747,7 +1747,7 @@ textarea.editable {
     aspect-ratio: 1/1;
     overflow: hidden;
     position: relative;
-    top: 5%;
+    top: 15%;
 }
 
 .imagen-profesor-principal img {
@@ -1758,7 +1758,6 @@ textarea.editable {
 }
 
 .descripcion-profesor-admin {
-    /* background-color: blue; */
     width: 60%;
     height: fit-content;
     text-align: center;
@@ -2026,24 +2025,21 @@ textarea.editable {
     border-bottom: none;
 }
 
-/* #reporte-article {
-    width: 70%;
-} */
 
 #tabla-reporte-profesor {
     width: 80%;
     margin: 0 auto;
 }
 
-#legend-reporte {
-    width: 99.6%;
-    margin-left: auto;
-    margin-right: auto;
+#article-reporte-profesor {
+    width: 60%;
+    margin: 0 auto;
+    margin-top: 2%;
 }
 
-#article-reporte-profesor {
-    width: 80%;
-    margin: 0 auto;
+#profesor-p-reporte {
+    position: relative;
+    bottom: 20%;
 }
 
 #article-reporte-profesor .ver-estudiante-p figure {
@@ -2416,6 +2412,49 @@ textarea.editable {
 #tabla-buscar-profesor, #tabla-buscar-estudiante {
     height: 100%;
 }
+
+#form-a-reporte-curso {
+    padding-bottom: 40px;
+}
+
+#form-a-reporte-curso select {
+    float: right;
+    position: relative;
+    right: 1%;
+}
+
+#form-a-reporte-curso select optgroup {
+    background-color: rgba(0, 0, 0, 0.304);
+    color: white;
+}
+/* ==================== */
+#profesor-p-reporte .imagen-profesor-principal figure {
+    top: 5%;
+}
+
+/* ========================= */
+#scroll-horario-admin {
+    width: 90%;
+    margin: 0 auto;
+    overflow: hidden;
+    overflow-x: scroll;
+}
+
+#scroll-horario-admin::-webkit-scrollbar {
+    display: none;
+}
+
+/* ================= */
+.section-horario-admin {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.section-horario-admin #cabecera-horario-admin {
+    margin: 0 auto;
+    margin-top: 5%;
+}
+
 /* Movil */
 
 @media screen and (min-width: 300px) and (max-width: 400px) {
@@ -2428,7 +2467,42 @@ textarea.editable {
         overflow: hidden;
     }
 
+    #form-a-reporte-curso {
+        padding-bottom: 20px;
+    }
+
+    #article-reporte-profesor {
+        width: 100%;
+        margin: 0 auto;
+    }
+    /* ======================= */
+    .mobile-none {
+        display: none;
+    }
+    /* ====================== */
+    .imagen-profesor-principal figure {
+        top: 40%;
+    }
+    /* ===================== */
+    #profesor-p-reporte .imagen-profesor-principal figure {
+        top: 30%;
+    }
+    /* ================= */
+    .section-horario-admin {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .section-horario-admin #cabecera-horario-admin {
+        margin: 0 auto;
+        margin-top: 5%;
+    }
+
+    #scroll-horario-admin {
+        width: 90%;
+    }
 }
+
 
 @media screen and (max-width: 600px) {
     /* Sweetalert modales */
@@ -2789,11 +2863,49 @@ textarea.editable {
     }
 
     /* Correcciones */
-    /* .section-libros-refuerzo-e .cabecera-flex {
-        width: 80%;
-    } */
-}
+    #form-a-reporte-curso {
+        padding-bottom: 20px;
+    }
+    /* ===================== */
+    #article-reporte-profesor {
+        width: 100%;
+        margin: 0 auto;
+    }
+    /* ======================= */
+    .mobile-none {
+        display: none;
+    }
+    /* ================ */
+    #profesor-p-reporte .imagen-profesor-principal figure {
+        top: 15%;
+    }
+    /* ================= */
+    .section-horario-admin {
+        width: 100%;
+        margin: 0 auto;
+        margin-top: 10%;
+    }
 
+    .section-horario-admin #cabecera-horario-admin {
+        margin: 0 auto;
+        margin-top: 5%;
+        width: 98%;
+    }
+    
+    #scroll-horario-admin {
+        width: 98%;
+    }
+
+    #scroll-horario-admin::-webkit-scrollbar {
+        display: inline-block;
+        background-color: transparent;
+        height: 10px;
+    }
+
+    #scroll-horario-admin::-webkit-scrollbar-thumb {
+        background-color: #ffc83d5e;
+    }
+}
 /* Tablet */
 
 @media screen and (min-width: 601px) and (max-width: 900px) {
