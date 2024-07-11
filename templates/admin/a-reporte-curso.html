@@ -31,35 +31,74 @@
             </div>
         </header>
         <main class="main-container main-reporte-admin">
-            <div class="cabecera-agg-material">
-                <div class="cabecera-materiales-flex">
-                    <h2 class="titulo-material">Reporte de Estudio</h2>
-                    <form action="#" class="form-agg-material" id="form-a-reporte-curso">
-                        <select name="seccion-cursos" id="seccion-cursos">
-                            <optgroup label="Seccion-A">
-                                <option value="" selected disabled>cursos</option>
-                                <option value="1ro">1ro</option>
-                                <option value="2do">2do</option>
-                                <option value="3ro">3ro</option>
-                                <option value="4to">4to</option>
-                                <option value="5to">5to</option>
-                                <option value="6to">6to</option>
-                            </optgroup>
-                            <optgroup label="Seccion-B">
-                                <option value="1ro">1ro</option>
-                                <option value="2do">2do</option>
-                                <option value="3ro">3ro</option>
-                                <option value="4to">4to</option>
-                                <option value="5to">5to</option>
-                                <option value="6to">6to</option>
-                            </optgroup>
-                        </select>                               
-                    </form>                        
-                </div>
-            </div>
             <section class="curso-material-container">
-                    <article class="curso-main curso-main-enviado" id="reporte-article">
-                        <table class="tabla-estudiante-material" id="tabla-reporte-curso">
+                    <article id="reporte-article">
+                        <div class="cabecera-agg-material">
+                            <div class="cabecera-materiales-flex">
+                                <h2 class="titulo-material">Reporte de Estudio</h2>
+                                <form action="#" class="form-agg-material" id="form-a-reporte-curso">
+                                    <select name="seccion-cursos" id="seccion-cursos">
+                                        <optgroup label="Seccion-A">
+                                            <option value="" selected disabled>cursos</option>
+                                            <option value="1ro">1ro</option>
+                                            <option value="2do">2do</option>
+                                            <option value="3ro">3ro</option>
+                                            <option value="4to">4to</option>
+                                            <option value="5to">5to</option>
+                                            <option value="6to">6to</option>
+                                        </optgroup>
+                                        <optgroup label="Seccion-B">
+                                            <option value="1ro">1ro</option>
+                                            <option value="2do">2do</option>
+                                            <option value="3ro">3ro</option>
+                                            <option value="4to">4to</option>
+                                            <option value="5to">5to</option>
+                                            <option value="6to">6to</option>
+                                        </optgroup>
+                                    </select>                               
+                                </form>                        
+                            </div>
+                        </div>
+                        <div class="scroll-tabla-container-admin">
+                            <table id="tabla-estudiantes-admin">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Apellido</th>
+                                    <th>Asignatura</th>
+                                    <th>Ver</th>
+                                </tr>
+                                <tr class="fila-calificacion">
+                                    <td>1010</td>
+                                    <td>Miguel Enrique</td>
+                                    <td>Martinez</td>
+                                    <td>Matem&aacute;ticas</td>
+                                    <td class="ver-estudiante-p"><a href="a-reporte-profesor.html" class="ver-recurso"><figure><img src="../imagenes/iconos/angle-small-right.svg" alt="ver-estudiante"></figure></a></td>
+                                </tr>
+                                <tr class="fila-calificacion">
+                                    <td>1010</td>
+                                    <td>Miguel Enrique</td>
+                                    <td>Martinez</td>
+                                    <td>Matem&aacute;ticas</td>
+                                    <td class="ver-estudiante-p"><a href="a-reporte-profesor.html" class="ver-recurso"><figure><img src="../imagenes/iconos/angle-small-right.svg" alt="ver-estudiante"></figure></a></td>
+                                </tr>
+                                <tr class="fila-calificacion">
+                                    <td>1010</td>
+                                    <td>Miguel Enrique</td>
+                                    <td>Martinez</td>
+                                    <td>Matem&aacute;ticas</td>
+                                    <td class="ver-estudiante-p"><a href="a-reporte-profesor.html" class="ver-recurso"><figure><img src="../imagenes/iconos/angle-small-right.svg" alt="ver-estudiante"></figure></a></td>
+                                </tr>    
+                                <tr class="fila-calificacion">
+                                    <td>1010</td>
+                                    <td>Miguel Enrique</td>
+                                    <td>Martinez</td>
+                                    <td>Matem&aacute;ticas</td>
+                                    <td class="ver-estudiante-p"><a href="a-reporte-profesor.html" class="ver-recurso"><figure><img src="../imagenes/iconos/angle-small-right.svg" alt="ver-estudiante"></figure></a></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <!-- <table class="tabla-estudiante-material" id="tabla-reporte-curso">
                             <tr>
                                 <th>ID</th>
                                 <th>Nombre</th>
@@ -95,7 +134,7 @@
                                 <td>Matem&aacute;ticas</td>
                                 <td class="ver-estudiante-p"><a href="a-reporte-profesor.html" class="ver-recurso"><figure><img src="../imagenes/iconos/angle-small-right.svg" alt="ver-estudiante"></figure></a></td>
                             </tr>
-                        </table>
+                        </table> -->
                     </article>
             </section>
         </main>

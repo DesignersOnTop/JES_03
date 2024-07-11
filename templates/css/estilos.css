@@ -1664,6 +1664,10 @@ textarea.editable {
     border-bottom: none;
 }
 
+#cabecera-profesor-a {
+    justify-content: space-between;
+}
+
 .cabecera-tabla-estudiantes-a input {
     height: 30px;
     padding: 10px 5px;
@@ -2055,10 +2059,10 @@ textarea.editable {
     margin: 0 auto;
 }
 
-#main-curso-admin {
+/* #main-curso-admin {
     width: 70%;
     padding-bottom: 10px;
-}
+} */
 /* ------------------------------ */
 
 .agg-materias-container {
@@ -2414,6 +2418,7 @@ textarea.editable {
 }
 
 #form-a-reporte-curso {
+    width: 100%;
     padding-bottom: 40px;
 }
 
@@ -2453,6 +2458,187 @@ textarea.editable {
 .section-horario-admin #cabecera-horario-admin {
     margin: 0 auto;
     margin-top: 5%;
+}
+
+/* =================== */
+.tabla-curso-estudiantes {
+    width: 90%;
+    margin: 0 auto;
+}
+
+/* =============== */
+.cabecera-curso-admin {
+    border-bottom: 1px solid rgba(128, 128, 128, 0.126);
+}
+
+#tabla-estudiantes-admin {
+    width: 100%;
+    min-height: 330px;
+    text-align: center;
+    background-color: #00000025;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 8px #0005;
+    border: 1px solid #ffffff1a;
+    border-radius: 5px;
+    margin: 0 auto;
+    border-collapse: collapse;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 10px;
+}
+
+#tabla-estudiantes-admin  td{
+    color: #FFF;
+    padding: 0px 10px;
+    text-align: center;
+}
+
+#tabla-estudiantes-admin  th {
+    padding: 10px 20px;
+    color: #ffc83d68;
+}
+
+#tabla-estudiantes-admin tr:nth-child(even) {
+    background-color: #00000036;
+}
+
+#tabla-estudiantes-admin  tr:hover {
+    background-color: #FFF2;
+}
+
+.scroll-tabla-container-admin {
+    overflow: scroll;
+    height: 320px;
+}
+
+.scroll-tabla-container-admin::-webkit-scrollbar {
+    display: none;
+}
+
+/* ======================== */
+
+.agg-es-pro {
+    color: white;
+    position: relative;
+    left: 3%;
+    padding: 4px 8px;
+    padding-bottom: 8px;
+    border-radius: 3px;
+    border: 2px solid #ffc83d22;
+    text-decoration: none;
+}
+
+.agg-es-pro:hover {
+    background-color: #ffc83d22;
+}
+
+/* ====================== */
+#mainContent .btn {
+    background-color: #cb940ab1;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    margin: 10px;
+}  
+#mainContent .btn:hover {
+    background-color: #ffc83d73;
+}
+
+#mainContent .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+#searchBtn {
+    width: 60%;
+    position: relative;
+    left: 20%;
+}
+
+#mainContent .modal-content {
+    background-color: #fefefe2f;
+    backdrop-filter: blur(30px);
+    margin: 15% auto;
+    color: #ffc83d73;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+#h2-modal-agg-profesor {
+    color: white;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+#mainContent .close {
+    /* color: #aaa; */
+    color: red;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    background: none;
+    border: none;
+}
+
+#mainContent .close:hover,
+#mainContent .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#mainContent .search-bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+#mainContent .search-bar input {
+    padding: 10px;
+    font-size: 16px;
+    margin-top: 10px;
+    flex: 1;
+}
+
+#mainContent .search-bar label {
+    margin-right: 10px;
+}
+
+#mainContent #profesorList {
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+#mainContent #profesorList div {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+#mainContent #profesorList div:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+
+/* a-reporte-curso */
+#reporte-article {
+    width: 80%;
+    margin: 0 auto;
 }
 
 /* Movil */
@@ -2905,6 +3091,37 @@ textarea.editable {
     #scroll-horario-admin::-webkit-scrollbar-thumb {
         background-color: #ffc83d5e;
     }
+    /* ============================== */
+    .cabecera-curso-admin {
+        width: 100%;
+    }
+    /* ================== */
+    .tabla-curso-estudiantes {
+        width: 98%;
+        margin: 0 auto;
+    }
+    /* ================= */
+    #main-profesores-admin{
+        width: 100%;
+    }
+
+    /* modal agregar profesores a cursos */
+    #mainContent .modal-content {
+        width: 80%;
+    }
+    
+    #mainContent .search-bar div {
+        flex-direction: column;
+    }
+    
+    #mainContent .btn {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+    
+    #mainContent .search-bar input {
+        font-size: 14px;
+    }    
 }
 /* Tablet */
 
