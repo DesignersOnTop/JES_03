@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Refuerzo de estudio</title>
-    <link rel="stylesheet" href="../css/estilos.css">
-    <link rel="icon" href="../imagenes/recursos/logo-jes.png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='imagenes/recursos/logo-jes.png') }}">
 </head>
 <body>
     <div class="body-container">
         <header>
             <div class="header-container">
                 <figure class="jesIMG-container">
-                    <img src="../imagenes/recursos/logo-jes.png" alt="JES-LOGO">
+                    <img src="{{ url_for('static', filename='imagenes/recursos/logo-jes.png') }}" alt="JES-LOGO">
                 </figure>            
                 <div class="jes-titulo">
                     <h2>JES</h2>
@@ -21,10 +21,10 @@
                 <nav class="nav-container">
                     <ul>
                         <li class="nav-home">
-                            <a href="e-home.html" class="li-home"><figure><img src="../imagenes/iconos/house-blank.svg" alt="perfil"></figure></a>
+                            <a href="/home/estudiante/" class="li-home"><figure><img src="{{ url_for('static', filename='imagenes/iconos/house-blank.svg') }}" alt="perfil"></figure></a>
                         </li>
                         <li class="nav-menu">
-                            <a href="#" class="menu"><figure><img src="../imagenes/iconos/menu.svg" alt="menu"></figure></a>
+                            <a href="#" class="menu"><figure><img src="{{ url_for('static', filename='imagenes/iconos/menu.svg') }}" alt="menu"></figure></a>
                         </li>
                     </ul>
                 </nav>
@@ -36,7 +36,7 @@
                     <div class="cabecera-flex">
                         <div class="contenedor-a-cabecera">
                             <a href="#" id="recurrente-a-refuerzo">Libros</a>
-                            <a href="e-refuerzo-videos.html">Videos</a>
+                            <a href="/estudiante/refuerzo/videos/">Videos</a>
                         </div>
                         <h2 class="titulo-refuerzo titulo-none">Recursos de Estudio</h2>                        
                     </div>
@@ -56,11 +56,11 @@
                     </div>
                     <div class="contenido-material">
                         <figure class="fondo-material-estudio">
-                            <img src="../imagenes/recursos/don-quijote.jpg" alt="imagen-fondo-estudio">
+                            <img src="{{ url_for('static', filename='imagenes/recursos/don-quijote.jpg') }}" alt="imagen-fondo-estudio">
                         </figure>
                         <div class="link-material">
                             <h3>Don quijotes</h3>
-                            <a href="e-libro-refuerzo.html">ver</a>                            
+                            <a href="/estudiante/libro/">ver</a>                            
                         </div>
                     </div>
                 </article>
@@ -70,11 +70,11 @@
                     </div>
                     <div class="contenido-material">
                         <figure class="fondo-material-estudio">
-                            <img src="../imagenes/recursos/aritmetica.jpg" alt="imagen-fondo-estudio">
+                            <img src="{{ url_for('static', filename='imagenes/recursos/aritmetica.jpg') }}" alt="imagen-fondo-estudio">
                         </figure>
                         <div class="link-material">
                             <h3>Aritmetica basica</h3>
-                            <a href="e-libro-refuerzo.html">ver</a>                            
+                            <a href="/estudiante/libro/">ver</a>                            
                         </div>
                     </div>
                 </article>
@@ -84,11 +84,11 @@
                     </div>
                     <div class="contenido-material">
                         <figure class="fondo-material-estudio">
-                            <img src="../imagenes/recursos/To-be.png" alt="imagen-fondo-estudio">
+                            <img src="{{ url_for('static', filename='imagenes/recursos/To-be.png') }}" alt="imagen-fondo-estudio">
                         </figure>
                         <div class="link-material">
                             <h3>Verb to be</h3>
-                            <a href="e-libro-refuerzo.html">ver</a>                            
+                            <a href="/estudiante/libro/">ver</a>                            
                         </div>
                     </div>
                 </article>
@@ -98,11 +98,11 @@
                     </div>
                     <div class="contenido-material">
                         <figure class="fondo-material-estudio">
-                            <img src="../imagenes/recursos/cuerpo-humano.jpg" alt="imagen-fondo-estudio">
+                            <img src="{{ url_for('static', filename='imagenes/recursos/cuerpo-humano.jpg') }}" alt="imagen-fondo-estudio">
                         </figure>
                         <div class="link-material">
                             <h3>El cuerpo humano</h3>
-                            <a href="e-libro-refuerzo.html">ver</a>                        
+                            <a href="/estudiante/libro/">ver</a>                        
                         </div>
                     </div>
                 </article>
@@ -112,18 +112,18 @@
                     </div>
                     <div class="contenido-material">
                         <figure class="fondo-material-estudio">
-                            <img src="../imagenes/recursos/ajedrez.jpg" alt="imagen-fondo-estudio">
+                            <img src="{{ url_for('static', filename='imagenes/recursos/ajedrez.jpg') }}" alt="imagen-fondo-estudio">
                         </figure>
                         <div class="link-material">
                             <h3>Historia del ajedrez</h3>
-                            <a href="e-libro-refuerzo.html">ver</a>                        
+                            <a href="/estudiante/libro/">ver</a>                        
                         </div>
                     </div>
                 </article>
             </section>
         </main>
     </div>
-    <script src="../js/menu.js"></script>
+    <script src="{{ url_for('static', filename='js/menu.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>

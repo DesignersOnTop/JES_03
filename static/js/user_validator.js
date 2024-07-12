@@ -3,12 +3,12 @@ function usuario() {
     let password = document.getElementById("password").value;
 
 if(user === "admin" && password =="admin"){
-    window.location="./admin/a-home.html";
+    window.location="/home/admin/";
 
 } else if(user === "estudiante" && password === "estudiante"){
-        window.location="./estudiante/e-home.html";
+        window.location="/home/estudiante/";
     }else if(user === "profesor" && password === "profesor"){
-        window.location = "./profesor/p-home-a.html"
+        window.location = "/home/profesor/"
     }else if(user === "" && password === "") {
         Swal.fire({
             html: '<span class="white">"Por favor, asegúrate de completar todos los campos necesarios para acceder al sistema!"</span',
@@ -23,7 +23,7 @@ if(user === "admin" && password =="admin"){
             // closeButtonAriaLabel: "cerrar",
             allowOutsideClick: false,
             confirmButtonText: "Aceptar",
-            imageUrl: './imagenes/recursos/logo-jes.png',
+            imageUrl: './static/imagenes/recursos/logo-jes.png',
             imageWidth: '140px',
             imageHeight: '120px'
         });
@@ -42,7 +42,7 @@ if(user === "admin" && password =="admin"){
             // closeButtonAriaLabel: "cerrar",
             allowOutsideClick: false,
             confirmButtonText: "Aceptar",
-            imageUrl: './imagenes/recursos/logo-jes.png',
+            imageUrl: './static/imagenes/recursos/logo-jes.png',
             imageWidth: '140px',
             imageHeight: '120px'
         });

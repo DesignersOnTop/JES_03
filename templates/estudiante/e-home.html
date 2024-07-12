@@ -11,7 +11,7 @@
     <header>
         <div class="header-container">
             <figure class="jesIMG-container">
-                <img src="../imagenes/recursos/logo-jes.png" alt="JES-LOGO">
+                <img src="{{ url_for('static', filename='imagenes/recursos/logo-jes.png') }}" alt="JES-LOGO">
             </figure>            
             <div class="jes-titulo">
                 <h2>JES</h2>
@@ -20,10 +20,14 @@
             <nav class="nav-container">
                 <ul>
                     <li class="nav-perfil">
-                        <a href="e-perfil.html" class="li-perfil"><figure><img src="../imagenes/recursos/perfil-femenino.jpg" alt="perfil"></figure></a>
+                        <a href="e-perfil.html" class="li-perfil">
+                            <figure><img src="{{ url_for('static', filename='imagenes/recursos/perfil-femenino.jpg') }}" alt="perfil"></figure>
+                        </a>
                     </li>
                     <li class="nav-menu-home">
-                        <a href="#" class="menu"><figure><img src="../imagenes/iconos/menu.svg" alt="menu"></figure></a>
+                        <a href="#" class="menu">
+                            <figure><img src="{{ url_for('static', filename='imagenes/iconos/menu.svg') }}" alt="menu"></figure>
+                        </a>
                     </li>
                 </ul>
             </nav>
@@ -32,172 +36,174 @@
 <main class="main-container">
     <section class="section-top-container">
         <article class="asistencia-art-container">
-                <div class="barra-circular" data-porcentaje="100">
-                    <svg viewBox="0 0 33.83 33.83">
-                        <circle class="background-circular" cx="16.92" cy="16.92" r="15.92"></circle>
-                        <circle class="progreso-circular" cx="16.92" cy="16.92" r="15.92"></circle>
-                    </svg>
-                    <span class="porcentaje">90%</span>
-                </div>
-                <div class="asistencia-h">
-                    <h3>Asistencia</h3>
-                    <h4>General</h4>
-                </div>
-            </article>
-            <article class="material-container">
-                <a href="e-material_estudio.html">
-                    <figure class="material-figure"><img src="../imagenes/iconos/capas.svg" alt="perfil-estudiante"></figure>
-                    <h2>Material de tareas</h2>                        
-                </a>
-            </article>
-            <!-- calendario-container -->
-            <article class="material-container">
-                <a href="e-refuerzo-libros.html">
-                    <h2>Refuerzo de clase</h2> 
-                    <figure><img src="../imagenes/iconos/formulario.svg" alt="refuerzo-de-clase-img"></figure>
-                </a>
-            </article>
-        </section>
-        <section class="ca-ho-section">
-            <div class="ca-ho-botones">
-                <button class="btn-calificaciones btn-caho-active">Calificaciones</button>
-                <button class="btn-horario">Horario</button>
+            <div class="barra-circular" data-porcentaje="100">
+                <svg viewBox="0 0 33.83 33.83">
+                    <circle class="background-circular" cx="16.92" cy="16.92" r="15.92"></circle>
+                    <circle class="progreso-circular" cx="16.92" cy="16.92" r="15.92"></circle>
+                </svg>
+                <span class="porcentaje">90%</span>
             </div>
-            <div class="ca-ho-scroll">
-                <article class="tabla-centrar tabla-calificacion-centrar">
-                    <div id="e-scroll-calificacion">
-                        <table class="tabla-calificacion" id="">
-                            <tr class="tabla-cabecera">
-                                <th>Calificaciones</th>
-                                <th>L. Española</th>
-                                <th>C. Sociales</th>
-                                <th>Naturales</th>
-                                <th>Ingles</th>
-                                <th>Frances</th>
-                                <th>italiano</th>
-                                <th>romano</th>
-                            </tr>
-                            <tr>
-                                <td class="calificacion">C1</td>
-                                <td>90</td>
-                                <td>100</td>
-                                <td>98</td>
-                                <td>95</td>
-                                <td>96</td>
-                                <td>--</td>
-                                <td>--</td>
-                            </tr>
-                            <tr>
-                                <td class="calificacion">C2</td>
-                                <td>90</td>
-                                <td>100</td>
-                                <td>98</td>
-                                <td>95</td>
-                                <td>96</td>
-                                <td>--</td>
-                                <td>--</td>
-                            </tr>
-                            <tr>
-                                <td class="calificacion">C3</td>
-                                <td>90</td>
-                                <td>100</td>
-                                <td>98</td>
-                                <td>95</td>
-                                <td>96</td>
-                                <td>--</td>
-                                <td>--</td>
-                            </tr>
-                            <tr>
-                                <td class="calificacion">C4</td>
-                                <td>90</td>
-                                <td>100</td>
-                                <td>98</td>
-                                <td>95</td>
-                                <td>96</td>
-                                <td>--</td>
-                                <td>--</td>
-                            </tr>
-                            <tr>
-                                <td class="calificacion">C.Final</td>
-                                <td class="nota-final">90</td>
-                                <td class="nota-final">100</td>
-                                <td class="nota-final">98</td>
-                                <td class="nota-final">95</td>
-                                <td class="nota-final">96</td>
-                                <td class="nota-final">--</td>
-                                <td class="nota-final">--</td>
-                            </tr>
-                        </table>
-                    </div>
-                </article>
-                <article class="tabla-centrar tabla-horario-centrar">
-                    <div id="e-scroll-horario">
-                        <table class="tabla-horario">
-                            <tr class="tabla-cabecera">
-                                <th>Horas</th>
-                                <th>Lunes</th>
-                                <th>Martes</th>
-                                <th>Miércoles</th>
-                                <th>Jueves</th>
-                                <th>Viernes</th>
-                            </tr>
-                            <tr>
-                                <td>7:00</td>
-                                <td>Matemáticas</td>
-                                <td>L. Española</td>
-                                <td>Naturales</td>
-                                <td>Sociales</td>
-                                <td>Artes</td>
-                            </tr>
-                            <tr>
-                                <td>8:00</td>
-                                <td>Sociales</td>
-                                <td>Artes</td>
-                                <td>Ed. Física</td>
-                                <td>Matemáticas</td>
-                                <td>Naturales</td>
-                            </tr>
-                            <tr>
-                                <td>9:00</td>
-                                <td>RE</td>
-                                <td>C</td>
-                                <td>R</td>
-                                <td>E</td>
-                                <td>O</td>
-                            </tr>
-                            <tr>
-                                <td>10:00</td>
-                                <td>Inglés</td>
-                                <td>Religión</td>
-                                <td>Inglés</td>
-                                <td>Informática</td>
-                                <td>Sociales</td>
-                            </tr>
-                            <tr>
-                                <td>11:00</td>
-                                <td>Informática</td>
-                                <td>Matemáticas</td>
-                                <td>Sociales</td>
-                                <td>Ed. Física</td>
-                                <td>L. Española</td>
-                            </tr>
-                            <tr>
-                                <td>12:00</td>
-                                <td>Religión</td>
-                                <td>Sociales</td>
-                                <td>Artes</td>
-                                <td>Inglés</td>
-                                <td>Matemáticas</td>
-                            </tr>
-                        </table>
-                    </div>
-                </article>
+            <div class="asistencia-h">
+                <h3>Asistencia</h3>
+                <h4>General</h4>
             </div>
-        </section>
-    </main>
-    <script src="../js/ca-ho.js"></script>
-    <script src="../js/menu.js"></script>
-    <script src="../js/barra-asistencia.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        </article>
+        <article class="material-container">
+            <a href="/estudiante/material/">
+                <figure class="material-figure">
+                    <img src="{{ url_for('static', filename='imagenes/iconos/capas.svg') }}" alt="perfil-estudiante">
+                </figure>
+                <h2>Material de tareas</h2>                        
+            </a>
+        </article>
+        <!-- calendario-container -->
+        <article class="material-container">
+            <a href="/estudiante/refuerzo/libros/">
+                <h2>Refuerzo de clase</h2> 
+                <figure><img src="{{ url_for('static', filename='imagenes/iconos/formulario.svg') }}" alt="refuerzo-de-clase-img"></figure>
+            </a>
+        </article>
+    </section>
+    <section class="ca-ho-section">
+        <div class="ca-ho-botones">
+            <button class="btn-calificaciones btn-caho-active">Calificaciones</button>
+            <button class="btn-horario">Horario</button>
+        </div>
+        <div class="ca-ho-scroll">
+            <article class="tabla-centrar tabla-calificacion-centrar">
+                <div id="e-scroll-calificacion">
+                    <table class="tabla-calificacion" id="">
+                        <tr class="tabla-cabecera">
+                            <th>Calificaciones</th>
+                            <th>L. Española</th>
+                            <th>C. Sociales</th>
+                            <th>Naturales</th>
+                            <th>Inglés</th>
+                            <th>Francés</th>
+                            <th>Italiano</th>
+                            <th>Romano</th>
+                        </tr>
+                        <tr>
+                            <td class="calificacion">C1</td>
+                            <td>90</td>
+                            <td>100</td>
+                            <td>98</td>
+                            <td>95</td>
+                            <td>96</td>
+                            <td>--</td>
+                            <td>--</td>
+                        </tr>
+                        <tr>
+                            <td class="calificacion">C2</td>
+                            <td>90</td>
+                            <td>100</td>
+                            <td>98</td>
+                            <td>95</td>
+                            <td>96</td>
+                            <td>--</td>
+                            <td>--</td>
+                        </tr>
+                        <tr>
+                            <td class="calificacion">C3</td>
+                            <td>90</td>
+                            <td>100</td>
+                            <td>98</td>
+                            <td>95</td>
+                            <td>96</td>
+                            <td>--</td>
+                            <td>--</td>
+                        </tr>
+                        <tr>
+                            <td class="calificacion">C4</td>
+                            <td>90</td>
+                            <td>100</td>
+                            <td>98</td>
+                            <td>95</td>
+                            <td>96</td>
+                            <td>--</td>
+                            <td>--</td>
+                        </tr>
+                        <tr>
+                            <td class="calificacion">C.Final</td>
+                            <td class="nota-final">90</td>
+                            <td class="nota-final">100</td>
+                            <td class="nota-final">98</td>
+                            <td class="nota-final">95</td>
+                            <td class="nota-final">96</td>
+                            <td class="nota-final">--</td>
+                            <td class="nota-final">--</td>
+                        </tr>
+                    </table>
+                </div>
+            </article>
+            <article class="tabla-centrar tabla-horario-centrar">
+                <div id="e-scroll-horario">
+                    <table class="tabla-horario">
+                        <tr class="tabla-cabecera">
+                            <th>Horas</th>
+                            <th>Lunes</th>
+                            <th>Martes</th>
+                            <th>Miércoles</th>
+                            <th>Jueves</th>
+                            <th>Viernes</th>
+                        </tr>
+                        <tr>
+                            <td>7:00</td>
+                            <td>Matemáticas</td>
+                            <td>L. Española</td>
+                            <td>Naturales</td>
+                            <td>Sociales</td>
+                            <td>Artes</td>
+                        </tr>
+                        <tr>
+                            <td>8:00</td>
+                            <td>Sociales</td>
+                            <td>Artes</td>
+                            <td>Ed. Física</td>
+                            <td>Matemáticas</td>
+                            <td>Naturales</td>
+                        </tr>
+                        <tr>
+                            <td>9:00</td>
+                            <td>RE</td>
+                            <td>C</td>
+                            <td>R</td>
+                            <td>E</td>
+                            <td>O</td>
+                        </tr>
+                        <tr>
+                            <td>10:00</td>
+                            <td>Inglés</td>
+                            <td>Religión</td>
+                            <td>Inglés</td>
+                            <td>Informática</td>
+                            <td>Sociales</td>
+                        </tr>
+                        <tr>
+                            <td>11:00</td>
+                            <td>Informática</td>
+                            <td>Matemáticas</td>
+                            <td>Sociales</td>
+                            <td>Ed. Física</td>
+                            <td>L. Española</td>
+                        </tr>
+                        <tr>
+                            <td>12:00</td>
+                            <td>Religión</td>
+                            <td>Sociales</td>
+                            <td>Artes</td>
+                            <td>Inglés</td>
+                            <td>Matemáticas</td>
+                        </tr>
+                    </table>
+                </div>
+            </article>
+        </div>
+    </section>
+</main>
+<script src="{{ url_for('static', filename='js/ca-ho.js') }}"></script>
+<script src="{{ url_for('static', filename='js/menu.js') }}"></script>
+<script src="{{ url_for('static', filename='js/barra-asistencia.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>

@@ -12,7 +12,7 @@
         <section class="cara-de-jes">
             <div class="cara-de-jes-contenedor">
                 <figure>
-                    <img src="imagenes/recursos/logo-jes.png" alt="logo-jes">
+                    <img src="{{ url_for('static', filename='imagenes/recursos/logo-jes.png') }}" alt="logo-jes">
                 </figure>
                 <h2>JES</h2>
                 <h3>Junior Explorer System</h3>
@@ -22,25 +22,25 @@
         <section id="inicio-de-sesion">
             <h1>Iniciar Sesion</h1>
             <form action="#">
-                    <div id="introducir-id">
-                        <figure class="svg">
-                            <img src="imagenes/iconos/user-id-verification.svg" alt="icono-id">
-                        </figure>
-                        <input type="text" id="id" placeholder="Introduzca Su ID" autofocus autocomplete="off">
-                    </div>
-                    <!-- En esta parte estara tanto el icono de la contraseña asi mismo como el input de la contraseña -->
-                    <div id="introducir-contraseña">
-                        <figure class="svg">
-                            <img src="imagenes/iconos/security-password.svg" alt="icono-contraseña">
-                        </figure>
-                        <input type="password" id="password" placeholder="Introduzca Su Contraseña" autocomplete="off">
-                    </div>
+                <div id="introducir-id">
+                    <figure class="svg">
+                        <img src="{{ url_for('static', filename='imagenes/iconos/user-id-verification.svg') }}" alt="icono-id">
+                    </figure>
+                    <input type="text" id="id" placeholder="Introduzca Su ID" autofocus autocomplete="off">
+                </div>
+                <!-- En esta parte estara tanto el icono de la contraseña asi mismo como el input de la contraseña -->
+                <div id="introducir-contraseña">
+                    <figure class="svg">
+                        <img src="{{ url_for('static', filename='imagenes/iconos/security-password.svg') }}" alt="icono-contraseña">
+                    </figure>
+                    <input type="password" id="password" placeholder="Introduzca Su Contraseña" autocomplete="off">
+                </div>
                 <!-- Boton de inicio de sesion -->
-                <input type="button" id="iniciar-sesion" value="Iniciar Sesion" onclick="usuario()"></input>
+                <input type="button" id="iniciar-sesion" value="Iniciar Sesion" onclick="usuario()">
             </form>
         </section>
     </main>
-    <script src="js/user_validator.js"></script>
+    <script src="{{ url_for('static', filename='js/user_validator.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>

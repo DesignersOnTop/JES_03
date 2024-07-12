@@ -41,7 +41,7 @@ def Index():
 
 # APARTADO DEL ESTUDIANTE EN PYTHON
 
-@app.route('/Home/estudiante/')
+@app.route('/home/estudiante/')
 def e_home():
     return render_template('./estudiante/e-home.html')
 
@@ -57,13 +57,13 @@ def e_material():
 def ver_materia():
     return render_template('./estudiante/e-ver_materias.html')
 
-@app.route('/estudiante/refuerzo/libros')
+@app.route('/estudiante/refuerzo/libros/')
 def e_refuerzo_libros():
-    return render_template('./estudiante/e-refuerzo-libros.html')
+    return render_template('./estudiante/e_refuerzo_libros.html')
 
-@app.route('/estudiante/refuerzo/videos')
+@app.route('/estudiante/refuerzo/videos/')
 def e_refuerzo_videos():
-    return render_template('./estudiante/e-refuerzo-videos.html')
+    return render_template('./estudiante/e_refuerzo_videos.html')
 
 @app.route('/estudiante/libro/')
 def e_libro():
@@ -71,7 +71,7 @@ def e_libro():
 
 # APARTADO DEL ADMIN EN PYTHON
 
-@app.route('/admin/home')
+@app.route('/home/admin/')
 def a_home():
     return render_template('./admin/a-home.html')
 
@@ -88,7 +88,7 @@ def a_reportes():
     return render_template('./admin/a-reporte-curso.html')
 
 @app.route('/admin/reportes-profesor')
-def a_reporte-profesor():
+def a_reporte_profesor():
     return render_template('./admin/a-reporte-profesor.html')
 
 @app.route('/admin/perfil')
@@ -96,7 +96,7 @@ def a_perfil():
     return render_template('./admin/a-perfil.html')
 
 @app.route('/admin/reportes-calificacion')
-def a_reporte-calificaciones():
+def a_reporte_calificaciones():
     return render_template('./admin/a-calificaciones-reporte.html')
 
 @app.route('/admin/reportes-asistencias')
@@ -104,24 +104,24 @@ def a_reportes_asistencia():
     return render_template('./admin/a-asistencias-reporte.html')
 
 @app.route('/admin/registro-E')
-def a_formulario-registro-e():
+def a_formulario_registro_e():
     return render_template('./admin/a-formulario-registro-e.html')
 
 @app.route('/admin/registro-P')
-def a_formulario-registro-p():
+def a_formulario_registro_p():
     return render_template('./admin/a-formulario-registro-p.html')
 
 @app.route('/admin/profesores')
-def a_cursos-profesor():
+def a_cursos_profesor():
     return render_template('./admin/a-profesor-1_a.html')
 
 @app.route('/admin/horario')
-def a_horario-profesor():
+def a_horario_profesor():
     return render_template('./admin/a-horario-1a.html')
 
 # APARTADO DEL PROFESORES EN PYTHON
 
-@app.route('/profesor/home/')
+@app.route('/home/profesor/')
 def p_home():
     return render_template('./profesor/p-home-a.html')
 
