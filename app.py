@@ -87,37 +87,37 @@ def a_materias():
 def a_reportes():
     return render_template('./admin/a-reporte-curso.html')
 
-# @app.route('/admin/reportes-profesor')
-# def a_reportes_profesor():
-#     return render_template('./admin/a-reporte-profesor.html')
+@app.route('/admin/reportes-profesor')
+def a_reporte-profesor():
+    return render_template('./admin/a-reporte-profesor.html')
 
-# @app.route('/admin/perfil')
-# def a_reportes_profesor():
-#     return render_template('./admin/a-perfil.html')
+@app.route('/admin/perfil')
+def a_perfil():
+    return render_template('./admin/a-perfil.html')
 
-# @app.route('/admin/reportes-calificacion')
-# def a_reportes_profesor():
-#     return render_template('./admin/a-calificaciones-reporte.html')
+@app.route('/admin/reportes-calificacion')
+def a_reporte-calificaciones():
+    return render_template('./admin/a-calificaciones-reporte.html')
 
-# @app.route('/admin/reportes-asistencias')
-# def a_reportes_profesor():
-#     return render_template('./admin/a-asistencias-reporte.html')
+@app.route('/admin/reportes-asistencias')
+def a_reportes_asistencia():
+    return render_template('./admin/a-asistencias-reporte.html')
 
-# @app.route('/admin/registro-E')
-# def a_reportes_profesor():
-#     return render_template('./admin/a-formulario-registro-e.html')
+@app.route('/admin/registro-E')
+def a_formulario-registro-e():
+    return render_template('./admin/a-formulario-registro-e.html')
 
-# @app.route('/admin/registro-P')
-# def a_reportes_profesor():
-#     return render_template('./admin/a-formulario-registro-p.html')
+@app.route('/admin/registro-P')
+def a_formulario-registro-p():
+    return render_template('./admin/a-formulario-registro-p.html')
 
-# @app.route('/admin/profesores')
-# def a_reportes_profesor():
-#     return render_template('./admin/a-profesor-1_a.html')
+@app.route('/admin/profesores')
+def a_cursos-profesor():
+    return render_template('./admin/a-profesor-1_a.html')
 
-# @app.route('/admin/horario')
-# def a_reportes_profesor():
-#     return render_template('./admin/a-horario-1a.html')
+@app.route('/admin/horario')
+def a_horario-profesor():
+    return render_template('./admin/a-horario-1a.html')
 
 # APARTADO DEL PROFESORES EN PYTHON
 
