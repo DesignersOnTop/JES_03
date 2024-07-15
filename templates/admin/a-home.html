@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-    <link rel="stylesheet" href="../css/estilos.css">
-    <link rel="icon" href="../imagenes/recursos/logo-jes.png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='imagenes/recursos/logo-jes.png') }}">
 </head>
 <body>
     <div class="body-container">
         <header>
             <div class="header-container">
                 <figure class="jesIMG-container">
-                    <img src="../imagenes/recursos/logo-jes.png" alt="JES-LOGO">
+                    <img src="{{ url_for('static', filename='imagenes/recursos/logo-jes.png') }}" alt="JES-LOGO">
                 </figure>            
                 <div class="jes-titulo">
                     <h2>JES</h2>
@@ -21,10 +21,10 @@
                 <nav class="nav-container">
                     <ul>
                         <li class="nav-perfil">
-                            <a href="a-perfil.html" class="li-perfil"><figure><img src="../imagenes/recursos/perfil-masculino-3.jpg" alt="perfil"></figure></a>
+                            <a href="{{ url_for('templates', filename='admin/a-perfil.html') }}" class="li-perfil"><figure><img src="{{ url_for('static', filename='imagenes/recursos/perfil-masculino-3.jpg') }}" alt="perfil"></figure></a>
                         </li>
                         <li class="nav-menu-home">
-                            <a href="#" class="menu"><figure><img src="../imagenes/iconos/menu.svg" alt="menu"></figure></a>
+                            <a href="#" class="menu"><figure><img src="{{ url_for('static', filename='imagenes/iconos/menu.svg') }}" alt="menu"></figure></a>
                         </li>
                     </ul>
                 </nav>
@@ -33,21 +33,21 @@
         <main class="main-container"> 
             <section class="section-top-container">
                 <article class="material-container">
-                    <a href="a-cursos.html">
+                    <a href="{{ url_for('templates', filename='admin/a-cursos.html') }}">
                         <h2>Cursos</h2> 
-                        <figure><img src="../imagenes/iconos/formulario.svg" alt="refuerzo-de-clase-img"></figure>                     
+                        <figure><img src="{{ url_for('static', filename='imagenes/iconos/formulario.svg') }}" alt="refuerzo-de-clase-img"></figure>                     
                     </a>
                 </article>
                 <article class="material-container">
-                    <a href="a-materias.html">
-                        <figure class="material-figure"><img src="../imagenes/iconos/capas.svg" alt="perfil-estudiante"></figure>
+                    <a href="{{ url_for('templates', filename='admin/a-materias.html') }}">
+                        <figure class="material-figure"><img src="{{ url_for('static', filename='imagenes/iconos/capas.svg') }}" alt="perfil-estudiante"></figure>
                         <h2>Materias</h2>                        
                     </a>
                 </article>
                 <article class="calendario-container">
-                    <a href="a-reporte-curso.html">
+                    <a href="{{ url_for('templates', filename='admin/a-reporte-curso.html') }}">
                         <h2>Reportes de los cursos</h2> 
-                        <figure><img src="../imagenes/iconos/calendario-reloj.svg" alt="recordatorio"></figure>
+                        <figure><img src="{{ url_for('static', filename='imagenes/iconos/calendario-reloj.svg') }}" alt="recordatorio"></figure>
                     </a>
                 </article>
             </section>
@@ -60,7 +60,7 @@
                 <article class="tabla-centrar tabla-calificacion-centrar">                        
                     <div class="cabecera-tabla-estudiantes-a">
                         <form action="#">
-                            <button class="buscar-estudiante"><figure><img src="../imagenes/iconos/lupa.svg" alt=""></figure></button>
+                            <button class="buscar-estudiante"><figure><img src="{{ url_for('static', filename='imagenes/iconos/lupa.svg') }}" alt=""></figure></button>
                             <input type="search" id="buscar-estudiante">
                         </form>
                     </div>
@@ -113,7 +113,7 @@
                     <div class="cabecera-tabla-estudiantes-a" id="cabecera-profesor-a">
                         <a href="#" class="agg-es-pro">Agregar</a>
                         <form action="#">
-                            <button class="buscar-estudiante"><figure><img src="../imagenes/iconos/lupa.svg" alt=""></figure></button>
+                            <button class="buscar-estudiante"><figure><img src="{{ url_for('static', filename='imagenes/iconos/lupa.svg') }}" alt=""></figure></button>
                             <input type="search" id="buscar-estudiante">
                         </form>
                     </div>

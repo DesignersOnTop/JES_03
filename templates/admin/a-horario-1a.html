@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Horario</title>
-    <link rel="stylesheet" href="../css/estilos.css">
-    <link rel="icon" href="../imagenes/recursos/logo-jes.png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='imagenes/recursos/logo-jes.png') }}">
 </head>
 <body>
     <div class="body-container">
         <header>
             <div class="header-container">
                 <figure class="jesIMG-container">
-                    <img src="../imagenes/recursos/logo-jes.png" alt="JES-LOGO">
+                    <img src="{{ url_for('static', filename='imagenes/recursos/logo-jes.png') }}" alt="JES-LOGO">
                 </figure>            
                 <div class="jes-titulo">
                     <h2>JES</h2>
@@ -21,10 +21,10 @@
                 <nav class="nav-container">
                     <ul>
                         <li class="nav-home">
-                            <a href="a-home.html" class="li-home"><figure><img src="../imagenes/iconos/house-blank.svg" alt="perfil"></figure></a>
+                            <a href="{{ url_for('templates', filename='admin/a-home.html') }}" class="li-home"><figure><img src="{{ url_for('static', filename='imagenes/iconos/house-blank.svg') }}" alt="perfil"></figure></a>
                         </li>
                         <li class="nav-menu nav-menu-top">
-                            <a href="#" class="menu"><figure><img src="../imagenes/iconos/menu.svg" alt="menu"></figure></a>
+                            <a href="#" class="menu"><figure><img src="{{ url_for('static', filename='imagenes/iconos/menu.svg') }}" alt="menu"></figure></a>
                         </li>
                     </ul>
                 </nav>
@@ -34,7 +34,7 @@
             <section class="section-horario-admin">
                 <div class="cabecera-agg-refuerzo cabecera-libro" id="cabecera-horario-admin">
                     <div class="cabecera-flex">
-                        <a href="a-curso.html" class="regresar-libro-video">Regresar</a>                        
+                        <a href="{{ url_for('templates', filename='admin/a-curso.html') }}" class="regresar-libro-video">Regresar</a>                        
                         <h1 class="titulo-refuerzo titulo-libro">1ro - A</h1>
                     </div>
                 </div>
