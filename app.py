@@ -6,10 +6,10 @@ from flask import Flask
 from flask import render_template, request, redirect, session
 
 # Importar el enlace a base de datos MySQL
-# from flaskext.mysql import MySQL
+from flaskext.mysql import MySQL
 
 # Funciona en python avanzado:
-from flask_mysqldb import MySQL
+    # from flask_mysqldb import MySQL
 
 # Importar controlador del tiempo
 from datetime import datetime
@@ -140,6 +140,10 @@ def p_libro_refuerzo():
 @app.route('/profesor/refuerzo/videos')
 def p_refuerzo_videos():
     return render_template('./profesor/p-refuerzo-videos.html')
+
+@app.route('/profesor/agregar/libros')
+def agregar_libro():
+    return render_template('/profesor/p-agregar-libro.html')
 
 @app.route('/profesor/agregarVideo')
 def p_agregar():

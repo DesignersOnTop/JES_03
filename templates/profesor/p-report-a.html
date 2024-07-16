@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Material</title>
-    <link rel="stylesheet" href="../css/estilos.css">
-    <link rel="icon" href="../imagenes/recursos/logo-jes.png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='imagenes/recursos/logo-jes.png') }}">>
 </head>
 <body>
     <div class="body-container">
@@ -36,8 +36,8 @@
             </section>
         </main>
     </div>
-    <script src="../js/menu-profesor-a.js"></script>
-    <script src="../js/cerrar-modal-agg-material.js"></script>
+    <script src="{{ url_for('static', filename='js/menu-profesor-a.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/cerrar-modal-agg-material.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>
