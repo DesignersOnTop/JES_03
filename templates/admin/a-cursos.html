@@ -21,7 +21,7 @@
                 <nav class="nav-container">
                     <ul>
                         <li class="nav-home">
-                            <a href="a-home.html" class="li-home"><figure><img src="{{ url_for('static', filename='imagenes/iconos/house-blank.svg') }}" alt="perfil"></figure></a>
+                            <a href="/home/admin/" class="li-home"><figure><img src="{{ url_for('static', filename='imagenes/iconos/house-blank.svg') }}" alt="perfil"></figure></a>
                         </li>
                         <li class="nav-menu">
                             <a href="#" class="menu"><figure><img src="{{ url_for('static', filename='imagenes/iconos/menu.svg') }}" alt="menu"></figure></a>
@@ -50,10 +50,10 @@
                     </div>
                     <div class="contenido-material">
                         <figure class="fondo-material-estudio">
-                            <img src="{{ url_for('static', filename='imagenes/recursos/Auditorio-img-fondo,jpg') }}" alt="imagen-fondo-estudio">
+                            <img src="{{ url_for('static', filename='imagenes/recursos/Auditorio-img-fondo.jpg') }}" alt="imagen-fondo-estudio">
                         </figure>
                         <div class="link-material">
-                            <a href="{{ url_for('templates', filename='admin/a-curso.html') }}">Entrar</a>                         
+                            <a href="/admin/curso">Entrar</a>                         
                         </div>
                     </div>
                 </article>
@@ -63,10 +63,10 @@
                     </div>
                     <div class="contenido-material">
                         <figure class="fondo-material-estudio">
-                            <img src="{{ url_for('static', filename='imagenes/recursos/Auditorio-img-fondo,jpg') }}" alt="imagen-fondo-estudio">
+                            <img src="{{ url_for('static', filename='imagenes/recursos/Auditorio-img-fondo.jpg') }}" alt="imagen-fondo-estudio">
                         </figure>
                         <div class="link-material">
-                            <a href="{{ url_for('templates', filename='admin/a-curso.html') }}">Entrar</a>                   
+                            <a href="/admin/curso">Entrar</a>                   
                         </div>
                     </div>
                 </article>
@@ -76,10 +76,10 @@
                     </div>
                     <div class="contenido-material">
                         <figure class="fondo-material-estudio">
-                            <img src="{{ url_for('static', filename='imagenes/recursos/Auditorio-img-fondo,jpg') }}" alt="imagen-fondo-estudio">
+                            <img src="{{ url_for('static', filename='imagenes/recursos/Auditorio-img-fondo.jpg') }}" alt="imagen-fondo-estudio">
                         </figure>
                         <div class="link-material">
-                            <a href="{{ url_for('templates', filename='admin/a-curso.html') }}">Entrar</a>                     
+                            <a href="/admin/curso">Entrar</a>                     
                         </div>
                     </div>
                 </article>
@@ -89,10 +89,10 @@
                     </div>
                     <div class="contenido-material">
                         <figure class="fondo-material-estudio">
-                            <img src="{{ url_for('static', filename='imagenes/recursos/Auditorio-img-fondo,jpg') }}" alt="imagen-fondo-estudio">
+                            <img src="{{ url_for('static', filename='imagenes/recursos/Auditorio-img-fondo.jpg') }}" alt="imagen-fondo-estudio">
                         </figure>
                         <div class="link-material">
-                            <a href="{{ url_for('templates', filename='admin/a-curso.html') }}">Entrar</a>                      
+                            <a href="/admin/curso">Entrar</a>                      
                         </div>
                     </div>
                 </article>
@@ -102,10 +102,10 @@
                     </div>
                     <div class="contenido-material">
                         <figure class="fondo-material-estudio">
-                            <img src="{{ url_for('static', filename='imagenes/recursos/Auditorio-img-fondo,jpg') }}" alt="imagen-fondo-estudio">
+                            <img src="{{ url_for('static', filename='imagenes/recursos/Auditorio-img-fondo.jpg') }}" alt="imagen-fondo-estudio">
                         </figure>
                         <div class="link-material">
-                            <a href="{{ url_for('templates', filename='admin/a-curso.html') }}">Entrar</a>                     
+                            <a href="/admin/curso">Entrar</a>                     
                         </div>
                     </div>
                 </article>
@@ -115,18 +115,18 @@
                     </div>
                     <div class="contenido-material">
                         <figure class="fondo-material-estudio">
-                            <img src="{{ url_for('static', filename='imagenes/recursos/Auditorio-img-fondo,jpg') }}" alt="imagen-fondo-estudio">
+                            <img src="{{ url_for('static', filename='imagenes/recursos/Auditorio-img-fondo.jpg') }}" alt="imagen-fondo-estudio">
                         </figure>
                         <div class="link-material">
-                            <a href="{{ url_for('templates', filename='admin/a-curso.html') }}">Entrar</a>                        
+                            <a href="/admin/curso">Entrar</a>                        
                         </div>
                     </div>
                 </article>
             </section>
         </main>
     </div>
-    <script src="../js/perfil-modal.js"></script>
-    <script src="../js/menu.js"></script>
+    <script src="{{ url_for('static', filename='js/perfil-modal.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/menu-admin.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>

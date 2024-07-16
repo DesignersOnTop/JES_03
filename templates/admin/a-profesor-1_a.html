@@ -20,7 +20,7 @@
             <nav class="nav-container">
                 <ul>
                     <li class="nav-home">
-                        <a href="{{ url_for('templates', filename='admin/a-home.html') }}" class="li-home"><figure><img src="{{ url_for('static', filename='imagenes/iconos/house-blank.svg') }}" alt="perfil"></figure></a>
+                        <a href="/home/admin/" class="li-home"><figure><img src="{{ url_for('static', filename='imagenes/iconos/house-blank.svg') }}" alt="perfil"></figure></a>
                     </li>
                     <li class="nav-menu">
                         <a href="#" class="menu"><figure><img src="{{ url_for('static', filename='imagenes/iconos/menu.svg') }}" alt="menu"></figure></a>
@@ -34,9 +34,9 @@
             <h2 class="identificador-curso">1ro A</h2>
             <article class="tabla-curso-estudiantes" id="a-profesor-article">
                 <div class="cabecera-tabla-estudiantes-a cabecera-curso-admin">
-                    <a href="{{ url_for('templates', filename='admin/a-curso.html') }}">Ir atr&aacute;s</a>
+                    <a href="/admin/curso">Ir atr&aacute;s</a>
                     <h2 class="identificador-apartado-curso">Profesores</h2>
-                    <a href="{{ url_for('templates', filename='admin/a-formulario-registro-p.html') }}">Agregar</a>
+                    <a href="/admin/registro-P">Agregar</a>
                 </div>
                 <div class="scroll-tabla-container-admin">
                     <table id="tabla-estudiantes-admin">

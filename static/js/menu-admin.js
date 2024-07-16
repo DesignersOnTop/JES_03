@@ -2,14 +2,14 @@ const menu = document.querySelector('.menu');
 
 menu.addEventListener('click',() => {
     Swal.fire({
-        html: '<nav><ul class="ul-eme"><li class="li-eme"><a href="/estudiante/perfil/" class="a-eme">Perfil</a></li><li class="li-eme"><a href="/estudiante/refuerzo/libros" class="a-eme home-eme">Refuerzo de curso</a></li><li class="li-eme"><a href="/estudiante/material/" class="a-eme material-eme">Material de tareas</a></li><li class="li-eme"><a href="/" class="a-eme cerrar-eme">Cerrar Sesion</a></li></ul></nav>',
+        html: '<nav><ul class="ul-eme"><li class="li-eme"><a href="/admin/perfil" class="a-eme">Perfil</a><li class="li-eme"><a href="/home/admin/" class="a-eme material-eme">Home</a></li><li class="li-eme"><a href="/" class="a-eme cerrar-eme">Cerrar Sesion</a></li></ul></nav>',
         backdrop: true,
         customClass: {
             popup: 'emergente-class classes-eme',
             confirmButton: 'confirm-eme',
             container: 'container-eme conta-eme'
         },
-        imageUrl: "{{ url_for('static', filename='imagenes/recursos/logo-jes.png') }}",
+        imageUrl: '../imagenes/recursos/logo-jes.png',
         imageWidth: '100px',
         imageHeight: '100px',
         imageAlt: 'Logo-JES',
