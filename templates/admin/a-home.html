@@ -21,7 +21,7 @@
                 <nav class="nav-container">
                     <ul>
                         <li class="nav-perfil">
-                            <a href="{{ url_for('templates', filename='admin/a-perfil.html') }}" class="li-perfil"><figure><img src="{{ url_for('static', filename='imagenes/recursos/perfil-masculino-3.jpg') }}" alt="perfil"></figure></a>
+                            <a href="/admin/perfil" class="li-perfil"><figure><img src="{{ url_for('static', filename='imagenes/recursos/perfil-masculino-3.jpg') }}" alt="perfil"></figure></a>
                         </li>
                         <li class="nav-menu-home">
                             <a href="#" class="menu"><figure><img src="{{ url_for('static', filename='imagenes/iconos/menu.svg') }}" alt="menu"></figure></a>
@@ -33,19 +33,19 @@
         <main class="main-container"> 
             <section class="section-top-container">
                 <article class="material-container">
-                    <a href="{{ url_for('templates', filename='admin/a-cursos.html') }}">
+                    <a href="/admin/cursos">
                         <h2>Cursos</h2> 
                         <figure><img src="{{ url_for('static', filename='imagenes/iconos/formulario.svg') }}" alt="refuerzo-de-clase-img"></figure>                     
                     </a>
                 </article>
                 <article class="material-container">
-                    <a href="{{ url_for('templates', filename='admin/a-materias.html') }}">
+                    <a href="/admin/materias">
                         <figure class="material-figure"><img src="{{ url_for('static', filename='imagenes/iconos/capas.svg') }}" alt="perfil-estudiante"></figure>
                         <h2>Materias</h2>                        
                     </a>
                 </article>
                 <article class="calendario-container">
-                    <a href="{{ url_for('templates', filename='admin/a-reporte-curso.html') }}">
+                    <a href="/admin/reportes">
                         <h2>Reportes de los cursos</h2> 
                         <figure><img src="{{ url_for('static', filename='imagenes/iconos/calendario-reloj.svg') }}" alt="recordatorio"></figure>
                     </a>
@@ -160,12 +160,12 @@
             </section>
         </main>
     </div>
-    <script src="../js/cambiar-cursos.js"></script>
-    <script src="../js/menu-profesor-a.js"></script>
-    <script src="../js/profesor-ver-estudiante-modal.js"></script>
-    <script src="../js/ca-ho.js"></script>
+    <script src="{{ url_for('static', filename='js/cambiar-cursos.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/menu-admin.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/profesor-ver-estudiante-modal.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/ca-ho.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="../js/promedio-calificacion.js"></script>
-    <script src="../js/promedio-asistencia.js"></script>
+    <script src="{{ url_for('static', filename='js/promedio-calificacion.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/promedio-asistencia.js') }}"></script>
 </body>
 </html>

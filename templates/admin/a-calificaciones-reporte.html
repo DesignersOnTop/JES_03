@@ -20,7 +20,7 @@
             <nav class="nav-container">
                 <ul>
                     <li class="nav-home">
-                        <a href="a-home.html" class="li-home"><figure><img src="{{ url_for('static', filename='imagenes/iconos/house-blank.svg') }}" alt="perfil"></figure></a>
+                        <a href="/home/admin/" class="li-home"><figure><img src="{{ url_for('static', filename='imagenes/iconos/house-blank.svg') }}" alt="perfil"></figure></a>
                     </li>
                     <li class="nav-menu">
                         <a href="#" class="menu"><figure><img src="{{ url_for('static', filename='imagenes/iconos/menu.svg') }}" alt="menu"></figure></a>
@@ -45,11 +45,11 @@
             <article class="article-reporte-iframe">
                 <div class="cabecera-agg-material cabecera-agg-refuerzo" id="cabecera-admin-reporte">
                     <div class="cabecera-flex">
-                        <a href="a-reporte-profesor.html">Ir atr&aacute;s</a>
+                        <a href="/admin/reportes-profesor">Ir atr&aacute;s</a>
                         <h2 class="titulo-refuerzo">1ro - A</h2>
                     </div>
                 </div>
-                <iframe src="../Ecuaciones1.pdf" frameborder="0"></iframe>
+                <iframe src="{{ url_for('static', filename='Ecuaciones1.pdf') }}" frameborder="0"></iframe>
             </article>
         </section>
     </main>
