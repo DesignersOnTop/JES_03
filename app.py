@@ -9,7 +9,7 @@ from flask import render_template, request, redirect, session
 from flaskext.mysql import MySQL
 
 # Funciona en python avanzado:
-from flask_mysqldb import MySQL
+# from flask_mysqldb import MySQL
 
 # Importar controlador del tiempo
 from datetime import datetime
