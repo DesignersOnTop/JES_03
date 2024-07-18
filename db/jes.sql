@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-07-2024 a las 22:50:52
+-- Tiempo de generación: 18-07-2024 a las 23:31:32
 -- Versión del servidor: 10.1.37-MariaDB
 -- Versión de PHP: 7.2.13
 
@@ -120,14 +120,17 @@ CREATE TABLE `dias` (
 
 CREATE TABLE `estudiantes` (
   `id_estudiantes` int(11) NOT NULL,
+  `id_rol` int(10) NOT NULL,
+  `id_curso` int(10) NOT NULL,
+  `id_seccion` int(10) NOT NULL,
   `matricula` char(10) COLLATE utf8_spanish_ci NOT NULL,
   `nombre` varchar(30) COLLATE utf8_spanish_ci NOT NULL,
   `apellidos` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `direccion` text COLLATE utf8_spanish_ci NOT NULL,
   `fecha_nacimiento` date NOT NULL,
   `genero` varchar(10) COLLATE utf8_spanish_ci NOT NULL,
   `email` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `telefono` char(12) COLLATE utf8_spanish_ci NOT NULL,
-  `direccion` text COLLATE utf8_spanish_ci NOT NULL,
   `imagen_perfil` varchar(260) COLLATE utf8_spanish_ci NOT NULL,
   `contraseña` varchar(30) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
@@ -151,9 +154,9 @@ CREATE TABLE `hora` (
 
 CREATE TABLE `horario` (
   `id_horario` int(10) NOT NULL,
-  `id_horas` int(10) NOT NULL,
-  `id_cursos` int(10) NOT NULL,
-  `id_asignaturas` int(10) NOT NULL,
+  `id_hora` int(10) NOT NULL,
+  `id_curso` int(10) NOT NULL,
+  `id_asignatura` int(10) NOT NULL,
   `id_dias` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -184,9 +187,11 @@ CREATE TABLE `material estudio` (
 CREATE TABLE `profesores` (
   `id_profesor` int(10) NOT NULL,
   `id_asignatura` int(10) NOT NULL,
+  `id_rol` int(10) NOT NULL,
   `matricula` char(10) COLLATE utf8_spanish_ci NOT NULL,
   `nombre` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `apellido` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `direccion` text COLLATE utf8_spanish_ci NOT NULL,
   `cedula` char(14) COLLATE utf8_spanish_ci NOT NULL,
   `genero` varchar(10) COLLATE utf8_spanish_ci NOT NULL,
   `email` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
@@ -199,16 +204,16 @@ CREATE TABLE `profesores` (
 -- Volcado de datos para la tabla `profesores`
 --
 
-INSERT INTO `profesores` (`id_profesor`, `id_asignatura`, `matricula`, `nombre`, `apellido`, `cedula`, `genero`, `email`, `telefono`, `contraseña`, `imagen_perfil`) VALUES
-(10011, 2401, 'p001', 'Juan', ' Gonzalez Perez', '001-1234567-1', 'Masculino', 'juangonzales@gmail.com', '809-458-1265', 'juan123', ''),
-(10012, 2402, 'p002', 'Maria', 'Lopez Garcia', '002-2345678-2', 'Femenino', 'mARIlopez@gmail.com', '809-234-5678', 'maria123', ''),
-(10013, 2403, 'p003', 'Carlos', 'Dominguez Fernandez', '003-3456789-3', 'Masculino', 'carlos.dominguezfernandez@gmail.com', '809-345-6789', 'carlos123', ''),
-(10014, 2404, 'p004', 'Ana', 'Sanchez Ruiz', '004-4567890-4', 'Femenino', 'anaruiz@gmail.com', '809-456-7890', 'ana123', ''),
-(10015, 2405, 'p005', 'Luis Mario ', 'Martinez Gomez', '005-5678901-5', 'Masculino', 'luismartinez@gmail.com', '809-567-8901', 'luismario123', ''),
-(10016, 2406, 'p006', 'Macarena', 'Ramirez Torres', ' 006-6789012-6', 'Femenino', 'ramireztorresMac@gmail.com', '809-678-9012', 'macarena123', ''),
-(10017, 2407, 'p007', 'Javier', 'Dias Morales', ' 007-7890123-7', 'Masculino', 'javiDiazmorales@gmail.com', '809-789-0123', 'javier123', ''),
-(10018, 2408, 'p008', 'Maria Elena', 'Hernandez Castro', '008-8901234-8', 'Femenino', 'elenahernandezcastro@example.com', '809-890-1234', 'mariaElena123', ''),
-(10019, 2409, 'p009', 'Isabel', ' Navarro Vá\\azquez', '010-0123456-0', 'Femenino', 'isabelvazquez@example.com', '809-456-6461', 'isabel123', '');
+INSERT INTO `profesores` (`id_profesor`, `id_asignatura`, `id_rol`, `matricula`, `nombre`, `apellido`, `direccion`, `cedula`, `genero`, `email`, `telefono`, `contraseña`, `imagen_perfil`) VALUES
+(10011, 2401, 0, 'p001', 'Juan', ' Gonzalez Perez', '', '001-1234567-1', 'Masculino', 'juangonzales@gmail.com', '809-458-1265', 'juan123', ''),
+(10012, 2402, 0, 'p002', 'Maria', 'Lopez Garcia', '', '002-2345678-2', 'Femenino', 'mARIlopez@gmail.com', '809-234-5678', 'maria123', ''),
+(10013, 2403, 0, 'p003', 'Carlos', 'Dominguez Fernandez', '', '003-3456789-3', 'Masculino', 'carlos.dominguezfernandez@gmail.com', '809-345-6789', 'carlos123', ''),
+(10014, 2404, 0, 'p004', 'Ana', 'Sanchez Ruiz', '', '004-4567890-4', 'Femenino', 'anaruiz@gmail.com', '809-456-7890', 'ana123', ''),
+(10015, 2405, 0, 'p005', 'Luis Mario ', 'Martinez Gomez', '', '005-5678901-5', 'Masculino', 'luismartinez@gmail.com', '809-567-8901', 'luismario123', ''),
+(10016, 2406, 0, 'p006', 'Macarena', 'Ramirez Torres', '', ' 006-6789012-6', 'Femenino', 'ramireztorresMac@gmail.com', '809-678-9012', 'macarena123', ''),
+(10017, 2407, 0, 'p007', 'Javier', 'Dias Morales', '', ' 007-7890123-7', 'Masculino', 'javiDiazmorales@gmail.com', '809-789-0123', 'javier123', ''),
+(10018, 2408, 0, 'p008', 'Maria Elena', 'Hernandez Castro', '', '008-8901234-8', 'Femenino', 'elenahernandezcastro@example.com', '809-890-1234', 'mariaElena123', ''),
+(10019, 2409, 0, 'p009', 'Isabel', ' Navarro Vá\\azquez', '', '010-0123456-0', 'Femenino', 'isabelvazquez@example.com', '809-456-6461', 'isabel123', '');
 
 -- --------------------------------------------------------
 
@@ -238,6 +243,37 @@ CREATE TABLE `refuerzo libros` (
   `imagen_libro` varchar(255) COLLATE utf8mb4_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `roles`
+--
+
+CREATE TABLE `roles` (
+  `id_rol` int(10) NOT NULL,
+  `tipo` varchar(60) COLLATE utf8_spanish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `roles`
+--
+
+INSERT INTO `roles` (`id_rol`, `tipo`) VALUES
+(1, 'profesor'),
+(2, 'estudiante'),
+(3, 'administrador');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `secciones`
+--
+
+CREATE TABLE `secciones` (
+  `id_seccion` int(10) NOT NULL,
+  `seccion` varchar(5) COLLATE utf8_spanish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
 --
 -- Índices para tablas volcadas
 --
@@ -252,13 +288,16 @@ ALTER TABLE `asignaturas`
 -- Indices de la tabla `asistencias`
 --
 ALTER TABLE `asistencias`
-  ADD PRIMARY KEY (`id_asistencia`);
+  ADD PRIMARY KEY (`id_asistencia`),
+  ADD KEY `id_estudiante` (`id_estudiante`);
 
 --
 -- Indices de la tabla `calificaciones`
 --
 ALTER TABLE `calificaciones`
-  ADD PRIMARY KEY (`id_calificacion`);
+  ADD PRIMARY KEY (`id_calificacion`),
+  ADD KEY `id_estudiante` (`id_estudiante`),
+  ADD KEY `id_asignatura` (`id_asignatura`);
 
 --
 -- Indices de la tabla `cursos`
@@ -276,7 +315,10 @@ ALTER TABLE `dias`
 -- Indices de la tabla `estudiantes`
 --
 ALTER TABLE `estudiantes`
-  ADD PRIMARY KEY (`id_estudiantes`);
+  ADD PRIMARY KEY (`id_estudiantes`),
+  ADD KEY `id_rol` (`id_rol`),
+  ADD KEY `id_curso` (`id_curso`),
+  ADD KEY `id_seccion` (`id_seccion`);
 
 --
 -- Indices de la tabla `hora`
@@ -288,7 +330,11 @@ ALTER TABLE `hora`
 -- Indices de la tabla `horario`
 --
 ALTER TABLE `horario`
-  ADD PRIMARY KEY (`id_horario`);
+  ADD PRIMARY KEY (`id_horario`),
+  ADD KEY `id_horas` (`id_hora`),
+  ADD KEY `id_cursos` (`id_curso`),
+  ADD KEY `id_asignaturas` (`id_asignatura`),
+  ADD KEY `id_dias` (`id_dias`);
 
 --
 -- Indices de la tabla `material estudio`
@@ -303,7 +349,11 @@ ALTER TABLE `material estudio`
 -- Indices de la tabla `profesores`
 --
 ALTER TABLE `profesores`
-  ADD PRIMARY KEY (`id_profesor`);
+  ADD PRIMARY KEY (`id_profesor`),
+  ADD KEY `id_asignatura` (`id_asignatura`),
+  ADD KEY `id_rol` (`id_rol`),
+  ADD KEY `id_rol_2` (`id_rol`),
+  ADD KEY `id_rol_3` (`id_rol`);
 
 --
 -- Indices de la tabla `profesor_asignado`
@@ -321,6 +371,18 @@ ALTER TABLE `refuerzo libros`
   ADD UNIQUE KEY `id_materia` (`id_asignatura`),
   ADD KEY `id_curso` (`id_curso`),
   ADD KEY `id_seccion` (`id_seccion`);
+
+--
+-- Indices de la tabla `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`id_rol`);
+
+--
+-- Indices de la tabla `secciones`
+--
+ALTER TABLE `secciones`
+  ADD PRIMARY KEY (`id_seccion`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -397,6 +459,72 @@ ALTER TABLE `profesor_asignado`
 --
 ALTER TABLE `refuerzo libros`
   MODIFY `id_libro_refuerzo` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `id_rol` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de la tabla `secciones`
+--
+ALTER TABLE `secciones`
+  MODIFY `id_seccion` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `calificaciones`
+--
+ALTER TABLE `calificaciones`
+  ADD CONSTRAINT `calificaciones_ibfk_1` FOREIGN KEY (`id_asignatura`) REFERENCES `asignaturas` (`id_asignatura`);
+
+--
+-- Filtros para la tabla `estudiantes`
+--
+ALTER TABLE `estudiantes`
+  ADD CONSTRAINT `estudiantes_ibfk_2` FOREIGN KEY (`id_curso`) REFERENCES `cursos` (`id_curso`),
+  ADD CONSTRAINT `estudiantes_ibfk_3` FOREIGN KEY (`id_seccion`) REFERENCES `secciones` (`id_seccion`),
+  ADD CONSTRAINT `estudiantes_ibfk_4` FOREIGN KEY (`id_rol`) REFERENCES `roles` (`id_rol`);
+
+--
+-- Filtros para la tabla `horario`
+--
+ALTER TABLE `horario`
+  ADD CONSTRAINT `horario_ibfk_1` FOREIGN KEY (`id_hora`) REFERENCES `hora` (`id_hora`),
+  ADD CONSTRAINT `horario_ibfk_2` FOREIGN KEY (`id_dias`) REFERENCES `dias` (`id_dias`),
+  ADD CONSTRAINT `horario_ibfk_3` FOREIGN KEY (`id_curso`) REFERENCES `cursos` (`id_curso`),
+  ADD CONSTRAINT `horario_ibfk_4` FOREIGN KEY (`id_asignatura`) REFERENCES `asignaturas` (`id_asignatura`);
+
+--
+-- Filtros para la tabla `material estudio`
+--
+ALTER TABLE `material estudio`
+  ADD CONSTRAINT `material estudio_ibfk_1` FOREIGN KEY (`id_curso`) REFERENCES `cursos` (`id_curso`),
+  ADD CONSTRAINT `material estudio_ibfk_2` FOREIGN KEY (`id_asignatura`) REFERENCES `asignaturas` (`id_asignatura`),
+  ADD CONSTRAINT `material estudio_ibfk_3` FOREIGN KEY (`id_seccion`) REFERENCES `secciones` (`id_seccion`);
+
+--
+-- Filtros para la tabla `profesores`
+--
+ALTER TABLE `profesores`
+  ADD CONSTRAINT `profesores_ibfk_1` FOREIGN KEY (`id_asignatura`) REFERENCES `asignaturas` (`id_asignatura`);
+
+--
+-- Filtros para la tabla `profesor_asignado`
+--
+ALTER TABLE `profesor_asignado`
+  ADD CONSTRAINT `profesor_asignado_ibfk_1` FOREIGN KEY (`id_curso`) REFERENCES `cursos` (`id_curso`),
+  ADD CONSTRAINT `profesor_asignado_ibfk_2` FOREIGN KEY (`id_profesor`) REFERENCES `profesores` (`id_profesor`);
+
+--
+-- Filtros para la tabla `refuerzo libros`
+--
+ALTER TABLE `refuerzo libros`
+  ADD CONSTRAINT `refuerzo libros_ibfk_1` FOREIGN KEY (`id_curso`) REFERENCES `cursos` (`id_curso`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
