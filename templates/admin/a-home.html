@@ -68,44 +68,25 @@
                         <table class="tabla-calificacion tabla-asistencia" >
                             <tr>
                                 <th>ID</th>
+                                <th>Matricula</th>
                                 <th>Nombre</th>
                                 <th>Apellido</th>
                                 <th>F. Nacimiento</th>
                                 <th>Curso</th>
                                 <th>Secci&oacute;n</th>
                             </tr>
+                            {% for estudiante in estudiantes %}
                             <tr class="fila-calificacion">
-                                <td>1010</td>
-                                <td>Albiery</td>
-                                <td>Rodriguez</td>
-                                <td>07/08/2003</td>
-                                <td>1ro</td>
-                                <td>A</td>
+                                <td>{{ estudiante[0] }}</td> <!-- Asumiendo que id_estudiante es la primera columna -->
+                                <td>{{estudiante[4]}}</td>
+                                <td>{{ estudiante[5] }}</td> <!-- Matricula -->
+                                <td>{{ estudiante[6] }}</td> <!-- Nombre -->
+                                <td>{{ estudiante[3] }}</td> <!-- Apellido -->
+                                <td>{{ estudiante[4] }}</td> <!-- Fecha de Nacimiento -->
+                                <td>{{ estudiante[5] }}</td> <!-- Curso -->
+                                <td>{{ estudiante[6] }}</td> <!-- Sección -->
                             </tr>
-                            <tr class="fila-calificacion">
-                                <td>1011</td>
-                                <td>Smailyn</td>
-                                <td>Burgos</td>
-                                <td>04/03/2003</td>
-                                <td>1ro</td>
-                                <td>A</td>
-                            </tr>
-                            <tr class="fila-calificacion">
-                                <td>1012</td>
-                                <td>Massiel</td>
-                                <td>Rodriguez</td>
-                                <td>04/01/2003</td>
-                                <td>1ro</td>
-                                <td>A</td>
-                            </tr>    
-                            <tr class="fila-calificacion">
-                                <td>1013</td>
-                                <td>Faury</td>
-                                <td>Garcia</td>
-                                <td>17/09/2004</td>
-                                <td>1ro</td>
-                                <td>A</td>
-                            </tr>
+                            {% endfor %}
                         </table>
                     </div>
                 </article>
@@ -121,39 +102,22 @@
                         <table class="tabla-horario tabla-asistencia">
                             <tr>
                                 <th>ID</th>
+                                <th>Matrícula</th>
                                 <th>Nombre</th>
                                 <th>Apellido</th>
                                 <th>Ced&uacute;la</th>
                                 <th>Asignatura</th>
                             </tr>
+                            {% for profesor in profesores %}
                             <tr class="fila-calificacion">
-                                <td>1010</td>
-                                <td>Miguel Enrique</td>
-                                <td>Martinez</td>
-                                <td>402-7798981-1</td>
-                                <td>Matem&aacute;ticas</td>
+                                <td>{{ profesor.id_profesor }}</td> <!-- Ajusta esto según los nombres de los campos de tu tabla -->
+                                <td>{{ profesor.matricula }}</td>
+                                <td>{{ profesor.nombre }}</td>
+                                <td>{{ profesor.apellido }}</td>
+                                <td>{{ profesor.cedula }}</td>
+                                <td>{{ profesor.id_asignatura }}</td>
                             </tr>
-                            <tr class="fila-calificacion">
-                                <td>1011</td>
-                                <td>Smailyn</td>
-                                <td>Burgos</td>
-                                <td>402-7745981-1</td>
-                                <td>Educación Fisica</td>
-                            </tr>
-                            <tr class="fila-calificacion">
-                                <td>1012</td>
-                                <td>Massiel</td>
-                                <td>Rodriguez</td>
-                                <td>402-7710981-0</td>
-                                <td>Literatura</td>
-                            </tr>    
-                            <tr class="fila-calificacion">
-                                <td>1013</td>
-                                <td>Faury</td>
-                                <td>Garcia</td>
-                                <td>402-7752981-1</td>
-                                <td>Informática</td>
-                            </tr>
+                            {% endfor %}
                         </table>
                     </div>
                 </article>

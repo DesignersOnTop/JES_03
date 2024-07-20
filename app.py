@@ -1,43 +1,45 @@
 # Incluir el framework Flask
 import os
-from flask import Flask
-
-# importar la pantilla html. para guardar datos desde el formulario importamos request, redirect y session (variable de sesion)
-from flask import render_template, request, redirect, session
-
-# Importar el enlace a base de datos MySQL
-from flaskext.mysql import MySQL
-
-# Funciona en python avanzado:
-# from flask_mysqldb import MySQL
-
-# Importar controlador del tiempo
+from flask import Flask, render_template, request, redirect, session, send_from_directory
+from flask_mysqldb import MySQL
+import MySQLdb.cursors
 from datetime import datetime
+# Importar el enlace a base de datos MySQL
+# from flaskext.mysql import MySQL
 
-# Importar para obtener informacion de la imagen
-from flask import send_from_directory
+# Crear la aplicación
+app = Flask(__name__)
 
-# Crear la aplicacion
-app=Flask(__name__)
+# Crear una llave secreta
+app.secret_key = 'JES'
 
-# Crear una llave secreta 
-app.secret_key='JES'
+# Configurar la base de datos MySQL
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = ''
+app.config['MYSQL_DB'] = 'jes'
 
-# Crear una conexion a la de base de datos
-mysql=MySQL()
-
-app.config['MYSQL_DATABASE_HOST']='localhost'
-app.config['MYSQL_DATABASE_USER']='root'
-app.config['MYSQL_DATABASE_PASSWORD']=''
-app.config['MYSQL_DATABASE_DB']='jes'
-
-# Agregar el valor para inicializar nuestra aplicacion
-mysql.init_app(app)
+# Inicializar MySQL
+mysql = MySQL(app)
 #-----------------------------------------------------
 
-@app.route('/')
+@app.route('/', methods=['POST'])
 def Index():
-    return render_template('index.html')
+    if request.method == 'POST' and 'matricula-sesion' in request.form and 'pass-sesion':
+        _matricula = request.form['matricula-sesion']
+        _password = request.form['pass-sesion']
+        
+        cursor = mysql.connection.cursor()
+        cursor.execute('SELECT * FROM usuarios WHERE matricula = %s AND contraseña = %s',(_matricula, _password,))
+        cuenta = cursor.fetchone()
+        
+        if cuenta:
+            session ['Logueado'] = True
+            session['id'] = cuenta['id']
+            
+            return render_template('a-home.html')
+    else:
+        return render_template('index.html')
 
 # APARTADO DEL ESTUDIANTE EN PYTHON
 
@@ -73,7 +75,21 @@ def e_libro():
 
 @app.route('/home/admin/')
 def a_home():
-    return render_template('./admin/a-home.html')
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    
+    # Estudiantes
+    cursor.execute('SELECT * FROM estudiantes')
+    estudiantes = cursor.fetchall()
+    print('Estudiantes:', estudiantes)
+    
+    # Profesores
+    cursor.execute('SELECT * FROM profesores')
+    profesores = cursor.fetchall()
+    print('Profesores:', profesores)
+    
+    cursor.close()
+    
+    return render_template('./admin/a-home.html', estudiantes=estudiantes, profesores=profesores)
 
 @app.route('/admin/cursos')
 def a_cursos():

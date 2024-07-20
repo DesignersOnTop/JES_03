@@ -21,22 +21,22 @@
         <!-- En este section estara el formulario de inicio de sesion ademas del titulo  -->
         <section id="inicio-de-sesion">
             <h1>Iniciar Sesion</h1>
-            <form action="#">
+            <form  method="post">
                 <div id="introducir-id">
                     <figure class="svg">
                         <img src="{{ url_for('static', filename='imagenes/iconos/user-id-verification.svg') }}" alt="icono-id">
                     </figure>
-                    <input type="text" id="id" placeholder="Introduzca Su ID" autofocus autocomplete="off">
+                    <input type="text" id="id" placeholder="Introduzca Su ID" autofocus autocomplete="off" name="matricula-sesion">
                 </div>
                 <!-- En esta parte estara tanto el icono de la contraseña asi mismo como el input de la contraseña -->
                 <div id="introducir-contraseña">
                     <figure class="svg">
                         <img src="{{ url_for('static', filename='imagenes/iconos/security-password.svg') }}" alt="icono-contraseña">
                     </figure>
-                    <input type="password" id="password" placeholder="Introduzca Su Contraseña" autocomplete="off">
+                    <input type="password" id="password" placeholder="Introduzca Su Contraseña" autocomplete="off" name="pass-sesion">
                 </div>
                 <!-- Boton de inicio de sesion -->
-                <input type="button" id="iniciar-sesion" value="Iniciar Sesion" onclick="usuario()">
+                <button type="submit" id="iniciar-sesion" onclick="usuario()">Iniciar Sesion</button>
             </form>
         </section>
     </main>
