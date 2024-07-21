@@ -1,6 +1,6 @@
 # Incluir el framework Flask
 import os
-from flask import Flask, render_template, request, redirect, session, send_from_directory
+from flask import Flask, render_template, request, redirect, session, send_from_directory, url_for
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
 from datetime import datetime
@@ -21,25 +21,32 @@ app.config['MYSQL_DB'] = 'jes'
 
 # Inicializar MySQL
 mysql = MySQL(app)
+
+users = {
+    'estudiante': {'role': 'estudiante', 'password': 'estudiante'},
+    'profesor': {'role': 'profesor', 'password': 'profesor'},
+    'admin': {'role': 'admin', 'password': 'admin'}
+}
 #-----------------------------------------------------
 
-@app.route('/', methods=['POST'])
+@app.route('/')
 def Index():
-    if request.method == 'POST' and 'matricula-sesion' in request.form and 'pass-sesion':
-        _matricula = request.form['matricula-sesion']
-        _password = request.form['pass-sesion']
-        
-        cursor = mysql.connection.cursor()
-        cursor.execute('SELECT * FROM usuarios WHERE matricula = %s AND contraseña = %s',(_matricula, _password,))
-        cuenta = cursor.fetchone()
-        
-        if cuenta:
-            session ['Logueado'] = True
-            session['id'] = cuenta['id']
-            
-            return render_template('a-home.html')
-    else:
-        return render_template('index.html')
+    return render_template('index.html')
+    
+@app.route('/login', methods=['POST'])
+def login():
+    matricula = request.form['matricula-sesion']
+    password = request.form['pass-sesion']
+    
+    if matricula in users and users[matricula]['password'] == password:
+        role = users[matricula]['role']
+        if role == 'estudiante':
+            return redirect('/home/estudiante/')
+        elif role == 'profesor':
+            return redirect('/home/profesor/')
+        elif role == 'admin':
+            return redirect('/home/admin/')
+    return redirect('/')
 
 # APARTADO DEL ESTUDIANTE EN PYTHON
 
@@ -75,20 +82,15 @@ def e_libro():
 
 @app.route('/home/admin/')
 def a_home():
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)  
     # Estudiantes
     cursor.execute('SELECT * FROM estudiantes')
     estudiantes = cursor.fetchall()
-    print('Estudiantes:', estudiantes)
-    
     # Profesores
     cursor.execute('SELECT * FROM profesores')
     profesores = cursor.fetchall()
-    print('Profesores:', profesores)
-    
+    # Cerrar la conexion para seguridad
     cursor.close()
-    
     return render_template('./admin/a-home.html', estudiantes=estudiantes, profesores=profesores)
 
 @app.route('/admin/cursos')
