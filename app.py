@@ -155,7 +155,7 @@ def p_perfil():
 def p_refuerzo_libros():
     return render_template('./profesor/p-refuerzo-libros.html')
 
-@app.route('/profesor/refuerzo/libro/fuenteAbriir/')
+@app.route('/profesor/refuerzo/libros/<int:libro_id>/')
 def p_libro_refuerzo():
     return render_template('./profesor/p-libro-refuerzo.html')
 
