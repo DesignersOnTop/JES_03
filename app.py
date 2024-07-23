@@ -1,4 +1,3 @@
-# Incluir el framework Flask
 import os
 from flask import Flask, render_template, request, redirect, session, send_from_directory, url_for
 from flask_mysqldb import MySQL
