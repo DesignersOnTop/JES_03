@@ -50,7 +50,7 @@ def login():
         return redirect('/home/profesor/')
 
     # Verificación de administradores
-    cursor.execute("SELECT * FROM admin WHERE a_email = %s", (matricula,))
+    cursor.execute("SELECT * FROM admin WHERE matricula = %s", (matricula,))
     admin = cursor.fetchone()
     if admin and admin['contraseña'] == password:
         session['user_id'] = admin['id_admin']
@@ -186,7 +186,7 @@ def p_perfil():
 def p_refuerzo_libros():
     return render_template('./profesor/p-refuerzo-libros.html')
 
-@app.route('/profesor/refuerzo/libros/<int:libro_id>/')
+@app.route('/profesor/refuerzo/libros/nombre_libro')
 def p_libro_refuerzo():
     return render_template('./profesor/p-libro-refuerzo.html')
 
@@ -230,9 +230,9 @@ def p_tarea_e():
 def p_report_a():
     return render_template('./profesor/p-report-a.html')
 
-@app.route('/profesor/perfil')
+@app.route('/profesor/perfil/estudiante')
 def p_perfil_e():
-    return render_template('/profesor/p-perfil-e.html')
+    return render_template('./profesor/p-perfil-e.html')
 
 if __name__ == '__main__':
     app.run(port = 3000, debug=True)

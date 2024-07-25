@@ -73,18 +73,15 @@
                                 <th>Apellido</th>
                                 <th>F. Nacimiento</th>
                                 <th>Curso</th>
-                                <th>Secci&oacute;n</th>
                             </tr>
                             {% for estudiante in estudiantes %}
                             <tr class="fila-calificacion">
-                                <td>{{ estudiante[0] }}</td> <!-- Asumiendo que id_estudiante es la primera columna -->
-                                <td>{{estudiante[4]}}</td>
-                                <td>{{ estudiante[5] }}</td> <!-- Matricula -->
-                                <td>{{ estudiante[6] }}</td> <!-- Nombre -->
-                                <td>{{ estudiante[3] }}</td> <!-- Apellido -->
-                                <td>{{ estudiante[4] }}</td> <!-- Fecha de Nacimiento -->
-                                <td>{{ estudiante[5] }}</td> <!-- Curso -->
-                                <td>{{ estudiante[6] }}</td> <!-- Sección -->
+                                <td>{{ estudiante.id_estudiante }}</td>
+                                <td>{{estudiante.matricula}}</td>
+                                <td>{{ estudiante.nombre }}</td>
+                                <td>{{ estudiante.apellidos }}</td>
+                                <td>{{ estudiante.fecha_nacimiento }}</td>
+                                <td>{{ estudiante.id_curso_seccion}}</td>
                             </tr>
                             {% endfor %}
                         </table>

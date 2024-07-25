@@ -1028,7 +1028,7 @@ header {
     display: none;
 }
 
-.botones-curso * {
+.botones-curso a {
     background-color: #00000049;
     backdrop-filter: blur(20px);
     color: #ffc83da2;
@@ -1051,13 +1051,18 @@ header {
     gap: 10px;
 }
 
-.botones-curso-p *{
+.botones-curso-p button{
     width: 80%;
     color: rgba(255, 0, 0, 0.438);
     border-radius: 5px;
+    background-color: #00000049;
+    backdrop-filter: blur(20px);
+    border: 1px solid #ffffff48;
+    width: 80%;
+    padding: 5px 0;
 }
 
-.botones-curso-p *:hover {
+.botones-curso-p button:hover {
     color: red;
     transition: all 0.4s;
 }
@@ -2691,6 +2696,10 @@ textarea.editable {
 
 
 @media screen and (max-width: 600px) {
+    .display-none {
+        display: none;
+    }
+
     /* Sweetalert modales */
     .emergente-class {
         width: 80%;
@@ -3126,6 +3135,10 @@ textarea.editable {
 /* Tablet */
 
 @media screen and (min-width: 601px) and (max-width: 900px) {
+    .display-none {
+        display: none;
+    }
+    
     #index-main {
         background-color: rgba(0, 0, 0, 0.84);
         min-width: 80%;
