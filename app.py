@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request, redirect, session, send_from_directory, url_for
+from flask import Flask, render_template, request, redirect, session, send_from_directory, url_for, flash
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
 from datetime import datetime
@@ -20,12 +20,6 @@ app.config['MYSQL_DB'] = 'jes'
 
 # Inicializar MySQL
 mysql = MySQL(app)
-
-users = {
-    'estudiante': {'role': 'estudiante', 'password': 'estudiante'},
-    'profesor': {'role': 'profesor', 'password': 'profesor'},
-    'admin': {'role': 'admin', 'password': 'admin'}
-}
 #-----------------------------------------------------
 
 @app.route('/')
@@ -37,21 +31,59 @@ def login():
     matricula = request.form['matricula-sesion']
     password = request.form['pass-sesion']
     
-    if matricula in users and users[matricula]['password'] == password:
-        role = users[matricula]['role']
-        if role == 'estudiante':
-            return redirect('/home/estudiante/')
-        elif role == 'profesor':
-            return redirect('/home/profesor/')
-        elif role == 'admin':
-            return redirect('/home/admin/')
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    
+    # Verificación de estudiantes
+    cursor.execute("SELECT * FROM estudiantes WHERE matricula = %s", (matricula,))
+    estudiante = cursor.fetchone()
+    if estudiante and estudiante['contraseña'] == password:
+        session['user_id'] = estudiante['id_estudiante']
+        session['role'] = 'estudiante'
+        return redirect('/home/estudiante/')
+
+    # Verificación de profesores
+    cursor.execute("SELECT * FROM profesores WHERE matricula = %s", (matricula,))
+    profesor = cursor.fetchone()
+    if profesor and profesor['contraseña'] == password:
+        session['user_id'] = profesor['id_profesor']
+        session['role'] = 'profesor'
+        return redirect('/home/profesor/')
+
+    # Verificación de administradores
+    cursor.execute("SELECT * FROM admin WHERE a_email = %s", (matricula,))
+    admin = cursor.fetchone()
+    if admin and admin['contraseña'] == password:
+        session['user_id'] = admin['id_admin']
+        session['role'] = 'admin'
+        return redirect('/home/admin/')
     return redirect('/')
 
-# APARTADO DEL ESTUDIANTE EN PYTHON
+# HOME ESTUDIANTE
+@app.route('/home/estudiante/', methods=['GET'])
+def home_estudiante():
+    if 'user_id' not in session or session['role'] != 'estudiante':
+        return redirect('/')
 
-@app.route('/home/estudiante/')
-def e_home():
-    return render_template('./estudiante/e-home.html')
+    estudiante_id = session['user_id']
+
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+
+    # calificacion estudiante
+    cursor.execute("SELECT * FROM calificaciones WHERE id_estudiante = %s", (estudiante_id,))
+    calificaciones = cursor.fetchall()
+
+    # horario estudiante
+    cursor.execute("SELECT * FROM horario WHERE id_estudiante = %s", (estudiante_id,))
+    horarios = cursor.fetchall()
+
+    # asistencias estudiante
+    cursor.execute("SELECT * FROM asistencias WHERE id_estudiante = %s", (estudiante_id,))
+    asistencias = cursor.fetchall()
+
+    cursor.close()
+
+    return render_template('./estudiante/e-home.html', calificaciones=calificaciones, horarios=horarios, asistencias=asistencias)
+
 
 @app.route('/estudiante/perfil/')
 def e_perfil():

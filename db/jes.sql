@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 23-07-2024 a las 01:57:50
+-- Tiempo de generación: 25-07-2024 a las 08:33:38
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -107,6 +107,13 @@ CREATE TABLE `calificaciones` (
   `C. Final` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `calificaciones`
+--
+
+INSERT INTO `calificaciones` (`id_calificacion`, `id_estudiante`, `id_asignatura`, `C1`, `C2`, `C3`, `C4`, `C. Final`) VALUES
+(1, 2, 2403, 100, 100, 100, 100, 100);
+
 -- --------------------------------------------------------
 
 --
@@ -141,6 +148,24 @@ CREATE TABLE `curso_seccion` (
   `id_curso` int(11) NOT NULL,
   `id_seccion` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `curso_seccion`
+--
+
+INSERT INTO `curso_seccion` (`id_curso_seccion`, `id_curso`, `id_seccion`) VALUES
+(1, 1, 10),
+(2, 1, 11),
+(3, 2, 10),
+(4, 2, 11),
+(5, 3, 10),
+(6, 3, 11),
+(7, 4, 10),
+(8, 4, 11),
+(9, 5, 10),
+(10, 5, 11),
+(11, 6, 10),
+(12, 6, 11);
 
 -- --------------------------------------------------------
 
@@ -185,6 +210,13 @@ CREATE TABLE `estudiantes` (
   `contraseña` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `estudiantes`
+--
+
+INSERT INTO `estudiantes` (`id_estudiante`, `id_curso_seccion`, `matricula`, `nombre`, `apellidos`, `direccion`, `fecha_nacimiento`, `genero`, `email`, `telefono`, `imagen_perfil`, `contraseña`) VALUES
+(2, 1, 'e-9990', 'Albiery', 'Rodriguez', 'calle 16 de agosto #1', '2010-10-19', 'masculino', 'albieryr@gmail.com', '8095889924', 'https://images.unsplash.com/photo-1521119989659-a83eee488004?q=80&w=1923&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'estudiante123');
+
 -- --------------------------------------------------------
 
 --
@@ -215,11 +247,19 @@ INSERT INTO `hora` (`id_hora`, `hora`) VALUES
 
 CREATE TABLE `horario` (
   `id_horario` int(10) NOT NULL,
+  `id_estudiante` int(11) NOT NULL,
   `id_hora` int(10) NOT NULL,
   `id_curso_seccion` int(11) NOT NULL,
   `id_asignatura` int(10) NOT NULL,
   `id_dias` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `horario`
+--
+
+INSERT INTO `horario` (`id_horario`, `id_estudiante`, `id_hora`, `id_curso_seccion`, `id_asignatura`, `id_dias`) VALUES
+(1, 2, 1, 1, 2403, 100);
 
 -- --------------------------------------------------------
 
@@ -413,7 +453,8 @@ ALTER TABLE `horario`
   ADD KEY `id_cursos` (`id_curso_seccion`),
   ADD KEY `id_asignaturas` (`id_asignatura`),
   ADD KEY `id_dias` (`id_dias`),
-  ADD KEY `id_curso_seccion` (`id_curso_seccion`);
+  ADD KEY `id_curso_seccion` (`id_curso_seccion`),
+  ADD KEY `id_estudiante` (`id_estudiante`);
 
 --
 -- Indices de la tabla `material estudio`
@@ -485,7 +526,7 @@ ALTER TABLE `asistencias`
 -- AUTO_INCREMENT de la tabla `calificaciones`
 --
 ALTER TABLE `calificaciones`
-  MODIFY `id_calificacion` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_calificacion` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `cursos`
@@ -497,7 +538,7 @@ ALTER TABLE `cursos`
 -- AUTO_INCREMENT de la tabla `curso_seccion`
 --
 ALTER TABLE `curso_seccion`
-  MODIFY `id_curso_seccion` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_curso_seccion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `dias`
@@ -509,7 +550,7 @@ ALTER TABLE `dias`
 -- AUTO_INCREMENT de la tabla `estudiantes`
 --
 ALTER TABLE `estudiantes`
-  MODIFY `id_estudiante` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_estudiante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `hora`
@@ -521,7 +562,7 @@ ALTER TABLE `hora`
 -- AUTO_INCREMENT de la tabla `horario`
 --
 ALTER TABLE `horario`
-  MODIFY `id_horario` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_horario` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `material estudio`
@@ -596,7 +637,8 @@ ALTER TABLE `horario`
   ADD CONSTRAINT `horario_ibfk_1` FOREIGN KEY (`id_hora`) REFERENCES `hora` (`id_hora`),
   ADD CONSTRAINT `horario_ibfk_2` FOREIGN KEY (`id_dias`) REFERENCES `dias` (`id_dias`),
   ADD CONSTRAINT `horario_ibfk_4` FOREIGN KEY (`id_asignatura`) REFERENCES `asignaturas` (`id_asignatura`),
-  ADD CONSTRAINT `horario_ibfk_5` FOREIGN KEY (`id_curso_seccion`) REFERENCES `curso_seccion` (`id_curso_seccion`);
+  ADD CONSTRAINT `horario_ibfk_5` FOREIGN KEY (`id_curso_seccion`) REFERENCES `curso_seccion` (`id_curso_seccion`),
+  ADD CONSTRAINT `horario_ibfk_6` FOREIGN KEY (`id_estudiante`) REFERENCES `estudiantes` (`id_estudiante`);
 
 --
 -- Filtros para la tabla `material estudio`
