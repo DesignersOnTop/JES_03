@@ -2646,6 +2646,13 @@ textarea.editable {
     margin: 0 auto;
 }
 
+.modal-video iframe {
+    width: 80%;
+    height: 80%;
+    margin: auto;
+}
+
+
 /* Movil */
 
 @media screen and (min-width: 300px) and (max-width: 400px) {

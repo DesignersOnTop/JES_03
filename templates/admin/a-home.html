@@ -97,24 +97,28 @@
                     </div>
                     <div class="tabla-admin">
                         <table class="tabla-horario tabla-asistencia">
-                            <tr>
-                                <th>ID</th>
-                                <th>Matrícula</th>
-                                <th>Nombre</th>
-                                <th>Apellido</th>
-                                <th>Ced&uacute;la</th>
-                                <th>Asignatura</th>
-                            </tr>
-                            {% for profesor in profesores %}
-                            <tr class="fila-calificacion">
-                                <td>{{ profesor.id_profesor }}</td>
-                                <td>{{ profesor.matricula }}</td>
-                                <td>{{ profesor.nombre }}</td>
-                                <td>{{ profesor.apellido }}</td>
-                                <td>{{ profesor.cedula }}</td>
-                                <td>{{ profesor.id_asignatura }}</td>
-                            </tr>
-                            {% endfor %}
+                            <thead id="thead-admin">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Matrícula</th>
+                                    <th>Nombre</th>
+                                    <th>Apellido</th>
+                                    <th>Ced&uacute;la</th>
+                                    <th>Asignatura</th>
+                                </tr>                                
+                            </thead>
+                            <tbody id="tbody-scroll">
+                                {% for profesor in profesores %}
+                                <tr class="fila-calificacion">
+                                    <td>{{ profesor.id_profesor }}</td>
+                                    <td>{{ profesor.matricula }}</td>
+                                    <td>{{ profesor.nombre }}</td>
+                                    <td>{{ profesor.apellido }}</td>
+                                    <td>{{ profesor.cedula }}</td>
+                                    <td>{{ profesor.id_asignatura }}</td>
+                                </tr>
+                                {% endfor %}                                
+                            </tbody>
                         </table>
                     </div>
                 </article>

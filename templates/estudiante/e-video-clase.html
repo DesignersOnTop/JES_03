@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='imagenes/recursos/logo-jes.png') }}">
+</head>
+<body>
+    <main class="main-container">
+        <section class="modals-container modal-video">
+            <iframe src="https://www.youtube.com/embed/ir6A-Ns5Em8?si=bVzCn3rsk42nL5yT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </section>
+    </main>
+    <script src="{{ url_for('static', filename='js/perfil.js') }}"></script>
+</body>
+</html>

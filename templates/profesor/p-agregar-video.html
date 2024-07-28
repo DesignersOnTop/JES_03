@@ -10,20 +10,20 @@
 <body>
     <main class="main-container main-curso-material">            
         <section class="modals-container agregar-material-section">
-            <form action="#">
+            <form action="/agregar/video/profesor/" method="post" enctype="multipart/form-data">
                 <fieldset class="agregar-material-fieldset">
                     <legend>Agregar video de refuerzo 1ro - A</legend>
                     <div class="dato-material info-material">
                         <label for="nombre-material">Titulo del video</label>
-                        <input type="text" id="nombre-material">
+                        <input type="text" id="nombre-material" name="titulo-video">
                     </div>
                     <div class="dato-material dato-valor-material">
                         <label for="valor-material">Materia</label>
-                        <input type="text" id="valor-material">
+                        <input type="text" id="valor-material" name="materia-video">
                     </div>
                     <div class="dato-material dato-video-url">
-                        <label for="url-video">Insertar</label>
-                        <input type="text" id="url-video">
+                        <label for="Insertar-video">Insertar</label>
+                        <input type="text" id="insertar-video" name="insertar-video">
                     </div>
                 </fieldset>
                 <div class="botones-agg-material">

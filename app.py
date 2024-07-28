@@ -105,6 +105,10 @@ def e_refuerzo_libros():
 def e_refuerzo_videos():
     return render_template('./estudiante/e_refuerzo_videos.html')
 
+@app.route('/estudiante/video/')
+def e_videos():
+    return render_template('./estudiante/e-video-clase.html')
+
 @app.route('/estudiante/libro/')
 def e_libro():
     return render_template('./estudiante/e-libro-refuerzo.html')
@@ -124,61 +128,62 @@ def a_home():
     cursor.close()
     return render_template('./admin/a-home.html', estudiantes=estudiantes, profesores=profesores)
 
-@app.route('/admin/cursos')
+@app.route('/admin/cursos/')
 def a_cursos():
     return render_template('./admin/a-cursos.html')
 
-@app.route('/admin/curso')
+@app.route('/admin/curso/')
 def a_curso():
     return render_template('./admin/a-curso.html')
 
-@app.route('/admin/materias')
+@app.route('/admin/materias/')
 def a_materias():
     return render_template('./admin/a-materias.html')
 
-@app.route('/admin/reportes')
+@app.route('/admin/reportes/')
 def a_reportes():
     return render_template('./admin/a-reporte-curso.html')
 
-@app.route('/admin/reportes-profesor')
+@app.route('/admin/reportes-profesor/')
 def a_reporte_profesor():
     return render_template('./admin/a-reporte-profesor.html')
 
-@app.route('/admin/perfil')
+@app.route('/admin/perfil/')
 def a_perfil():
     return render_template('./admin/a-perfil.html')
 
-@app.route('/admin/reportes-calificacion')
+@app.route('/admin/reportes-calificacion/')
 def a_reporte_calificaciones():
     return render_template('./admin/a-calificaciones-reporte.html')
 
-@app.route('/admin/reportes-asistencias')
+@app.route('/admin/reportes-asistencias/')
 def a_reportes_asistencia():
     return render_template('./admin/a-asistencias-reporte.html')
 
-@app.route('/admin/registro-E')
+@app.route('/admin/registro/estudiante/')
 def a_formulario_registro_e():
     return render_template('./admin/a-formulario-registro-e.html')
 
-@app.route('/admin/registro-P')
+@app.route('/admin/registro/profesor/')
 def a_formulario_registro_p():
     return render_template('./admin/a-formulario-registro-p.html')
 
-@app.route('/admin/profesores')
+@app.route('/admin/profesores/')
 def a_cursos_profesor():
     return render_template('./admin/a-profesor-1_a.html')
 
-@app.route('/admin/horario')
+@app.route('/admin/horario/')
 def a_horario_profesor():
     return render_template('./admin/a-horario-1a.html')
 
-# APARTADO DEL PROFESORES EN PYTHON
+# =========================================================
 
+# APARTADO DEL PROFESORES EN PYTHON
 @app.route('/home/profesor/')
 def p_home():
     return render_template('./profesor/p-home-a.html')
 
-@app.route('/profesor/perfil')
+@app.route('/profesor/perfil/')
 def p_perfil():
     return render_template('./profesor/p-perfil.html')
 
@@ -190,47 +195,70 @@ def p_refuerzo_libros():
 def p_libro_refuerzo():
     return render_template('./profesor/p-libro-refuerzo.html')
 
-@app.route('/profesor/refuerzo/videos')
+@app.route('/profesor/refuerzo/videos/')
 def p_refuerzo_videos():
     return render_template('./profesor/p-refuerzo-videos.html')
 
-@app.route('/profesor/agregar/libros')
+@app.route('/profesor/agregar/libros/', methods=['GET','POST'])
 def agregar_libro():
+    _portada = request.files['portada-libro']
+    _titulo = request.form['titulo-libro']
+    _materia = request.form['materia-libro']
+    _subir = request.files['subir-libro']
+    
+    print(_portada)
+    print(_titulo)
+    print(_materia)
+    print(_subir)
     return render_template('/profesor/p-agregar-libro.html')
+    
 
-@app.route('/profesor/agregarVideo')
+@app.route('/profesor/agregar/video/')
 def p_agregar():
     return render_template('./profesor/p-agregar-video.html')
 
-@app.route('/profesor/materiales')
+@app.route('/agregar/video/profesor/', methods=['POST'])
+def p_agregar_video():
+    _titulo = request.form['titulo-video']
+    _materia = request.form['materia-video']
+    _insertar = request.form['insertar-video']
+    
+    print(_titulo)
+    print(_materia)
+    print(_insertar)
+    
+    return redirect('/profesor/refuerzo/videos/')
+    
+
+@app.route('/profesor/materiales/')
 def p_material_estudio():
     return render_template('/profesor/p-material_estudio.html')
 
-@app.route('/profesor/agregar_material')
+@app.route('/profesor/agregar/material/')
 def p_agregar_material():
     return render_template('./profesor/p-agregar-material.html')
 
-@app.route('/profesor/recuerdoEstudio')
+@app.route('/profesor/recurso/estudio/')
 def p_recurso_estudio():
     return render_template('./profesor/p-recurso_estudio.html')
 
-@app.route('/profesor/materialSubido')
+@app.route('/profesor/material/subido/')
 def p_material_de_curso_subido():
     return render_template('./profesor/p-material-de-curso-subido.html')
 
-@app.route('/profesor/clasesEnviadas')
+@app.route('/profesor/clases/enviadas/')
 def p_clases_enviadas():
     return render_template('./profesor/p-clases-enviada.html')
 
-@app.route('/profesor/tareaEstudiante')
+@app.route('/profesor/tarea/estudiante/')
 def p_tarea_e():
     return render_template('./profesor/p-tarea-e.html')
 
-@app.route('/profesor/reporte')
+@app.route('/profesor/reporte/')
 def p_report_a():
     return render_template('./profesor/p-report-a.html')
 
-@app.route('/profesor/perfil/estudiante')
+@app.route('/profesor/perfil/estudiante/')
 def p_perfil_e():
     return render_template('./profesor/p-perfil-e.html')
 
