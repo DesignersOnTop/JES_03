@@ -199,19 +199,36 @@ def p_libro_refuerzo():
 def p_refuerzo_videos():
     return render_template('./profesor/p-refuerzo-videos.html')
 
-@app.route('/profesor/agregar/libros/', methods=['GET','POST'])
+@app.route('/profesor/agregar/libros/')
 def agregar_libro():
-    _portada = request.files['portada-libro']
+    return render_template('/profesor/p-agregar-libro.html')
+
+@app.route('/agregar/libro/', methods=['GET','POST'])
+def p_agregar_libro():
+    _portada = request.files['portada_libro'].filename
     _titulo = request.form['titulo-libro']
     _materia = request.form['materia-libro']
-    _subir = request.files['subir-libro']
+    _subir = request.files['subir-libro'].filename
     
-    print(_portada)
-    print(_titulo)
-    print(_materia)
-    print(_subir)
-    return render_template('/profesor/p-agregar-libro.html')
+    tiempo = datetime.now()
+    horaActual = tiempo.strftime('%Y%H%M%S')
     
+    # if _subir.filename!= " ":
+    #     nuevoNombre = horaActual+ "_" + _subir.filename
+    #     _subir.save('static/img/'+nuevoNombre)
+        
+    sql = 'INSERT INTO `libros` (`id`,`portada`, `titulo`, `id_asignatura`, `libro`, `id_curso_seccion`) VALUES (NULL, %s, %s, %s, %s, 2)'
+    
+    datos = (_portada, _titulo, _materia, _subir)
+    
+    conexion = mysql.connection
+    cursor = conexion.cursor()
+    cursor.execute(sql,datos)
+    
+    conexion.commit()
+    cursor.close()
+    
+    return redirect('/profesor/refuerzo/libros/')
 
 @app.route('/profesor/agregar/video/')
 def p_agregar():
@@ -223,9 +240,16 @@ def p_agregar_video():
     _materia = request.form['materia-video']
     _insertar = request.form['insertar-video']
     
-    print(_titulo)
-    print(_materia)
-    print(_insertar)
+    sql = 'INSERT INTO `videos` (`id`, `titulo`, `id_seccion_curso`, `id_asignatura`, `video`) VALUES (NULL, %s, %s, %s, 2)'
+    
+    datos = (_titulo, _materia, _insertar)
+    
+    conexion = mysql.connection
+    cursor = conexion.cursor()
+    cursor.execute(sql,datos)
+    
+    conexion.commit()
+    cursor.close()
     
     return redirect('/profesor/refuerzo/videos/')
     

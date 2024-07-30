@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-07-2024 a las 08:33:38
+-- Tiempo de generación: 30-07-2024 a las 06:54:30
 -- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Versión de PHP: 8.1.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -264,6 +264,21 @@ INSERT INTO `horario` (`id_horario`, `id_estudiante`, `id_hora`, `id_curso_secci
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `libros`
+--
+
+CREATE TABLE `libros` (
+  `id` int(10) NOT NULL,
+  `portada` varchar(255) NOT NULL,
+  `titulo` varchar(60) NOT NULL,
+  `id_asignatura` int(10) NOT NULL,
+  `libro` varchar(255) NOT NULL,
+  `id_curso_seccion` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `material estudio`
 --
 
@@ -380,6 +395,20 @@ INSERT INTO `secciones` (`id_seccion`, `seccion`) VALUES
 (10, 'A'),
 (11, 'B');
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `videos`
+--
+
+CREATE TABLE `videos` (
+  `id` int(10) NOT NULL,
+  `titulo` varchar(60) NOT NULL,
+  `id_seccion_curso` int(11) NOT NULL,
+  `id_asignatura` int(10) NOT NULL,
+  `video` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
+
 --
 -- Índices para tablas volcadas
 --
@@ -457,6 +486,12 @@ ALTER TABLE `horario`
   ADD KEY `id_estudiante` (`id_estudiante`);
 
 --
+-- Indices de la tabla `libros`
+--
+ALTER TABLE `libros`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `material estudio`
 --
 ALTER TABLE `material estudio`
@@ -499,6 +534,12 @@ ALTER TABLE `roles`
 --
 ALTER TABLE `secciones`
   ADD PRIMARY KEY (`id_seccion`);
+
+--
+-- Indices de la tabla `videos`
+--
+ALTER TABLE `videos`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -565,6 +606,12 @@ ALTER TABLE `horario`
   MODIFY `id_horario` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT de la tabla `libros`
+--
+ALTER TABLE `libros`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `material estudio`
 --
 ALTER TABLE `material estudio`
@@ -599,6 +646,12 @@ ALTER TABLE `roles`
 --
 ALTER TABLE `secciones`
   MODIFY `id_seccion` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT de la tabla `videos`
+--
+ALTER TABLE `videos`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas

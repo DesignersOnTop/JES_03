@@ -1567,9 +1567,11 @@ header {
 }
 
 .dato-material textarea {
-    resize: vertical;
+    resize:vertical;
+    max-height: 80px;
+    max-width: 80%;
+    width: 80%; 
     min-height: 80px;
-    min-width: 100%;
 }
 
 .dato-material label {
@@ -1613,17 +1615,17 @@ header {
     justify-content: center;
     align-items: center;
     position: relative;
-    left: 6%;
+    /* left: 6%; */
 }
 
-.dato-report input[type='file'] {
+/* .dato-report input[type='file'] {
     display: none;
-}
+} */
 
 /*----------------------------------------------------- */
-.imagen-de-fondo-curso input {
+/* .imagen-de-fondo-curso input {
     display: none;
-}
+} */
 
 .imagen-de-fondo-curso {
     display: flex;

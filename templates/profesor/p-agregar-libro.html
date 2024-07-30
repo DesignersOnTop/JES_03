@@ -11,12 +11,12 @@
     <div class="body-container">
         <main class="main-container main-curso-material">            
             <section class="modals-container agregar-material-section">
-                <form action="#">
+                <form action="/agregar/libro/" method="post" enctype="multipart/form-data">
                     <fieldset class="agregar-material-fieldset p-agregar-libro-fieldset">
                         <legend>Agregar libro de refuerzo 1ro - A</legend>
                         <div class="imagen-de-fondo-curso">
                             <label for="fondo-material">Portada</label>
-                            <input type="file" id="fondo-material">
+                            <input type="file" id="fondo-material" name="portada_libro">
                         </div>
                         <div class="dato-material info-material">
                             <label for="nombre-material">Titulo del libro</label>
