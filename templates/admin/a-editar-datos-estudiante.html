@@ -11,7 +11,7 @@
     <main id="registro-modal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <form class="form-container">
+            <form method="post" class="form-container">
                 <fieldset>
                     <legend>Editar Perfil de Estudiante</legend>
                     <div class="form-group">
@@ -25,37 +25,37 @@
                     </div>
                     <div class="form-group">
                         <label for="nombre">Nombre:</label>
-                        <input type="text" id="nombre" name="nombre" required>
+                        <input value="{{ estudiante }}" type="text" id="nombre" name="nombre" required>
                     </div>
                     <div class="form-group">
                         <label for="apellidos">Apellidos:</label>
-                        <input type="text" id="apellidos" name="apellidos" required>
+                        <input value="{{ estudiante }}" type="text" id="apellidos" name="apellidos" required>
                     </div>
                     <div class="form-group">
                         <label for="matricula">Matrícula:</label>
-                        <input type="text" id="matricula" name="matricula" required>
+                        <input value="{{ estudiante }}" type="text" id="matricula" name="matricula" required>
                     </div>
                     <div class="form-group">
                         <label for="email">Correo Electrónico:</label>
-                        <input type="email" id="email" name="email" required>
+                        <input value="{{ estudiante }}" type="email" id="email" name="email" required>
                     </div>
                     <div class="form-group">
                         <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
-                        <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required>
+                        <input value="{{ estudiante }}" type="date" id="fecha_nacimiento" name="fecha_nacimiento" required>
                     </div>
                     <div class="form-group">
                         <label for="direccion">Dirección:</label>
-                        <input type="text" id="direccion" name="direccion" required>
+                        <input value="{{ estudiante }}" type="text" id="direccion" name="direccion" required>
                     </div>
                     <div class="form-group">
                         <label for="telefono">Teléfono:</label>
-                        <input type="tel" id="telefono" name="telefono" required>
+                        <input value="{{ estudiante }}" type="tel" id="telefono" name="telefono" required>
                     </div>
                     <div class="form-group">
                         <label for="contrasena">Contraseña:</label>
-                        <input type="password" id="contrasena" name="contrasena" required>
+                        <input value="{{ estudiante }}" type="password" id="contrasena" name="contrasena" required>
                     </div>
-                    <button type="button" class="btn-guardar-cambios">Guardar Cambios</button>
+                    <button type="submit" class="btn-guardar-cambios">Guardar Cambios</button>
                 </fieldset>
             </form>
         </div>

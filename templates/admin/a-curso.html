@@ -47,7 +47,7 @@
                     <a href="/admin/profesores">Profesores</a>
                     <!-- <h2 class="titulo-curso">Estudiantes</h2> -->
                     <div class="lado-derecho-curso-cabecera">
-                        <a href="/admin/registro-E">agregar</a>
+                        <a href="/admin/registro/estudiante">agregar</a>
                         <a href="/admin/horario">Horario</a>
                     </div>
                 </div>
@@ -61,46 +61,48 @@
                             <th>Curso</th>
                             <th>Secci&oacute;n</th>
                         </tr>
+                        {% for estudiante in estudiantes %}
                         <tr class="fila-calificacion">
-                            <td>1010</td>
-                            <td>Albiery</td>
-                            <td>Rodriguez</td>
-                            <td>07/08/2003</td>
-                            <td>1ro</td>
-                            <td>A</td>
-                            <td><a><figure><img src="{{ url_for('static', filename='imagenes/iconos/editar.svg') }}" alt="editar-profesor" class="btn-editar"></figure></a></td>
-                            <td><button class="btn-eliminar">eliminar</button></td>
-                        </tr>
-                        <tr class="fila-calificacion">
-                            <td>1011</td>
-                            <td>Smailyn</td>
-                            <td>Burgos</td>
-                            <td>04/03/2003</td>
-                            <td>1ro</td>
-                            <td>A</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                             <td><a><figure><img src="{{ url_for('static', filename='imagenes/iconos/editar.svg') }}" alt="editar-profesor"  class="btn-editar"></figure></a></td>
                             <td><button class="btn-eliminar">eliminar</button></td>
                         </tr>
                         <tr class="fila-calificacion">
-                            <td>1012</td>
-                            <td>Massiel</td>
-                            <td>Rodriguez</td>
-                            <td>04/01/2003</td>
-                            <td>1ro</td>
-                            <td>A</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><a><figure><img src="{{ url_for('static', filename='imagenes/iconos/editar.svg') }}" alt="editar-profesor"  class="btn-editar"></figure></a></td>
+                            <td><button class="btn-eliminar">eliminar</button></td>
+                        </tr>
+                        <tr class="fila-calificacion">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                             <td><a><figure><img src="{{ url_for('static', filename='imagenes/iconos/editar.svg') }}" alt="editar-profesor"  class="btn-editar"></figure></a></td>
                             <td><button class="btn-eliminar">eliminar</button></td>
                         </tr>    
                         <tr class="fila-calificacion">
-                            <td>1013</td>
-                            <td>Faury</td>
-                            <td>Garcia</td>
-                            <td>17/09/2004</td>
-                            <td>1ro</td>
-                            <td>A</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                             <td><a><figure><img src="{{ url_for('static', filename='imagenes/iconos/editar.svg') }}" alt="editar-profesor"  class="btn-editar"></figure></a></td>
                             <td><button class="btn-eliminar">eliminar</button></td>
                         </tr>
+                        {% endfor %}
                     </table>
                 </div>
             </article>

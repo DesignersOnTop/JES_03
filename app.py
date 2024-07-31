@@ -164,6 +164,50 @@ def a_reportes_asistencia():
 def a_formulario_registro_e():
     return render_template('./admin/a-formulario-registro-e.html')
 
+@app.route('/guardar_estudiantes', methods = ['POST'])
+def guardar_estudiante():
+    # Insertar estudiantes
+    curso = request.form["curso"]
+    matricula = request.form["matricula"]
+    nombre = request.form["nombre"]
+    apellidos = request.form["apellidos"]
+    direccion = request.form["direccion"]
+    fecha_nacimiento = request.form["fecha_nacimiento"]
+    genero = request.form["genero"]
+    correo = request.form["email"]
+    telefono = request.form["telefono"]
+    imagen_perfil = request.files["imagen_perfil"]
+    contraseña = request.form["contraseña"]
+
+    sql = 'INSERT INTO `estudiantes` (`id_estudiante`,`id_curso`, `matricula`, `nombre`, `apellidos`, `direccion`, `fecha_nacimiento`, `genero`, `email`, `telefono`, `imagen_perfil`, `contraseña`) VALUES (NULL, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
+
+    datos = (curso, matricula, nombre, apellidos, direccion, fecha_nacimiento, genero, correo, telefono, imagen_perfil, contraseña)
+
+    conexion = mysql.connection
+    cursor = conexion.cursor()
+    cursor.execute(sql,datos)
+    
+    conexion.commit()
+    cursor.close()
+
+    return redirect('./admin/a-curso.html')
+
+@app.route('/actualizar_estudiantes', methods = ['POST'])
+def actualizar_estudiantes():
+    # Actualizar estudiantes
+    id = request.form["id_estudiante"]
+    nombre = request.form["nombre"]
+    apellidos = request.form["apellidos"]
+    fecha_nacimiento = request.form["fecha_nacimiento"]
+    genero = request.form["genero"]
+    curso = request.form["curso"]
+    correo = request.form["email"]
+    telefono = request.form["telefono"]
+    direccion = request.form["direccion"]
+    matricula = request.form["matricula"]
+    contraseña = request.form["contraseña"]
+    return redirect('./admin/a-curso.html')
+
 @app.route('/admin/registro/profesor/')
 def a_formulario_registro_p():
     return render_template('./admin/a-formulario-registro-p.html')
