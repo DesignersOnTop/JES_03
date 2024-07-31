@@ -87,7 +87,16 @@ def home_estudiante():
 
 @app.route('/estudiante/perfil/')
 def e_perfil():
-    return render_template('./estudiante/e-perfil.html')
+    
+    estudiante_id = session['user_id']
+    
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('SELECT * FROM `estudiantes` WHERE id_estudiante = %s', (estudiante_id,))
+    
+    perfil = cursor.fetchall()
+    cursor.close()
+    
+    return render_template('./estudiante/e-perfil.html', perfil =perfil[0])
 
 @app.route('/estudiante/material/')
 def e_material():

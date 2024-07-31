@@ -10,44 +10,44 @@
 <body>
     <main class="main-container">
         <section class="modals-container modals-container-perfiles">
-            <article class="modal-perfil">
-                <div class="perfil-izquierda">
-                    <h4 class="titulo-perfil">Estudiante</h4>
-                    <figure class="perfil-estudiante perfil-profesor">
-                        <img src="{{ url_for('static', filename='imagenes/recursos/perfil-femenino.jpg') }}" alt="img-perfil">
-                    </figure>
-                    <div class="perfil-izquierda-abajo">
-                        <h6>Grado</h6>
-                        <h4>1ro A </h4>
+                <article class="modal-perfil">
+                    <div class="perfil-izquierda">
+                        <h4 class="titulo-perfil">Estudiante</h4>
+                        <figure class="perfil-estudiante perfil-profesor">
+                            <img src="{{perfil.imagen_perfil}}" alt="img-perfil">
+                        </figure>
+                        <div class="perfil-izquierda-abajo">
+                            <h6>Grado</h6>
+                            <h4>1ro A</h4>
+                        </div>
                     </div>
-                </div>
-                <div class="perfil-derecho">
-                    <div class="perfil-derecha-arriba">
-                        <h2>Emmy Garcia</h2>
-                        <p>1-22-0500</p>
+                    <div class="perfil-derecho">
+                        <div class="perfil-derecha-arriba">
+                            <h2>{{perfil.nombre}} {{perfil.apellidos}}</h2>
+                            <p>{{perfil.matricula}}</p>
+                        </div>
+                        <div class="datos datos1">
+                            <h3>Email</h3>
+                            <p>{{perfil.email}}</p>
+                        </div>
+                        <div class="datos">
+                            <h3>Fecha de Nacimiento</h3>
+                            <p>{{perfil.fecha_nacimiento}}</p>
+                        </div>
+                        <div class="datos">
+                            <h3>Genero</h3>
+                            <p>{{perfil.genero}}</p>
+                        </div>
+                        <div class="datos">
+                            <h3>Dirección</h3>
+                            <p>{{perfil.direccion}}</p>
+                        </div>
+                        <div class="datos">
+                            <h3>Telefono</h3>
+                            <p>{{perfil.telefono}}</p>
+                        </div>
                     </div>
-                    <div class="datos datos1">
-                        <h3>Email</h3>
-                        <p>emmyMaria@gmail.com</p>
-                    </div>
-                    <div class="datos">
-                        <h3>Fecha de Nacimiento</h3>
-                        <p>10-05-2009</p>
-                    </div>
-                    <div class="datos">
-                        <h3>Genero</h3>
-                        <p>Femenino</p>
-                    </div>
-                    <div class="datos">
-                        <h3>Dirección</h3>
-                        <p>Calle 16 de Agosto #01</p>
-                    </div>
-                    <div class="datos">
-                        <h3>Telefono</h3>
-                        <p>809-101-0000</p>
-                    </div>
-                </div>
-            </article>
+                </article>
         </section>
     </main>
     <script src="{{ url_for('static', filename='js/perfil.js') }}"></script>

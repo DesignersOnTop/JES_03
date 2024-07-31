@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-07-2024 a las 06:54:30
+-- Tiempo de generación: 31-07-2024 a las 06:46:54
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.1.25
 
@@ -130,42 +130,18 @@ CREATE TABLE `cursos` (
 --
 
 INSERT INTO `cursos` (`id_curso`, `nombre`) VALUES
-(1, '1ro'),
-(2, '2do'),
-(3, '3ro'),
-(4, '4to'),
-(5, '5to'),
-(6, '6to');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `curso_seccion`
---
-
-CREATE TABLE `curso_seccion` (
-  `id_curso_seccion` int(11) NOT NULL,
-  `id_curso` int(11) NOT NULL,
-  `id_seccion` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
-
---
--- Volcado de datos para la tabla `curso_seccion`
---
-
-INSERT INTO `curso_seccion` (`id_curso_seccion`, `id_curso`, `id_seccion`) VALUES
-(1, 1, 10),
-(2, 1, 11),
-(3, 2, 10),
-(4, 2, 11),
-(5, 3, 10),
-(6, 3, 11),
-(7, 4, 10),
-(8, 4, 11),
-(9, 5, 10),
-(10, 5, 11),
-(11, 6, 10),
-(12, 6, 11);
+(1, '1ro A'),
+(2, '2do A'),
+(3, '3ro A'),
+(4, '4to A'),
+(5, '5to A'),
+(6, '6to A'),
+(7, '1ro B'),
+(8, '2do B'),
+(9, '3ro B'),
+(10, '4to B'),
+(11, '5to B'),
+(12, '6to B');
 
 -- --------------------------------------------------------
 
@@ -197,7 +173,7 @@ INSERT INTO `dias` (`id_dias`, `dia`) VALUES
 
 CREATE TABLE `estudiantes` (
   `id_estudiante` int(11) NOT NULL,
-  `id_curso_seccion` int(11) NOT NULL,
+  `id_curso` int(10) NOT NULL,
   `matricula` char(10) NOT NULL,
   `nombre` varchar(30) NOT NULL,
   `apellidos` varchar(50) NOT NULL,
@@ -214,7 +190,7 @@ CREATE TABLE `estudiantes` (
 -- Volcado de datos para la tabla `estudiantes`
 --
 
-INSERT INTO `estudiantes` (`id_estudiante`, `id_curso_seccion`, `matricula`, `nombre`, `apellidos`, `direccion`, `fecha_nacimiento`, `genero`, `email`, `telefono`, `imagen_perfil`, `contraseña`) VALUES
+INSERT INTO `estudiantes` (`id_estudiante`, `id_curso`, `matricula`, `nombre`, `apellidos`, `direccion`, `fecha_nacimiento`, `genero`, `email`, `telefono`, `imagen_perfil`, `contraseña`) VALUES
 (2, 1, 'e-9990', 'Albiery', 'Rodriguez', 'calle 16 de agosto #1', '2010-10-19', 'masculino', 'albieryr@gmail.com', '8095889924', 'https://images.unsplash.com/photo-1521119989659-a83eee488004?q=80&w=1923&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'estudiante123');
 
 -- --------------------------------------------------------
@@ -249,7 +225,7 @@ CREATE TABLE `horario` (
   `id_horario` int(10) NOT NULL,
   `id_estudiante` int(11) NOT NULL,
   `id_hora` int(10) NOT NULL,
-  `id_curso_seccion` int(11) NOT NULL,
+  `id_curso` int(10) NOT NULL,
   `id_asignatura` int(10) NOT NULL,
   `id_dias` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
@@ -258,7 +234,7 @@ CREATE TABLE `horario` (
 -- Volcado de datos para la tabla `horario`
 --
 
-INSERT INTO `horario` (`id_horario`, `id_estudiante`, `id_hora`, `id_curso_seccion`, `id_asignatura`, `id_dias`) VALUES
+INSERT INTO `horario` (`id_horario`, `id_estudiante`, `id_hora`, `id_curso`, `id_asignatura`, `id_dias`) VALUES
 (1, 2, 1, 1, 2403, 100);
 
 -- --------------------------------------------------------
@@ -273,8 +249,16 @@ CREATE TABLE `libros` (
   `titulo` varchar(60) NOT NULL,
   `id_asignatura` int(10) NOT NULL,
   `libro` varchar(255) NOT NULL,
-  `id_curso_seccion` int(11) NOT NULL
+  `id_curso` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `libros`
+--
+
+INSERT INTO `libros` (`id`, `portada`, `titulo`, `id_asignatura`, `libro`, `id_curso`) VALUES
+(1, '<FileStorage: \'star8k.jpg\' (\'image/jpeg\')>', 'adas', 0, '<FileStorage: \'download_image_1711609602624.png\' (\'image/png\')>', 2),
+(2, '<FileStorage: \'star8k.jpg\' (\'image/jpeg\')>', 'sads', 0, 'star8k.jpg', 2);
 
 -- --------------------------------------------------------
 
@@ -284,7 +268,7 @@ CREATE TABLE `libros` (
 
 CREATE TABLE `material estudio` (
   `id_material` int(11) NOT NULL,
-  `id_curso_seccion` int(11) NOT NULL,
+  `id_curso` int(10) NOT NULL,
   `titulo_material` varchar(60) NOT NULL,
   `fecha_material` date NOT NULL,
   `material_subido` varchar(255) NOT NULL,
@@ -338,7 +322,7 @@ INSERT INTO `profesores` (`id_profesor`, `id_asignatura`, `matricula`, `nombre`,
 CREATE TABLE `profesor_asignado` (
   `id_profesor-asignado` int(10) NOT NULL,
   `id_profesor` int(10) NOT NULL,
-  `id_curso_seccion` int(11) NOT NULL
+  `id_curso` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -353,47 +337,8 @@ CREATE TABLE `refuerzo libros` (
   `subir_libro` varchar(255) NOT NULL,
   `id_asignatura` int(11) NOT NULL,
   `imagen_libro` varchar(255) NOT NULL,
-  `id_curso_seccion` int(11) NOT NULL
+  `id_curso` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `roles`
---
-
-CREATE TABLE `roles` (
-  `id_rol` int(10) NOT NULL,
-  `tipo` varchar(60) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
---
--- Volcado de datos para la tabla `roles`
---
-
-INSERT INTO `roles` (`id_rol`, `tipo`) VALUES
-(1, 'profesor'),
-(2, 'estudiante'),
-(3, 'administrador');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `secciones`
---
-
-CREATE TABLE `secciones` (
-  `id_seccion` int(10) NOT NULL,
-  `seccion` varchar(5) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
---
--- Volcado de datos para la tabla `secciones`
---
-
-INSERT INTO `secciones` (`id_seccion`, `seccion`) VALUES
-(10, 'A'),
-(11, 'B');
 
 -- --------------------------------------------------------
 
@@ -404,10 +349,17 @@ INSERT INTO `secciones` (`id_seccion`, `seccion`) VALUES
 CREATE TABLE `videos` (
   `id` int(10) NOT NULL,
   `titulo` varchar(60) NOT NULL,
-  `id_seccion_curso` int(11) NOT NULL,
+  `id_curso` int(10) NOT NULL,
   `id_asignatura` int(10) NOT NULL,
   `video` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `videos`
+--
+
+INSERT INTO `videos` (`id`, `titulo`, `id_curso`, `id_asignatura`, `video`) VALUES
+(1, 'asfas', 1, 0, '2');
 
 --
 -- Índices para tablas volcadas
@@ -447,14 +399,6 @@ ALTER TABLE `cursos`
   ADD PRIMARY KEY (`id_curso`);
 
 --
--- Indices de la tabla `curso_seccion`
---
-ALTER TABLE `curso_seccion`
-  ADD PRIMARY KEY (`id_curso_seccion`),
-  ADD KEY `id_curso` (`id_curso`),
-  ADD KEY `id_seccion` (`id_seccion`);
-
---
 -- Indices de la tabla `dias`
 --
 ALTER TABLE `dias`
@@ -465,7 +409,7 @@ ALTER TABLE `dias`
 --
 ALTER TABLE `estudiantes`
   ADD PRIMARY KEY (`id_estudiante`),
-  ADD KEY `id_curso_seccion` (`id_curso_seccion`);
+  ADD KEY `id_curso_seccion` (`id_curso`);
 
 --
 -- Indices de la tabla `hora`
@@ -479,17 +423,18 @@ ALTER TABLE `hora`
 ALTER TABLE `horario`
   ADD PRIMARY KEY (`id_horario`),
   ADD KEY `id_horas` (`id_hora`),
-  ADD KEY `id_cursos` (`id_curso_seccion`),
+  ADD KEY `id_cursos` (`id_curso`),
   ADD KEY `id_asignaturas` (`id_asignatura`),
   ADD KEY `id_dias` (`id_dias`),
-  ADD KEY `id_curso_seccion` (`id_curso_seccion`),
+  ADD KEY `id_curso_seccion` (`id_curso`),
   ADD KEY `id_estudiante` (`id_estudiante`);
 
 --
 -- Indices de la tabla `libros`
 --
 ALTER TABLE `libros`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_curso` (`id_curso`);
 
 --
 -- Indices de la tabla `material estudio`
@@ -497,7 +442,7 @@ ALTER TABLE `libros`
 ALTER TABLE `material estudio`
   ADD PRIMARY KEY (`id_material`),
   ADD KEY `id_materia` (`id_asignatura`),
-  ADD KEY `id_curso_seccion` (`id_curso_seccion`);
+  ADD KEY `id_curso_seccion` (`id_curso`);
 
 --
 -- Indices de la tabla `profesores`
@@ -512,7 +457,7 @@ ALTER TABLE `profesores`
 ALTER TABLE `profesor_asignado`
   ADD PRIMARY KEY (`id_profesor-asignado`),
   ADD KEY `id_profesor` (`id_profesor`),
-  ADD KEY `id_curso_seccion` (`id_curso_seccion`);
+  ADD KEY `id_curso_seccion` (`id_curso`);
 
 --
 -- Indices de la tabla `refuerzo libros`
@@ -520,26 +465,15 @@ ALTER TABLE `profesor_asignado`
 ALTER TABLE `refuerzo libros`
   ADD PRIMARY KEY (`id_libro_refuerzo`),
   ADD UNIQUE KEY `id_materia` (`id_asignatura`),
-  ADD KEY `id_curso_seccion` (`id_curso_seccion`),
+  ADD KEY `id_curso_seccion` (`id_curso`),
   ADD KEY `id_asignatura` (`id_asignatura`);
-
---
--- Indices de la tabla `roles`
---
-ALTER TABLE `roles`
-  ADD PRIMARY KEY (`id_rol`);
-
---
--- Indices de la tabla `secciones`
---
-ALTER TABLE `secciones`
-  ADD PRIMARY KEY (`id_seccion`);
 
 --
 -- Indices de la tabla `videos`
 --
 ALTER TABLE `videos`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_curso` (`id_curso`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -573,13 +507,7 @@ ALTER TABLE `calificaciones`
 -- AUTO_INCREMENT de la tabla `cursos`
 --
 ALTER TABLE `cursos`
-  MODIFY `id_curso` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT de la tabla `curso_seccion`
---
-ALTER TABLE `curso_seccion`
-  MODIFY `id_curso_seccion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_curso` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `dias`
@@ -609,7 +537,7 @@ ALTER TABLE `horario`
 -- AUTO_INCREMENT de la tabla `libros`
 --
 ALTER TABLE `libros`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `material estudio`
@@ -636,22 +564,10 @@ ALTER TABLE `refuerzo libros`
   MODIFY `id_libro_refuerzo` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `roles`
---
-ALTER TABLE `roles`
-  MODIFY `id_rol` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT de la tabla `secciones`
---
-ALTER TABLE `secciones`
-  MODIFY `id_seccion` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-
---
 -- AUTO_INCREMENT de la tabla `videos`
 --
 ALTER TABLE `videos`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Restricciones para tablas volcadas
@@ -671,17 +587,10 @@ ALTER TABLE `calificaciones`
   ADD CONSTRAINT `calificaciones_ibfk_2` FOREIGN KEY (`id_estudiante`) REFERENCES `estudiantes` (`id_estudiante`);
 
 --
--- Filtros para la tabla `curso_seccion`
---
-ALTER TABLE `curso_seccion`
-  ADD CONSTRAINT `curso_seccion_ibfk_1` FOREIGN KEY (`id_curso`) REFERENCES `cursos` (`id_curso`),
-  ADD CONSTRAINT `curso_seccion_ibfk_2` FOREIGN KEY (`id_seccion`) REFERENCES `secciones` (`id_seccion`);
-
---
 -- Filtros para la tabla `estudiantes`
 --
 ALTER TABLE `estudiantes`
-  ADD CONSTRAINT `estudiantes_ibfk_1` FOREIGN KEY (`id_curso_seccion`) REFERENCES `curso_seccion` (`id_curso_seccion`);
+  ADD CONSTRAINT `estudiantes_ibfk_1` FOREIGN KEY (`id_curso`) REFERENCES `cursos` (`id_curso`);
 
 --
 -- Filtros para la tabla `horario`
@@ -690,15 +599,21 @@ ALTER TABLE `horario`
   ADD CONSTRAINT `horario_ibfk_1` FOREIGN KEY (`id_hora`) REFERENCES `hora` (`id_hora`),
   ADD CONSTRAINT `horario_ibfk_2` FOREIGN KEY (`id_dias`) REFERENCES `dias` (`id_dias`),
   ADD CONSTRAINT `horario_ibfk_4` FOREIGN KEY (`id_asignatura`) REFERENCES `asignaturas` (`id_asignatura`),
-  ADD CONSTRAINT `horario_ibfk_5` FOREIGN KEY (`id_curso_seccion`) REFERENCES `curso_seccion` (`id_curso_seccion`),
-  ADD CONSTRAINT `horario_ibfk_6` FOREIGN KEY (`id_estudiante`) REFERENCES `estudiantes` (`id_estudiante`);
+  ADD CONSTRAINT `horario_ibfk_6` FOREIGN KEY (`id_estudiante`) REFERENCES `estudiantes` (`id_estudiante`),
+  ADD CONSTRAINT `horario_ibfk_7` FOREIGN KEY (`id_curso`) REFERENCES `cursos` (`id_curso`);
+
+--
+-- Filtros para la tabla `libros`
+--
+ALTER TABLE `libros`
+  ADD CONSTRAINT `libros_ibfk_1` FOREIGN KEY (`id_curso`) REFERENCES `cursos` (`id_curso`);
 
 --
 -- Filtros para la tabla `material estudio`
 --
 ALTER TABLE `material estudio`
   ADD CONSTRAINT `material estudio_ibfk_2` FOREIGN KEY (`id_asignatura`) REFERENCES `asignaturas` (`id_asignatura`),
-  ADD CONSTRAINT `material estudio_ibfk_3` FOREIGN KEY (`id_curso_seccion`) REFERENCES `curso_seccion` (`id_curso_seccion`);
+  ADD CONSTRAINT `material estudio_ibfk_3` FOREIGN KEY (`id_curso`) REFERENCES `cursos` (`id_curso`);
 
 --
 -- Filtros para la tabla `profesores`
@@ -711,14 +626,20 @@ ALTER TABLE `profesores`
 --
 ALTER TABLE `profesor_asignado`
   ADD CONSTRAINT `profesor_asignado_ibfk_2` FOREIGN KEY (`id_profesor`) REFERENCES `profesores` (`id_profesor`),
-  ADD CONSTRAINT `profesor_asignado_ibfk_3` FOREIGN KEY (`id_curso_seccion`) REFERENCES `curso_seccion` (`id_curso_seccion`);
+  ADD CONSTRAINT `profesor_asignado_ibfk_3` FOREIGN KEY (`id_curso`) REFERENCES `cursos` (`id_curso`);
 
 --
 -- Filtros para la tabla `refuerzo libros`
 --
 ALTER TABLE `refuerzo libros`
-  ADD CONSTRAINT `refuerzo libros_ibfk_1` FOREIGN KEY (`id_curso_seccion`) REFERENCES `curso_seccion` (`id_curso_seccion`),
-  ADD CONSTRAINT `refuerzo libros_ibfk_2` FOREIGN KEY (`id_asignatura`) REFERENCES `asignaturas` (`id_asignatura`);
+  ADD CONSTRAINT `refuerzo libros_ibfk_2` FOREIGN KEY (`id_asignatura`) REFERENCES `asignaturas` (`id_asignatura`),
+  ADD CONSTRAINT `refuerzo libros_ibfk_3` FOREIGN KEY (`id_curso`) REFERENCES `cursos` (`id_curso`);
+
+--
+-- Filtros para la tabla `videos`
+--
+ALTER TABLE `videos`
+  ADD CONSTRAINT `videos_ibfk_1` FOREIGN KEY (`id_curso`) REFERENCES `cursos` (`id_curso`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
