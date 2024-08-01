@@ -61,15 +61,33 @@ def login():
 # HOME ESTUDIANTE
 @app.route('/home/estudiante/', methods=['GET'])
 def home_estudiante():
-    if 'user_id' not in session or session['role'] != 'estudiante':
+    if 'user_id' not in session or session.get('role') != 'estudiante':
         return redirect('/')
 
     estudiante_id = session['user_id']
 
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
 
+    cursor.execute("SELECT imagen_perfil FROM estudiantes WHERE id_estudiante = %s", (estudiante_id,))
+    estudiante = cursor.fetchone()
+
     # calificacion estudiante
-    cursor.execute("SELECT * FROM calificaciones WHERE id_estudiante = %s", (estudiante_id,))
+    cursor.execute("""
+        SELECT 
+            calificaciones.id_estudiante,
+            asignaturas.nom_asignatura AS nom_asignatura,
+            calificaciones.C1,
+            calificaciones.C2,
+            calificaciones.C3,
+            calificaciones.C4,
+            calificaciones.`C. Final`
+        FROM 
+            calificaciones
+        JOIN 
+            asignaturas ON calificaciones.id_asignatura = asignaturas.id_asignatura
+        WHERE 
+            calificaciones.id_estudiante = %s
+    """, (estudiante_id,))
     calificaciones = cursor.fetchall()
 
     # horario estudiante
@@ -82,7 +100,10 @@ def home_estudiante():
 
     cursor.close()
 
-    return render_template('./estudiante/e-home.html', calificaciones=calificaciones, horarios=horarios, asistencias=asistencias)
+    session.clear()
+
+    return render_template('estudiante/e-home.html', calificaciones=calificaciones, horarios=horarios, asistencias=asistencias, estudiante=estudiante)
+
 
 
 @app.route('/estudiante/perfil/')

@@ -21,7 +21,7 @@
                 <ul>
                     <li class="nav-perfil">
                         <a href="/estudiante/perfil/" class="li-perfil">
-                            <figure><img src="{{ url_for('static', filename='imagenes/recursos/perfil-femenino.jpg') }}" alt="perfil"></figure>
+                            <figure><img src="{{ estudiante.imagen_perfil }}" alt="perfil"></figure>
                         </a>
                     </li>
                     <li class="nav-menu-home">
@@ -75,65 +75,41 @@
                     <table class="tabla-calificacion" id="">
                         <tr class="tabla-cabecera">
                             <th>Calificaciones</th>
-                            <th>L. Española</th>
-                            <th>C. Sociales</th>
-                            <th>Naturales</th>
-                            <th>Inglés</th>
-                            <th>Francés</th>
-                            <th>Italiano</th>
-                            <th>Romano</th>
+                            {% for calificacion in calificaciones %}
+                                <th>{{ calificacion.nom_asignatura }}</th>
+                            {% endfor %}
                         </tr>
                         <tr>
                             <td class="calificacion">C1</td>
-                            <td>90</td>
-                            <td>100</td>
-                            <td>98</td>
-                            <td>95</td>
-                            <td>96</td>
-                            <td>--</td>
-                            <td>--</td>
+                            {% for calificacion in calificaciones %}
+                                <td>{{ calificacion.C1 }}</td>
+                            {% endfor %}
                         </tr>
                         <tr>
                             <td class="calificacion">C2</td>
-                            <td>90</td>
-                            <td>100</td>
-                            <td>98</td>
-                            <td>95</td>
-                            <td>96</td>
-                            <td>--</td>
-                            <td>--</td>
+                            {% for calificacion in calificaciones %}
+                                <td>{{ calificacion.C2 }}</td>
+                            {% endfor %}
                         </tr>
                         <tr>
                             <td class="calificacion">C3</td>
-                            <td>90</td>
-                            <td>100</td>
-                            <td>98</td>
-                            <td>95</td>
-                            <td>96</td>
-                            <td>--</td>
-                            <td>--</td>
+                            {% for calificacion in calificaciones %}
+                                <td>{{ calificacion.C3 }}</td>
+                            {% endfor %}
                         </tr>
                         <tr>
                             <td class="calificacion">C4</td>
-                            <td>90</td>
-                            <td>100</td>
-                            <td>98</td>
-                            <td>95</td>
-                            <td>96</td>
-                            <td>--</td>
-                            <td>--</td>
+                            {% for calificacion in calificaciones %}
+                                <td>{{ calificacion.C4 }}</td>
+                            {% endfor %}
                         </tr>
                         <tr>
-                            <td class="calificacion">C.Final</td>
-                            <td class="nota-final">90</td>
-                            <td class="nota-final">100</td>
-                            <td class="nota-final">98</td>
-                            <td class="nota-final">95</td>
-                            <td class="nota-final">96</td>
-                            <td class="nota-final">--</td>
-                            <td class="nota-final">--</td>
+                            <td class="calificacion">C. Final</td>
+                            {% for calificacion in calificaciones %}
+                                <td class="nota-final">{{ calificacion["C. Final"] }}</td>
+                            {% endfor %}
                         </tr>
-                    </table>
+                    </table>                    
                 </div>
             </article>
             <article class="tabla-centrar tabla-horario-centrar">
