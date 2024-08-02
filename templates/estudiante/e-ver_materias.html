@@ -32,13 +32,13 @@
         </header>
         <main class="main-container main-curso-material" id="ver-material-mobile">    
             <div class="materia-clases-elegir">
-                <h2>Tarea 1 - Investigación</h2>
+                <h2>{{ material.titulo }}</h2>
             </div>            
             <div class="imagen-de-fondo-curso">
                 <figure>
                     <img src="{{ url_for('static', filename='imagenes/recursos/Auditorio-img-fondo.jpg') }}" alt="imagen-de-fondo">
                     <figcaption>
-                        Matemáticas
+                        {{ material.nom_asignatura }}
                     </figcaption>
                 </figure>
             </div>
@@ -46,7 +46,7 @@
                 <div class="c-curso-izquierdo">
                     <article class="curso-descargar">
                         <h3>Descargar Archivo</h3>
-                        <a href="{{ url_for('static', filename='Ecuaciones1.pdf') }}" download="#">Click</a>
+                        <a href="{{ url_for('static', filename=material.archivo_nombre) }}" download="#">Click</a>
                     </article>
                     <article class="curso-subir-tarea">
                         <form action="#">
@@ -55,7 +55,7 @@
                             <input type="file" id="subir-tarea" name="subir-tarea">
                         </form>
                     </article>
-                    <form action="/estudiante/enviar/tarea/"  method="post" enctype="multipart/form-data" class="botones-curso botones-curso-p">
+                    <form action="/estudiante/enviar/tarea/" method="post" enctype="multipart/form-data" class="botones-curso botones-curso-p">
                         <button type='submit' value="Enviar">Enviar</button>
                     </form>
                 </div>
@@ -65,11 +65,11 @@
                             <figure>
                                 <img src="{{ url_for('static', filename='imagenes/recursos/perfil-masculino-2.jpg') }}" alt="profesor">
                             </figure>
-                            <h3><span class="profesor-material-span">Profesor:</span>Miguel Enrique Martinez</h3>
+                            <h3><span class="profesor-material-span">Profesor:</span></h3>
                         </div>
                         <div class="contenedor-material-curso">
                             <div class="descripcion-material-curso">
-                                <p>Las matemáticas son una ciencia que estudia los números, las formas, las estructuras y los patrones. Se utilizan para contar, medir, describir el tamaño y la forma de los objetos, y analizar cómo cambian las cosas. Las matemáticas incluyen áreas como la aritmética, el álgebra, la geometría y el cálculo, y son fundamentales para resolver problemas en ciencias, ingeniería, economía y muchos otros campos. En resumen, las matemáticas nos ayudan a entender y describir el mundo que nos rodea mediante números y símbolos</p>
+                                <p>{{ material.descripcion }}</p>
                             </div>
                         </div>
                     </article>

@@ -35,103 +35,34 @@
                 <div class="cabecera-agg-material">
                     <div class="cabecera-materiales-flex">
                         <h2 class="titulo-material">Material de estudio</h2>
-                        <form action="#" class="form-agg-material">
+                        <form action="/estudiante/material/" method="POST" class="form-agg-material">
                             <select name="materias-agg" id="materias-agg">
-                                <option value="todas" selected>Todas</option>
-                                <option value="math">Matemáticas</option>
-                                <option value="l_española">L. Española</option>
+                                {% for asignatura in asignaturas %}
+                                <option value="{{ asignatura.id_asignatura }}">{{ asignatura.nom_asignatura }}</option>
+                                {% endfor %}
                             </select>
-                            <select name="ver-clases-enviada" id="ver-clases-enviada">
-                                <option value="Pendientes" selected>Pendientes</option>
-                                <option value="enviadas">Enviadas</option>
-                            </select>                               
-                        </form>                        
+                            <button type="submit">Buscar</button>
+                        </form>
                     </div>
                 </div>
+                {% for material in materiales %}
                 <article class="contenedor-material">                           
                     <div class="materia-del-material">
-                        <h3>Tarea 1</h3>
+                        <h3>{{ material.titulo }}</h3>
                     </div>
                     <div class="contenido-material">
                         <figure class="fondo-material-estudio">
                             <img src="{{ url_for('static', filename='imagenes/recursos/Auditorio-img-fondo.jpg') }}" alt="imagen-fondo-estudio">
                         </figure>
                         <div class="link-material">
-                            <h3>Matemáticas</h3>
-                            <a href="/estudiante/material/trabajo/">ver</a>                            
+                            <h3>{{ material.nom_asignatura }}</h3>
+                            <a href="{{ url_for('ver_materia', titulo=material.titulo) }}">ver</a>
                         </div>
                     </div>
                 </article>
-                <article class="contenedor-material">                           
-                    <div class="materia-del-material">
-                        <h3>Tarea 2</h3>
-                    </div>
-                    <div class="contenido-material">
-                        <figure class="fondo-material-estudio">
-                            <img src="{{ url_for('static', filename='imagenes/recursos/Auditorio-img-fondo.jpg') }}" alt="imagen-fondo-estudio">
-                        </figure>
-                        <div class="link-material">
-                            <h3>Matemáticas</h3>
-                            <a href="/estudiante/material/trabajo/">ver</a>                            
-                        </div>
-                    </div>
-                </article>
-                <article class="contenedor-material">                           
-                    <div class="materia-del-material">
-                        <h3>Tarea 3</h3>
-                    </div>
-                    <div class="contenido-material">
-                        <figure class="fondo-material-estudio">
-                            <img src="{{ url_for('static', filename='imagenes/recursos/Auditorio-img-fondo.jpg') }}" alt="imagen-fondo-estudio">
-                        </figure>
-                        <div class="link-material">
-                            <h3>Matemáticas</h3>
-                            <a href="/estudiante/material/trabajo/">ver</a>                            
-                        </div>
-                    </div>
-                </article>
-                <article class="contenedor-material">                           
-                    <div class="materia-del-material">
-                        <h3>Tarea 4</h3>
-                    </div>
-                    <div class="contenido-material">
-                        <figure class="fondo-material-estudio">
-                            <img src="{{ url_for('static', filename='imagenes/recursos/Auditorio-img-fondo.jpg') }}" alt="imagen-fondo-estudio">
-                        </figure>
-                        <div class="link-material">
-                            <h3>Matemáticas</h3>
-                            <a href="/estudiante/material/trabajo/">ver</a>                            
-                        </div>
-                    </div>
-                </article>
-                <article class="contenedor-material">                           
-                    <div class="materia-del-material">
-                        <h3>Tarea 5</h3>
-                    </div>
-                    <div class="contenido-material">
-                        <figure class="fondo-material-estudio">
-                            <img src="{{ url_for('static', filename='imagenes/recursos/Auditorio-img-fondo.jpg') }}" alt="imagen-fondo-estudio">
-                        </figure>
-                        <div class="link-material">
-                            <h3>Matemáticas</h3>
-                            <a href="/estudiante/material/trabajo/">ver</a>                            
-                        </div>
-                    </div>
-                </article>
-                <article class="contenedor-material">                           
-                    <div class="materia-del-material">
-                        <h3>Tarea 6</h3>
-                    </div>
-                    <div class="contenido-material">
-                        <figure class="fondo-material-estudio">
-                            <img src="{{ url_for('static', filename='imagenes/recursos/Auditorio-img-fondo.jpg') }}" alt="imagen-fondo-estudio">
-                        </figure>
-                        <div class="link-material">
-                            <h3>Matemáticas</h3>
-                            <a href="/estudiante/material/trabajo/">ver</a>                            
-                        </div>
-                    </div>
-                </article>
+                {% else %}
+                    <p>Selecciona la materia de la cual quieres buscar el material</p>
+                {% endfor %}
             </section>
         </main>
     </div>

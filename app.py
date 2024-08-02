@@ -100,32 +100,88 @@ def home_estudiante():
 
     cursor.close()
 
-    session.clear()
-
     return render_template('estudiante/e-home.html', calificaciones=calificaciones, horarios=horarios, asistencias=asistencias, estudiante=estudiante)
 
 
 
 @app.route('/estudiante/perfil/')
 def e_perfil():
+    if 'user_id' not in session or session.get('role') != 'estudiante':
+        return redirect('/')
     
     estudiante_id = session['user_id']
     
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute('SELECT * FROM `estudiantes` WHERE id_estudiante = %s', (estudiante_id,))
-    
     perfil = cursor.fetchall()
+    
+    cursor.execute('''
+    SELECT cursos.nombre
+    FROM estudiantes
+    JOIN cursos ON estudiantes.id_curso = cursos.id_curso
+    WHERE estudiantes.id_estudiante = %s''', (estudiante_id,))
+    curso = cursor.fetchone()
+    
     cursor.close()
     
-    return render_template('./estudiante/e-perfil.html', perfil =perfil[0])
+    return render_template('./estudiante/e-perfil.html', perfil=perfil[0], curso=curso)
 
-@app.route('/estudiante/material/')
+@app.route('/estudiante/material/', methods=['GET', 'POST'])
 def e_material():
-    return render_template('./estudiante/e-material_estudio.html')
+    if 'user_id' not in session or session.get('role') != 'estudiante':
+        return redirect('/')
 
-@app.route('/estudiante/material/trabajo/')
-def ver_materia():
-    return render_template('./estudiante/e-ver_materias.html')
+    estudiante_id = session['user_id']
+    
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    
+    # las asignaturas disponibles
+    cursor.execute('''
+    SELECT asignaturas.id_asignatura, asignaturas.nom_asignatura
+    FROM asignaturas
+    JOIN material_estudio ON asignaturas.id_asignatura = material_estudio.id_asignatura
+    JOIN estudiantes ON estudiantes.id_curso = material_estudio.id_curso
+    WHERE estudiantes.id_estudiante = %s''', (estudiante_id,))
+    asignaturas = cursor.fetchall()
+
+    # materiales vacío
+    materiales = []
+
+    if request.method == 'POST':
+        materia_seleccionada = request.form.get('materias-agg')
+
+        # Buscar materiales para la asignatura seleccionada
+        cursor.execute('''
+            SELECT material_estudio.*, asignaturas.nom_asignatura
+            FROM material_estudio
+            JOIN estudiantes ON material_estudio.id_curso = estudiantes.id_curso
+            JOIN asignaturas ON material_estudio.id_asignatura = asignaturas.id_asignatura
+            WHERE material_estudio.id_asignatura = %s AND estudiantes.id_estudiante = %s''', (materia_seleccionada, estudiante_id))
+        materiales = cursor.fetchall()
+
+    cursor.close()
+    
+    return render_template('./estudiante/e-material_estudio.html', asignaturas=asignaturas, materiales=materiales)
+
+@app.route('/estudiante/material/<titulo>')
+def ver_materia(titulo):
+    if 'user_id' not in session or session.get('role') != 'estudiante':
+        return redirect('/')
+
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+
+    # Obtener detalles del material por título
+    cursor.execute('''
+        SELECT material_estudio.*, asignaturas.nom_asignatura
+        FROM material_estudio
+        JOIN asignaturas ON material_estudio.id_asignatura = asignaturas.id_asignatura
+        WHERE material_estudio.titulo = %s
+    ''', (titulo,))
+    material = cursor.fetchone()
+
+    cursor.close()
+
+    return render_template('estudiante/e-ver_materias.html', material=material)
 
 @app.route('/estudiante/refuerzo/libros/')
 def e_refuerzo_libros():
@@ -208,10 +264,13 @@ def guardar_estudiante():
     telefono = request.form["telefono"]
     imagen_perfil = request.files["imagen_perfil"]
     contraseña = request.form["contraseña"]
+    
+    if imagen_perfil:
+        estudiante_perfil = imagen_perfil.read()
 
     sql = 'INSERT INTO `estudiantes` (`id_estudiante`,`id_curso`, `matricula`, `nombre`, `apellidos`, `direccion`, `fecha_nacimiento`, `genero`, `email`, `telefono`, `imagen_perfil`, `contraseña`) VALUES (NULL, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
 
-    datos = (curso, matricula, nombre, apellidos, direccion, fecha_nacimiento, genero, correo, telefono, imagen_perfil, contraseña)
+    datos = (curso, matricula, nombre, apellidos, direccion, fecha_nacimiento, genero, correo, telefono, estudiante_perfil, contraseña)
 
     conexion = mysql.connection
     cursor = conexion.cursor()
