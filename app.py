@@ -1,10 +1,10 @@
 import os
 from flask import Flask, render_template, request, redirect, session, send_from_directory, url_for, flash
-from flask_mysqldb import MySQL
+# from flask_mysqldb import MySQL
 import MySQLdb.cursors
 from datetime import datetime
 # Importar el enlace a base de datos MySQL
-# from flaskext.mysql import MySQL
+from flaskext.mysql import MySQL
 
 # Crear la aplicación
 app = Flask(__name__)
@@ -295,6 +295,16 @@ def actualizar_estudiantes():
     direccion = request.form["direccion"]
     matricula = request.form["matricula"]
     contraseña = request.form["contraseña"]
+
+    sql = 'UPDATE `nombre`, `apellidos`, `fecha_nacimiento`, `genero`, `curso`, `correo`, `telefono`, `direccion`, `matricula`, `contraseña` IN `estudiantes` WHERE `id_estudiante == %s`'
+
+    conexion = mysql.connection
+    cursor = conexion.cursor()
+    cursor.execute(sql)
+
+    conexion.commit()
+    cursor.close()
+
     return redirect('./admin/a-curso.html')
 
 @app.route('/admin/registro/profesor/')
