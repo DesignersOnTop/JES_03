@@ -218,9 +218,14 @@ def a_home():
 def a_cursos():
     return render_template('./admin/a-cursos.html')
 
-@app.route('/admin/curso/')
-def a_curso():
-    return render_template('./admin/a-curso.html')
+@app.route('/admin/a-curso', methods = ['GET'])
+def mostrar_estudiantes():
+    conexion = mysql.connection
+    cursor = conexion.cursor()
+    cursor.execute('SELECT * FROM estudiantes')
+    estudiantes = cursor.fetchall()
+    cursor.close()
+    return render_template('a-curso.html', estudiantes=estudiantes)
 
 @app.route('/admin/materias/')
 def a_materias():
@@ -296,16 +301,35 @@ def actualizar_estudiantes():
     matricula = request.form["matricula"]
     contraseña = request.form["contraseña"]
 
-    sql = 'UPDATE `nombre`, `apellidos`, `fecha_nacimiento`, `genero`, `curso`, `correo`, `telefono`, `direccion`, `matricula`, `contraseña` IN `estudiantes` WHERE `id_estudiante == %s`'
+    # Aqui indicamos lo que se cambiará y de donde lo hará
+    sql =  '''UPDATE estudiantes SET nombre = %s, apellidos = %s, fecha_nacimiento = %s, genero = %s, curso = %s, correo = %s, telefono = %s, direccion = %s, matricula = %s, contraseña = %s WHERE id_estudiante = %s'''
+    
+    datos = (nombre, apellidos, fecha_nacimiento, genero, curso, correo, telefono, direccion, matricula, contraseña)
 
     conexion = mysql.connection
     cursor = conexion.cursor()
-    cursor.execute(sql)
+    cursor.execute(sql, datos)
 
     conexion.commit()
     cursor.close()
 
     return redirect('./admin/a-curso.html')
+
+@app.route('/admin/eliminar_estudiantes', methods = ['POST'])
+def eliminar_estudiantes():
+    id_estudiante = request.form["id_estudiante"]
+
+    # Se hace una confirmación de si el id introducido existe
+    if id_estudiante in 'estudiantes':
+        sql = 'DELETE FROM estudiantes WHERE id_estudiante = %s'
+        return redirect('./admin/a-curso.html')
+    
+    conexion = mysql.connection
+    cursor = conexion.cursor()
+    cursor.execute(sql, (id_estudiante))
+
+    conexion.commit()
+    cursor.close()
 
 @app.route('/admin/registro/profesor/')
 def a_formulario_registro_p():

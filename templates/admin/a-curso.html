@@ -59,48 +59,21 @@
                             <th>Apellido</th>
                             <th>F. Nacimiento</th>
                             <th>Curso</th>
-                            <th>Secci&oacute;n</th>
+                            <th>G&eacute;nero</th>
                         </tr>
                         {% for estudiante in estudiantes %}
                         <tr class="fila-calificacion">
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><a><figure><img src="{{ url_for('static', filename='imagenes/iconos/editar.svg') }}" alt="editar-profesor"  class="btn-editar"></figure></a></td>
-                            <td><button class="btn-eliminar">eliminar</button></td>
-                        </tr>
-                        <tr class="fila-calificacion">
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><a><figure><img src="{{ url_for('static', filename='imagenes/iconos/editar.svg') }}" alt="editar-profesor"  class="btn-editar"></figure></a></td>
-                            <td><button class="btn-eliminar">eliminar</button></td>
-                        </tr>
-                        <tr class="fila-calificacion">
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><a><figure><img src="{{ url_for('static', filename='imagenes/iconos/editar.svg') }}" alt="editar-profesor"  class="btn-editar"></figure></a></td>
-                            <td><button class="btn-eliminar">eliminar</button></td>
-                        </tr>    
-                        <tr class="fila-calificacion">
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><a><figure><img src="{{ url_for('static', filename='imagenes/iconos/editar.svg') }}" alt="editar-profesor"  class="btn-editar"></figure></a></td>
-                            <td><button class="btn-eliminar">eliminar</button></td>
+                            <td>{{ estudiante.id }}</td>
+                            <td>{{ estudiante.nombre }}</td>
+                            <td>{{ estudiante.apellidos }}</td>
+                            <td>{{ estudiante.fecha_nacimiento }}</td>
+                            <td>{{ estudiante.curso }}</td>
+                            <td>{{ estudiante.genero }}</td>
+                            <td><a href="{{ url_for('editar_estudiante', id=estudiante.id_estudiante) }}"><figure><img src="{{ url_for('static', filename='imagenes/iconos/editar.svg') }}" alt="editar-profesor"  class="btn-editar"></figure></a></td>
+                            <form action="{{ url_for('eliminar_estudiante') }}" method="POST"style="display:inline;">
+                                <input type="hidden" name="id_estudiante" value="{{ estudiante.id_estudiante }}">
+                                <button type="submit" class="btn-eliminar">Eliminar</button>
+                            </form>
                         </tr>
                         {% endfor %}
                     </table>
