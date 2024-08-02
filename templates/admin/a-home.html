@@ -57,80 +57,81 @@
                     <button class="btn-horario">Profesores</button>
                 </div>
                 <div class="ca-ho-scroll">
-                <article class="tabla-centrar tabla-calificacion-centrar">                        
-                    <div class="cabecera-tabla-estudiantes-a">
-                        <form action="#">
-                            <button class="buscar-estudiante"><figure><img src="{{ url_for('static', filename='imagenes/iconos/lupa.svg') }}" alt=""></figure></button>
-                            <input type="search" id="buscar-estudiante">
-                        </form>
-                    </div>
-                    <div class="tabla-admin">
-                        <table class="tabla-calificacion tabla-asistencia" >
-                            <tr>
-                                <th>ID</th>
-                                <th>Matricula</th>
-                                <th>Nombre</th>
-                                <th>Apellido</th>
-                                <th>F. Nacimiento</th>
-                                <th>Curso</th>
-                            </tr>
-                            {% for estudiante in estudiantes %}
-                            <tr class="fila-calificacion">
-                                <td>{{ estudiante.id_estudiante }}</td>
-                                <td>{{estudiante.matricula}}</td>
-                                <td>{{ estudiante.nombre }}</td>
-                                <td>{{ estudiante.apellidos }}</td>
-                                <td>{{ estudiante.fecha_nacimiento }}</td>
-                                <td>{{ estudiante.id_curso_seccion}}</td>
-                            </tr>
-                            {% endfor %}
-                        </table>
-                    </div>
-                </article>
-                <article class="tabla-centrar tabla-horario-centrar">
-                    <div class="cabecera-tabla-estudiantes-a" id="cabecera-profesor-a">
-                        <a href="#" class="agg-es-pro">Agregar</a>
-                        <form action="#">
-                            <button class="buscar-estudiante"><figure><img src="{{ url_for('static', filename='imagenes/iconos/lupa.svg') }}" alt=""></figure></button>
-                            <input type="search" id="buscar-estudiante">
-                        </form>
-                    </div>
-                    <div class="tabla-admin">
-                        <table class="tabla-horario tabla-asistencia">
-                            <thead id="thead-admin">
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Matrícula</th>
-                                    <th>Nombre</th>
-                                    <th>Apellido</th>
-                                    <th>Ced&uacute;la</th>
-                                    <th>Asignatura</th>
-                                </tr>                                
-                            </thead>
-                            <tbody id="tbody-scroll">
-                                {% for profesor in profesores %}
-                                <tr class="fila-calificacion">
-                                    <td>{{ profesor.id_profesor }}</td>
-                                    <td>{{ profesor.matricula }}</td>
-                                    <td>{{ profesor.nombre }}</td>
-                                    <td>{{ profesor.apellido }}</td>
-                                    <td>{{ profesor.cedula }}</td>
-                                    <td>{{ profesor.id_asignatura }}</td>
-                                </tr>
-                                {% endfor %}                                
-                            </tbody>
-                        </table>
-                    </div>
-                </article>
+                    <article class="tabla-centrar tabla-calificacion-centrar">                        
+                        <div class="cabecera-tabla-estudiantes-a cabecera-profesor-a">
+                            <a href="#" class="agg-es-pro">Agregar</a>
+                            <form action="#">
+                                <input type="search" id="buscar-estudiantes" placeholder="Buscar estudiante...">
+                            </form>
+                        </div>
+                        <div class="tabla-admin">
+                            <table class="tabla-calificacion tabla-asistencia">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Matricula</th>
+                                        <th>Nombre</th>
+                                        <th>Apellido</th>
+                                        <th>F. Nacimiento</th>
+                                        <th>Curso</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody-estudiantes">
+                                    {% for estudiante in estudiantes %}
+                                    <tr class="fila-calificacion">
+                                        <td>{{ estudiante.id_estudiante }}</td>
+                                        <td>{{ estudiante.matricula }}</td>
+                                        <td>{{ estudiante.nombre }}</td>
+                                        <td>{{ estudiante.apellidos }}</td>
+                                        <td>{{ estudiante.fecha_nacimiento }}</td>
+                                        <td>{{ estudiante.id_curso_seccion }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </article>
+                    <article class="tabla-centrar tabla-horario-centrar">
+                        <div class="cabecera-tabla-estudiantes-a cabecera-profesor-a">
+                            <a href="#" class="agg-es-pro">Agregar</a>
+                            <form action="#">
+                                <input type="search" id="buscar-profesores" placeholder="Buscar profesor...">
+                            </form>
+                        </div>
+                        <div class="tabla-admin">
+                            <table class="tabla-horario tabla-asistencia">
+                                <thead id="thead-admin">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Matrícula</th>
+                                        <th>Nombre</th>
+                                        <th>Apellido</th>
+                                        <th>Ced&uacute;la</th>
+                                        <th>Asignatura</th>
+                                    </tr>                                
+                                </thead>
+                                <tbody id="tbody-profesores">
+                                    {% for profesor in profesores %}
+                                    <tr class="fila-calificacion">
+                                        <td>{{ profesor.id_profesor }}</td>
+                                        <td>{{ profesor.matricula }}</td>
+                                        <td>{{ profesor.nombre }}</td>
+                                        <td>{{ profesor.apellido }}</td>
+                                        <td>{{ profesor.cedula }}</td>
+                                        <td>{{ profesor.id_asignatura }}</td>
+                                    </tr>
+                                    {% endfor %}                                
+                                </tbody>
+                            </table>
+                        </div>
+                    </article>
+                </div>
             </section>
         </main>
     </div>
-    <script src="{{ url_for('static', filename='js/cambiar-cursos.js') }}"></script>
     <script src="{{ url_for('static', filename='js/menu-admin.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/profesor-ver-estudiante-modal.js') }}"></script>
     <script src="{{ url_for('static', filename='js/ca-ho.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="{{ url_for('static', filename='js/promedio-calificacion.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/promedio-asistencia.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/busqueda.js') }}"></script>
 </body>
 </html>

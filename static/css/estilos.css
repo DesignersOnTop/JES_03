@@ -1671,7 +1671,7 @@ textarea.editable {
     border-bottom: none;
 }
 
-#cabecera-profesor-a {
+.cabecera-profesor-a {
     justify-content: space-between;
 }
 
