@@ -51,7 +51,7 @@
                     </article>
                 </div>
                 <article class="agregar-material-contenido">
-                    <form action="#">
+                    <form action="/subir_materia" method="post" enctype="multipart/form-data">
                         <div class="materia-dato dato-img-materia">
                             <div id="imagen-materia-js"></div>
                             <label for="imagen-materia">Subir imagen</label>
@@ -60,11 +60,11 @@
                         <div class="materia-dato-container">
                             <div class="materia-dato">
                                 <label for="nom-materia">Nombre de la materia</label>
-                                <input type="text" id="nom-materia">         
+                                <input type="text" id="nom-materia" name="nom_asignatura" required>         
                             </div>
                             <div class="materia-dato">
                                 <label for="curso-materia">Curso</label>
-                                <select name="curso-materia" id="curso-materia">
+                                <select name="curso-materia" id="curso-materia" required>
                                     <option value="">1ro</option>
                                     <option value="">2do</option>
                                     <option value="">3ro</option>
@@ -74,9 +74,9 @@
                                 </select>
                             </div> 
                         </div>
+                        <button type="submit">Subir Materia</button>
                     </form>
-                </article>                        
-                <input type="submit" value="Subir" id="subir-materia">
+                </article>
             </div>
         </section>
     </main>

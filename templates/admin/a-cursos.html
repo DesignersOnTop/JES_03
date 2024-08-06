@@ -44,9 +44,10 @@
                         </form>                        
                     </div>
                 </div>
+                {% for curso in cursos %}
                 <article class="contenedor-material">                           
                     <div class="materia-del-material">
-                        <h3>1ro-A</h3>
+                        <h3>{{ cursos.nombre }}</h3>
                     </div>
                     <div class="contenido-material">
                         <figure class="fondo-material-estudio">
@@ -57,71 +58,7 @@
                         </div>
                     </div>
                 </article>
-                <article class="contenedor-material">                           
-                    <div class="materia-del-material">
-                        <h3>2do-A</h3>
-                    </div>
-                    <div class="contenido-material">
-                        <figure class="fondo-material-estudio">
-                            <img src="{{ url_for('static', filename='imagenes/recursos/Auditorio-img-fondo.jpg') }}" alt="imagen-fondo-estudio">
-                        </figure>
-                        <div class="link-material">
-                            <a href="/admin/curso/">Entrar</a>                   
-                        </div>
-                    </div>
-                </article>
-                <article class="contenedor-material">                           
-                    <div class="materia-del-material">
-                        <h3>3ro-A</h3>
-                    </div>
-                    <div class="contenido-material">
-                        <figure class="fondo-material-estudio">
-                            <img src="{{ url_for('static', filename='imagenes/recursos/Auditorio-img-fondo.jpg') }}" alt="imagen-fondo-estudio">
-                        </figure>
-                        <div class="link-material">
-                            <a href="/admin/curso/">Entrar</a>                     
-                        </div>
-                    </div>
-                </article>
-                <article class="contenedor-material">                           
-                    <div class="materia-del-material">
-                        <h3>4to-A</h3>
-                    </div>
-                    <div class="contenido-material">
-                        <figure class="fondo-material-estudio">
-                            <img src="{{ url_for('static', filename='imagenes/recursos/Auditorio-img-fondo.jpg') }}" alt="imagen-fondo-estudio">
-                        </figure>
-                        <div class="link-material">
-                            <a href="/admin/curso/">Entrar</a>                      
-                        </div>
-                    </div>
-                </article>
-                <article class="contenedor-material">                           
-                    <div class="materia-del-material">
-                        <h3>5to-A</h3>
-                    </div>
-                    <div class="contenido-material">
-                        <figure class="fondo-material-estudio">
-                            <img src="{{ url_for('static', filename='imagenes/recursos/Auditorio-img-fondo.jpg') }}" alt="imagen-fondo-estudio">
-                        </figure>
-                        <div class="link-material">
-                            <a href="/admin/curso/">Entrar</a>                     
-                        </div>
-                    </div>
-                </article>
-                <article class="contenedor-material">                           
-                    <div class="materia-del-material">
-                        <h3>6to-A</h3>
-                    </div>
-                    <div class="contenido-material">
-                        <figure class="fondo-material-estudio">
-                            <img src="{{ url_for('static', filename='imagenes/recursos/Auditorio-img-fondo.jpg') }}" alt="imagen-fondo-estudio">
-                        </figure>
-                        <div class="link-material">
-                            <a href="/admin/curso/">Entrar</a>                        
-                        </div>
-                    </div>
-                </article>
+                {% endfor %}
             </section>
         </main>
     </div>

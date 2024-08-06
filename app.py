@@ -231,6 +231,39 @@ def mostrar_estudiantes():
 def a_materias():
     return render_template('./admin/a-materias.html')
 
+@app.route('/admin/asignar-profesores')
+def a_asignar_profesores():
+    return render_template('./admin/a-agregar-profesor-cursos.html')
+
+@app.route('/admin/agregar-materias')
+def a_agg_materias():
+    return render_template('./admin/a-agg-materias.html')
+
+@app.route('/admin/subir_materia', methods = ['POST'])
+def subir_materia():
+    nom_asignatura = request.form["nom_asignatura"]
+
+    datos = (nom_asignatura)
+    
+    sql = '''INSERT INTO `asignaturas` (`id_asignatura`, `nom_asignatura`) VALUES (NULL, %s,)'''
+
+    conexion = mysql.connection
+    cursor = conexion.cursor()
+    cursor.execute(sql,datos)
+    
+    conexion.commit()
+    cursor.close()
+    return redirect('./a-materias.html')
+
+@app.route('/admin/eliminar_materia/<int:id_asignatura>', methods = ['POST'])
+def eliminar_materia(id_asignatura):
+    conexion = mysql.connection
+    cursor = conexion.cursor()
+
+    cursor.execute('DELETE FROM asignaturas WHERE id_asignatura = %s', (id_asignatura))
+
+    return redirect('./a-materias.html')
+
 @app.route('/admin/reportes/')
 def a_reportes():
     return render_template('./admin/a-reporte-curso.html')
@@ -249,14 +282,14 @@ def a_reporte_calificaciones():
 
 @app.route('/admin/reportes-asistencias/')
 def a_reportes_asistencia():
-    return render_template('./admin/a-asistencias-reporte.html')
+    return render_template('./admin/a-asistencia-reporte.html')
 
 @app.route('/admin/registro/estudiante/')
 def a_formulario_registro_e():
     return render_template('./admin/a-formulario-registro-e.html')
 
-@app.route('/guardar_estudiantes', methods = ['POST'])
-def guardar_estudiante():
+@app.route('/agregar_estudiantes', methods = ['POST'])
+def agregar_estudiante():
     # Insertar estudiantes
     curso = request.form["curso"]
     matricula = request.form["matricula"]
@@ -334,6 +367,81 @@ def eliminar_estudiantes():
 @app.route('/admin/registro/profesor/')
 def a_formulario_registro_p():
     return render_template('./admin/a-formulario-registro-p.html')
+
+@app.route('/admin/agregar_profesores', methods = ['POST'])
+def agregar_profesores():
+    # Insertar profesores
+    asignatura = request.form["id_asignatura"]
+    matricula = request.form["matricula"]
+    nombre = request.form["nombre"]
+    apellidos = request.form["apellido"]
+    direccion = request.form["direccion"]
+    cedula = request.form["cedula"]
+    genero = request.form["genero"]
+    correo = request.form["email"]
+    telefono = request.form["telefono"]
+    imagen_perfil = request.files["imagen_perfil"]
+    contraseña = request.form["contraseña"]
+    
+    if imagen_perfil:
+        profesor_perfil = imagen_perfil.read()
+
+    sql = 'INSERT INTO `profesores` (`id_profesor`,`id_asignatura`, `matricula`, `nombre`, `apellido`, `direccion`, `cedula`, `genero`, `email`, `telefono`, `imagen_perfil`, `contraseña`) VALUES (NULL, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
+
+    datos = (asignatura, matricula, nombre, apellidos, direccion, cedula, genero, correo, telefono, profesor_perfil, contraseña)
+
+    conexion = mysql.connection
+    cursor = conexion.cursor()
+    cursor.execute(sql,datos)
+    
+    conexion.commit()
+    cursor.close()
+
+    # return redirect('./admin/a-curso.html')
+
+@app.route('/admin/actualizar_profesor', methods = ['POST'])
+def actualizar_profesores():
+    # Actualizar estudiantes
+    id = request.form["id_profesor"]
+    asignatura = request.form["id_asignatura"]
+    nombre = request.form["nombre"]
+    apellidos = request.form["apellidos"]
+    direccion = request.form["fecha_nacimiento"]
+    cedula = request.form["genero"]
+    genero = request.form["genero"]
+    correo = request.form["email"]
+    telefono = request.form["telefono"]
+    matricula = request.form["matricula"]
+    imagen_perfil = request.files["imagen_perfil"]
+    contraseña = request.form["contraseña"]
+
+    # Aqui indicamos lo que se cambiará y de donde lo hará
+    sql =  '''UPDATE profesores SET asignatura = %s, nombre = %s, apellidos = %s, direccion = %s, cedula = %s, genero = %s, correo = %s, telefono = %s, matricula = %s,imagen_perfil = %s, contraseña = %s WHERE id_profesor = %s'''
+    
+    datos = (asignatura, nombre, apellidos, direccion, cedula, genero, correo, telefono, matricula,imagen_perfil, contraseña)
+
+    conexion = mysql.connection
+    cursor = conexion.cursor()
+    cursor.execute(sql, datos)
+
+    conexion.commit()
+    cursor.close()
+
+@app.route('/admin/eliminar_profesores', methods = ['POST'])
+def eliminar_profesores():
+    id_profesor = request.form["id_profesor"]
+
+    # Se hace una confirmación de si el id introducido existe
+    if id_profesor in 'profesores':
+        sql = 'DELETE FROM profesores WHERE id_profesor = %s'
+        # return redirect('./admin/a-curso.html')
+    
+    conexion = mysql.connection
+    cursor = conexion.cursor()
+    cursor.execute(sql, (id_profesor))
+
+    conexion.commit()
+    cursor.close()
 
 @app.route('/admin/profesores/')
 def a_cursos_profesor():
