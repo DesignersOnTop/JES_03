@@ -50,11 +50,11 @@
                         </tr>
                         {% for profesor in profesores %}
                         <tr class="fila-calificacion">
-                            <td>{{ profesores.id }}</td>
+                            <td>{{ profesores.id_profesor }}</td>
                             <td>{{ profesores.nombre }}</td>
                             <td>{{ profesores.apellido }}</td>
                             <td>{{ profesores.cedula }}</td>
-                            <td>{{ profesores.asignatura }}</td>
+                            <td>{{ profesores.id_asignatura }}</td>
                             <td><a href="a-editar-datos-profesores.html"><figure><img src="{{ url_for('static', filename='imagenes/iconos/editar.svg') }}" alt="editar-profesor"></figure></a></td>
                             <form action="{{ url_for('eliminar_profesor') }}" method="POST"style="display:inline;">
                                 <input type="hidden" name="id_profesor" value="{{ profesores.id_profesor }}">
