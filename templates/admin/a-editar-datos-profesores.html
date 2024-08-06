@@ -13,7 +13,7 @@
             <span class="close">&times;</span>
             <form method="post" class="form-container">
                 <fieldset>
-                    <legend>Editar Perfil de Estudiante</legend>
+                    <legend>Editar Perfil de Profesor</legend>
                     <div class="form-group">
                         <div class="subir-imagen-registro">
                             <div class="imagen-registro-preview" id="preview">
@@ -25,35 +25,39 @@
                     </div>
                     <div class="form-group">
                         <label for="nombre">Nombre:</label>
-                        <input value="{{ estudiantes.nombre }}" type="text" id="nombre" name="nombre" required>
+                        <input value="{{ profesores.nombre }}" type="text" id="nombre" name="nombre" required>
                     </div>
                     <div class="form-group">
                         <label for="apellidos">Apellidos:</label>
-                        <input value="{{ estudiantes.apellido }}" type="text" id="apellidos" name="apellidos" required>
+                        <input value="{{ profesores.apellido }}" type="text" id="apellidos" name="apellidos" required>
                     </div>
                     <div class="form-group">
                         <label for="matricula">Matrícula:</label>
-                        <input value="{{ estudiantes.matricula }}" type="text" id="matricula" name="matricula" required>
+                        <input value="{{ profesores.matricula }}" type="text" id="matricula" name="matricula" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="direccion">Direccion:</label>
+                        <input value="{{ profesores.direccion }}" type="text" id="direccion" name="direccion" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cedula">Cedula:</label>
+                        <input value="{{ profesores.cedula }}" type="text" id="cedula" name="cedula" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="genero">Genero:</label>
+                        <input value="{{ profesores.genero }}" type="text" id="genero" name="genero" required>
                     </div>
                     <div class="form-group">
                         <label for="email">Correo Electrónico:</label>
-                        <input value="{{ estudiantes.email }}" type="email" id="email" name="email" required>
+                        <input value="{{ profesores.email }}" type="email" id="email" name="email" required>
                     </div>
                     <div class="form-group">
-                        <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
-                        <input value="{{ estudiantes.fecha_nacimiento }}" type="date" id="fecha_nacimiento" name="fecha_nacimiento" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="direccion">Dirección:</label>
-                        <input value="{{ estudiantes.direccion }}" type="text" id="direccion" name="direccion" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="telefono">Teléfono:</label>
-                        <input value="{{ estudiantes.telefono }}" type="tel" id="telefono" name="telefono" required>
+                        <label for="telefono">Telefono:</label>
+                        <input value="{{ profesores.telefono }}" type="tel" id="telefono" name="telefono" required>
                     </div>
                     <div class="form-group">
                         <label for="contrasena">Contraseña:</label>
-                        <input value="{{ estudiantes.contraseña }}" type="password" id="contrasena" name="contrasena" required>
+                        <input value="{{ profesores.contraseña }}" type="password" id="contraseña" name="contraseña" required>
                     </div>
                     <button type="submit" class="btn-guardar-cambios">Guardar Cambios</button>
                 </fieldset>

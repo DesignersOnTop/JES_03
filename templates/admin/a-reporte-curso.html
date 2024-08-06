@@ -68,34 +68,15 @@
                                     <th>Asignatura</th>
                                     <th>Ver</th>
                                 </tr>
+                                {{% for profesor in profesores %}}
                                 <tr class="fila-calificacion">
-                                    <td>1010</td>
-                                    <td>Miguel Enrique</td>
-                                    <td>Martinez</td>
-                                    <td>Matem&aacute;ticas</td>
+                                    <td>{{ profesores.id_profesor }}</td>
+                                    <td>{{ profesores.nombre }}</td>
+                                    <td>{{ profesores.apellido }}</td>
+                                    <td>{{ profesores.id_asignatura }}</td>
                                     <td class="ver-estudiante-p"><a href="/admin/reportes-profesor" class="ver-recurso"><figure><img src="{{ url_for('static', filename='imagenes/iconos/angle-small-right.svg') }}" alt="ver-estudiante"></figure></a></td>
                                 </tr>
-                                <tr class="fila-calificacion">
-                                    <td>1010</td>
-                                    <td>Miguel Enrique</td>
-                                    <td>Martinez</td>
-                                    <td>Matem&aacute;ticas</td>
-                                    <td class="ver-estudiante-p"><a href="/admin/reportes-profesor" class="ver-recurso"><figure><img src="{{ url_for('static', filename='imagenes/iconos/angle-small-right.svg') }}" alt="ver-estudiante"></figure></a></td>
-                                </tr>
-                                <tr class="fila-calificacion">
-                                    <td>1010</td>
-                                    <td>Miguel Enrique</td>
-                                    <td>Martinez</td>
-                                    <td>Matem&aacute;ticas</td>
-                                    <td class="ver-estudiante-p"><a href="/admin/reportes-profesor" class="ver-recurso"><figure><img src="{{ url_for('static', filename='imagenes/iconos/angle-small-right.svg') }}" alt="ver-estudiante"></figure></a></td>
-                                </tr>    
-                                <tr class="fila-calificacion">
-                                    <td>1010</td>
-                                    <td>Miguel Enrique</td>
-                                    <td>Martinez</td>
-                                    <td>Matem&aacute;ticas</td>
-                                    <td class="ver-estudiante-p"><a href="/admin/reportes-profesor" class="ver-recurso"><figure><img src="{{ url_for('static', filename='imagenes/iconos/angle-small-right.svg') }}" alt="ver-estudiante"></figure></a></td>
-                                </tr>
+                                {{% endfor %}}
                             </table>
                         </div>
                         <!-- <table class="tabla-estudiante-material" id="tabla-reporte-curso">
