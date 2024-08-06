@@ -7,7 +7,7 @@ function sumarCalificaciones() {
     for (var j = 0; j < inputs.length - 1; j++) {
         if (inputs[j].value.trim() !== '') { // Verifica si el valor no está vacío
             var calificacion = parseFloat(inputs[j].value);
-            if (!isNaN(calificacion)) {
+            if (!isNaN(calificacion) && calificacion >= 0 && calificacion <= 100) { // Validación adicional
                 totalCalificaciones += calificacion;
                 cantidadCalificaciones++;
             }
@@ -28,10 +28,8 @@ document.addEventListener('DOMContentLoaded', function() {
     var filas = document.getElementsByClassName('fila-calificacion');
     for (var i = 0; i < filas.length; i++) {
         var inputs = filas[i].getElementsByTagName('input');
-        inputs[3].addEventListener('keypress', function(event) {
-            if (event.key === 'Enter') {
-                sumarCalificaciones.call(this);
-            }
-        });
+        for (var j = 0; j < inputs.length - 1; j++) {
+            inputs[j].addEventListener('input', sumarCalificaciones);
+        }
     }
 });

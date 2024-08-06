@@ -453,5 +453,67 @@ def p_report_a():
 def p_perfil_e():
     return render_template('./profesor/p-perfil-e.html')
 
+@app.route('/agregar/calificacion', methods=['POST'])
+def agregar_calificacion():
+    id_estudiante = request.form['id_estudiante']
+    id_asignatura = request.form['id_asignatura']
+    C1 = request.form['C1']
+    C2 = request.form['C2']
+    C3 = request.form['C3']
+    C4 = request.form['C4']
+    calificacion_final = request.form['calificacion_final']
+
+    sql = 'INSERT INTO calificaciones (id_estudiante, id_asignatura, C1, C2, C3, C4, `C. Final`) VALUES (%s, %s, %s, %s, %s, %s, %s)'
+
+    datos = (id_estudiante, id_asignatura, C1, C2, C3, C4, calificacion_final)
+
+    conexion = mysql.connection
+    cursor = conexion.cursor()
+    cursor.execute(sql,datos)
+
+    conexion.commit()
+    cursor.close()
+
+    return redirect(url_for('listar_calificaciones'))
+
+@app.route('/editar/calificacion/<int:id>', methods=['POST'])
+def editar_calificacion(id):
+    C1 = request.form['C1']
+    C2 = request.form['C2']
+    C3 = request.form['C3']
+    C4 = request.form['C4']
+    calificacion_final = request.form['calificacion_final']
+
+    sql = 'UPDATE calificaciones SET C1 = %s, C2 = %s, C3 = %s, C4 = %s, `C. Final` = %s WHERE id_calificacion = %s'
+    datos = (C1, C2, C3, C4, calificacion_final, id)
+    
+    conexion = mysql.connection
+    cursor = conexion.cursor()
+    cursor.execute(sql,datos)
+
+    conexion.commit()
+    cursor.close()
+
+    return redirect(url_for('listar_calificaciones'))
+
+# @app.route('/listar/calificaciones')
+# def listar_calificaciones():
+#     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+#     cursor.execute('SELECT * FROM calificaciones')
+#     calificaciones = cursor.fetchall()
+#     cursor.close()
+
+#     return render_template('list_calificaciones.html', calificaciones=calificaciones)
+
+
+# @app.route('/eliminar/calificacion/<int:id>', methods=['POST'])
+# def eliminar_calificacion(id):
+#     cursor = mysql.connection.cursor()
+#     cursor.execute('DELETE FROM calificaciones WHERE id_calificacion = %s', (id,))
+#     mysql.connection.commit()
+#     cursor.close()
+
+#     return redirect(url_for('listar_calificaciones'))
+
 if __name__ == '__main__':
     app.run(port = 3000, debug=True)

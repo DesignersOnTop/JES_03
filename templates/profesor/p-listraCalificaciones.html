@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Calificaciones</title>
+</head>
+<body>
+    <h1>Lista de Calificaciones</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>ID Estudiante</th>
+                <th>ID Asignatura</th>
+                <th>C1</th>
+                <th>C2</th>
+                <th>C3</th>
+                <th>C4</th>
+                <th>Calificación Final</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for calificacion in calificaciones %}
+            <tr>
+                <td>{{ calificacion.id_calificacion }}</td>
+                <td>{{ calificacion.id_estudiante }}</td>
+                <td>{{ calificacion.id_asignatura }}</td>
+                <td>{{ calificacion.C1 }}</td>
+                <td>{{ calificacion.C2 }}</td>
+                <td>{{ calificacion.C3 }}</td>
+                <td>{{ calificacion.C4 }}</td>
+                <td>{{ calificacion['C. Final'] }}</td>
+                <td>
+                    <a href="/editar/calificacion/{{ calificacion.id_calificacion }}">Editar</a>
+                    <form action="/eliminar/calificacion/{{ calificacion.id_calificacion }}" method="POST" style="display:inline;">
+                        <button type="submit">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="/agregar/calificacion">Agregar Calificación</a>
+</body>
+</html>
