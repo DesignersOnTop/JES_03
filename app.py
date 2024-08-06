@@ -1,10 +1,10 @@
 import os
 from flask import Flask, render_template, request, redirect, session, send_from_directory, url_for, flash
-# from flask_mysqldb import MySQL
+from flask_mysqldb import MySQL
 import MySQLdb.cursors
 from datetime import datetime
 # Importar el enlace a base de datos MySQL
-from flaskext.mysql import MySQL
+# from flaskext.mysql import MySQL
 
 # Crear la aplicación
 app = Flask(__name__)
@@ -218,14 +218,14 @@ def a_home():
 def a_cursos():
     return render_template('./admin/a-cursos.html')
 
-@app.route('/admin/a-curso', methods = ['GET'])
+@app.route('/admin/curso/', methods = ['GET'])
 def mostrar_estudiantes():
     conexion = mysql.connection
     cursor = conexion.cursor()
     cursor.execute('SELECT * FROM estudiantes')
     estudiantes = cursor.fetchall()
     cursor.close()
-    return render_template('a-curso.html', estudiantes=estudiantes)
+    return render_template('./admin/a-curso.html', estudiantes=estudiantes)
 
 @app.route('/admin/materias/')
 def a_materias():

@@ -43,22 +43,20 @@
                 </figure>
             </div>
             <section class="curso-material-container">
-                <div class="c-curso-izquierdo">
+                <form action="/estudiante/enviar/tarea/" method="post" class="c-curso-izquierdo">
                     <article class="curso-descargar">
                         <h3>Descargar Archivo</h3>
                         <a href="{{ url_for('static', filename=material.archivo_nombre) }}" download="#">Click</a>
                     </article>
                     <article class="curso-subir-tarea">
-                        <form action="#">
                             <div id="previsualizacion"></div>
                             <label for="subir-tarea" id="subir-recurso-estudio">Subir Tarea</label>
                             <input type="file" id="subir-tarea" name="subir-tarea">
-                        </form>
                     </article>
-                    <form action="/estudiante/enviar/tarea/" method="post" enctype="multipart/form-data" class="botones-curso botones-curso-p">
+                    <div class="botones-curso botones-curso-p">
                         <button type='submit' value="Enviar">Enviar</button>
-                    </form>
-                </div>
+                    </div>
+                </form>
                 <div class="c-curso-central">
                     <article class="curso-main">
                         <div class="informacion-profesor-material">
