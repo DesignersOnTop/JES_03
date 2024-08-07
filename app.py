@@ -537,6 +537,26 @@ def p_material_estudio():
 def p_agregar_material():
     return render_template('./profesor/p-agregar-material.html')
 
+@app.route('/agregar_material', methods=['POST'])
+def agregar_material():
+    fondo_material = request.files['fondo-material']
+    nombre_material = request.form['nombre-material']
+    recurso_de_estudio = request.files['recurso-de-estudio']
+    descripcion_material = request.form['descripcion-material']
+
+    sql = "INSERT INTO material_estudio (id_curso, id_asignatura, titulo, fondo, material, descripcion) VALUES (%s, %s, %s, %s, %s, %s)"
+
+    datos = (1, 1, nombre_material, fondo_material, recurso_de_estudio, descripcion_material)
+    
+    conexion = mysql.connection
+    cursor = conexion.cursor()
+    cursor.execute(sql,datos)
+    
+    conexion.commit()
+    cursor.close()
+
+    return redirect('./profesor/p-material_estudio.html')
+
 @app.route('/profesor/recurso/estudio/')
 def p_recurso_estudio():
     return render_template('./profesor/p-recurso_estudio.html')
