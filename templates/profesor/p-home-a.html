@@ -67,111 +67,67 @@
     </div>
     <div class="ca-ho-scroll">
         <article class="tabla-centrar tabla-calificacion-centrar">
-            <div class="scroll-calificacion-p">
-                <form action="/agregar/calificacion" method="POST">
-                    <table class="tabla-calificacion tabla-asistencia">
-                        <tr>
-                            <th>Matrícula</th>
-                            <th>Nombre</th>
-                            <th>Apellido</th>
-                            <th>Info</th>
-                            <th>C1</th>
-                            <th>C2</th>
-                            <th>C3</th>
-                            <th>C4</th>
-                            <th>Calificación Final</th>
-                            <th>Acciones</th>
-                        </tr>
-                        <tr class="fila-calificacion">
-                            <td>1010</td>
-                            <td>Albiery</td>
-                            <td>Rodriguez</td>
-                            <td class="ver-estudiante-p"><a href="/profesor/perfil/estudiante"><figure><img src="{{ url_for('static', filename='imagenes/iconos/lupa.svg') }}" alt="ver-estudiante"></figure></a></td>
-                            <td><input type="text" name="C1" oninput="sumarCalificaciones(this)"></td>
-                            <td><input type="text" name="C2" oninput="sumarCalificaciones(this)"></td>
-                            <td><input type="text" name="C3" oninput="sumarCalificaciones(this)"></td>
-                            <td><input type="text" name="C4" oninput="sumarCalificaciones(this)"></td>
-                            <td><input type="text" name="C_Fin" readonly></td>
-                            <td>
-                                <!-- Botón para editar -->
-                                <form action="/editar/calificacion/1" method="POST" style="display:inline;">
-                                    <button type="submit">Editar</button>
-                                </form>
-                                <!-- Botón para eliminar -->
-                                <form action="/eliminar/calificacion/1" method="POST" style="display:inline;">
-                                    <button type="submit">Eliminar</button>
-                                </form>
-                            </td>
-                        </tr>
-                        <tr class="fila-calificacion">
-                            <td>1011</td>
-                            <td>Smailyn</td>
-                            <td>Burgos</td>
-                            <td class="ver-estudiante-p"><a href="/profesor/perfil/estudiante"><figure><img src="{{ url_for('static', filename='imagenes/iconos/lupa.svg') }}" alt="ver-estudiante"></figure></a></td>
-                            <td><input type="text" name="C1" oninput="sumarCalificaciones(this)"></td>
-                            <td><input type="text" name="C2" oninput="sumarCalificaciones(this)"></td>
-                            <td><input type="text" name="C3" oninput="sumarCalificaciones(this)"></td>
-                            <td><input type="text" name="C4" oninput="sumarCalificaciones(this)"></td>
-                            <td><input type="text" name="C_Fin" readonly></td>
-                            <td>
-                                <!-- Botón para editar -->
-                                <form action="/editar/calificacion/2" method="POST" style="display:inline;">
-                                    <button type="submit">Editar</button>
-                                </form>
-                                <!-- Botón para eliminar -->
-                                <form action="/eliminar/calificacion/2" method="POST" style="display:inline;">
-                                    <button type="submit">Eliminar</button>
-                                </form>
-                            </td>
-                        </tr>
-                        <tr class="fila-calificacion">
-                            <td>1012</td>
-                            <td>Massiel</td>
-                            <td>Rodriguez</td>
-                            <td class="ver-estudiante-p"><a href="/profesor/perfil/estudiante"><figure><img src="{{ url_for('static', filename='imagenes/iconos/lupa.svg') }}" alt="ver-estudiante"></figure></a></td>
-                            <td><input type="text" name="C1" oninput="sumarCalificaciones(this)"></td>
-                            <td><input type="text" name="C2" oninput="sumarCalificaciones(this)"></td>
-                            <td><input type="text" name="C3" oninput="sumarCalificaciones(this)"></td>
-                            <td><input type="text" name="C4" oninput="sumarCalificaciones(this)"></td>
-                            <td><input type="text" name="C_Fin" readonly></td>
-                            <td>
-                                <!-- Botón para editar -->
-                                <form action="/editar/calificacion/3" method="POST" style="display:inline;">
-                                    <button type="submit">Editar</button>
-                                </form>
-                                <!-- Botón para eliminar -->
-                                <form action="/eliminar/calificacion/3" method="POST" style="display:inline;">
-                                    <button type="submit">Eliminar</button>
-                                </form>
-                            </td>
-                        </tr>
-                        <tr class="fila-calificacion">
-                            <td>1013</td>
-                            <td>Faury</td>
-                            <td>Garcia</td>
-                            <td class="ver-estudiante-p"><a href="/profesor/perfil/estudiante"><figure><img src="{{ url_for('static', filename='imagenes/iconos/lupa.svg') }}" alt="ver-estudiante"></figure></a></td>
-                            <td><input type="text" name="C1" oninput="sumarCalificaciones(this)"></td>
-                            <td><input type="text" name="C2" oninput="sumarCalificaciones(this)"></td>
-                            <td><input type="text" name="C3" oninput="sumarCalificaciones(this)"></td>
-                            <td><input type="text" name="C4" oninput="sumarCalificaciones(this)"></td>
-                            <td><input type="text" name="C_Fin" readonly></td>
-                            <td>
-                                <!-- Botón para editar -->
-                                <form action="/editar/calificacion/4" method="POST" style="display:inline;">
-                                    <button type="submit">Editar</button>
-                                </form>
-                                <!-- Botón para eliminar -->
-                                <form action="/eliminar/calificacion/4" method="POST" style="display:inline;">
-                                    <button type="submit">Eliminar</button>
-                                </form>
-                            </td>
-                        </tr>
-                    </table>
-                </form>
+                    <div class="scroll-calificacion-p">
+                        <table class="tabla-calificacion tabla-asistencia">
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Info</th>
+                                <th>C1</th>
+                                <th>C2</th>
+                                <th>C3</th>
+                                <th>C4</th>
+                                <th>Calificaci&oacute;n Final</th>
+                            </tr>
+                            <tr class="fila-calificacion">
+                                <td>1010</td>
+                                <td>Albiery</td>
+                                <td>Rodriguez</td>
+                                <td class="ver-estudiante-p"><a href="/profesor/perfil"><figure><img src="{{ url_for('static', filename='imagenes/iconos/lupa.svg') }}" alt="ver-estudiante"></figure></a></td>
+                                <td><input type="text"></td>
+                                <td><input type="text"></td>
+                                <td><input type="text"></td>
+                                <td><input type="text"></td>
+                                <td><input type="text" value="" oninput="sumarCalificaciones()"></td>
+                            </tr>
+                            <tr class="fila-calificacion">
+                                <td>1011</td>
+                                <td>Smailyn</td>
+                                <td>Burgos</td>
+                                <td class="ver-estudiante-p"><a href="/profesor/perfil"><figure><img src="{{ url_for('static', filename='imagenes/iconos/lupa.svg') }}" alt="ver-estudiante"></figure></a></td>
+                                <td><input type="text"></td>
+                                <td><input type="text"></td>
+                                <td><input type="text"></td>
+                                <td><input type="text"></td>
+                                <td><input type="text" value="" oninput="sumarCalificaciones()"></td>
+                            </tr>
+                            <tr class="fila-calificacion">
+                                <td>1012</td>
+                                <td>Massiel</td>
+                                <td>Rodriguez</td>
+                                <td class="ver-estudiante-p"><a href="/profesor/perfil"><figure><img src="{{ url_for('static', filename='imagenes/iconos/lupa.svg') }}"alt="ver-estudiante"></figure></a></td>
+                                <td><input type="text"></td>
+                                <td><input type="text"></td>
+                                <td><input type="text"></td>
+                                <td><input type="text"></td>
+                                <td><input type="text" value="" oninput="sumarCalificaciones()"></td>
+                            <tr class="fila-calificacion">
+                                <td>1013</td>
+                                <td>Faury</td>
+                                <td>Garcia</td>
+                                <td class="ver-estudiante-p"><a href="/profesor/perfil"><figure><img src="{{ url_for('static', filename='imagenes/iconos/lupa.svg') }}" alt="ver-estudiante"></figure></a></td>
+                                <td><input type="text" ></td>
+                                <td><input type="text" ></td>
+                                <td><input type="text" ></td>
+                                <td><input type="text" ></td>
+                                <td><input type="text" value="" oninput="sumarCalificaciones()"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </article>
             </div>
-        </article>
-    </div>
-</section>
+            </section>
                 <article class="tabla-centrar tabla-horario-centrar">
                     <div class="scroll-calificacion-p">
                         <table class="tabla-horario tabla-asistencia">
