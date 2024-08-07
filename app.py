@@ -577,6 +577,25 @@ def p_tarea_e():
 def p_report_a():
     return render_template('./profesor/p-report-a.html')
 
+@app.route('/profesor/reporte', methods=['POST'])
+def reporte():
+    archivo_asistencia_nombre = request.files['archivo-asistencia']
+    archivo_calificacion_nombre = request.files['archivo-calificacion']
+    descripcion_material = request.form['descripcion-material']
+
+    sql = "INSERT INTO materiales (asistencia, calificacion, descripcion) VALUES (%s, %s, %s)"
+
+    datos = (archivo_asistencia_nombre, archivo_calificacion_nombre, descripcion_material)
+    
+    conexion = mysql.connection
+    cursor = conexion.cursor()
+    cursor.execute(sql, datos)
+    
+    conexion.commit()
+    cursor.close()
+
+    return redirect('./profesor/p-home-a.html')
+
 @app.route('/profesor/perfil/estudiante/')
 def p_perfil_e():
     return render_template('./profesor/p-perfil-e.html')
