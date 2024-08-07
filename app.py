@@ -453,7 +453,7 @@ def a_horario_profesor():
 
 # =========================================================
 
-# APARTADO DEL PROFESORES EN PYTHON
+# APARTADO DEL PROFESORES EN PYTHON Smailyn 
 @app.route('/home/profesor/')
 def p_home():
     return render_template('./profesor/p-home-a.html')
