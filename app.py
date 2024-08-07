@@ -218,6 +218,10 @@ def a_home():
 def a_cursos():
     return render_template('./admin/a-cursos.html')
 
+# @app.route('/admin/agregar_cursos', methods = ['POST'])
+# def agregar_cursos():
+
+
 @app.route('/admin/curso/', methods = ['GET'])
 def mostrar_estudiantes():
     conexion = mysql.connection
@@ -274,6 +278,15 @@ def a_reporte_profesor():
 
 @app.route('/admin/perfil/')
 def a_perfil():
+    sql = 'SELECT nombre_admin, matricula, a_email, a_genero, a_direccion, a_telefono FROM admin'
+
+    conexion = mysql.connection
+    cursor = conexion.cursor()
+    cursor.execute(sql)
+
+    admin = cursor.fetchall()
+    cursor.close()
+
     return render_template('./admin/a-perfil.html')
 
 @app.route('/admin/reportes-calificacion/')
@@ -401,7 +414,7 @@ def agregar_profesores():
 
 @app.route('/admin/actualizar_profesor', methods = ['POST'])
 def actualizar_profesores():
-    # Actualizar estudiantes
+    # Actualizar profesores
     id = request.form["id_profesor"]
     asignatura = request.form["id_asignatura"]
     nombre = request.form["nombre"]
@@ -416,7 +429,7 @@ def actualizar_profesores():
     contraseña = request.form["contraseña"]
 
     # Aqui indicamos lo que se cambiará y de donde lo hará
-    sql =  '''UPDATE profesores SET asignatura = %s, nombre = %s, apellidos = %s, direccion = %s, cedula = %s, genero = %s, correo = %s, telefono = %s, matricula = %s,imagen_perfil = %s, contraseña = %s WHERE id_profesor = %s'''
+    sql =  '''UPDATE profesores SET asignatura = %s, nombre = %s, apellido = %s, direccion = %s, cedula = %s, genero = %s, correo = %s, telefono = %s, matricula = %s,imagen_perfil = %s, contraseña = %s WHERE id_profesor = %s'''
     
     datos = (asignatura, nombre, apellidos, direccion, cedula, genero, correo, telefono, matricula,imagen_perfil, contraseña)
 
@@ -434,7 +447,7 @@ def eliminar_profesores():
     # Se hace una confirmación de si el id introducido existe
     if id_profesor in 'profesores':
         sql = 'DELETE FROM profesores WHERE id_profesor = %s'
-        # return redirect('./admin/a-curso.html')
+        return redirect('./admin/a-home.html')
     
     conexion = mysql.connection
     cursor = conexion.cursor()
@@ -445,7 +458,27 @@ def eliminar_profesores():
 
 @app.route('/admin/profesores/')
 def a_cursos_profesor():
+    sql = 'SELECT id_profesor, nombre, apellido, cedula, id_asignatura FROM profesores'
+
+    conexion = mysql.connection
+    cursor = conexion.cursor()
+    cursor.execute(sql)
+
+    profesores = cursor.fetchall()
+    cursor.close()
     return render_template('./admin/a-profesor-1_a.html')
+
+@app.route('/admin/estudiantes')
+def a_cursos_estudiantes():
+    sql = 'SELECT id_estudiante, nombre, apellido, fecha_nacimiento, id_curso FROM estudiantes'
+
+    conexion = mysql.connection
+    cursor = conexion.cursor()
+    cursor.execute(sql)
+
+    estudiantes = cursor.fetchall()
+    cursor.close()
+    return render_template('./admin/a-estudiante-1_a.html')
 
 @app.route('/admin/horario/')
 def a_horario_profesor():

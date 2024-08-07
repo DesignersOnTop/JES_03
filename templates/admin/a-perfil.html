@@ -19,24 +19,24 @@
                 </div>
                 <div class="perfil-derecho">
                     <div class="perfil-derecha-arriba">
-                        <h2>Jhon Mike Peña</h2>
-                        <p>1-22-0500</p>
+                        <h2>{{ admin.nombre_admin }}</h2>
+                        <p>{{ admin.matricula }}</p>
                     </div>
                     <div class="datos datos1">
                         <h3>Email</h3>
-                        <p>jhonmip2@gmail.com</p>
+                        <p>{{ admin.a_email }}</p>
                     </div>
                     <div class="datos">
                         <h3>Genero</h3>
-                        <p>Masculino</p>
+                        <p>{{ admin.a_genero }}</p>
                     </div>
                     <div class="datos">
                         <h3>Dirección</h3>
-                        <p>Calle 16 de Agosto #01</p>
+                        <p>{{ admin.a_direccion }}</p>
                     </div>
                     <div class="datos">
                         <h3>Telefono</h3>
-                        <p>809-101-0000</p>
+                        <p>{{ admin.a_telefono }}</p>
                     </div>
                 </div>
             </article>
