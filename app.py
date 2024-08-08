@@ -1,10 +1,9 @@
 import os
 from flask import Flask, render_template, request, redirect, session, send_from_directory, url_for, flash
-# from flask_mysqldb import MySQL
-# import MySQLdb.cursors
+from flask_mysqldb import MySQL
+import MySQLdb.cursors
 from datetime import datetime
 # Importar el enlace a base de datos MySQL
-from flaskext.mysql import MySQL
 
 # Crear la aplicación
 app = Flask(__name__)
