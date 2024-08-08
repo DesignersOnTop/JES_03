@@ -11,24 +11,24 @@
     <div class="body-container">
         <main class="main-container main-curso-material">            
             <section class="modals-container agregar-material-section">
-                <form action="#">
+                <form action="/profesor/agregar/material" method="POST" enctype="multipart/form-data">
                     <fieldset class="agregar-material-fieldset">
                         <legend>Agregar Material 1ro - A</legend>
                         <div class="imagen-de-fondo-curso">
                             <label for="fondo-material">Tema de fondo</label>
-                            <input type="file" id="fondo-material">
+                            <input type="file" id="fondo-material" name="fondo" required>
                         </div>
                         <div class="dato-material info-material" id="titulo-material">
                             <label for="nombre-material">Titulo del Material</label>
-                            <input type="text" id="nombre-material">
+                            <input type="text" id="nombre-material" name="titulo" required>
                         </div>
                         <div class="dato-material">
                             <label for="recurso-de-estudio">Subir Material</label>
-                            <input type="file" id="recurso-de-estudio">
+                            <input type="file" id="recurso-de-estudio" name="material" required>
                         </div>
                         <div class="dato-material dato-material-textarea">
-                            <label for="con-material">Descripci&oacute;n del Material</label>
-                            <textarea name="con-material" id="con-material"></textarea>
+                            <label for="con-material">Descripción del Material</label>
+                            <textarea name="descripcion" id="con-material" required></textarea>
                         </div>
                     </fieldset>
                     <div class="botones-agg-material">
