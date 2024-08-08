@@ -185,273 +185,70 @@ def ver_materia(titulo):
 
 @app.route('/estudiante/refuerzo/libros/')
 def e_refuerzo_libros():
-    return render_template('./estudiante/e_refuerzo_libros.html')
+    if 'user_id' not in session or session.get('role') != 'estudiante':
+        return redirect('/')
+
+    estudiante_id = session['user_id']
+    
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    
+    cursor.execute(
+    '''
+        SELECT libros.*, asignaturas.nom_asignatura
+        FROM libros
+        JOIN estudiantes ON libros.id_curso = estudiantes.id_curso
+        JOIN asignaturas ON libros.id_asignatura = asignaturas.id_asignatura
+        WHERE estudiantes.id_estudiante = %s
+    ''', (estudiante_id,))
+    
+    libros = cursor.fetchall()
+    cursor.close()
+    
+    return render_template('./estudiante/e_refuerzo_libros.html', libros=libros)
+
+@app.route('/estudiante/libro/<titulo>')
+def e_libro(titulo):
+    if 'user_id' not in session or session.get('role') != 'estudiante':
+        return redirect('/')
+
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+
+    # Obtener detalles del libro por título
+    cursor.execute('''
+        SELECT libros.*, asignaturas.nom_asignatura
+        FROM libros
+        JOIN asignaturas ON libros.id_asignatura = asignaturas.id_asignatura
+        WHERE libros.titulo = %s
+    ''', (titulo,))
+    
+    libro = cursor.fetchone()
+    cursor.close()
+
+    return render_template('estudiante/e-libro-refuerzo.html', libro=libro)
 
 @app.route('/estudiante/refuerzo/videos/')
 def e_refuerzo_videos():
-    return render_template('./estudiante/e_refuerzo_videos.html')
+    estudiante_id = session['user_id']
+    if 'user_id' not in session or session.get('role') != 'estudiante':
+        return redirect('/')
+
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    
+    cursor.execute(
+        '''
+        SELECT videos.*, asignaturas.nom_asignatura
+        FROM videos
+        JOIN estudiantes ON videos.id_curso = estudiantes.id_curso
+        JOIN asignaturas ON videos.id_asignatura = asignaturas.id_asignatura
+        WHERE estudiantes.id_estudiante = %s
+        ''', (estudiante_id))
+    
+    videos = cursor.fetchall()
+    return render_template('./estudiante/e_refuerzo_videos.html', videos=videos)
 
 @app.route('/estudiante/video/')
 def e_videos():
     return render_template('./estudiante/e-video-clase.html')
 
-@app.route('/estudiante/libro/')
-def e_libro():
-    return render_template('./estudiante/e-libro-refuerzo.html')
-
-# APARTADO DEL ADMIN EN PYTHON
-
-@app.route('/home/admin/')
-def a_home():
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)  
-    # Estudiantes
-    cursor.execute('SELECT * FROM estudiantes')
-    estudiantes = cursor.fetchall()
-    # Profesores
-    cursor.execute('SELECT * FROM profesores')
-    profesores = cursor.fetchall()
-    # Cerrar la conexion para seguridad
-    cursor.close()
-    return render_template('./admin/a-home.html', estudiantes=estudiantes, profesores=profesores)
-
-@app.route('/admin/cursos/')
-def a_cursos():
-    return render_template('./admin/a-cursos.html')
-
-@app.route('/admin/curso/', methods = ['GET'])
-def mostrar_estudiantes():
-    conexion = mysql.connection
-    cursor = conexion.cursor()
-    cursor.execute('SELECT * FROM estudiantes')
-    estudiantes = cursor.fetchall()
-    cursor.close()
-    return render_template('./admin/a-curso.html', estudiantes=estudiantes)
-
-@app.route('/admin/materias/')
-def a_materias():
-    return render_template('./admin/a-materias.html')
-
-@app.route('/admin/reportes/')
-def a_reportes():
-    return render_template('./admin/a-reporte-curso.html')
-
-@app.route('/admin/reportes-profesor/')
-def a_reporte_profesor():
-    return render_template('./admin/a-reporte-profesor.html')
-
-@app.route('/admin/perfil/')
-def a_perfil():
-    return render_template('./admin/a-perfil.html')
-
-@app.route('/admin/reportes-calificacion/')
-def a_reporte_calificaciones():
-    return render_template('./admin/a-calificaciones-reporte.html')
-
-@app.route('/admin/reportes-asistencias/')
-def a_reportes_asistencia():
-    return render_template('./admin/a-asistencias-reporte.html')
-
-@app.route('/admin/registro/estudiante/')
-def a_formulario_registro_e():
-    return render_template('./admin/a-formulario-registro-e.html')
-
-@app.route('/guardar_estudiantes', methods = ['POST'])
-def guardar_estudiante():
-    # Insertar estudiantes
-    curso = request.form["curso"]
-    matricula = request.form["matricula"]
-    nombre = request.form["nombre"]
-    apellidos = request.form["apellidos"]
-    direccion = request.form["direccion"]
-    fecha_nacimiento = request.form["fecha_nacimiento"]
-    genero = request.form["genero"]
-    correo = request.form["email"]
-    telefono = request.form["telefono"]
-    imagen_perfil = request.files["imagen_perfil"]
-    contraseña = request.form["contraseña"]
-    
-    if imagen_perfil:
-        estudiante_perfil = imagen_perfil.read()
-
-    sql = 'INSERT INTO `estudiantes` (`id_estudiante`,`id_curso`, `matricula`, `nombre`, `apellidos`, `direccion`, `fecha_nacimiento`, `genero`, `email`, `telefono`, `imagen_perfil`, `contraseña`) VALUES (NULL, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
-
-    datos = (curso, matricula, nombre, apellidos, direccion, fecha_nacimiento, genero, correo, telefono, estudiante_perfil, contraseña)
-
-    conexion = mysql.connection
-    cursor = conexion.cursor()
-    cursor.execute(sql,datos)
-    
-    conexion.commit()
-    cursor.close()
-
-    return redirect('./admin/a-curso.html')
-
-@app.route('/actualizar_estudiantes', methods = ['POST'])
-def actualizar_estudiantes():
-    # Actualizar estudiantes
-    id = request.form["id_estudiante"]
-    nombre = request.form["nombre"]
-    apellidos = request.form["apellidos"]
-    fecha_nacimiento = request.form["fecha_nacimiento"]
-    genero = request.form["genero"]
-    curso = request.form["curso"]
-    correo = request.form["email"]
-    telefono = request.form["telefono"]
-    direccion = request.form["direccion"]
-    matricula = request.form["matricula"]
-    contraseña = request.form["contraseña"]
-
-    # Aqui indicamos lo que se cambiará y de donde lo hará
-    sql =  '''UPDATE estudiantes SET nombre = %s, apellidos = %s, fecha_nacimiento = %s, genero = %s, curso = %s, correo = %s, telefono = %s, direccion = %s, matricula = %s, contraseña = %s WHERE id_estudiante = %s'''
-    
-    datos = (nombre, apellidos, fecha_nacimiento, genero, curso, correo, telefono, direccion, matricula, contraseña)
-
-    conexion = mysql.connection
-    cursor = conexion.cursor()
-    cursor.execute(sql, datos)
-
-    conexion.commit()
-    cursor.close()
-
-    return redirect('./admin/a-curso.html')
-
-@app.route('/admin/eliminar_estudiantes', methods = ['POST'])
-def eliminar_estudiantes():
-    id_estudiante = request.form["id_estudiante"]
-
-    # Se hace una confirmación de si el id introducido existe
-    if id_estudiante in 'estudiantes':
-        sql = 'DELETE FROM estudiantes WHERE id_estudiante = %s'
-        return redirect('./admin/a-curso.html')
-    
-    conexion = mysql.connection
-    cursor = conexion.cursor()
-    cursor.execute(sql, (id_estudiante))
-
-    conexion.commit()
-    cursor.close()
-
-@app.route('/admin/registro/profesor/')
-def a_formulario_registro_p():
-    return render_template('./admin/a-formulario-registro-p.html')
-
-@app.route('/admin/profesores/')
-def a_cursos_profesor():
-    return render_template('./admin/a-profesor-1_a.html')
-
-@app.route('/admin/horario/')
-def a_horario_profesor():
-    return render_template('./admin/a-horario-1a.html')
-
-# =========================================================
-
-# APARTADO DEL PROFESORES EN PYTHON
-@app.route('/home/profesor/')
-def p_home():
-    return render_template('./profesor/p-home-a.html')
-
-@app.route('/profesor/perfil/')
-def p_perfil():
-    return render_template('./profesor/p-perfil.html')
-
-@app.route('/profesor/refuerzo/libros/')
-def p_refuerzo_libros():
-    return render_template('./profesor/p-refuerzo-libros.html')
-
-@app.route('/profesor/refuerzo/libros/nombre_libro')
-def p_libro_refuerzo():
-    return render_template('./profesor/p-libro-refuerzo.html')
-
-@app.route('/profesor/refuerzo/videos/')
-def p_refuerzo_videos():
-    return render_template('./profesor/p-refuerzo-videos.html')
-
-@app.route('/profesor/agregar/libros/')
-def agregar_libro():
-    return render_template('/profesor/p-agregar-libro.html')
-
-@app.route('/agregar/libro/', methods=['GET','POST'])
-def p_agregar_libro():
-    _portada = request.files['portada_libro'].filename
-    _titulo = request.form['titulo-libro']
-    _materia = request.form['materia-libro']
-    _subir = request.files['subir-libro'].filename
-    
-    tiempo = datetime.now()
-    horaActual = tiempo.strftime('%Y%H%M%S')
-    
-    # if _subir.filename!= " ":
-    #     nuevoNombre = horaActual+ "_" + _subir.filename
-    #     _subir.save('static/img/'+nuevoNombre)
-        
-    sql = 'INSERT INTO `libros` (`id`,`portada`, `titulo`, `id_asignatura`, `libro`, `id_curso_seccion`) VALUES (NULL, %s, %s, %s, %s, 2)'
-    
-    datos = (_portada, _titulo, _materia, _subir)
-    
-    conexion = mysql.connection
-    cursor = conexion.cursor()
-    cursor.execute(sql,datos)
-    
-    conexion.commit()
-    cursor.close()
-    
-    return redirect('/profesor/refuerzo/libros/')
-
-@app.route('/profesor/agregar/video/')
-def p_agregar():
-    return render_template('./profesor/p-agregar-video.html')
-
-@app.route('/agregar/video/profesor/', methods=['POST'])
-def p_agregar_video():
-    _titulo = request.form['titulo-video']
-    _materia = request.form['materia-video']
-    _insertar = request.form['insertar-video']
-    
-    sql = 'INSERT INTO `videos` (`id`, `titulo`, `id_seccion_curso`, `id_asignatura`, `video`) VALUES (NULL, %s, %s, %s, 2)'
-    
-    datos = (_titulo, _materia, _insertar)
-    
-    conexion = mysql.connection
-    cursor = conexion.cursor()
-    cursor.execute(sql,datos)
-    
-    conexion.commit()
-    cursor.close()
-    
-    return redirect('/profesor/refuerzo/videos/')
-    
-
-@app.route('/profesor/materiales/')
-def p_material_estudio():
-    return render_template('/profesor/p-material_estudio.html')
-
-@app.route('/profesor/agregar/material/')
-def p_agregar_material():
-    return render_template('./profesor/p-agregar-material.html')
-
-@app.route('/profesor/recurso/estudio/')
-def p_recurso_estudio():
-    return render_template('./profesor/p-recurso_estudio.html')
-
-@app.route('/profesor/material/subido/')
-def p_material_de_curso_subido():
-    return render_template('./profesor/p-material-de-curso-subido.html')
-
-@app.route('/profesor/clases/enviadas/')
-def p_clases_enviadas():
-    return render_template('./profesor/p-clases-enviada.html')
-
-@app.route('/profesor/tarea/estudiante/')
-def p_tarea_e():
-    return render_template('./profesor/p-tarea-e.html')
-
-@app.route('/profesor/reporte/')
-def p_report_a():
-    return render_template('./profesor/p-report-a.html')
-
-@app.route('/profesor/perfil/estudiante/')
-def p_perfil_e():
-    return render_template('./profesor/p-perfil-e.html')
-
 if __name__ == '__main__':
-    app.run(port = 3000, debug=True)
+    app.run(debug=True)
