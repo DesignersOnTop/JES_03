@@ -144,63 +144,71 @@ def p_agregar_material():
 
 @app.route('/profesor/agregar/material', methods=['GET', 'POST'])
 def agregar_material():
-    if request.method == 'POST':
-        # Obtener los datos del formulario
-        titulo = request.form['titulo']
-        descripcion = request.form['descripcion']
-        # Usar valores fijos para id_curso e id_asignatura
-        id_cursos = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]  # Lista de valores para id_curso
-        id_asignaturas = [2401, 2402, 2403, 2404, 2405, 2406, 2407, 2408]  # Lista de valores para id_asignatura
-        material = request.files['material']
-        fondo = request.files['fondo']
-
-        # Leer los archivos y convertirlos a binario
-        material_blob = material.read()
-        fondo_blob = fondo.read()
-
+    if request.method == 'GET':
+        id_curso = request.args.get('id_curso')
         cursor = mysql.connection.cursor()
+        cursor.execute("SELECT nombre FROM cursos WHERE id_curso = %s", (id_curso,))
+        curso_nombre = cursor.fetchone()[0]
+        id_asignatura = 1  # Obtener el valor de id_asignatura desde la base de datos o de otra fuente
+        return render_template('p-agregar-material.html', curso_nombre=curso_nombre, id_asignatura=id_asignatura)
 
-        # Verificar si los id_asignaturas existen
-        for id_asignatura in id_asignaturas:
-            cursor.execute('SELECT * FROM asignaturas WHERE id_asignatura = %s', (id_asignatura,))
-            asignatura = cursor.fetchone()
-            if not asignatura:
-                flash(f'La asignatura con id {id_asignatura} no existe.', 'error')
-                return redirect(url_for('agregar_material'))
+    elif request.method == 'POST':
+        try:
+            id_curso = request.form.get('id_curso')
+            titulo = request.form.get('titulo')
+            material_subido = request.files.get('material')
+            fondo = request.files.get('fondo')
+            descripcion = request.form.get('descripcion')
+            id_asignatura = request.form.get('id_asignatura')
 
-        # Insertar el material para cada combinación de id_curso e id_asignatura
-        for id_curso in id_cursos:
-            for id_asignatura in id_asignaturas:
-                sql = """
-                    INSERT INTO material_estudio (titulo, descripcion, id_curso, id_asignatura, material_subido, fondo) 
-                    VALUES (%s, %s, %s, %s, %s, %s)
-                """
-                datos = (titulo, descripcion, id_curso, id_asignatura, material_blob, fondo_blob)
-                
-                try:
-                    cursor.execute(sql, datos)
-                    mysql.connection.commit()
-                except MySQLdb.OperationalError:
-                    mysql.connection.ping(True)
-                    cursor.execute(sql, datos)
-                    mysql.connection.commit()
+            if not id_curso or not titulo or not material_subido or not fondo or not descripcion or not id_asignatura:
+                flash('Error: algunos campos están vacíos')
+                return render_template('p-agregar-material.html', error_message='Error: algunos campos están vacíos')
 
-        cursor.close()
-        return redirect(url_for('p-lista-material'))
+            # Validar tipo de archivo subido
+            if material_subido.mimetype not in ['application/pdf', 'image/jpeg']:
+                flash('Error: tipo de archivo no permitido')
+                return render_template('p-agregar-material.html', error_message='Error: tipo de archivo no permitido')
 
-    return render_template('p-agregar-material.html')
+            # Leer los archivos subidos
+            material_subido_data = material_subido.read()
+            fondo_data = fondo.read()
 
+            sql = 'INSERT INTO material_estudio (id_curso, titulo, material_subido, fondo, descripcion, id_asignatura) VALUES (%s, %s, %s, %s, %s, %s)'
 
+            datos = (id_curso, titulo, material_subido_data, fondo_data, descripcion, id_asignatura)
 
+            conexion = mysql.connection
+            cursor = conexion.cursor()
+            cursor.execute(sql, datos)
 
+            conexion.commit()
+            cursor.close()
 
+            flash('Material agregado con éxito')
+            return redirect(url_for('p_lista_material'))
 
-@app.route('/profesor/recurso/estudio/<int:id_material>')
-def mostrar_material(id_material):
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    cursor.execute('SELECT material_subido FROM material_estudio WHERE id_material = %s', (id_material,))
-    material = cursor.fetchone()
+        except mysql.Error as err:
+            flash('Error: ' + str(err))
+            return render_template('p-agregar-material.html', error_message='Error: ' + str(err))
+
+        except Exception as e:
+            flash('Error: ' + str(e))
+            return render_template('p-agregar-material.html', error_message='Error: ' + str(e))
+    
+@app.route('/profesor/lista/material')
+def lista_material():
+   
+    return render_template('p-lista-material.html')
+
+@app.route('/profesor/materiales')
+def listar_materiales():
+    conexion = mysql.connection
+    cursor = conexion.cursor()
+    cursor.execute('SELECT * FROM material_estudio')
+    materiales = cursor.fetchall()
     cursor.close()
+    return render_template('p-material_estudio.html', materiales=materiales)
     
 
 @app.route('/profesor/recurso/estudio/')

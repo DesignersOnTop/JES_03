@@ -12,6 +12,8 @@
         <main class="main-container main-curso-material">            
             <section class="modals-container agregar-material-section">
                 <form action="/profesor/agregar/material" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="id_curso" value="{{ id_curso }}">
+                    <input type="hidden" name="id_asignatura" value="{{ id_asignatura }}">
                     <fieldset class="agregar-material-fieldset">
                         <legend>Agregar Material 1ro - A</legend>
                         <div class="imagen-de-fondo-curso">

@@ -1,40 +1,23 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Materiales</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+  <title>Materiales de Estudio</title>
 </head>
 <body>
-    <div class="body-container">
-        <header>
-            
-        </header>
-        <main class="main-container">
-            <section class="section-materiales section-p-material-estudio">
-                <div class="cabecera-agg-refuerzo" id="cabecera-material_estudio">
-                    <div class="cabecera-flex">
-                        <a href="/profesor/agregar/material/">Agregar</a>
-                        <h1 class="titulo-refuerzo titulo-libro">Material</h1>
-                    </div>
-                </div>
-                {% for material in materiales %}
-                <article class="contenedor-material">                           
-                    <div class="materia-del-material">
-                        <h3>{{ material.titulo }}</h3>
-                        <p>{{ material.descripcion }}</p>
-                        <figure>
-                            <img src="data:image/jpeg;base64,{{ material.fondo | b64encode }}" alt="{{ material.titulo }}">
-                        </figure>
-                    </div>
-                    <div class="link-material">
-                        <a href="/profesor/recurso/estudio/{{ material.id_material }}">ver material</a>
-                    </div>
-                </article>
-                {% endfor %}
-            </section>
-        </main>
-    </div>
+  <h1>Materiales de Estudio</h1>
+  <ul>
+    {% for material in materiales %}
+      <li>
+        {{ material.titulo }} (Curso {{ material.id_curso }})
+        <ul>
+          <li>Descripción: {{ material.descripcion }}</li>
+          <li>Asignatura: {{ material.id_asignatura }}</li>
+          <li>
+            <a href="{{ url_for('descargar_material', id_material=material.id) }}">Descargar Material</a>
+          </li>
+        </ul>
+      </li>
+    {% endfor %}
+  </ul>
 </body>
 </html>
