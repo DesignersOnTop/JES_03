@@ -18,33 +18,34 @@
                     </figure>
                     <div class="perfil-izquierda-abajo">
                         <h6>Grado</h6>
-                        <h4>1ro A </h4>
+                        <h4>{{ estudiantes.id_curso }} </h4>
                     </div>
                 </div>
                 <div class="perfil-derecho">
                     <div class="perfil-derecha-arriba">
-                        <h2>Albiery Rodriguez</h2>
-                        <p>1-22-0500</p>
+                        <h2>{{ estudiantes.nombre }}</h2>
+                        <h2>{{ estudiantes.apellidos }}</h2>
+                        <p>{{ estudiantes.matricula }}</p>
                     </div>
                     <div class="datos datos1">
                         <h3>Email</h3>
-                        <p>albieryrf@gmail.com</p>
+                        <p>{{ estudiantes.email }}</p>
                     </div>
                     <div class="datos">
                         <h3>Fecha de Nacimiento</h3>
-                        <p>07-08-2003</p>
+                        <p>{{ estudiantes.fecha_nacimiento }}</p>
                     </div>
                     <div class="datos">
                         <h3>Genero</h3>
-                        <p>Masculino</p>
+                        <p>{{ estudiantes.genero }}</p>
                     </div>
                     <div class="datos">
                         <h3>Dirección</h3>
-                        <p>Calle 16 de Agosto #01</p>
+                        <p>{{ estudiantes.direccion }}</p>
                     </div>
                     <div class="datos">
                         <h3>Telefono</h3>
-                        <p>849-464-9924</p>
+                        <p>{{ estudiantes.telefono }}</p>
                     </div>
                 </div>
             </article>

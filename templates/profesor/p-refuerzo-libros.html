@@ -49,12 +49,14 @@
                             <th>Materia</th>
                             <th>fuente|link</th>
                         </tr>
+                        {% for libro in libros %}
                         <tr>
-                            <td>Don quijote</td>
-                            <td>Lengua Española</td>
+                            <td>{{ libros.titulo }}</td>
+                            <td>{{ libros.id_asignatura }}</td>
                             <td><a href="/profesor/refuerzo/libros/nombre_libro"><button>abrir</button></a></td>
                             <td><button class="td-eliminar-libros">Eliminar</button></td>
                         </tr>
+                        {% endfor %}
                         <tr>
                             <td>Aritmetica basica</td>
                             <td>Matematicas</td>

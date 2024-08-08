@@ -19,32 +19,33 @@
                 </div>
                 <div class="perfil-derecho">
                     <div class="perfil-derecha-arriba">
-                        <h2>Miguel Enrique Martinez</h2>
-                        <p>1-22-0500</p>
+                        <h2>{{ profesores.nombre }}</h2>
+                         <h2>{{ profesores.apellido }}</h2>
+                        <p>{{ profesores.matricula }}</p>
                     </div>
                     <div class="datos datos1">
                         <h3>Email</h3>
-                        <p>MiguelEnm@gmail.com</p>
+                        <p>{{ profesores.email }}</p>
                     </div>
                     <div class="datos">
                         <h3>Cedula</h3>
-                        <p>031-0071899-9</p>
+                        <p>{{ profesores.cedula }}</p>
                     </div>
                     <div class="datos">
                         <h3>Materia</h3>
-                        <p>Matem&aacute;ticas</p>
+                        <p>{{ profesores.id_asignatura }}</p>
                     </div>
                     <div class="datos">
                         <h3>Genero</h3>
-                        <p>Masculino</p>
+                        <p>{{ profesores.genero }}</p>
                     </div>
                     <div class="datos">
                         <h3>Dirección</h3>
-                        <p>Calle 16 de Agosto #01</p>
+                        <p>{{ profesores.direccion }}</p>
                     </div>
                     <div class="datos">
                         <h3>Telefono</h3>
-                        <p>809-101-0000</p>
+                        <p>{{ profesores.telefono }}</p>
                     </div>
                 </div>
             </article>

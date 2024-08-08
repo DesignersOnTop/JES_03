@@ -11,20 +11,21 @@
     <div class="body-container">
         <main class="main-container main-curso-material">            
             <section class="modals-container agregar-material-section">
-                <form action="#">
+                <form action="/profesor/reporte/" method="post">
+
                     <fieldset class="agregar-material-fieldset">
                         <legend>Informe de 1ro - A</legend>
                         <div class="dato-report">
                             <label for="report-asistencia">Asistencia</label>
-                            <input type="file" id="report-asistencia">
+                            <input type="file" name="report_asist " id="report-asistencia">
                         </div>
                         <div class="dato-report">
                             <label for="report-calificacion">Calificaci&oacute;n</label>
-                            <input type="file" id="report-calificacion">
+                            <input type="file" name="report_cali" id="report-calificacion">
                         </div>                    
                         <div class="dato-material dato-material-textarea">
                             <label for="con-material">Descripci&oacute;n del Material</label>
-                            <textarea name="con-material" id="con-material"></textarea>
+                            <textarea name="descrip_material" id="con-material"></textarea>
                         </div>
                     </fieldset>                        
                     <div class="botones-agg-material">

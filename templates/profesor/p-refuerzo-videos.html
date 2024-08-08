@@ -50,12 +50,14 @@
                             <th>Materia</th>
                             <th>fuente|link</th>                      
                         </tr>
+                        {% for video in videos %}
                         <tr>
-                            <td>Don quijote</td>
-                            <td>Lengua Española</td>
+                            <td>{{ videos.titulo }}</td>
+                            <td>{{% videos.id_asignatura%}}</td>
                             <td><a href="https://www.youtube.com/watch?v=ir6A-Ns5Em8" target="_blank"><button>link</button></a></td>
                             <td><button class="td-eliminar-libros">Eliminar</button></td>
                         </tr>
+                        {% endfor %}
                         <tr>
                             <td>Aritmetica basica</td>
                             <td>Matematicas</td>
