@@ -579,7 +579,7 @@ def agregar_material():
 
     sql = "INSERT INTO material_estudio (id_curso, id_asignatura, titulo, fondo, material, descripcion) VALUES (%s, %s, %s, %s, %s, %s)"
 
-    datos = (1, 1, nombre_material, fondo_material, recurso_de_estudio, descripcion_material)
+    datos = (nombre_material, fondo_material, recurso_de_estudio, descripcion_material)
     
     conexion = mysql.connection
     cursor = conexion.cursor()
