@@ -10,7 +10,7 @@
 <body>
     <main class="main-container">
         <section class="modals-container modal-video">
-            <iframe src="https://www.youtube.com/embed/ir6A-Ns5Em8?si=bVzCn3rsk42nL5yT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            {{video.video | safe}}
         </section>
     </main>
     <script src="{{ url_for('static', filename='js/perfil.js') }}"></script>
