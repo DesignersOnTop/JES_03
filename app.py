@@ -24,6 +24,7 @@ mysql = MySQL(app)
 
 @app.route('/')
 def Index():
+    session.clear()
     return render_template('index.html')
     
 @app.route('/login', methods=['POST'])
@@ -183,6 +184,18 @@ def ver_materia(titulo):
 
     return render_template('estudiante/e-ver_materias.html', material=material)
 
+@app.route('/estudiante/enviar/tarea/')
+def e_tarea():
+    
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    
+    tarea = request.files['subir-tarea']
+    cursor.execute(''' 
+    INSERT                
+    ''')
+    return redirect('/estudiante/material/')
+
+
 @app.route('/estudiante/refuerzo/libros/')
 def e_refuerzo_libros():
     if 'user_id' not in session or session.get('role') != 'estudiante':
@@ -241,14 +254,30 @@ def e_refuerzo_videos():
         JOIN estudiantes ON videos.id_curso = estudiantes.id_curso
         JOIN asignaturas ON videos.id_asignatura = asignaturas.id_asignatura
         WHERE estudiantes.id_estudiante = %s
-        ''', (estudiante_id))
+        ''', (estudiante_id,)
+    )
     
     videos = cursor.fetchall()
     return render_template('./estudiante/e_refuerzo_videos.html', videos=videos)
 
-@app.route('/estudiante/video/')
-def e_videos():
-    return render_template('./estudiante/e-video-clase.html')
+@app.route('/estudiante/video/<titulo>')
+def e_videos(titulo):
+    if 'user_id' not in session or session.get('role') != 'estudiante':
+        return redirect('/')
+
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    
+    cursor.execute('''
+        SELECT videos.*, asignaturas.nom_asignatura
+        FROM videos
+        JOIN asignaturas ON videos.id_asignatura = asignaturas.id_asignatura
+        WHERE videos.titulo = %s
+    ''', (titulo,))
+    
+    video = cursor.fetchone()
+    cursor.close()
+    
+    return render_template('./estudiante/e-video-clase.html', video = video)
 
 if __name__ == '__main__':
     app.run(debug=True)
