@@ -332,6 +332,18 @@ def agregar_estudiante():
 
     return redirect('./admin/a-curso.html')
 
+@app.route('/editar_estudiante/<int:id>', methods=['GET'])
+def editar_estudiante(id):
+    cursor = mysql.connection.cursor()
+    cursor.execute("SELECT * FROM estudiantes WHERE id = %s", (id))
+    estudiante = cursor.fetchone()
+    cursor.close()
+
+    if estudiante:
+        return render_template('./admin/a-editar-datos-estudiantes.html', estudiante=estudiante)
+    else:
+        return "Estudiante no encontrado", 404
+
 @app.route('/actualizar_estudiantes', methods = ['POST'])
 def actualizar_estudiantes():
     # Actualizar estudiantes
@@ -367,12 +379,12 @@ def eliminar_estudiantes():
 
     # Se hace una confirmación de si el id introducido existe
     if id_estudiante in 'estudiantes':
-        sql = 'DELETE FROM estudiantes WHERE id_estudiante = %s'
+        sql = 'DELETE FROM estudiantes WHERE id_estudiante = %s', (id_estudiante)
         return redirect('./admin/a-curso.html')
     
     conexion = mysql.connection
     cursor = conexion.cursor()
-    cursor.execute(sql, (id_estudiante))
+    cursor.execute(sql)
 
     conexion.commit()
     cursor.close()
@@ -446,12 +458,12 @@ def eliminar_profesores():
 
     # Se hace una confirmación de si el id introducido existe
     if id_profesor in 'profesores':
-        sql = 'DELETE FROM profesores WHERE id_profesor = %s'
+        sql = 'DELETE FROM profesores WHERE id_profesor = %s', (id_profesor)
         return redirect('./admin/a-home.html')
     
     conexion = mysql.connection
     cursor = conexion.cursor()
-    cursor.execute(sql, (id_profesor))
+    cursor.execute(sql)
 
     conexion.commit()
     cursor.close()
