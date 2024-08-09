@@ -421,7 +421,7 @@ def a_perfil():
     admin = cursor.fetchall()
     cursor.close()
 
-    return render_template('./admin/a-perfil.html')
+    return render_template('./admin/a-perfil.html', admin = admin)
 
 @app.route('/admin/reportes-calificacion/')
 def a_reporte_calificaciones():
