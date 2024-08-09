@@ -32,13 +32,14 @@
         </header>
         <main class="main-container main-curso-material">    
             <div class="materia-clases-elegir">
-                <h2>Tarea 1 - Investigaci&oacute;n</h2>
+                <h2>{{ material.titulo }}</h2>
             </div>            
             <div class="imagen-de-fondo-curso">
                 <figure>
+                    <!-- Imagen de fondo del material -->
                     <img src="{{ url_for('static', filename='imagenes/recursos/Auditorio-img-fondo.jpg') }}" alt="imagen-de-fondo">
                     <figcaption>
-                        Matemáticas
+                        {{ material.descripcion }}
                     </figcaption>
                 </figure>
             </div>
@@ -49,32 +50,34 @@
                             <figure>
                                 <img src="{{ url_for('static', filename='imagenes/recursos/perfil-masculino-2.jpg') }}" alt="profesor">
                             </figure>
-                            <h3><span class="profesor-material-span">YO:</span>Miguel Enrique Martinez</h3>
+                            <h3><span class="profesor-material-span">Profesor:</span> {{ material.profesor }}</h3>
                         </div>
                         <div class="contenedor-material-curso">
                             <div class="descripcion-material-curso">
                                 <figure class="descripcion-m-c-editar" style="cursor: pointer;">
                                     <img src="{{ url_for('static', filename='imagenes/iconos/lapiz-editar.svg') }}" alt="editar">
                                 </figure>
-                                <p id="texto-material-curso" class="editable">Las matemáticas son una ciencia que estudia los números, las formas, las estructuras y los patrones. Se utilizan para contar, medir, describir el tamaño y la forma de los objetos, y analizar cómo cambian las cosas. Las matemáticas incluyen áreas como la aritmética, el álgebra, la geometría y el cálculo, y son fundamentales para resolver problemas en ciencias, ingeniería, economía y muchos otros campos. En resumen, las matemáticas nos ayudan a entender y describir el mundo que nos rodea mediante números y símbolos.</p>
+                                <p id="texto-material-curso" class="editable">{{ material.descripcion }}</p>
                             </div>
                         </div>
                     </article>
                 </div>
                 <div class="c-curso-izquierdo c-c-derecho">
-                        <article class="curso-descargar">
-                            <h3>Recurso <span class="display-none">De Estudio</span></h3>
-                            <a href='/profesor/material/subido/'
-                            id="material-p">Ver</a>
-                        </article>
-                        <article class="curso-descargar">
-                            <h3><span class="display-none">Clases</span> Enviadas</h3>
-                            <a href="/profesor/clases/enviadas/">Click</a>
-                        </article>
-                        <div class="botones-curso botones-curso-p">
-                            <button value="Eliminar Contenido">Eliminar <span class="display-none">Contenido</span></button>
-                        </div>
+                    <article class="curso-descargar">
+                        <h3>Material de Estudio</h3>
+                        <!-- Enlace para descargar el material -->
+                        <a href="{{ url_for('static', filename=material.material_subido) }}" download>Ver</a>
+                    </article>
+                    <article class="curso-descargar">
+                        <h3>Clases Enviadas</h3>
+                        <a href="/profesor/clases/enviadas/">Click</a>
+                    </article>
+                    <div class="botones-curso botones-curso-p">
+                        <form action="/profesor/eliminar/material/{{ material.id_material }}" method="POST">
+                            <button type="submit">Eliminar Contenido</button>
+                        </form>
                     </div>
+                </div>
             </section>
         </main>
     </div>

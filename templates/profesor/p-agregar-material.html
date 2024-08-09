@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Material</title>
+    <title>Agregar Material</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='imagenes/recursos/logo-jes.png') }}">
 </head>
@@ -12,27 +12,39 @@
         <main class="main-container main-curso-material">            
             <section class="modals-container agregar-material-section">
                 <form action="/profesor/agregar/material" method="POST" enctype="multipart/form-data">
+                    <!-- Campos ocultos para los IDs del curso y la asignatura -->
                     <input type="hidden" name="id_curso" value="{{ id_curso }}">
                     <input type="hidden" name="id_asignatura" value="{{ id_asignatura }}">
+                    
                     <fieldset class="agregar-material-fieldset">
-                        <legend>Agregar Material 1ro - A</legend>
+                        <legend>Agregar Material</legend>
+                        
+                        <!-- Campo para la imagen de fondo del material -->
                         <div class="imagen-de-fondo-curso">
-                            <label for="fondo-material">Tema de fondo</label>
+                            <label for="fondo-material">Tema de fondo:</label>
                             <input type="file" id="fondo-material" name="fondo_material" required>
                         </div>
+                        
+                        <!-- Campo para el título del material -->
                         <div class="dato-material info-material" id="titulo-material">
-                            <label for="nombre-material">Titulo del Material</label>
+                            <label for="nombre-material">Título del Material:</label>
                             <input type="text" id="nombre-material" name="nombre_material" required>
                         </div>
+                        
+                        <!-- Campo para subir el recurso de estudio -->
                         <div class="dato-material">
-                            <label for="recurso-de-estudio">Subir Material</label>
+                            <label for="recurso-de-estudio">Subir Material:</label>
                             <input type="file" id="recurso-de-estudio" name="recurso_de_estudio" required>
                         </div>
+                        
+                        <!-- Campo para la descripción del material -->
                         <div class="dato-material dato-material-textarea">
-                            <label for="con-material">Descripción del Material</label>
+                            <label for="con-material">Descripción del Material:</label>
                             <textarea name="descripcion_material" id="con-material" required></textarea>
                         </div>
                     </fieldset>
+                    
+                    <!-- Botones de enviar y resetear el formulario -->
                     <div class="botones-agg-material">
                         <input type="submit" value="Enviar">
                         <input type="reset" value="Rehacer">

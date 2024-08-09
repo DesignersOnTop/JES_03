@@ -3,6 +3,8 @@ from flask import Flask, render_template, request, redirect, session, send_from_
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
 from datetime import datetime
+from werkzeug.utils import secure_filename # Manejar los archivos de manera segura 
+
 # Importar el enlace a base de datos MySQL
 
 # Crear la aplicación
@@ -140,46 +142,117 @@ def p_material_estudio():
 
 @app.route('/profesor/agregar/material/')
 def p_agregar_material():
+    
     return render_template('./profesor/p-agregar-material.html')
 
-@app.route('/agregar_material', methods=['POST'])
+@app.route('/profesor/agregar/material/', methods=['POST'])
 def agregar_material():
+    # Obtener los datos del formulario
     fondo_material = request.files['fondo-material']
     nombre_material = request.form['nombre-material']
     recurso_de_estudio = request.files['recurso-de-estudio']
     descripcion_material = request.form['descripcion-material']
-
-    sql = "INSERT INTO material_estudio (id_curso, id_asignatura, titulo, fondo, material, descripcion) VALUES (%s, %s, %s, %s, %s, %s)"
-
-    datos = (nombre_material, fondo_material, recurso_de_estudio, descripcion_material)
     
+    # Obtener los IDs de curso y asignatura
+    id_curso = request.form.get('id_curso', type=int)
+    id_asignatura = request.form.get('id_asignatura', type=int)
+    
+    if not id_curso or not id_asignatura:
+        flash('Curso o asignatura no proporcionados.', 'error')
+        return redirect(url_for('./profesor/p-material_estudio.html'))
+
+    # Verificar que el curso y la asignatura existen
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('SELECT * FROM cursos WHERE id_curso = %s', (id_curso,))
+    curso = cursor.fetchone()
+    cursor.execute('SELECT * FROM asignaturas WHERE id_asignatura = %s', (id_asignatura,))
+    asignatura = cursor.fetchone()
+    cursor.close()
+
+    if not curso or not asignatura:
+        flash('Curso o asignatura no válido.', 'error')
+        return redirect(url_for('./profesor/p-material_estudio.html'))
+
+    # Ruta donde se almacenarán los archivos subidos
+    if not os.path.exists('static/materiales/'):
+        os.makedirs('static/materiales/')
+        
+    fondo_filename = secure_filename(fondo_material.filename)
+    recurso_filename = secure_filename(recurso_de_estudio.filename)
+    fondo_material_path = os.path.join('static/materiales/', fondo_filename)
+    recurso_de_estudio_path = os.path.join('static/materiales/', recurso_filename)
+    
+    # Guardar los archivos en el servidor
+    fondo_material.save(fondo_material_path)
+    recurso_de_estudio.save(recurso_de_estudio_path)
+
+    # Preparar la consulta SQL para insertar el nuevo material
+    sql = """INSERT INTO material_estudio (id_curso, id_asignatura, titulo, fondo, material, descripcion) 
+             VALUES (%s, %s, %s, %s, %s, %s)"""
+    
+    datos = (id_curso, id_asignatura, nombre_material, fondo_filename, recurso_filename, descripcion_material)
+   
     conexion = mysql.connection
     cursor = conexion.cursor()
-    cursor.execute(sql,datos)
+    cursor.execute(sql, datos)
     
     conexion.commit()
     cursor.close()
 
-    return redirect('./profesor/p-material_estudio.html')
+    # Redirigir a la página de materiales de estudio
+    flash('Material agregado exitosamente.', 'success')
+    return redirect('/profesor/p-materiales_estudio.html')
+
+# Ruta para mostrar el formulario de agregar material
+@app.route('/profesor/agregar/material/<int:id_curso>/<int:id_asignatura>')
+def formulario_agregar_material(id_curso, id_asignatura):
+    return render_template('agregar_material.html', id_curso=id_curso, id_asignatura=id_asignatura)
+
+@app.route('/profesor/eliminar/material/', methods= ['POST'])
+def eliminar_material():
+    id_material = request.form["id_material"]
+
+    if id_material in 'material_estudio':
+        sql = 'DELETE FROM material_estudio WHERE id_material = %s', (id_material)
+        return redirect('/profesor/p-material_estudio.html')
     
-@app.route('/profesor/lista/material')
-def lista_material():
+    conexion = mysql.connection
+    cursor = conexion.cursor()
+    cursor.execute(sql)
+    
+    conexion.commit()
+    cursor.close()
+  
+# @app.route('/profesor/lista/material')
+# def lista_material():
    
-    return render_template('p-lista-material.html')
+#     return render_template('./profesores/p-lista-material.html')
 
 @app.route('/profesor/materiales')
-def listar_materiales():
+def material_estudios():
     conexion = mysql.connection
     cursor = conexion.cursor()
     cursor.execute('SELECT * FROM material_estudio')
     materiales = cursor.fetchall()
     cursor.close()
-    return render_template('p-material_estudio.html', materiales=materiales)
+    return render_template('./profesores/p-material_estudio.html', materiales=materiales)
     
 
 @app.route('/profesor/recurso/estudio/')
 def p_recurso_estudio():
     return render_template('./profesor/p-recurso_estudio.html')
+
+@app.route('/profesor/recurso/estudio/<int:id>')
+def p_recurso_estudio(id):
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('SELECT * FROM material_estudio WHERE id_material = %s', (id,))
+    material = cursor.fetchone()
+    cursor.close()
+    
+    if material:
+        return render_template('./profesores/p-recurso_estudio.html', material=material)
+    else:
+        return "Material no encontrado", 404
 
 @app.route('/profesor/material/subido/')
 def p_material_de_curso_subido():
@@ -222,7 +295,7 @@ def agregar_calificacion():
     conexion.commit()
     cursor.close()
 
-    return redirect(url_for('listar_calificaciones'))
+    return redirect(url_for('./profesor/p-material_estudio.html'))
 
 
 
