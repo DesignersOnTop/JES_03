@@ -343,6 +343,18 @@ def editar_estudiante(id):
         return render_template('./admin/a-editar-datos-estudiantes.html', estudiante=estudiante)
     else:
         return "Estudiante no encontrado", 404
+    
+@app.route('/editar_profesor/<int:id>', methods=['GET'])
+def editar_profesor(id):
+    cursor = mysql.connection.cursor()
+    cursor.execute("SELECT * FROM profesores WHERE id = %s", (id))
+    profesor = cursor.fetchone()
+    cursor.close()
+
+    if profesor:
+        return render_template('./admin/a-editar-datos-profesores.html', profesor = profesor)
+    else:
+        return "Profesor no encontrado", 404
 
 @app.route('/actualizar_estudiantes', methods = ['POST'])
 def actualizar_estudiantes():
@@ -421,6 +433,8 @@ def agregar_profesores():
     
     conexion.commit()
     cursor.close()
+    
+    return redirect('./admin/a-home.html')
 
     # return redirect('./admin/a-curso.html')
 
@@ -451,6 +465,8 @@ def actualizar_profesores():
 
     conexion.commit()
     cursor.close()
+
+    return redirect('./admin/a-home.html')
 
 @app.route('/admin/eliminar_profesores', methods = ['POST'])
 def eliminar_profesores():
