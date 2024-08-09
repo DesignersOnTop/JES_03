@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 08, 2024 at 06:59 AM
+-- Generation Time: Aug 09, 2024 at 06:33 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -112,7 +112,9 @@ CREATE TABLE `calificaciones` (
 --
 
 INSERT INTO `calificaciones` (`id_calificacion`, `id_estudiante`, `id_asignatura`, `C1`, `C2`, `C3`, `C4`, `C. Final`) VALUES
-(1, 2, 2403, 100, 100, 100, 100, 100);
+(1, 2, 2403, 100, 100, 100, 100, 100),
+(2, 2, 2404, 100, 100, 90, 89, 95),
+(3, 2, 2405, 99, 91, 96, 97, 96);
 
 -- --------------------------------------------------------
 
@@ -257,7 +259,7 @@ CREATE TABLE `libros` (
 --
 
 INSERT INTO `libros` (`id_libro`, `id_asignatura`, `id_curso`, `titulo`, `subir_libro`, `portada`) VALUES
-(1, 2408, 1, 'Material 1', '', '');
+(1, 2408, 1, 'Don quijote', '', 'https://static.arteinformado.com/resources/app/docs/profesional/75/185475/obras/308.d._quijote_y_sancho_en_el_camino.jpg');
 
 -- --------------------------------------------------------
 
@@ -274,6 +276,13 @@ CREATE TABLE `material_estudio` (
   `descripcion` text COLLATE utf8mb4_spanish2_ci NOT NULL,
   `id_asignatura` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
+
+--
+-- Dumping data for table `material_estudio`
+--
+
+INSERT INTO `material_estudio` (`id_material`, `id_curso`, `titulo`, `material_subido`, `fondo`, `descripcion`, `id_asignatura`) VALUES
+(1, 1, 'Investigacion', '', '', 'Ciencia de la Naturales es una asignatura que se enfoca en comprender los procesos y fenómenos que ocurren en nuestro entorno natural. Los estudiantes aprenden sobre la estructura y funcionamiento de los seres vivos, las sustancias químicas que componen el mundo, las fuerzas físicas y los procesos geológicos que modelan nuestro planeta.', 2404);
 
 -- --------------------------------------------------------
 
@@ -323,6 +332,34 @@ CREATE TABLE `profesor_asignado` (
   `id_curso` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci;
 
+--
+-- Dumping data for table `profesor_asignado`
+--
+
+INSERT INTO `profesor_asignado` (`id_profesor-asignado`, `id_profesor`, `id_curso`) VALUES
+(1, 10011, 1),
+(2, 10014, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tareas_estudiante`
+--
+
+CREATE TABLE `tareas_estudiante` (
+  `id_tarea` int NOT NULL,
+  `id_estudiante` int NOT NULL,
+  `id_curso` int NOT NULL,
+  `tarea` varchar(300) COLLATE utf8mb4_spanish2_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
+
+--
+-- Dumping data for table `tareas_estudiante`
+--
+
+INSERT INTO `tareas_estudiante` (`id_tarea`, `id_estudiante`, `id_curso`, `tarea`) VALUES
+(1, 2, 1, '');
+
 -- --------------------------------------------------------
 
 --
@@ -334,8 +371,15 @@ CREATE TABLE `videos` (
   `titulo` varchar(60) COLLATE utf8mb4_spanish2_ci NOT NULL,
   `id_curso` int NOT NULL,
   `id_asignatura` int NOT NULL,
-  `video` varchar(255) COLLATE utf8mb4_spanish2_ci NOT NULL
+  `video` text CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
+
+--
+-- Dumping data for table `videos`
+--
+
+INSERT INTO `videos` (`id`, `titulo`, `id_curso`, `id_asignatura`, `video`) VALUES
+(2, 'Don quijote', 1, 2408, '<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/ir6A-Ns5Em8?si=y-I8_Uain9fbW5vZ\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>');
 
 --
 -- Indexes for dumped tables
@@ -437,6 +481,14 @@ ALTER TABLE `profesor_asignado`
   ADD KEY `id_curso_seccion` (`id_curso`);
 
 --
+-- Indexes for table `tareas_estudiante`
+--
+ALTER TABLE `tareas_estudiante`
+  ADD PRIMARY KEY (`id_tarea`),
+  ADD KEY `id_estudiante` (`id_estudiante`),
+  ADD KEY `id_curso` (`id_curso`);
+
+--
 -- Indexes for table `videos`
 --
 ALTER TABLE `videos`
@@ -470,7 +522,7 @@ ALTER TABLE `asistencias`
 -- AUTO_INCREMENT for table `calificaciones`
 --
 ALTER TABLE `calificaciones`
-  MODIFY `id_calificacion` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_calificacion` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `cursos`
@@ -512,7 +564,7 @@ ALTER TABLE `libros`
 -- AUTO_INCREMENT for table `material_estudio`
 --
 ALTER TABLE `material_estudio`
-  MODIFY `id_material` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id_material` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `profesores`
@@ -524,13 +576,19 @@ ALTER TABLE `profesores`
 -- AUTO_INCREMENT for table `profesor_asignado`
 --
 ALTER TABLE `profesor_asignado`
-  MODIFY `id_profesor-asignado` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id_profesor-asignado` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `tareas_estudiante`
+--
+ALTER TABLE `tareas_estudiante`
+  MODIFY `id_tarea` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `videos`
 --
 ALTER TABLE `videos`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
@@ -591,6 +649,13 @@ ALTER TABLE `profesores`
 ALTER TABLE `profesor_asignado`
   ADD CONSTRAINT `profesor_asignado_ibfk_2` FOREIGN KEY (`id_profesor`) REFERENCES `profesores` (`id_profesor`),
   ADD CONSTRAINT `profesor_asignado_ibfk_3` FOREIGN KEY (`id_curso`) REFERENCES `cursos` (`id_curso`);
+
+--
+-- Constraints for table `tareas_estudiante`
+--
+ALTER TABLE `tareas_estudiante`
+  ADD CONSTRAINT `tareas_estudiante_ibfk_1` FOREIGN KEY (`id_estudiante`) REFERENCES `estudiantes` (`id_estudiante`),
+  ADD CONSTRAINT `tareas_estudiante_ibfk_2` FOREIGN KEY (`id_curso`) REFERENCES `cursos` (`id_curso`);
 
 --
 -- Constraints for table `videos`
