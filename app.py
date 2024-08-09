@@ -19,7 +19,7 @@ app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'jes'
 
 # carpeta para subir los archivos, fotos, pdf, etc.
-UPLOAD_FOLDER = 'documentos'
+UPLOAD_FOLDER = os.path.join('static', 'documentos')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # este codigo hara que si no existe la carpeta pues la va a crear;
