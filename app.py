@@ -1,10 +1,10 @@
 import os
+# from flaskext.mysql import MySQL
 from flask import Flask, render_template, request, redirect, session, send_from_directory, url_for, flash
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
 from datetime import datetime
-# Importar el enlace a base de datos MySQL
-# from flaskext.mysql import MySQL
+from werkzeug.utils import secure_filename
 
 # Crear la aplicación
 app = Flask(__name__)
@@ -17,6 +17,14 @@ app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'jes'
+
+# carpeta para subir los archivos, fotos, pdf, etc.
+UPLOAD_FOLDER = 'documentos'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+# este codigo hara que si no existe la carpeta pues la va a crear;
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
 
 # Inicializar MySQL
 mysql = MySQL(app)
@@ -184,15 +192,61 @@ def ver_materia(titulo):
 
     return render_template('estudiante/e-ver_materias.html', material=material)
 
-@app.route('/estudiante/enviar/tarea/')
-def e_tarea():
-    
+@app.route('/estudiante/enviar/tarea/', methods=['POST'])
+def enviar_tarea():
+    if 'user_id' not in session or session.get('role') != 'estudiante':
+        return redirect('/')
+
+    estudiante_id = session['user_id']
+    material_id = request.form.get('material_id')
+
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    
+
+    # Obtener la información del material
+    cursor.execute('''
+        SELECT id_curso
+        FROM material_estudio
+        WHERE id_material = %s
+    ''', (material_id,))
+    material = cursor.fetchone()
+
+    if material:
+        id_curso = material['id_curso']
+    else:
+        cursor.close()
+        flash('Material no encontrado')
+        return redirect('/estudiante/material/')
+
+    # Procesar el archivo subido
+    if 'subir-tarea' not in request.files:
+        cursor.close()
+        flash('No se ha subido ningún archivo')
+        return redirect('/estudiante/material/')
+
     tarea = request.files['subir-tarea']
-    cursor.execute(''' 
-    INSERT                
-    ''')
+    if tarea.filename == '':
+        cursor.close()
+        flash('No se seleccionó ningún archivo')
+        return redirect('/estudiante/material/')
+
+    if tarea:
+        archivos = secure_filename(tarea.filename)
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], archivos)
+        tarea.save(file_path)
+
+        cursor.execute('''
+            INSERT INTO tareas_estudiantes (id_estudiante, id_curso, tarea)
+            VALUES (%s, %s, %s)
+        ''', (estudiante_id, id_curso, archivos))
+
+        mysql.connection.commit()
+        cursor.close()
+
+        flash('Tarea enviada exitosamente')
+        return redirect('/estudiante/material/')
+
+    cursor.close()
+    flash('Error al subir el archivo')
     return redirect('/estudiante/material/')
 
 
@@ -258,6 +312,7 @@ def e_refuerzo_videos():
     )
     
     videos = cursor.fetchall()
+    cursor.close()
     return render_template('./estudiante/e_refuerzo_videos.html', videos=videos)
 
 @app.route('/estudiante/video/<titulo>')
