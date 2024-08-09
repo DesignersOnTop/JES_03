@@ -1,10 +1,10 @@
 import os
+# from flaskext.mysql import MySQL
 from flask import Flask, render_template, request, redirect, session, send_from_directory, url_for, flash
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
 from datetime import datetime
-# Importar el enlace a base de datos MySQL
-# from flaskext.mysql import MySQL
+from werkzeug.utils import secure_filename
 
 # Crear la aplicación
 app = Flask(__name__)
@@ -18,12 +18,21 @@ app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'jes'
 
+# carpeta para subir los archivos, fotos, pdf, etc.
+UPLOAD_FOLDER = os.path.join('static', 'documentos')
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+# este codigo hara que si no existe la carpeta pues la va a crear;
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+
 # Inicializar MySQL
 mysql = MySQL(app)
 #-----------------------------------------------------
 
 @app.route('/')
 def Index():
+    session.clear()
     return render_template('index.html')
     
 @app.route('/login', methods=['POST'])
@@ -101,7 +110,6 @@ def home_estudiante():
     cursor.close()
 
     return render_template('estudiante/e-home.html', calificaciones=calificaciones, horarios=horarios, asistencias=asistencias, estudiante=estudiante)
-
 
 
 @app.route('/estudiante/perfil/')
@@ -183,21 +191,147 @@ def ver_materia(titulo):
 
     return render_template('estudiante/e-ver_materias.html', material=material)
 
+@app.route('/estudiante/enviar/tarea/', methods=['POST'])
+def enviar_tarea():
+    if 'user_id' not in session or session.get('role') != 'estudiante':
+        return redirect('/')
+
+    estudiante_id = session['user_id']
+    material_id = request.form.get('material_id')
+
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+
+    # Obtener la información del material
+    cursor.execute('''
+        SELECT id_curso
+        FROM material_estudio
+        WHERE id_material = %s
+    ''', (material_id,))
+    material = cursor.fetchone()
+
+    if material:
+        id_curso = material['id_curso']
+    else:
+        cursor.close()
+        flash('Material no encontrado')
+        return redirect('/estudiante/material/')
+
+    # Procesar el archivo subido
+    if 'subir-tarea' not in request.files:
+        cursor.close()
+        flash('No se ha subido ningún archivo')
+        return redirect('/estudiante/material/')
+
+    tarea = request.files['subir-tarea']
+    if tarea.filename == '':
+        cursor.close()
+        flash('No se seleccionó ningún archivo')
+        return redirect('/estudiante/material/')
+
+    if tarea:
+        archivos = secure_filename(tarea.filename)
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], archivos)
+        tarea.save(file_path)
+
+        cursor.execute('''
+            INSERT INTO tareas_estudiantes (id_estudiante, id_curso, tarea)
+            VALUES (%s, %s, %s)
+        ''', (estudiante_id, id_curso, archivos))
+
+        mysql.connection.commit()
+        cursor.close()
+
+        flash('Tarea enviada exitosamente')
+        return redirect('/estudiante/material/')
+
+    cursor.close()
+    flash('Error al subir el archivo')
+    return redirect('/estudiante/material/')
+
 @app.route('/estudiante/refuerzo/libros/')
 def e_refuerzo_libros():
-    return render_template('./estudiante/e_refuerzo_libros.html')
+    if 'user_id' not in session or session.get('role') != 'estudiante':
+        return redirect('/')
+
+    estudiante_id = session['user_id']
+    
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    
+    cursor.execute(
+    '''
+        SELECT libros.*, asignaturas.nom_asignatura
+        FROM libros
+        JOIN estudiantes ON libros.id_curso = estudiantes.id_curso
+        JOIN asignaturas ON libros.id_asignatura = asignaturas.id_asignatura
+        WHERE estudiantes.id_estudiante = %s
+    ''', (estudiante_id,))
+    
+    libros = cursor.fetchall()
+    cursor.close()
+    
+    return render_template('./estudiante/e_refuerzo_libros.html', libros=libros)
+
+@app.route('/estudiante/libro/<titulo>')
+def e_libro(titulo):
+    if 'user_id' not in session or session.get('role') != 'estudiante':
+        return redirect('/')
+
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+
+    # Obtener detalles del libro por título
+    cursor.execute('''
+        SELECT libros.*, asignaturas.nom_asignatura
+        FROM libros
+        JOIN asignaturas ON libros.id_asignatura = asignaturas.id_asignatura
+        WHERE libros.titulo = %s
+    ''', (titulo,))
+    
+    libro = cursor.fetchone()
+    cursor.close()
+
+    return render_template('estudiante/e-libro-refuerzo.html', libro=libro)
 
 @app.route('/estudiante/refuerzo/videos/')
 def e_refuerzo_videos():
-    return render_template('./estudiante/e_refuerzo_videos.html')
+    estudiante_id = session['user_id']
+    if 'user_id' not in session or session.get('role') != 'estudiante':
+        return redirect('/')
 
-@app.route('/estudiante/video/')
-def e_videos():
-    return render_template('./estudiante/e-video-clase.html')
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    
+    cursor.execute(
+        '''
+        SELECT videos.*, asignaturas.nom_asignatura
+        FROM videos
+        JOIN estudiantes ON videos.id_curso = estudiantes.id_curso
+        JOIN asignaturas ON videos.id_asignatura = asignaturas.id_asignatura
+        WHERE estudiantes.id_estudiante = %s
+        ''', (estudiante_id,)
+    )
+    
+    videos = cursor.fetchall()
+    cursor.close()
+    return render_template('./estudiante/e_refuerzo_videos.html', videos=videos)
 
-@app.route('/estudiante/libro/')
-def e_libro():
-    return render_template('./estudiante/e-libro-refuerzo.html')
+@app.route('/estudiante/video/<titulo>')
+def e_videos(titulo):
+    if 'user_id' not in session or session.get('role') != 'estudiante':
+        return redirect('/')
+
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    
+    cursor.execute('''
+        SELECT videos.*, asignaturas.nom_asignatura
+        FROM videos
+        JOIN asignaturas ON videos.id_asignatura = asignaturas.id_asignatura
+        WHERE videos.titulo = %s
+    ''', (titulo,))
+    
+    video = cursor.fetchone()
+    cursor.close()
+    
+    return render_template('./estudiante/e-video-clase.html', video = video)
+
 
 # APARTADO DEL ADMIN EN PYTHON
 
@@ -533,9 +667,9 @@ def p_agregar_libro():
     tiempo = datetime.now()
     horaActual = tiempo.strftime('%Y%H%M%S')
     
-    # if _subir.filename!= " ":
-    #     nuevoNombre = horaActual+ "_" + _subir.filename
-    #     _subir.save('static/img/'+nuevoNombre)
+    if _subir.filename!= " ":
+        nuevoNombre = horaActual+ "_" + _subir.filename
+        _subir.save('static/documentos/'+nuevoNombre)
         
     sql = 'INSERT INTO `libros` (`id`,`portada`, `titulo`, `id_asignatura`, `libro`, `id_curso_seccion`) VALUES (NULL, %s, %s, %s, %s, 2)'
     

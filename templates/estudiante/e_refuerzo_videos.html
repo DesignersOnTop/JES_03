@@ -41,14 +41,15 @@
                         <h2 class="titulo-refuerzo titulo-none">Recursos de Estudio</h2>
                     </div>
                     <form action="#">
-                        <select name="materias-refuerzo" id="materias-refuerzo">
+                        <!-- <select name="materias-refuerzo" id="materias-refuerzo">
                             <option value="">Todos</option>
                             <option value="">Lengua Espa&ntilde;ola</option>
                             <option value="">Matem&aacute;ticas</option>
                             <option value="">Ingles</option>
                             <option value="">Biolog&iacute;a</option>
                             <option value="">Educaci&oacute;n fisica</option>
-                        </select>
+                        </select> -->
+                        <input type="search" name="materias-refuerzo" id="materias-refuerzo" style="float: right; margin-right: 2%; position: relative; bottom: 5px; background-color: transparent; border: 1px solid #ffc83d5e; padding: 3.5px 2px; padding-left: 10px; border-radius: 2px; color: white;">
                     </form>
                 </div>
                 <article class="libros-refuerzo videos-refuerzo">
@@ -58,21 +59,13 @@
                             <th>Materia</th>
                             <th>fuente|link</th>                      
                         </tr>
+                        {% for video in videos %}
                         <tr>
-                            <td>Don quijote</td>
-                            <td>L. Español</td>
-                            <td><a href="/estudiante/video/"><button>abrir</button></a></td>
+                            <td>{{video.titulo}}</td>
+                            <td>{{video.nom_asignatura}}</td>
+                            <td><a href="{{ url_for('e_videos', titulo=video.titulo) }}"><button>abrir</button></a></td>
                         </tr>
-                        <tr>
-                            <td>Don quijote</td>
-                            <td>L. Español</td>
-                            <td><a href="/estudiante/video/"><button>abrir</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>Don quijote</td>
-                            <td>L. Español</td>
-                            <td><a href="/estudiante/video/"><button>abrir</button></a></td>
-                    </table>
+                        {%endfor%}
                 </article>
             </section>
         </main>
