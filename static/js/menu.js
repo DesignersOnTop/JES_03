@@ -9,10 +9,6 @@ menu.addEventListener('click',() => {
             confirmButton: 'confirm-eme',
             container: 'container-eme conta-eme'
         },
-        imageUrl: "{{ url_for('static', filename='imagenes/recursos/logo-jes.png') }}",
-        imageWidth: '100px',
-        imageHeight: '100px',
-        imageAlt: 'Logo-JES',
         buttonsStyling: false,
         showCloseButton: false,
         // closeButtonAriaLabel: "cerrar",

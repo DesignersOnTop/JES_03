@@ -34,31 +34,36 @@
             <section class="section-materiales">
                 <div class="cabecera-agg-material">
                     <div class="cabecera-materiales-flex">
-                        <h2 class="titulo-material">Cursos Primarios</h2>
-                        <form action="#" class="form-agg-material">
+                        <div class="form-agg-material" id="cursos_cabcera">
+                            <h2 class="titulo-material">Cursos Primarios</h2>
+                        </div>
+                        
+                        <!-- <form action="#" class="form-agg-material">
                             <select name="seccion-cursos" id="seccion-cursos">
                                 <option value="secciones" disabled selected>Secciones</option>
                                 <option value="seccion-a">A</option>
                                 <option value="seccion-b">B</option>
                             </select>                               
-                        </form>                        
+                        </form>                         -->
                     </div>
                 </div>
-                {% for curso in cursos %}
-                <article class="contenedor-material">                           
-                    <div class="materia-del-material">
-                        <h3>{{ cursos.nombre }}</h3>
-                    </div>
-                    <div class="contenido-material">
-                        <figure class="fondo-material-estudio">
-                            <img src="{{ url_for('static', filename='imagenes/recursos/Auditorio-img-fondo.jpg') }}" alt="imagen-fondo-estudio">
-                        </figure>
-                        <div class="link-material">
-                            <a href="/admin/curso/">Entrar</a>                         
+                <div class="contenedor_curso">
+                    {% for curso in cursos %}
+                    <article class="contenedor-material">                           
+                        <div class="materia-del-material">
+                            <h3>{{ curso.nombre }}</h3>
                         </div>
-                    </div>
-                </article>
-                {% endfor %}
+                        <div class="contenido-material">
+                            <figure class="fondo-material-estudio">
+                                <img src="{{ url_for('static', filename='imagenes/recursos/Auditorio-img-fondo.jpg') }}" alt="imagen-fondo-estudio">
+                            </figure>
+                            <div class="link-material">
+                                <a href="/admin/curso/">Entrar</a>                         
+                            </div>
+                        </div>
+                    </article>
+                    {% endfor %}
+                </div>
             </section>
         </main>
     </div>

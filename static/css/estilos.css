@@ -190,7 +190,7 @@ body {
 
 .classes-eme {
     width: 40%;
-    height: 76%;
+    height: fit-content;
     /* background-color: transparent; */
     background-color: #00000020;
     overflow: hidden;
@@ -698,7 +698,7 @@ header {
 .contenedor-material {
     max-width: 30%;
     width: 30%;
-    height: 200px;
+    height: 190px;
     border: 1px solid #ffc83d27;
     backdrop-filter: blur(10px);
     background-color: #00000013;
@@ -2654,6 +2654,29 @@ textarea.editable {
     margin: auto;
 }
 
+/* contenedor curso */
+.contenedor_curso {
+    min-width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    justify-content: center;
+    height: 390px;
+    max-height: 390px;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+.contenedor_curso::-webkit-scrollbar {
+    display: none;
+}
+
+#cursos_cabcera .titulo-material {
+    margin: 0;
+    top: 0;
+    bottom: 0;
+}
+
 
 /* Movil */
 
@@ -3139,7 +3162,20 @@ textarea.editable {
     
     #mainContent .search-bar input {
         font-size: 14px;
-    }    
+    }
+    /* ============= */
+    .contenedor_curso {
+        gap: 3px;
+        height: 426px;
+        max-height: 426px;
+    }
+
+    #cursos_cabcera .titulo-material {
+        margin: 0;
+        top: 0;
+        bottom: 20px;
+        left: 40%;
+    }
 }
 /* Tablet */
 
@@ -3251,6 +3287,11 @@ textarea.editable {
         height: 36%;
         /* margin-bottom: 8px; */
         order: 2;
+    }
+
+    /* -========== */
+    .section-materiales {
+        width: 90%;
     }
 
 }

@@ -69,11 +69,11 @@
                             <td>{{ estudiantes.fecha_nacimiento }}</td>
                             <td>{{ estudiantes.curso }}</td>
                             <td>{{ estudiantes.genero }}</td>
-                            <td><a href="{{ url_for('editar_estudiante', id=estudiante.id_estudiante) }}"><figure><img src="{{ url_for('static', filename='imagenes/iconos/editar.svg') }}" alt="editar-profesor"  class="btn-editar"></figure></a></td>
+                            <!-- <td><a href="{{ url_for('editar_estudiante', id=estudiante.id_estudiante) }}"><figure><img src="{{ url_for('static', filename='imagenes/iconos/editar.svg') }}" alt="editar-profesor"  class="btn-editar"></figure></a></td>
                             <form action="{{ url_for('eliminar_estudiante') }}"method="POST"style="display:inline;">
                                 <input type="hidden" name="id_estudiante" value="{{ estudiantes.id_estudiante }}">
                                 <button type="submit" class="btn-eliminar">Eliminar</button>
-                            </form>
+                            </form> -->
                         </tr>
                         {% endfor %}
                     </table>

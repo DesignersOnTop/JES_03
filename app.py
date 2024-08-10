@@ -350,7 +350,11 @@ def a_home():
 
 @app.route('/admin/cursos/')
 def a_cursos():
-    return render_template('./admin/a-cursos.html')
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('SELECT * FROM `cursos`')
+    cursos = cursor.fetchall()
+    cursor.close()
+    return render_template('./admin/a-cursos.html', cursos=cursos)
 
 # @app.route('/admin/agregar_cursos', methods = ['POST'])
 # def agregar_cursos():
@@ -358,8 +362,7 @@ def a_cursos():
 
 @app.route('/admin/curso/', methods = ['GET'])
 def mostrar_estudiantes():
-    conexion = mysql.connection
-    cursor = conexion.cursor()
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute('SELECT * FROM estudiantes')
     estudiantes = cursor.fetchall()
     cursor.close()

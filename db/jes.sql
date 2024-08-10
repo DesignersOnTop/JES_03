@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 09, 2024 at 06:33 AM
+-- Generation Time: Aug 10, 2024 at 04:44 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -29,15 +29,15 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admin` (
   `id_admin` int NOT NULL,
-  `nombre_admin` varchar(40) COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `a_apellido` varchar(40) COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `a_email` varchar(140) COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `a_genero` char(10) COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `a_direccion` text COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `a_telefono` char(14) COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `a_img_perfil` varchar(255) COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `matricula` varchar(20) COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `contraseña` varchar(40) COLLATE utf8mb4_spanish2_ci NOT NULL
+  `nombre_admin` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `a_apellido` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `a_email` varchar(140) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `a_genero` char(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `a_direccion` text CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `a_telefono` char(14) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `a_img_perfil` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `matricula` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `contraseña` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
 
 --
@@ -55,7 +55,7 @@ INSERT INTO `admin` (`id_admin`, `nombre_admin`, `a_apellido`, `a_email`, `a_gen
 
 CREATE TABLE `asignaturas` (
   `id_asignatura` int NOT NULL,
-  `nom_asignatura` varchar(20) COLLATE utf8mb3_spanish_ci NOT NULL
+  `nom_asignatura` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci;
 
 --
@@ -76,17 +76,30 @@ INSERT INTO `asignaturas` (`id_asignatura`, `nom_asignatura`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `asignatura_curso`
+--
+
+CREATE TABLE `asignatura_curso` (
+  `id` int NOT NULL,
+  `id_curso` int NOT NULL,
+  `id_asignatura` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `asistencias`
 --
 
 CREATE TABLE `asistencias` (
   `id_asistencia` int NOT NULL,
   `id_estudiante` int NOT NULL,
-  `Sect - Oct` char(4) COLLATE utf8mb3_spanish_ci NOT NULL,
-  `Nov - Dic` char(4) COLLATE utf8mb3_spanish_ci NOT NULL,
-  `Ene - Feb` char(4) COLLATE utf8mb3_spanish_ci NOT NULL,
-  `Marz - Abril` char(4) COLLATE utf8mb3_spanish_ci NOT NULL,
-  `May - Jun` char(4) COLLATE utf8mb3_spanish_ci NOT NULL,
+  `id_curso` int NOT NULL,
+  `Sect - Oct` char(4) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL,
+  `Nov - Dic` char(4) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL,
+  `Ene - Feb` char(4) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL,
+  `Marz - Abril` char(4) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL,
+  `May - Jun` char(4) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL,
   `Total de asistencias` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci;
 
@@ -124,7 +137,7 @@ INSERT INTO `calificaciones` (`id_calificacion`, `id_estudiante`, `id_asignatura
 
 CREATE TABLE `cursos` (
   `id_curso` int NOT NULL,
-  `nombre` varchar(30) COLLATE utf8mb3_spanish_ci NOT NULL
+  `nombre` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci;
 
 --
@@ -153,7 +166,7 @@ INSERT INTO `cursos` (`id_curso`, `nombre`) VALUES
 
 CREATE TABLE `dias` (
   `id_dias` int NOT NULL,
-  `dia` varchar(10) COLLATE utf8mb3_spanish_ci NOT NULL
+  `dia` varchar(10) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci;
 
 --
@@ -176,16 +189,16 @@ INSERT INTO `dias` (`id_dias`, `dia`) VALUES
 CREATE TABLE `estudiantes` (
   `id_estudiante` int NOT NULL,
   `id_curso` int NOT NULL,
-  `matricula` char(10) COLLATE utf8mb3_spanish_ci NOT NULL,
-  `nombre` varchar(30) COLLATE utf8mb3_spanish_ci NOT NULL,
-  `apellidos` varchar(50) COLLATE utf8mb3_spanish_ci NOT NULL,
-  `direccion` text COLLATE utf8mb3_spanish_ci NOT NULL,
+  `matricula` char(10) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL,
+  `nombre` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL,
+  `apellidos` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL,
+  `direccion` text CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL,
   `fecha_nacimiento` date NOT NULL,
-  `genero` varchar(10) COLLATE utf8mb3_spanish_ci NOT NULL,
-  `email` varchar(50) COLLATE utf8mb3_spanish_ci NOT NULL,
-  `telefono` char(12) COLLATE utf8mb3_spanish_ci NOT NULL,
-  `imagen_perfil` varchar(255) COLLATE utf8mb3_spanish_ci NOT NULL,
-  `contraseña` varchar(30) COLLATE utf8mb3_spanish_ci NOT NULL
+  `genero` varchar(10) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL,
+  `email` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL,
+  `telefono` char(12) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL,
+  `imagen_perfil` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL,
+  `contraseña` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci;
 
 --
@@ -203,7 +216,7 @@ INSERT INTO `estudiantes` (`id_estudiante`, `id_curso`, `matricula`, `nombre`, `
 
 CREATE TABLE `hora` (
   `id_hora` int NOT NULL,
-  `hora` varchar(12) COLLATE utf8mb3_spanish_ci NOT NULL
+  `hora` varchar(12) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci;
 
 --
@@ -249,9 +262,9 @@ CREATE TABLE `libros` (
   `id_libro` int NOT NULL,
   `id_asignatura` int NOT NULL,
   `id_curso` int NOT NULL,
-  `titulo` varchar(60) COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `subir_libro` varchar(255) COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `portada` varchar(255) COLLATE utf8mb4_spanish2_ci NOT NULL
+  `titulo` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `subir_libro` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `portada` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
 
 --
@@ -270,10 +283,10 @@ INSERT INTO `libros` (`id_libro`, `id_asignatura`, `id_curso`, `titulo`, `subir_
 CREATE TABLE `material_estudio` (
   `id_material` int NOT NULL,
   `id_curso` int NOT NULL,
-  `titulo` varchar(60) COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `material_subido` varchar(255) COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `fondo` varchar(255) COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `descripcion` text COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `titulo` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `material_subido` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `fondo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `descripcion` text CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL,
   `id_asignatura` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
 
@@ -293,15 +306,15 @@ INSERT INTO `material_estudio` (`id_material`, `id_curso`, `titulo`, `material_s
 CREATE TABLE `profesores` (
   `id_profesor` int NOT NULL,
   `id_asignatura` int NOT NULL,
-  `matricula` char(10) COLLATE utf8mb3_spanish_ci NOT NULL,
-  `nombre` varchar(50) COLLATE utf8mb3_spanish_ci NOT NULL,
-  `apellido` varchar(50) COLLATE utf8mb3_spanish_ci NOT NULL,
-  `direccion` text COLLATE utf8mb3_spanish_ci NOT NULL,
-  `cedula` char(14) COLLATE utf8mb3_spanish_ci NOT NULL,
-  `genero` varchar(10) COLLATE utf8mb3_spanish_ci NOT NULL,
-  `email` varchar(50) COLLATE utf8mb3_spanish_ci NOT NULL,
-  `telefono` char(12) COLLATE utf8mb3_spanish_ci NOT NULL,
-  `contraseña` varchar(20) COLLATE utf8mb3_spanish_ci NOT NULL,
+  `matricula` char(10) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL,
+  `nombre` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL,
+  `apellido` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL,
+  `direccion` text CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL,
+  `cedula` char(14) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL,
+  `genero` varchar(10) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL,
+  `email` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL,
+  `telefono` char(12) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL,
+  `contraseña` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL,
   `imagen_perfil` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci;
 
@@ -343,6 +356,19 @@ INSERT INTO `profesor_asignado` (`id_profesor-asignado`, `id_profesor`, `id_curs
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `reporte_profesor`
+--
+
+CREATE TABLE `reporte_profesor` (
+  `id_report` int NOT NULL,
+  `id_profesor-asignado` int NOT NULL,
+  `asistencia` varchar(600) COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `calificaciones` varchar(600) COLLATE utf8mb4_spanish2_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tareas_estudiante`
 --
 
@@ -350,15 +376,8 @@ CREATE TABLE `tareas_estudiante` (
   `id_tarea` int NOT NULL,
   `id_estudiante` int NOT NULL,
   `id_curso` int NOT NULL,
-  `tarea` varchar(300) COLLATE utf8mb4_spanish2_ci NOT NULL
+  `tarea` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
-
---
--- Dumping data for table `tareas_estudiante`
---
-
-INSERT INTO `tareas_estudiante` (`id_tarea`, `id_estudiante`, `id_curso`, `tarea`) VALUES
-(1, 2, 1, '');
 
 -- --------------------------------------------------------
 
@@ -368,7 +387,7 @@ INSERT INTO `tareas_estudiante` (`id_tarea`, `id_estudiante`, `id_curso`, `tarea
 
 CREATE TABLE `videos` (
   `id` int NOT NULL,
-  `titulo` varchar(60) COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `titulo` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL,
   `id_curso` int NOT NULL,
   `id_asignatura` int NOT NULL,
   `video` text CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL
@@ -379,7 +398,8 @@ CREATE TABLE `videos` (
 --
 
 INSERT INTO `videos` (`id`, `titulo`, `id_curso`, `id_asignatura`, `video`) VALUES
-(2, 'Don quijote', 1, 2408, '<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/ir6A-Ns5Em8?si=y-I8_Uain9fbW5vZ\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>');
+(2, 'Don quijote', 1, 2408, '<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/ir6A-Ns5Em8?si=y-I8_Uain9fbW5vZ\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>'),
+(3, 'La naturaleza', 1, 2404, '<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/j6LunB9d2Bo?si=JaIb5RaXyWx1I_-p\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>');
 
 --
 -- Indexes for dumped tables
@@ -398,11 +418,20 @@ ALTER TABLE `asignaturas`
   ADD PRIMARY KEY (`id_asignatura`);
 
 --
+-- Indexes for table `asignatura_curso`
+--
+ALTER TABLE `asignatura_curso`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_curso` (`id_curso`),
+  ADD KEY `id_asignatura` (`id_asignatura`);
+
+--
 -- Indexes for table `asistencias`
 --
 ALTER TABLE `asistencias`
   ADD PRIMARY KEY (`id_asistencia`),
-  ADD KEY `id_estudiante` (`id_estudiante`);
+  ADD KEY `id_estudiante` (`id_estudiante`),
+  ADD KEY `id_curso` (`id_curso`);
 
 --
 -- Indexes for table `calificaciones`
@@ -513,6 +542,12 @@ ALTER TABLE `asignaturas`
   MODIFY `id_asignatura` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2410;
 
 --
+-- AUTO_INCREMENT for table `asignatura_curso`
+--
+ALTER TABLE `asignatura_curso`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `asistencias`
 --
 ALTER TABLE `asistencias`
@@ -582,13 +617,13 @@ ALTER TABLE `profesor_asignado`
 -- AUTO_INCREMENT for table `tareas_estudiante`
 --
 ALTER TABLE `tareas_estudiante`
-  MODIFY `id_tarea` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_tarea` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `videos`
 --
 ALTER TABLE `videos`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
