@@ -234,7 +234,7 @@ def enviar_tarea():
         tarea.save(file_path)
 
         cursor.execute('''
-            INSERT INTO tareas_estudiantes (id_estudiante, id_curso, tarea)
+            INSERT INTO tareas_estudiante (id_estudiante, id_curso, tarea)
             VALUES (%s, %s, %s)
         ''', (estudiante_id, id_curso, archivos))
 
