@@ -77,40 +77,106 @@ def p_refuerzo_libros():
 def p_libro_refuerzo():
     return render_template('./profesor/p-libro-refuerzo.html')
 
-@app.route('/profesor/refuerzo/videos/')
-def p_refuerzo_videos():
-    return render_template('./profesor/p-refuerzo-videos.html')
-
 @app.route('/profesor/agregar/libros/')
-def agregar_libro():
+def p_agregar_libro():
     return render_template('/profesor/p-agregar-libro.html')
 
-@app.route('/agregar/libro/', methods=['GET','POST'])
-def p_agregar_libro():
-    _portada = request.files['portada_libro'].filename
+@app.route('/agregar/libro/profesor/', methods=['POST'])
+def agregar_libro_pro():
     _titulo = request.form['titulo-libro']
     _materia = request.form['materia-libro']
-    _subir = request.files['subir-libro'].filename
+    _portada = request.files['portada_libro']
+    _subir_libro = request.files['subir-libro']
+
+    # Configuración de las carpetas de portadas y materiales
+    carpeta_portadas = 'static/portadas'
+    carpeta_materiales = 'static/materiales'
+
+    # Asegurarse de que las carpetas existan
+    if not os.path.exists(carpeta_portadas):
+        os.makedirs(carpeta_portadas)
+
+    if not os.path.exists(carpeta_materiales):
+        os.makedirs(carpeta_materiales)
+
+    # Guardar los archivos
+    portada_filename = secure_filename(_portada.filename)
+    material_filename = secure_filename(_subir_libro.filename)
+
+    portada_path = os.path.join(carpeta_portadas, portada_filename)
+    material_path = os.path.join(carpeta_materiales, material_filename)
+
+    _portada.save(portada_path)
+    _subir_libro.save(material_path)
+
+    # Consulta SQL para insertar el libro en la base de datos
+    sql = 'INSERT INTO `libros` (`titulo`, `id_asignatura`, `id_curso`, `subir_libro`, `portada`) VALUES (%s, %s, 1, %s, %s)'
     
-    tiempo = datetime.now()
-    horaActual = tiempo.strftime('%Y%H%M%S')
+    datos = (_titulo, _materia, material_path, portada_path)
+    
+    conexion = mysql.connection
+    cursor = conexion.cursor()
+    cursor.execute(sql, datos)
+    
+    conexion.commit()
+    cursor.close()
+    
+    return redirect(url_for('p-libro-refuerzo'))
+
+
+
+@app.route('/eliminar/libro/<int:id>', methods=['POST'])
+def eliminar_libro(id):
+    cursor = mysql.connection.cursor()
+    cursor.execute('DELETE FROM libros WHERE id_libro = %s', (id,))
+    mysql.connection.commit()
+    cursor.close()
+
+    return redirect(url_for('p-refuerzo-libros'))
+
+@app.route('/profesor/refuerzo/libros', methods=['GET'])
+def listar_libros():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('SELECT * FROM libros')
+    libros = cursor.fetchall()
+    cursor.close()
+
+    return render_template('refuerzo_libros.html', libros=libros)
+
+
+
+# @app.route('/agregar/libro/', methods=['GET','POST'])
+# def ():
+#     _portada = request.files['portada_libro'].filename
+#     _titulo = request.form['titulo-libro']
+#     _materia = request.form['materia-libro']
+#     _subir = request.files['subir-libro'].filename
+    
+#     tiempo = datetime.now()
+#     horaActual = tiempo.strftime('%Y%H%M%S')
     
     # if _subir.filename!= " ":
     #     nuevoNombre = horaActual+ "_" + _subir.filename
     #     _subir.save('static/img/'+nuevoNombre)
         
-    sql = 'INSERT INTO `libros` (`id`,`portada`, `titulo`, `id_asignatura`, `libro`, `id_curso_seccion`) VALUES (NULL, %s, %s, %s, %s, 2)'
+    # sql = 'INSERT INTO `libros` (`id`,`portada`, `titulo`, `id_asignatura`, `libro`, `id_curso_seccion`) VALUES (NULL, %s, %s, %s, %s, 2)'
     
-    datos = (_portada, _titulo, _materia, _subir)
+    # datos = (_portada, _titulo, _materia, _subir)
     
-    conexion = mysql.connection
-    cursor = conexion.cursor()
-    cursor.execute(sql,datos)
+    # conexion = mysql.connection
+    # cursor = conexion.cursor()
+    # cursor.execute(sql,datos)
     
-    conexion.commit()
-    cursor.close()
+    # conexion.commit()
+    # cursor.close()
     
-    return redirect('/profesor/refuerzo/libros/')
+    # return redirect('/profesor/refuerzo/libros/')
+
+@app.route('/profesor/refuerzo/videos/')
+def p_refuerzo_videos():
+    return render_template('./profesor/p-refuerzo-videos.html')
+
+
 
 @app.route('/profesor/agregar/video/')
 def p_agregar():
@@ -145,21 +211,27 @@ def p_agregar_material():
     
     return render_template('./profesor/p-agregar-material.html')
 
-@app.route('/profesor/agregar/material/', methods=['POST'])
+@app.route('/profesor/agregar/material/', methods=['GET', 'POST'])
 def agregar_material():
     # Obtener los datos del formulario
-    fondo_material = request.files['fondo-material']
-    nombre_material = request.form['nombre-material']
-    recurso_de_estudio = request.files['recurso-de-estudio']
-    descripcion_material = request.form['descripcion-material']
+    fondo_material = request.files['fondo_material']
+    nombre_material = request.form['nombre_material']
+    recurso_de_estudio = request.files['recurso_de_estudio']
+    descripcion_material = request.form['descripcion_material']
     
     # Obtener los IDs de curso y asignatura
     id_curso = request.form.get('id_curso', type=int)
     id_asignatura = request.form.get('id_asignatura', type=int)
     
+    # Debug: Imprimir los valores recibidos
+    print(f"ID Curso: {id_curso}, ID Asignatura: {id_asignatura}")
+    print(f"Nombre Material: {nombre_material}, Descripción: {descripcion_material}")
+    print(f"Archivos recibidos: {fondo_material.filename}, {recurso_de_estudio.filename}")
+
     if not id_curso or not id_asignatura:
         flash('Curso o asignatura no proporcionados.', 'error')
-        return redirect(url_for('./profesor/p-material_estudio.html'))
+        print("Error: Curso o asignatura no proporcionados.")
+        return redirect(url_for('p_material_estudio'))
 
     # Verificar que el curso y la asignatura existen
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -169,39 +241,61 @@ def agregar_material():
     asignatura = cursor.fetchone()
     cursor.close()
 
+    # Debug: Verificar la existencia de curso y asignatura
+    print(f"Curso encontrado: {curso}")
+    print(f"Asignatura encontrada: {asignatura}")
+
     if not curso or not asignatura:
         flash('Curso o asignatura no válido.', 'error')
-        return redirect(url_for('./profesor/p-material_estudio.html'))
+        print("Error: Curso o asignatura no válido.")
+        return redirect(url_for('p_material_estudio'))
 
     # Ruta donde se almacenarán los archivos subidos
-    if not os.path.exists('static/materiales/'):
-        os.makedirs('static/materiales/')
-        
+    if not os.path.exists('static'):
+        os.makedirs('static')
+        print("Directorio 'static' creado.")
+
     fondo_filename = secure_filename(fondo_material.filename)
     recurso_filename = secure_filename(recurso_de_estudio.filename)
-    fondo_material_path = os.path.join('static/materiales/', fondo_filename)
-    recurso_de_estudio_path = os.path.join('static/materiales/', recurso_filename)
-    
-    # Guardar los archivos en el servidor
-    fondo_material.save(fondo_material_path)
-    recurso_de_estudio.save(recurso_de_estudio_path)
+    fondo_material_path = os.path.join('static', fondo_filename)
+    recurso_de_estudio_path = os.path.join('static', recurso_filename)
 
-    # Preparar la consulta SQL para insertar el nuevo material
-    sql = """INSERT INTO material_estudio (id_curso, id_asignatura, titulo, fondo, material, descripcion) 
-             VALUES (%s, %s, %s, %s, %s, %s)"""
-    
-    datos = (id_curso, id_asignatura, nombre_material, fondo_filename, recurso_filename, descripcion_material)
-   
-    conexion = mysql.connection
-    cursor = conexion.cursor()
-    cursor.execute(sql, datos)
-    
-    conexion.commit()
-    cursor.close()
+    # Debug: Imprimir las rutas de los archivos guardados
+    print(f"Guardando fondo en: {fondo_material_path}")
+    print(f"Guardando recurso en: {recurso_de_estudio_path}")
+
+    try:
+        # Guardar los archivos en el servidor
+        fondo_material.save(fondo_material_path)
+        recurso_de_estudio.save(recurso_de_estudio_path)
+        print("Archivos guardados exitosamente.")
+
+        # Preparar la consulta SQL para insertar el nuevo material
+        sql = """INSERT INTO material_estudio (id_curso, id_asignatura, titulo, fondo, material_subido, descripcion) 
+                 VALUES (%s, %s, %s, %s, %s, %s)"""
+        
+        datos = (id_curso, id_asignatura, nombre_material, fondo_filename, recurso_filename, descripcion_material)
+
+        # Debug: Imprimir la consulta y los datos
+        print(f"Ejecutando SQL: {sql}")
+        print(f"Datos a insertar: {datos}")
+       
+        conexion = mysql.connection
+        cursor = conexion.cursor()
+        cursor.execute(sql, datos)
+        
+        conexion.commit()
+        flash('Material agregado exitosamente.', 'success')
+        print("Material agregado a la base de datos exitosamente.")
+    except Exception as e:
+        print(f"Error al insertar en la base de datos: {e}")
+        flash('Ocurrió un error al intentar guardar el material.', 'error')
+    finally:
+        cursor.close()
 
     # Redirigir a la página de materiales de estudio
-    flash('Material agregado exitosamente.', 'success')
     return redirect('/profesor/p-materiales_estudio.html')
+
 
 # Ruta para mostrar el formulario de agregar material
 @app.route('/profesor/agregar/material/<int:id_curso>/<int:id_asignatura>')
@@ -243,7 +337,7 @@ def p_recurso_estudio():
     return render_template('./profesor/p-recurso_estudio.html')
 
 @app.route('/profesor/recurso/estudio/<int:id>')
-def p_recurso_estudio(id):
+def recurso_estudio(id):
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute('SELECT * FROM material_estudio WHERE id_material = %s', (id,))
     material = cursor.fetchone()

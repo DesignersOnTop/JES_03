@@ -51,10 +51,15 @@
                         </tr>
                         {% for libro in libros %}
                         <tr>
-                            <td>{{ libros.titulo }}</td>
-                            <td>{{ libros.id_asignatura }}</td>
-                            <td><a href="/profesor/refuerzo/libros/nombre_libro"><button>abrir</button></a></td>
-                            <td><button class="td-eliminar-libros">Eliminar</button></td>
+                            <td>{{ libro.titulo }}</td>
+                            <td>{{ libro.id_asignatura }}</td>
+                            <td><img src="{{ libro.portada }}" alt="{{ libro.titulo }}" width="100"></td>
+                            <td><a href="{{ libro.subir_libro }}" download><button>Descargar</button></a></td>
+                            <td>
+                                <form action="/eliminar/libro/{{ libro.id_libro }}" method="POST">
+                                    <button type="submit" class="td-eliminar-libros">Eliminar</button>
+                                </form>
+                            </td>
                         </tr>
                         {% endfor %}
                         <tr>
