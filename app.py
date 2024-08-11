@@ -81,8 +81,8 @@ def p_libro_refuerzo():
 def p_agregar_libro():
     return render_template('/profesor/p-agregar-libro.html')
 
-@app.route('/agregar/libro/profesor/', methods=['POST'])
-def agregar_libro_pro():
+@app.route('/profesor/agregar/libros/', methods=['POST'])
+def agregar_libro_profesor():
     _titulo = request.form['titulo-libro']
     _materia = request.form['materia-libro']
     _portada = request.files['portada_libro']
@@ -122,7 +122,6 @@ def agregar_libro_pro():
     cursor.close()
     
     return redirect(url_for('p-libro-refuerzo'))
-
 
 
 @app.route('/eliminar/libro/<int:id>', methods=['POST'])
