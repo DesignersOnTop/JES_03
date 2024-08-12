@@ -394,7 +394,7 @@ def subir_materia():
     
     conexion.commit()
     cursor.close()
-    return redirect('./a-materias.html')
+    return redirect('/admin/materias/')
 
 @app.route('/admin/eliminar_materia/<int:id_asignatura>', methods = ['POST'])
 def eliminar_materia(id_asignatura):
@@ -403,7 +403,7 @@ def eliminar_materia(id_asignatura):
 
     cursor.execute('DELETE FROM asignaturas WHERE id_asignatura = %s', (id_asignatura))
 
-    return redirect('./a-materias.html')
+    return redirect('/admin/materias/')
 
 @app.route('/admin/reportes/')
 def a_reportes():
@@ -441,7 +441,7 @@ def a_formulario_registro_e():
 @app.route('/agregar_estudiantes', methods = ['POST'])
 def agregar_estudiante():
     # Insertar estudiantes
-    curso = request.form["curso"]
+    id_curso = request.form["id_curso"]
     matricula = request.form["matricula"]
     nombre = request.form["nombre"]
     apellidos = request.form["apellidos"]
@@ -450,15 +450,15 @@ def agregar_estudiante():
     genero = request.form["genero"]
     correo = request.form["email"]
     telefono = request.form["telefono"]
-    imagen_perfil = request.files["imagen_perfil"]
-    contraseña = request.form["contraseña"]
+    imagen_perfil = request.files["imagen_perfil"].filename
+    contrasena = request.form["contrasena"]
     
-    if imagen_perfil:
+    if imagen_perfil and imagen_perfil.filename:
         estudiante_perfil = imagen_perfil.read()
 
     sql = 'INSERT INTO `estudiantes` (`id_estudiante`,`id_curso`, `matricula`, `nombre`, `apellidos`, `direccion`, `fecha_nacimiento`, `genero`, `email`, `telefono`, `imagen_perfil`, `contraseña`) VALUES (NULL, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
 
-    datos = (curso, matricula, nombre, apellidos, direccion, fecha_nacimiento, genero, correo, telefono, estudiante_perfil, contraseña)
+    datos = (id_curso, matricula, nombre, apellidos, direccion, fecha_nacimiento, genero, correo, telefono, estudiante_perfil, contrasena)
 
     conexion = mysql.connection
     cursor = conexion.cursor()
@@ -467,7 +467,7 @@ def agregar_estudiante():
     conexion.commit()
     cursor.close()
 
-    return redirect('./admin/a-curso.html')
+    return redirect('/admin/curso/')
 
 @app.route('/editar_estudiante/<int:id>', methods=['GET'])
 def editar_estudiante(id):
@@ -496,7 +496,7 @@ def editar_profesor(id):
 @app.route('/actualizar_estudiantes', methods = ['POST'])
 def actualizar_estudiantes():
     # Actualizar estudiantes
-    id = request.form["id_estudiante"]
+    id_estudiante = request.form["id_estudiante"]
     nombre = request.form["nombre"]
     apellidos = request.form["apellidos"]
     fecha_nacimiento = request.form["fecha_nacimiento"]
@@ -506,12 +506,12 @@ def actualizar_estudiantes():
     telefono = request.form["telefono"]
     direccion = request.form["direccion"]
     matricula = request.form["matricula"]
-    contraseña = request.form["contraseña"]
+    contrasena = request.form["contrasena"]
 
     # Aqui indicamos lo que se cambiará y de donde lo hará
     sql =  '''UPDATE estudiantes SET nombre = %s, apellidos = %s, fecha_nacimiento = %s, genero = %s, curso = %s, correo = %s, telefono = %s, direccion = %s, matricula = %s, contraseña = %s WHERE id_estudiante = %s'''
     
-    datos = (nombre, apellidos, fecha_nacimiento, genero, curso, correo, telefono, direccion, matricula, contraseña)
+    datos = (nombre, apellidos, fecha_nacimiento, genero, curso, correo, telefono, direccion, matricula, contrasena)
 
     conexion = mysql.connection
     cursor = conexion.cursor()
@@ -520,7 +520,7 @@ def actualizar_estudiantes():
     conexion.commit()
     cursor.close()
 
-    return redirect('./admin/a-curso.html')
+    return redirect('/admin/curso/')
 
 @app.route('/admin/eliminar_estudiantes', methods = ['POST'])
 def eliminar_estudiantes():
@@ -529,7 +529,7 @@ def eliminar_estudiantes():
     # Se hace una confirmación de si el id introducido existe
     if id_estudiante in 'estudiantes':
         sql = 'DELETE FROM estudiantes WHERE id_estudiante = %s', (id_estudiante)
-        return redirect('./admin/a-curso.html')
+        return redirect('/admin/curso/')
     
     conexion = mysql.connection
     cursor = conexion.cursor()
@@ -545,24 +545,24 @@ def a_formulario_registro_p():
 @app.route('/admin/agregar_profesores', methods = ['POST'])
 def agregar_profesores():
     # Insertar profesores
-    asignatura = request.form["id_asignatura"]
+    id_asignatura = request.form["id_asignatura"]
     matricula = request.form["matricula"]
     nombre = request.form["nombre"]
-    apellidos = request.form["apellido"]
+    apellidos = request.form["apellidos"]
     direccion = request.form["direccion"]
     cedula = request.form["cedula"]
     genero = request.form["genero"]
     correo = request.form["email"]
     telefono = request.form["telefono"]
-    imagen_perfil = request.files["imagen_perfil"]
-    contraseña = request.form["contraseña"]
+    imagen_perfil = request.files["imagen_perfil"].filename
+    contrasena = request.form["contrasena"]
     
-    if imagen_perfil:
+    if imagen_perfil and imagen_perfil.filename:
         profesor_perfil = imagen_perfil.read()
 
     sql = 'INSERT INTO `profesores` (`id_profesor`,`id_asignatura`, `matricula`, `nombre`, `apellido`, `direccion`, `cedula`, `genero`, `email`, `telefono`, `imagen_perfil`, `contraseña`) VALUES (NULL, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
 
-    datos = (asignatura, matricula, nombre, apellidos, direccion, cedula, genero, correo, telefono, profesor_perfil, contraseña)
+    datos = (id_asignatura, matricula, nombre, apellidos, direccion, cedula, genero, correo, telefono, profesor_perfil, contrasena)
 
     conexion = mysql.connection
     cursor = conexion.cursor()
@@ -571,30 +571,28 @@ def agregar_profesores():
     conexion.commit()
     cursor.close()
     
-    return redirect('./admin/a-home.html')
+    return redirect('/home/admin/')
 
     # return redirect('./admin/a-curso.html')
 
-@app.route('/admin/actualizar_profesor', methods = ['POST'])
-def actualizar_profesores():
-    # Actualizar profesores
-    id = request.form["id_profesor"]
-    asignatura = request.form["id_asignatura"]
+@app.route('/admin/actualizar_profesor', methods=['POST'])
+def actualizar_profesor():
+    id_profesor = request.form["id_profesor"]
+    id_asignatura = request.form["id_asignatura"]
     nombre = request.form["nombre"]
     apellidos = request.form["apellidos"]
-    direccion = request.form["fecha_nacimiento"]
-    cedula = request.form["genero"]
+    direccion = request.form["direccion"]
+    cedula = request.form["cedula"]
     genero = request.form["genero"]
     correo = request.form["email"]
     telefono = request.form["telefono"]
     matricula = request.form["matricula"]
-    imagen_perfil = request.files["imagen_perfil"]
-    contraseña = request.form["contraseña"]
+    imagen_perfil = request.files["imagen_perfil"].filename
+    contrasena = request.form["contrasena"]
 
-    # Aqui indicamos lo que se cambiará y de donde lo hará
-    sql =  '''UPDATE profesores SET asignatura = %s, nombre = %s, apellido = %s, direccion = %s, cedula = %s, genero = %s, correo = %s, telefono = %s, matricula = %s,imagen_perfil = %s, contraseña = %s WHERE id_profesor = %s'''
+    sql =  '''UPDATE profesores SET id_asignatura = %s, nombre = %s, apellido = %s, direccion = %s, cedula = %s, genero = %s, correo = %s, telefono = %s, matricula = %s,imagen_perfil = %s, contraseña = %s WHERE id_profesor = %s'''
     
-    datos = (asignatura, nombre, apellidos, direccion, cedula, genero, correo, telefono, matricula,imagen_perfil, contraseña)
+    datos = (id_asignatura, nombre, apellidos, direccion, cedula, genero, correo, telefono, matricula,imagen_perfil, contrasena)
 
     conexion = mysql.connection
     cursor = conexion.cursor()
@@ -603,7 +601,7 @@ def actualizar_profesores():
     conexion.commit()
     cursor.close()
 
-    return redirect('./admin/a-home.html')
+    return redirect('/home/admin/')
 
 @app.route('/admin/eliminar_profesores', methods = ['POST'])
 def eliminar_profesores():
@@ -612,7 +610,7 @@ def eliminar_profesores():
     # Se hace una confirmación de si el id introducido existe
     if id_profesor in 'profesores':
         sql = 'DELETE FROM profesores WHERE id_profesor = %s', (id_profesor)
-        return redirect('./admin/a-home.html')
+        return redirect('/home/admin/')
     
     conexion = mysql.connection
     cursor = conexion.cursor()

@@ -10,14 +10,14 @@
 <body>
     <main class="main-container">
         <section class="modals-container">
-            <form action="/agregar_estudiantes" method="post" action="/">
+            <form action="/agregar_estudiantes" method="post" enctype="multipart/form-data">
                 <fieldset class="form-container">
                     <legend>Estudiante</legend>
                     <div class="subir-imagen-registro">
                         <div class="imagen-registro-preview" id="preview">
                         </div>
                         <label for="subir-imagen">Subir Imagen</label>
-                        <input type="file" id="subir-imagen" autocomplete="off" name='portada-libro'>
+                        <input type="file" id="subir-imagen" autocomplete="off" name='imagen_perfil'>
                     </div>
                     <div class="formulario-de-registro">
                         <label for="nombre">Nombre:</label>
@@ -41,7 +41,7 @@
                     </div>                    
                     <div class="formulario-de-registro">
                         <label for="curso">Curso:</label>
-                        <select type="text" id="curso" name="curso">
+                        <select type="text" id="curso" name="id_curso">
                             <option selected disabled>Seleccionar</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
