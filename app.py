@@ -63,11 +63,80 @@ def login():
 # APARTADO DEL PROFESORES EN PYTHON Smailyn 
 @app.route('/home/profesor/')
 def p_home():
-    return render_template('./profesor/p-home-a.html')
+    
+    id_profesor = session['user_id']    
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    
+    # ASIGNACION DE LOS CURSOS DEL PROFESOR
+    cursor.execute(
+        '''
+            SELECT cursos.id_curso, cursos.nombre 
+            FROM `profesor_asignado` 
+            JOIN profesores ON profesores.id_profesor = profesor_asignado.id_profesor 
+            JOIN cursos ON cursos.id_curso = profesor_asignado.id_curso
+            WHERE profesor_asignado.id_profesor = %s
+        ''', (id_profesor,)
+    )
+    
+    asignaciones = cursor.fetchall()
+    
+    # IMAGEN DEL PERFIL DEL PROFESOR
+    cursor.execute(
+        '''
+            SELECT imagen_perfil
+            FROM `profesores`
+            WHERE id_profesor = %s
+        ''', (id_profesor,)
+    )
+    
+    perfil = cursor.fetchone()
+    
+    curso_seleccionado = None
+    if request.method == 'POST':
+        curso_seleccionado = request.form.get('cursos')
+        
+        # ESTUDIANTES EN EL HOME
+        # cursor.execute(
+        #     '''
+        #         SELECT * 
+        #         FROM `estudiantes` 
+        #         WHERE id_curso = %s
+        #     ''', (curso_seleccionado,)
+        # )
+        
+        # estudiantes = estudiantes
+    
+    cursor.close()
+    
+    return render_template('./profesor/p-home-a.html', perfil=perfil, asignaciones=asignaciones, curso_seleccionado=curso_seleccionado) #estudiantes=estudiantes)
 
 @app.route('/profesor/perfil/')
 def p_perfil():
-    return render_template('./profesor/p-perfil.html')
+    id_profesor = session['user_id']
+    
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    
+    cursor.execute(
+        '''
+            SELECT *
+            FROM `profesores`
+            WHERE id_profesor = %s
+        ''', (id_profesor,)
+    )
+    perfil = cursor.fetchall()
+    
+    cursor.execute(
+    '''
+        SELECT nom_asignatura 
+        FROM asignaturas 
+        JOIN profesores ON profesores.id_asignatura = asignaturas.id_asignatura
+        WHERE id_profesor = %s
+    ''', (id_profesor,)
+    )
+    asignatura = cursor.fetchone()
+    
+    
+    return render_template('./profesor/p-perfil.html', perfil=perfil[0], asignatura=asignatura)
 
 @app.route('/profesor/refuerzo/libros/')
 def p_refuerzo_libros():
@@ -359,8 +428,8 @@ def p_clases_enviadas():
 def p_tarea_e():
     return render_template('./profesor/p-tarea-e.html')
 
-@app.route('/profesor/reporte/')
-def p_report_a():
+@app.route('/profesor/reporte/<int:id_curso>')
+def p_report_a(id_curso):
     return render_template('./profesor/p-report-a.html')
 
 @app.route('/profesor/perfil/estudiante/')
