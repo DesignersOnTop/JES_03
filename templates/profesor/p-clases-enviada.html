@@ -31,7 +31,7 @@
     </header>
     <main class="main-container main-curso-material">    
         <div class="materia-clases-elegir">
-            <h2>Tarea 1 - Investigaci&oacute;n</h2>
+            <h2>{{ tareas_estudiante.tarea }}</h2>
         </div>            
         <div class="imagen-de-fondo-curso" id="img-fondo-enviadas">
             <figure>
@@ -58,9 +58,9 @@
                         </tr>
                         {% for tarea in tareas %}
                         <tr>
-                            <td>1011</td>
-                            <td>Smailyn</td>
-                            <td>Burgos</td>
+                            <td>{{ estudiantes.id_estudiante }}</td>
+                            <td>{{ estudiantes.nombre }}</td>
+                            <td>{{ estudiantes.apellidos }}</td>
                             <td class="ver-estudiante-p"><a href="/profesor/tarea/estudiante/" class="ver-recurso"><figure><img src="{{ url_for('static', filename='imagenes/iconos/angle-small-right.svg') }}" alt="ver-estudiante"></figure></a></td>
                         </tr>
                         {% endfor%}

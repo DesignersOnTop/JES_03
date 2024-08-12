@@ -745,6 +745,10 @@ def p_refuerzo_videos():
 def agregar_libro():
     return render_template('/profesor/p-agregar-libro.html')
 
+@app.route('/profesor/refuerzo/libro/fuenteAbrir/')
+def abrir_libro():
+    return render_template('/profesor/p-libro-refuerzo.html')
+
 @app.route('/agregar/libro/', methods=['GET','POST'])
 def p_agregar_libro():
     _portada = request.files['portada_libro'].filename
@@ -794,6 +798,10 @@ def p_agregar_video():
     cursor.close()
     
     return redirect('/profesor/refuerzo/videos/')
+
+@app.route('/profesor/agregarVideo')
+def p_agregarVideo():
+    return render_template('./profesor/p-agregar-video.html')
     
 
 @app.route('/profesor/materiales/')
