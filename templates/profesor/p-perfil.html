@@ -14,38 +14,37 @@
                 <div class="perfil-izquierda">
                     <h4 class="titulo-perfil">Profesor</h4>
                     <figure class="perfil-estudiante perfil-profesor">
-                        <img src="{{ url_for('static', filename='imagenes/recursos/perfil-masculino-2.jpg') }}" alt="img-perfil">
+                        <img src="{{perfil.imagen_perfil}}" alt="img-perfil">
                     </figure>
                 </div>
                 <div class="perfil-derecho">
                     <div class="perfil-derecha-arriba">
-                        <h2>{{ profesores.nombre }}</h2>
-                         <h2>{{ profesores.apellido }}</h2>
-                        <p>{{ profesores.matricula }}</p>
+                        <h2>{{ perfil.nombre }} {{ perfil.apellido }}</h2>
+                        <p>{{ perfil.matricula }}</p>
                     </div>
                     <div class="datos datos1">
                         <h3>Email</h3>
-                        <p>{{ profesores.email }}</p>
+                        <p>{{ perfil.email }}</p>
                     </div>
                     <div class="datos">
                         <h3>Cedula</h3>
-                        <p>{{ profesores.cedula }}</p>
+                        <p>{{ perfil.cedula }}</p>
                     </div>
                     <div class="datos">
                         <h3>Materia</h3>
-                        <p>{{ profesores.id_asignatura }}</p>
+                        <p>{{ asignatura.nom_asignatura }}</p>
                     </div>
                     <div class="datos">
                         <h3>Genero</h3>
-                        <p>{{ profesores.genero }}</p>
+                        <p>{{ perfil.genero }}</p>
                     </div>
                     <div class="datos">
                         <h3>Dirección</h3>
-                        <p>{{ profesores.direccion }}</p>
+                        <p>{{ perfil.direccion }}</p>
                     </div>
                     <div class="datos">
                         <h3>Telefono</h3>
-                        <p>{{ profesores.telefono }}</p>
+                        <p>{{ perfil.telefono }}</p>
                     </div>
                 </div>
             </article>
