@@ -1,11 +1,10 @@
 import os
-# from flaskext.mysql import MySQL
+import pymysql
 from flask import Flask, render_template, request, redirect, session, send_from_directory, url_for, flash
-from flask_mysqldb import MySQL
-import MySQLdb.cursors
-from datetime import datetime
 from werkzeug.utils import secure_filename
-
+from datetime import datetime
+# from flask_mysqldb import MySQL
+# import MySQLdb.cursors
 # Crear la aplicación
 app = Flask(__name__)
 
@@ -18,36 +17,42 @@ app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'jes'
 
-# carpeta para subir los archivos, fotos, pdf, etc.
+# Carpeta para subir los archivos, fotos, pdf, etc.
 UPLOAD_FOLDER = os.path.join('static', 'documentos')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-# este codigo hara que si no existe la carpeta pues la va a crear;
+# Crear la carpeta si no existe
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
-
-# Inicializar MySQL
-mysql = MySQL(app)
-#-----------------------------------------------------
 
 @app.route('/')
 def Index():
     session.clear()
     return render_template('index.html')
-    
+
 @app.route('/login', methods=['POST'])
 def login():
     matricula = request.form['matricula-sesion']
     password = request.form['pass-sesion']
     
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    # Conectar a la base de datos
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
     
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
+
     # Verificación de estudiantes
     cursor.execute("SELECT * FROM estudiantes WHERE matricula = %s", (matricula,))
     estudiante = cursor.fetchone()
     if estudiante and estudiante['contraseña'] == password:
         session['user_id'] = estudiante['id_estudiante']
         session['role'] = 'estudiante'
+        cursor.close()
+        connection.close()
         return redirect('/home/estudiante/')
 
     # Verificación de profesores
@@ -56,6 +61,8 @@ def login():
     if profesor and profesor['contraseña'] == password:
         session['user_id'] = profesor['id_profesor']
         session['role'] = 'profesor'
+        cursor.close()
+        connection.close()
         return redirect('/home/profesor/')
 
     # Verificación de administradores
@@ -64,8 +71,16 @@ def login():
     if admin and admin['contraseña'] == password:
         session['user_id'] = admin['id_admin']
         session['role'] = 'admin'
+        cursor.close()
+        connection.close()
         return redirect('/home/admin/')
+    
+    # Cerrar conexión
+    cursor.close()
+    connection.close()
+
     return redirect('/')
+
 
 # HOME ESTUDIANTE
 @app.route('/home/estudiante/', methods=['GET'])
@@ -75,7 +90,14 @@ def home_estudiante():
 
     estudiante_id = session['user_id']
 
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
 
     cursor.execute("SELECT imagen_perfil FROM estudiantes WHERE id_estudiante = %s", (estudiante_id,))
     estudiante = cursor.fetchone()
@@ -120,7 +142,14 @@ def e_perfil():
     
     estudiante_id = session['user_id']
     
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
     cursor.execute('SELECT * FROM `estudiantes` WHERE id_estudiante = %s', (estudiante_id,))
     perfil = cursor.fetchall()
     
@@ -142,7 +171,14 @@ def e_material():
 
     estudiante_id = session['user_id']
     
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
     
     # las asignaturas disponibles
     cursor.execute('''
@@ -177,8 +213,14 @@ def ver_materia(titulo):
     if 'user_id' not in session or session.get('role') != 'estudiante':
         return redirect('/')
 
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
     # Obtener detalles del material por título
     cursor.execute('''
         SELECT material_estudio.*, asignaturas.nom_asignatura
@@ -200,7 +242,14 @@ def enviar_tarea():
     estudiante_id = session['user_id']
     material_id = request.form.get('material_id')
 
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
 
     # Obtener la información del material
     cursor.execute('''
@@ -239,7 +288,7 @@ def enviar_tarea():
             VALUES (%s, %s, %s)
         ''', (estudiante_id, id_curso, archivos))
 
-        mysql.connection.commit()
+        connection.commit()
         cursor.close()
 
         flash('Tarea enviada exitosamente')
@@ -257,7 +306,14 @@ def e_refuerzo_libros():
 
     estudiante_id = session['user_id']
     
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
     
     cursor.execute(
     '''
@@ -278,7 +334,14 @@ def e_libro(titulo):
     if 'user_id' not in session or session.get('role') != 'estudiante':
         return redirect('/')
 
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
 
     # Obtener detalles del libro por título
     cursor.execute('''
@@ -299,7 +362,14 @@ def e_refuerzo_videos():
     if 'user_id' not in session or session.get('role') != 'estudiante':
         return redirect('/')
 
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
     
     cursor.execute(
         '''
@@ -320,7 +390,14 @@ def e_videos(titulo):
     if 'user_id' not in session or session.get('role') != 'estudiante':
         return redirect('/')
 
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
     
     cursor.execute('''
         SELECT videos.*, asignaturas.nom_asignatura
