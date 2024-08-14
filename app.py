@@ -1,11 +1,10 @@
 import os
-# from flaskext.mysql import MySQL
+import pymysql
 from flask import Flask, render_template, request, redirect, session, send_from_directory, url_for, flash
-from flask_mysqldb import MySQL
-import MySQLdb.cursors
-from datetime import datetime
 from werkzeug.utils import secure_filename
-
+from datetime import datetime
+# from flask_mysqldb import MySQL
+# import MySQLdb.cursors
 # Crear la aplicación
 app = Flask(__name__)
 
@@ -18,16 +17,13 @@ app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'jes'
 
-# carpeta para subir los archivos, fotos, pdf, etc.
+# Carpeta para subir los archivos, fotos, pdf, etc.
 UPLOAD_FOLDER = os.path.join('static', 'documentos')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-# este codigo hara que si no existe la carpeta pues la va a crear;
+# Crear la carpeta si no existe
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
-
-# Inicializar MySQL
-mysql = MySQL(app)
 #-----------------------------------------------------
 
 @app.route('/')
@@ -40,7 +36,14 @@ def login():
     matricula = request.form['matricula-sesion']
     password = request.form['pass-sesion']
     
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
     
     # Verificación de estudiantes
     cursor.execute("SELECT * FROM estudiantes WHERE matricula = %s", (matricula,))
@@ -75,7 +78,14 @@ def home_estudiante():
 
     estudiante_id = session['user_id']
 
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
 
     cursor.execute("SELECT imagen_perfil FROM estudiantes WHERE id_estudiante = %s", (estudiante_id,))
     estudiante = cursor.fetchone()
@@ -119,7 +129,14 @@ def e_perfil():
     
     estudiante_id = session['user_id']
     
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
     cursor.execute('SELECT * FROM `estudiantes` WHERE id_estudiante = %s', (estudiante_id,))
     perfil = cursor.fetchall()
     
@@ -141,7 +158,14 @@ def e_material():
 
     estudiante_id = session['user_id']
     
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
     
     # las asignaturas disponibles
     cursor.execute('''
@@ -176,7 +200,14 @@ def ver_materia(titulo):
     if 'user_id' not in session or session.get('role') != 'estudiante':
         return redirect('/')
 
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
 
     # Obtener detalles del material por título
     cursor.execute('''
@@ -199,7 +230,14 @@ def enviar_tarea():
     estudiante_id = session['user_id']
     material_id = request.form.get('material_id')
 
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
 
     # Obtener la información del material
     cursor.execute('''
@@ -238,7 +276,7 @@ def enviar_tarea():
             VALUES (%s, %s, %s)
         ''', (estudiante_id, id_curso, archivos))
 
-        mysql.connection.commit()
+        connection.commit()
         cursor.close()
 
         flash('Tarea enviada exitosamente')
@@ -255,7 +293,14 @@ def e_refuerzo_libros():
 
     estudiante_id = session['user_id']
     
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
     
     cursor.execute(
     '''
@@ -276,7 +321,14 @@ def e_libro(titulo):
     if 'user_id' not in session or session.get('role') != 'estudiante':
         return redirect('/')
 
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
 
     # Obtener detalles del libro por título
     cursor.execute('''
@@ -297,7 +349,14 @@ def e_refuerzo_videos():
     if 'user_id' not in session or session.get('role') != 'estudiante':
         return redirect('/')
 
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
     
     cursor.execute(
         '''
@@ -318,7 +377,14 @@ def e_videos(titulo):
     if 'user_id' not in session or session.get('role') != 'estudiante':
         return redirect('/')
 
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
     
     cursor.execute('''
         SELECT videos.*, asignaturas.nom_asignatura
@@ -337,7 +403,14 @@ def e_videos(titulo):
 
 @app.route('/home/admin/')
 def a_home():
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)  
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
     # Estudiantes
     cursor.execute('SELECT * FROM estudiantes')
     estudiantes = cursor.fetchall()
@@ -350,7 +423,14 @@ def a_home():
 
 @app.route('/admin/cursos/')
 def a_cursos():
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
     cursor.execute('SELECT * FROM `cursos`')
     cursos = cursor.fetchall()
     cursor.close()
@@ -362,7 +442,14 @@ def a_cursos():
 
 @app.route('/admin/curso/', methods = ['GET'])
 def mostrar_estudiantes():
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
     cursor.execute('SELECT * FROM estudiantes')
     estudiantes = cursor.fetchall()
     cursor.close()
@@ -388,18 +475,29 @@ def subir_materia():
     
     sql = '''INSERT INTO `asignaturas` (`id_asignatura`, `nom_asignatura`) VALUES (NULL, %s,)'''
 
-    conexion = mysql.connection
-    cursor = conexion.cursor()
-    cursor.execute(sql,datos)
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
     
-    conexion.commit()
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
+    cursor.execute(sql,datos)
+    connection.commit()
     cursor.close()
     return redirect('/admin/materias/')
 
 @app.route('/admin/eliminar_materia/<int:id_asignatura>', methods = ['POST'])
 def eliminar_materia(id_asignatura):
-    conexion = mysql.connection
-    cursor = conexion.cursor()
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
 
     cursor.execute('DELETE FROM asignaturas WHERE id_asignatura = %s', (id_asignatura))
 
@@ -417,8 +515,14 @@ def a_reporte_profesor():
 def a_perfil():
     sql = 'SELECT nombre_admin, matricula, a_email, a_genero, a_direccion, a_telefono FROM admin'
 
-    conexion = mysql.connection
-    cursor = conexion.cursor()
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
     cursor.execute(sql)
 
     admin = cursor.fetchall()
@@ -460,18 +564,31 @@ def agregar_estudiante():
 
     datos = (id_curso, matricula, nombre, apellidos, direccion, fecha_nacimiento, genero, correo, telefono, estudiante_perfil, contrasena)
 
-    conexion = mysql.connection
-    cursor = conexion.cursor()
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
     cursor.execute(sql,datos)
     
-    conexion.commit()
+    connection.commit()
     cursor.close()
 
     return redirect('/admin/curso/')
 
 @app.route('/editar_estudiante/<int:id>', methods=['GET'])
 def editar_estudiante(id):
-    cursor = mysql.connection.cursor()
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
     cursor.execute("SELECT * FROM estudiantes WHERE id = %s", (id))
     estudiante = cursor.fetchone()
     cursor.close()
@@ -483,7 +600,14 @@ def editar_estudiante(id):
     
 @app.route('/editar_profesor/<int:id>', methods=['GET'])
 def editar_profesor(id):
-    cursor = mysql.connection.cursor()
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
     cursor.execute("SELECT * FROM profesores WHERE id = %s", (id))
     profesor = cursor.fetchone()
     cursor.close()
@@ -513,11 +637,17 @@ def actualizar_estudiantes():
     
     datos = (nombre, apellidos, fecha_nacimiento, genero, curso, correo, telefono, direccion, matricula, contrasena)
 
-    conexion = mysql.connection
-    cursor = conexion.cursor()
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
     cursor.execute(sql, datos)
 
-    conexion.commit()
+    connection.commit()
     cursor.close()
 
     return redirect('/admin/curso/')
@@ -531,11 +661,17 @@ def eliminar_estudiantes():
         sql = 'DELETE FROM estudiantes WHERE id_estudiante = %s', (id_estudiante)
         return redirect('/admin/curso/')
     
-    conexion = mysql.connection
-    cursor = conexion.cursor()
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
     cursor.execute(sql)
 
-    conexion.commit()
+    connection.commit()
     cursor.close()
 
 @app.route('/admin/registro/profesor/')
@@ -564,11 +700,17 @@ def agregar_profesores():
 
     datos = (id_asignatura, matricula, nombre, apellidos, direccion, cedula, genero, correo, telefono, profesor_perfil, contrasena)
 
-    conexion = mysql.connection
-    cursor = conexion.cursor()
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
     cursor.execute(sql,datos)
     
-    conexion.commit()
+    connection.commit()
     cursor.close()
     
     return redirect('/home/admin/')
@@ -594,11 +736,17 @@ def actualizar_profesor():
     
     datos = (id_asignatura, nombre, apellidos, direccion, cedula, genero, correo, telefono, matricula,imagen_perfil, contrasena)
 
-    conexion = mysql.connection
-    cursor = conexion.cursor()
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
     cursor.execute(sql, datos)
 
-    conexion.commit()
+    connection.commit()
     cursor.close()
 
     return redirect('/home/admin/')
@@ -612,31 +760,49 @@ def eliminar_profesores():
         sql = 'DELETE FROM profesores WHERE id_profesor = %s', (id_profesor)
         return redirect('/home/admin/')
     
-    conexion = mysql.connection
-    cursor = conexion.cursor()
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
     cursor.execute(sql)
 
-    conexion.commit()
+    connection.commit()
     cursor.close()
 
 @app.route('/admin/profesores/')
 def a_cursos_profesor():
     sql = 'SELECT id_profesor, nombre, apellido, cedula, id_asignatura FROM profesores'
 
-    conexion = mysql.connection
-    cursor = conexion.cursor()
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
     cursor.execute(sql)
 
     profesores = cursor.fetchall()
     cursor.close()
-    return render_template('./admin/a-profesor-1_a.html')
+    return render_template('./admin/a-profesor-1_a.html', profesores=profesores)
 
 @app.route('/admin/estudiantes')
 def a_cursos_estudiantes():
     sql = 'SELECT id_estudiante, nombre, apellido, fecha_nacimiento, id_curso FROM estudiantes'
 
-    conexion = mysql.connection
-    cursor = conexion.cursor()
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
     cursor.execute(sql)
 
     estudiantes = cursor.fetchall()
@@ -692,11 +858,17 @@ def p_agregar_libro():
     
     datos = (_portada, _titulo, _materia, _subir)
     
-    conexion = mysql.connection
-    cursor = conexion.cursor()
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
     cursor.execute(sql,datos)
     
-    conexion.commit()
+    connection.commit()
     cursor.close()
     
     return redirect('/profesor/refuerzo/libros/')
@@ -715,11 +887,17 @@ def p_agregar_video():
     
     datos = (_titulo, _materia, _insertar)
     
-    conexion = mysql.connection
-    cursor = conexion.cursor()
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
     cursor.execute(sql,datos)
     
-    conexion.commit()
+    connection.commit()
     cursor.close()
     
     return redirect('/profesor/refuerzo/videos/')
@@ -744,11 +922,17 @@ def agregar_material():
 
     datos = (nombre_material, fondo_material, recurso_de_estudio, descripcion_material)
     
-    conexion = mysql.connection
-    cursor = conexion.cursor()
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
     cursor.execute(sql,datos)
     
-    conexion.commit()
+    connection.commit()
     cursor.close()
 
     return redirect('./profesor/p-material_estudio.html')
@@ -783,11 +967,17 @@ def reporte():
 
     datos = (archivo_asistencia_nombre, archivo_calificacion_nombre, descripcion_material)
     
-    conexion = mysql.connection
-    cursor = conexion.cursor()
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
     cursor.execute(sql, datos)
     
-    conexion.commit()
+    connection.commit()
     cursor.close()
 
     return redirect('./profesor/p-home-a.html')
@@ -810,11 +1000,17 @@ def agregar_calificacion():
 
     datos = (id_estudiante, id_asignatura, C1, C2, C3, C4, calificacion_final)
 
-    conexion = mysql.connection
-    cursor = conexion.cursor()
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
     cursor.execute(sql,datos)
 
-    conexion.commit()
+    connection.commit()
     cursor.close()
 
     return redirect(url_for('listar_calificaciones'))
