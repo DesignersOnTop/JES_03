@@ -18,12 +18,21 @@ app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'jes'
 
 # Carpeta para subir los archivos, fotos, pdf, etc.
-UPLOAD_FOLDER = '/static/documentos'  # Cambia esto si es necesario
+UPLOAD_FOLDER = '/static/documentos'  
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 
 # Configurar la carpeta de carga
 app.config['UPLOAD_FOLDER'] = os.path.join(app.root_path, 'static', 'documentos')
+app.config['ALLOWED_EXTENSIONS'] = {'pdf', 'doc', 'docx', 'xlsx', 'xls'}
+
+# Esta función verifica si un archivo tiene una extensión permitida.
+def allowed_file(filename):
+    # Comprueba si el nombre del archivo contiene un punto, lo cual indica que tiene una extensión.
+    return '.' in filename and \
+    filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
+    # Separa la extensión del nombre del archivo y la convierte a minúsculas. Luego, verifica si la extensión está en la lista de extensiones permitidas.
+
 
 # Crear la carpeta si no existe
 if not os.path.exists(app.config['UPLOAD_FOLDER']):
@@ -1055,8 +1064,8 @@ def agregar_video():
         materia = request.form['materia-video']
         url_video = request.form['insertar-video']
         
-        id_asignatura = 2401  # Cambia esto si necesitas un valor dinámico
-        id_curso = 1  # Cambia esto si necesitas un valor dinámico
+        id_asignatura = 2401  
+        id_curso = 1  
 
         sql = '''
         INSERT INTO videos (titulo, id_curso, id_asignatura, video)
@@ -1142,36 +1151,63 @@ def p_tarea_e():
 def p_report_a():
     return render_template('./profesor/p-report-a.html')
 
-@app.route('/profesor/reporte', methods=['POST'])
+@app.route('/profesor/reporte/admin/', methods=['GET', 'POST'])
 def reporte():
-    archivo_asistencia_nombre = request.files['archivo-asistencia']
-    archivo_calificacion_nombre = request.files['archivo-calificacion']
-    descripcion_material = request.form['descripcion-material']
 
-    tiempo = datetime.now()
-    horaActual = tiempo.strftime('%Y%H%M%S')
-    nombreArchivoAsistencia = horaActual + "_" + secure_filename(archivo_asistencia_nombre.filename)
-    nombreArchivoCalificacion = horaActual + "_" + secure_filename(archivo_calificacion_nombre.filename)
-    
-    archivo_asistencia_nombre.save(os.path.join(app.config['UPLOAD_FOLDER'], nombreArchivoAsistencia))
-    archivo_calificacion_nombre.save(os.path.join(app.config['UPLOAD_FOLDER'], nombreArchivoCalificacion))
-    
-    sql = "INSERT INTO materiales (asistencia, calificacion, descripcion) VALUES (%s, %s, %s)"
-    datos = (nombreArchivoAsistencia, nombreArchivoCalificacion, descripcion_material)
-    
-    connection = pymysql.connect(
-        host='localhost',
-        user='root',
-        password='',
-        database='jes'
-    )
-    
-    cursor = connection.cursor(pymysql.cursors.DictCursor)
-    cursor.execute(sql, datos)
-    connection.commit()
-    cursor.close()
+    if request.method == 'POST':
+        
+        asistencia = request.files.get('report-asistencia')
+        calificacion = request.files.get('report-calificacion')
+        
+        id_profesor_asignado = 1 
 
-    return redirect(url_for('p_report_a'))
+        # Verifica si se ha subido un archivo de asistencia y si tiene una extensión permitida.
+        if asistencia and allowed_file(asistencia.filename):
+            # Asegura que el nombre del archivo sea seguro para guardarlo en el servidor.
+            filename_asistencia = secure_filename(asistencia.filename)
+            asistencia_path = os.path.join(app.config['UPLOAD_FOLDER'], filename_asistencia)
+            asistencia.save(asistencia_path)
+            print(f"Archivo de asistencia guardado en: {asistencia_path}")
+        else:
+            # Si no se subió un archivo válido, se establece la ruta como None.
+            asistencia_path = None
+
+        # Repite el mismo proceso para el archivo de calificación.
+        if calificacion and allowed_file(calificacion.filename):
+            filename_calificacion = secure_filename(calificacion.filename)
+            calificacion_path = os.path.join(app.config['UPLOAD_FOLDER'], filename_calificacion)
+            calificacion.save(calificacion_path)
+            print(f"Archivo de calificación guardado en: {calificacion_path}")
+        else:
+            calificacion_path = None
+
+        sql = '''
+        INSERT INTO reporte_profesor ( id_profesor-asignado, asistencia, calificaciones)
+        VALUES (%s, %s, %s)
+        '''
+        datos = (id_profesor_asignado, asistencia_path, calificacion_path)
+      
+        connection = pymysql.connect(
+            host='localhost',
+            user='root',
+            password='',
+            database='jes'
+        )
+        cursor = connection.cursor()
+        try:
+            cursor.execute(sql, datos)
+            connection.commit()
+        except pymysql.MySQLError as e:
+            print(f"Error en la base de datos: {e}")
+            connection.rollback()
+        finally:
+            cursor.close()
+            connection.close()
+
+        return redirect('/home/profesor/') 
+    
+    return render_template('p-report-a.html')  
+    
 @app.route('/profesor/perfil/estudiante/')
 def p_perfil_e():
     return render_template('./profesor/p-perfil-e.html')

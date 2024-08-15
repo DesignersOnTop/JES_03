@@ -5,33 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Material</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
-    <link rel="icon" href="{{ url_for('static', filename='imagenes/recursos/logo-jes.png') }}">>
+    <link rel="icon" href="{{ url_for('static', filename='imagenes/recursos/logo-jes.png') }}">
 </head>
 <body>
     <div class="body-container">
         <main class="main-container main-curso-material">            
             <section class="modals-container agregar-material-section">
-                <form action="#">
+                <form action="/profesor/reporte/admin/" method="post" enctype="multipart/form-data">
                     <fieldset class="agregar-material-fieldset">
                         <legend>Informe de 1ro - A</legend>
                         <div class="dato-report">
                             <label for="report-asistencia">Asistencia</label>
-                            <input type="file" id="report-asistencia">
+                            <input type="file" id="report-asistencia" name="report-asistencia">
                         </div>
                         <div class="dato-report">
-                            <label for="report-calificacion">Calificaci&oacute;n</label>
-                            <input type="file" id="report-calificacion">
+                            <label for="report-calificacion">Calificación</label>
+                            <input type="file" id="report-calificacion" name="report-calificacion">
                         </div>                    
-                        <!-- <div class="dato-material dato-material-textarea">
-                            <label for="con-material">Descripci&oacute;n del Material</label>
-                            <textarea name="con-material" id="con-material"></textarea>
-                        </div> -->
                     </fieldset>                        
                     <div class="botones-agg-material">
                             <input type="submit" value="Enviar">
                             <input type="reset" value="Rehacer">
                     </div>
-
                 </form>
             </section>
         </main>
