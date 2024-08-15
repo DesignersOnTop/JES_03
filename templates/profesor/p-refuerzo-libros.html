@@ -47,38 +47,17 @@
                         <tr>
                             <th>Titulo</th>
                             <th>Materia</th>
-                            <th>fuente|link</th>
+                            <th>Fuente | Link</th>
+                            <th>Acciones</th>
                         </tr>
+                        {% for libro in libros %}
                         <tr>
-                            <td>Don quijote</td>
-                            <td>Lengua Española</td>
-                            <td><a href="/profesor/refuerzo/libros/nombre_libro"><button>abrir</button></a></td>
-                            <td><button class="td-eliminar-libros">Eliminar</button></td>
+                            <td>{{ libro.titulo }}</td>
+                            <td>{{ libro.id_asignatura }}</td>
+                            <td><a href="{{ url_for('ver_libro', libro_id=libro.id) }}"><button>Abrir</button></a></td>
+                            <td><form action="{{ url_for('eliminar_libro', libro_id=libro.id) }}" method="post"><button type="submit" class="td-eliminar-libros">Eliminar</button></form></td>
                         </tr>
-                        <tr>
-                            <td>Aritmetica basica</td>
-                            <td>Matematicas</td>
-                            <td><a href="/profesor/refuerzo/libros/nombre_libro"><button>abrir</button></a></td>
-                            <td><button class="td-eliminar-libros">Eliminar</button></td>
-                        </tr>
-                        <tr>
-                            <td>Verb to be</td>
-                            <td>Ingles</td>
-                            <td><a href="/profesor/refuerzo/libros/nombre_libro"><button>abrir</button></a></td>
-                            <td><button class="td-eliminar-libros">Eliminar</button></td>
-                        </tr>
-                        <tr>
-                            <td>El cuerpo humano</td>
-                            <td>Biologia</td>
-                            <td><a href="/profesor/refuerzo/libros/nombre_libro"><button>abrir</button></a></td>
-                            <td><button class="td-eliminar-libros">Eliminar</button></td>
-                        </tr>
-                        <tr>
-                            <td>Historia del ajedrez</td>
-                            <td>Educaci&oacute;n fisica</td>
-                            <td><a href="/profesor/refuerzo/libros/nombre_libro"><button>abrir</button></a></td>
-                            <td><button class="td-eliminar-libros">Eliminar</button></td>
-                        </tr>
+                        {% endfor %}
                     </table>
                 </article>
             </section>

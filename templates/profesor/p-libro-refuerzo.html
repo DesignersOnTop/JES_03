@@ -36,11 +36,12 @@
                 <div class="cabecera-agg-refuerzo cabecera-libro">
                     <div class="cabecera-flex">
                         <a href="/profesor/refuerzo/libros/" class="regresar-libro-video">Regresar</a>
-                        <h1 class="titulo-refuerzo titulo-libro">Don quijote</h1>
-                    </div>                    
+                        <h1 class="titulo-refuerzo titulo-libro">{{ libro['titulo'] }}</h1>
+                    </div>
                 </div>
                 <article class="libros-refuerzo libros-refuerzo-iframe">
-                    <iframe src="{{ url_for('static', filename='ejemplo-espanol.pdf') }}" frameborder="1"></iframe>
+                   
+                    <iframe src="{{ url_for('static/documentos', filename=archivo) }}" frameborder="1"></iframe>
                 </article>
             </section>
         </main>

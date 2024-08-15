@@ -18,12 +18,16 @@ app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'jes'
 
 # Carpeta para subir los archivos, fotos, pdf, etc.
-UPLOAD_FOLDER = os.path.join('static', 'documentos')
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
-# Crear la carpeta si no existe
+UPLOAD_FOLDER = '/static/documentos'  # Cambia esto si es necesario
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
+
+# Configurar la carpeta de carga
+app.config['UPLOAD_FOLDER'] = os.path.join(app.root_path, 'static', 'documentos')
+
+# Crear la carpeta si no existe
+if not os.path.exists(app.config['UPLOAD_FOLDER']):
+    os.makedirs(app.config['UPLOAD_FOLDER'])
 #-----------------------------------------------------
 
 @app.route('/')
@@ -828,9 +832,74 @@ def p_perfil():
 def p_refuerzo_libros():
     return render_template('./profesor/p-refuerzo-libros.html')
 
+@app.route('/profesor/refuerzo/libros/')
+def p_refuerzo_libro():
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
+    cursor.execute('SELECT * FROM libros')
+    libros = cursor.fetchall()
+    cursor.close()
+    
+    return render_template('./profesor/p-refuerzo-libros.html', libros=libros)
+
+@app.route('/eliminar/libro/<int:libro_id>', methods=['POST'])
+def eliminar_libro(libro_id):
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor()
+    # Obtener el nombre del archivo asociado al libro
+    cursor.execute('SELECT libro FROM libros WHERE id = %s', (libro_id,))
+    libro = cursor.fetchone()
+    
+    # Eliminar el archivo del sistema de archivos si existe
+    if libro and libro['libro']:
+        libro_path = os.path.join(app.config['UPLOAD_FOLDER'], libro['libro'])
+        if os.path.exists(libro_path):
+            os.remove(libro_path)
+    
+    # Eliminar el registro de la base de datos
+    cursor.execute('DELETE FROM libros WHERE id = %s', (libro_id,))
+    connection.commit()
+    cursor.close()
+    
+    return redirect('/profesor/refuerzo/libros/')
+
+
 @app.route('/profesor/refuerzo/libros/nombre_libro')
 def p_libro_refuerzo():
     return render_template('./profesor/p-libro-refuerzo.html')
+
+@app.route('/ver/libro/<int:libro_id>')
+def ver_libro(libro_id):
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
+    cursor.execute('SELECT * FROM libros WHERE id = %s', (libro_id,))
+    libro = cursor.fetchone()
+    cursor.close()
+
+    if libro:
+        # Asegúrate de que `libro` tenga un campo para el archivo, como `libro`
+        archivo = libro.get('subir_libro')
+        return render_template('p-libro-refuerzo.html', libro=libro, archivo=archivo)
+    else:
+        return 'Libro no encontrado', 404
 
 @app.route('/profesor/refuerzo/videos/')
 def p_refuerzo_videos():
@@ -840,67 +909,97 @@ def p_refuerzo_videos():
 def agregar_libro():
     return render_template('/profesor/p-agregar-libro.html')
 
-@app.route('/agregar/libro/', methods=['GET','POST'])
+@app.route('/profesor/agregar/libros/', methods=['GET', 'POST'])
 def p_agregar_libro():
-    _portada = request.files['portada_libro'].filename
-    _titulo = request.form['titulo-libro']
-    _materia = request.form['materia-libro']
-    _subir = request.files['subir-libro'].filename
-    
-    tiempo = datetime.now()
-    horaActual = tiempo.strftime('%Y%H%M%S')
-    
-    if _subir.filename!= " ":
-        nuevoNombre = horaActual+ "_" + _subir.filename
-        _subir.save('static/documentos/'+nuevoNombre)
+    if request.method == 'POST':
+        # Obtener el archivo de portada del formulario
+        portada = request.files.get('portada_libro')
         
-    sql = 'INSERT INTO `libros` (`id`,`portada`, `titulo`, `id_asignatura`, `libro`, `id_curso_seccion`) VALUES (NULL, %s, %s, %s, %s, 2)'
+        # Obtener los datos del libro del formulario
+        titulo = request.form.get('titulo-libro')
+        materia = request.form.get('materia-libro')
+        
+        # Obtener el archivo del libro del formulario
+        libro = request.files.get('subir-libro')
+        
+        # Procesar el archivo de portada
+        portada_nombre = portada.filename if portada and portada.filename else None
+
+        # Procesar el archivo del libro
+        if libro and libro.filename:
+            tiempo = datetime.now()
+            horaActual = tiempo.strftime('%Y%H%M%S')
+            nuevoNombre = horaActual + "_" + libro.filename
+            libro.save(os.path.join(app.config['UPLOAD_FOLDER'], nuevoNombre))
+        else:
+            nuevoNombre = None
+        
+        # Valores de asignación y curso
+        id_asignatura = 2408
+        id_curso = 1
+        
+        # SQL para insertar el nuevo libro en la base de datos
+        sql = '''
+        INSERT INTO libros (id_asignatura, id_curso, titulo, subir_libro, portada)
+        VALUES (%s, %s, %s, %s, %s)
+        '''
+        datos = (id_asignatura, id_curso, titulo, nuevoNombre, portada_nombre)
+        
+        try:
+            # Conectar a la base de datos
+            connection = pymysql.connect(
+                host='localhost',
+                user='root',
+                password='',
+                database='jes'
+            )
+            cursor = connection.cursor()
+            
+            # Ejecutar la consulta SQL
+            cursor.execute(sql, datos)
+            connection.commit()  # Confirmar los cambios en la base de datos
+            print("Datos guardados en la base de datos.")
+        except pymysql.MySQLError as e:
+            print(f"Error en la base de datos: {e}")
+            connection.rollback()  # Deshacer los cambios en caso de error
+        finally:
+            cursor.close()  # Cerrar el cursor
+            connection.close()  # Cerrar la conexión a la base de datos
+        
+        # Redirigir a la página de libros después de guardar
+        return redirect('/profesor/refuerzo/libros/')
     
-    datos = (_portada, _titulo, _materia, _subir)
-    
-    connection = pymysql.connect(
-        host='localhost',
-        user='root',
-        password='',
-        database='jes'
-    )
-    
-    cursor = connection.cursor(pymysql.cursors.DictCursor)
-    cursor.execute(sql,datos)
-    
-    connection.commit()
-    cursor.close()
-    
-    return redirect('/profesor/refuerzo/libros/')
+    # Renderizar la plantilla del formulario cuando se accede con GET
+    return render_template('p-agregar-libro.html')
 
 @app.route('/profesor/agregar/video/')
 def p_agregar():
     return render_template('./profesor/p-agregar-video.html')
 
-@app.route('/agregar/video/profesor/', methods=['POST'])
+@app.route('/profesor/agregar/video', methods=['GET', 'POST'])
 def p_agregar_video():
-    _titulo = request.form['titulo-video']
-    _materia = request.form['materia-video']
-    _insertar = request.form['insertar-video']
-    
-    sql = 'INSERT INTO `videos` (`id`, `titulo`, `id_seccion_curso`, `id_asignatura`, `video`) VALUES (NULL, %s, %s, %s, 2)'
-    
-    datos = (_titulo, _materia, _insertar)
-    
-    connection = pymysql.connect(
-        host='localhost',
-        user='root',
-        password='',
-        database='jes'
-    )
-    
-    cursor = connection.cursor(pymysql.cursors.DictCursor)
-    cursor.execute(sql,datos)
-    
-    connection.commit()
-    cursor.close()
-    
-    return redirect('/profesor/refuerzo/videos/')
+    if request.method == 'POST':
+        _titulo = request.form['titulo-video']
+        _materia = request.form['materia-video']
+        _insertar = request.form['insertar-video']
+        
+        sql = 'INSERT INTO videos (titulo, id_seccion_curso, id_asignatura, video) VALUES (%s, 2, %s, %s)'
+        datos = (_titulo, _materia, _insertar)
+        
+        connection = pymysql.connect(
+            host='localhost',
+            user='root',
+            password='',
+            database='jes'
+        )
+        
+        cursor = connection.cursor(pymysql.cursors.DictCursor)
+        cursor.execute(sql, datos)
+        connection.commit()
+        cursor.close()
+        
+        return redirect(url_for('p_refuerzo_videos'))
+    return render_template('./profesor/p-agregar-video.html')
     
 
 @app.route('/profesor/materiales/')
@@ -911,31 +1010,36 @@ def p_material_estudio():
 def p_agregar_material():
     return render_template('./profesor/p-agregar-material.html')
 
-@app.route('/agregar_material', methods=['POST'])
+@app.route('/profesor/agregar/material', methods=['GET', 'POST'])
 def agregar_material():
-    fondo_material = request.files['fondo-material']
-    nombre_material = request.form['nombre-material']
-    recurso_de_estudio = request.files['recurso-de-estudio']
-    descripcion_material = request.form['descripcion-material']
+    if request.method == 'POST':
+        fondo_material = request.files['fondo-material']
+        nombre_material = request.form['nombre-material']
+        recurso_de_estudio = request.files['recurso-de-estudio']
+        descripcion_material = request.form['descripcion-material']
 
-    sql = "INSERT INTO material_estudio (id_curso, id_asignatura, titulo, fondo, material, descripcion) VALUES (%s, %s, %s, %s, %s, %s)"
+        tiempo = datetime.now()
+        horaActual = tiempo.strftime('%Y%H%M%S')
+        nombreArchivo = horaActual + "_" + secure_filename(recurso_de_estudio.filename)
+        recurso_de_estudio.save(os.path.join(app.config['UPLOAD_FOLDER'], nombreArchivo))
+        
+        sql = "INSERT INTO material_estudio (id_curso, id_asignatura, titulo, fondo, material, descripcion) VALUES (2, %s, %s, %s, %s, %s)"
+        datos = (nombre_material, secure_filename(fondo_material.filename), nombreArchivo, descripcion_material)
+        
+        connection = pymysql.connect(
+            host='localhost',
+            user='root',
+            password='',
+            database='jes'
+        )
+        
+        cursor = connection.cursor(pymysql.cursors.DictCursor)
+        cursor.execute(sql, datos)
+        connection.commit()
+        cursor.close()
 
-    datos = (nombre_material, fondo_material, recurso_de_estudio, descripcion_material)
-    
-    connection = pymysql.connect(
-        host='localhost',
-        user='root',
-        password='',
-        database='jes'
-    )
-    
-    cursor = connection.cursor(pymysql.cursors.DictCursor)
-    cursor.execute(sql,datos)
-    
-    connection.commit()
-    cursor.close()
-
-    return redirect('./profesor/p-material_estudio.html')
+        return redirect(url_for('p_material_estudio'))
+    return render_template('./profesor/p-agregar-material.html')
 
 @app.route('/profesor/recurso/estudio/')
 def p_recurso_estudio():
@@ -963,9 +1067,16 @@ def reporte():
     archivo_calificacion_nombre = request.files['archivo-calificacion']
     descripcion_material = request.form['descripcion-material']
 
+    tiempo = datetime.now()
+    horaActual = tiempo.strftime('%Y%H%M%S')
+    nombreArchivoAsistencia = horaActual + "_" + secure_filename(archivo_asistencia_nombre.filename)
+    nombreArchivoCalificacion = horaActual + "_" + secure_filename(archivo_calificacion_nombre.filename)
+    
+    archivo_asistencia_nombre.save(os.path.join(app.config['UPLOAD_FOLDER'], nombreArchivoAsistencia))
+    archivo_calificacion_nombre.save(os.path.join(app.config['UPLOAD_FOLDER'], nombreArchivoCalificacion))
+    
     sql = "INSERT INTO materiales (asistencia, calificacion, descripcion) VALUES (%s, %s, %s)"
-
-    datos = (archivo_asistencia_nombre, archivo_calificacion_nombre, descripcion_material)
+    datos = (nombreArchivoAsistencia, nombreArchivoCalificacion, descripcion_material)
     
     connection = pymysql.connect(
         host='localhost',
@@ -976,12 +1087,10 @@ def reporte():
     
     cursor = connection.cursor(pymysql.cursors.DictCursor)
     cursor.execute(sql, datos)
-    
     connection.commit()
     cursor.close()
 
-    return redirect('./profesor/p-home-a.html')
-
+    return redirect(url_for('p_report_a'))
 @app.route('/profesor/perfil/estudiante/')
 def p_perfil_e():
     return render_template('./profesor/p-perfil-e.html')
