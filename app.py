@@ -28,6 +28,9 @@ app.config['UPLOAD_FOLDER'] = os.path.join(app.root_path, 'static', 'documentos'
 # Crear la carpeta si no existe
 if not os.path.exists(app.config['UPLOAD_FOLDER']):
     os.makedirs(app.config['UPLOAD_FOLDER'])
+    
+# Definir los ID de asignaturas en Python
+ASIGNATURAS = [2401, 2402, 2403, 2404, 2405, 2406, 2407, 2408, 2409]
 #-----------------------------------------------------
 
 @app.route('/')
@@ -872,7 +875,7 @@ def p_refuerzo_libros():
     return render_template('./profesor/p-refuerzo-libros.html')
 
 @app.route('/profesor/refuerzo/libros/')
-def p_refuerzo_libro():
+def lista_libro():
     connection = pymysql.connect(
         host='localhost',
         user='root',
@@ -885,7 +888,7 @@ def p_refuerzo_libro():
     libros = cursor.fetchall()
     cursor.close()
     
-    return render_template('./profesor/p-refuerzo-libros.html', libros=libros)
+    return render_template('p-refuerzo-libros.html', libros=libros)
 
 @app.route('/eliminar/libro/<int:libro_id>', methods=['POST'])
 def eliminar_libro(libro_id):
@@ -951,20 +954,14 @@ def agregar_libro():
 @app.route('/profesor/agregar/libros/', methods=['GET', 'POST'])
 def p_agregar_libro():
     if request.method == 'POST':
-        # Obtener el archivo de portada del formulario
         portada = request.files.get('portada_libro')
-        
-        # Obtener los datos del libro del formulario
         titulo = request.form.get('titulo-libro')
-        materia = request.form.get('materia-libro')
-        
-        # Obtener el archivo del libro del formulario
         libro = request.files.get('subir-libro')
         
-        # Procesar el archivo de portada
+        # Procesar portada
         portada_nombre = portada.filename if portada and portada.filename else None
-
-        # Procesar el archivo del libro
+        
+        # Procesar archivo del libro
         if libro and libro.filename:
             tiempo = datetime.now()
             horaActual = tiempo.strftime('%Y%H%M%S')
@@ -973,44 +970,39 @@ def p_agregar_libro():
         else:
             nuevoNombre = None
         
-        # Valores de asignación y curso
-        id_asignatura = 2408
-        id_curso = 1
+        id_curso = 1  # Asumimos que el curso es fijo
         
-        # SQL para insertar el nuevo libro en la base de datos
-        sql = '''
-        INSERT INTO libros (id_asignatura, id_curso, titulo, subir_libro, portada)
-        VALUES (%s, %s, %s, %s, %s)
-        '''
-        datos = (id_asignatura, id_curso, titulo, nuevoNombre, portada_nombre)
+        # Usar la lista de asignaturas predefinidas
+        asignaturas = ASIGNATURAS
+        
+        # Insertar en la base de datos para cada asignatura en la lista
+        connection = pymysql.connect(
+            host='localhost',
+            user='root',
+            password='',
+            database='jes'
+        )
+        cursor = connection.cursor(pymysql.cursors.DictCursor)
         
         try:
-            # Conectar a la base de datos
-            connection = pymysql.connect(
-                host='localhost',
-                user='root',
-                password='',
-                database='jes'
-            )
-            cursor = connection.cursor()
-            
-            # Ejecutar la consulta SQL
-            cursor.execute(sql, datos)
-            connection.commit()  # Confirmar los cambios en la base de datos
-            print("Datos guardados en la base de datos.")
-        except pymysql.MySQLError as e:
-            print(f"Error en la base de datos: {e}")
-            connection.rollback()  # Deshacer los cambios en caso de error
+            sql = '''
+            INSERT INTO libros (id_asignatura, id_curso, titulo, subir_libro, portada)
+            VALUES (%s, %s, %s, %s, %s)
+            '''
+            for id_asignatura in asignaturas:
+                datos = (id_asignatura, id_curso, titulo, nuevoNombre, portada_nombre)
+                cursor.execute(sql, datos)
+            connection.commit()
+        except Exception as e:
+            print(f"Error: {e}")
+            connection.rollback()
         finally:
-            cursor.close()  # Cerrar el cursor
-            connection.close()  # Cerrar la conexión a la base de datos
+            cursor.close()
+            connection.close()
         
-        # Redirigir a la página de libros después de guardar
         return redirect('/profesor/refuerzo/libros/')
     
-    # Renderizar la plantilla del formulario cuando se accede con GET
     return render_template('p-agregar-libro.html')
-
 @app.route('/profesor/agregar/video/')
 def p_agregar():
     return render_template('./profesor/p-agregar-video.html')
@@ -1077,7 +1069,7 @@ def agregar_material():
         connection.commit()
         cursor.close()
 
-        return redirect(url_for('p_material_estudio'))
+        return redirect(url_for('p-refuerzo-libros'))
     return render_template('./profesor/p-agregar-material.html')
 
 @app.route('/profesor/recurso/estudio/')
