@@ -45,36 +45,26 @@
                 </div>
                 <article class="libros-refuerzo videos-refuerzo">
                     <table>
-                        <tr>
-                            <th>Titulo</th>
-                            <th>Materia</th>
-                            <th>fuente|link</th>                      
-                        </tr>
-                        <tr>
-                            <td>Don quijote</td>
-                            <td>Lengua Española</td>
-                            <td><a href="https://www.youtube.com/watch?v=ir6A-Ns5Em8" target="_blank"><button>link</button></a></td>
-                            <td><button class="td-eliminar-libros">Eliminar</button></td>
-                        </tr>
-                        <tr>
-                            <td>Aritmetica basica</td>
-                            <td>Matematicas</td>
-                            <td><a href="https://www.youtube.com/watch?v=ir6A-Ns5Em8" target="_blank"><button>link</button></a></td>
-                            <td><button class="td-eliminar-libros">Eliminar</button></td>
-                        </tr>
-                        <tr>
-                            <td>Verb to be</td>
-                            <td>Ingles</td>
-                            <td><a href="https://www.youtube.com/watch?v=ir6A-Ns5Em8" target="_blank"><button>link</button></a></td>
-                            <td><button class="td-eliminar-libros">Eliminar</button></td>
-                        </tr>
-                        <tr>
-                            <td>El cuerpo humano</td>
-                            <td>Biologia</td>
-                            <td><a href="https://www.youtube.com/watch?v=ir6A-Ns5Em8" target="_blank"><button>link</button></a></td>
-                            <td><button class="td-eliminar-libros">Eliminar</button></td>
-                        </tr>
-                    </table>
+                        <thead>
+                            <tr>
+                                <th>Título</th>
+                                <th>Materia</th>
+                                <th>Fuente/Link</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for video in videos %}
+                            <tr>
+                                <td>{{ video.titulo }}</td>
+                                <td>{{ video.id_asignatura }}</td>
+                                <td><a href="{{ video.url }}" target="_blank"><button>Link</button></a></td>
+                                <td>
+                                    <form action="/profesor/eliminar/video/{{ video.id_video }}" method="post" style="display:inline;">
+                                        <button type="submit">Eliminar</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
                 </article>
             </section><td>
         </main>

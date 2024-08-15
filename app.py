@@ -947,6 +947,47 @@ def ver_libro(libro_id):
 def p_refuerzo_videos():
     return render_template('./profesor/p-refuerzo-videos.html')
 
+@app.route('/profesor/refuerzo/videos/')
+def mostrar_videos():
+    sql = 'SELECT * FROM videos'
+    
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
+    cursor.execute(sql)
+    videos = cursor.fetchall()
+    cursor.close()
+    connection.close()
+    
+    return render_template('p-refuerzo-videos.html', videos=videos)
+
+@app.route('/eliminar/video/<int:id>', methods=['POST'])
+def eliminar_video(id):
+    sql = 'DELETE FROM videos WHERE id = %s'
+    
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    cursor = connection.cursor()
+    try:
+        cursor.execute(sql, (id,))
+        connection.commit()
+    except Exception as e:
+        print(f"Error: {e}")
+        connection.rollback()
+    finally:
+        cursor.close()
+        connection.close()
+    
+    return redirect('/profesor/refuerzo/videos/')
+
 @app.route('/profesor/agregar/libros/')
 def agregar_libro():
     return render_template('/profesor/p-agregar-libro.html')
@@ -1007,15 +1048,21 @@ def p_agregar_libro():
 def p_agregar():
     return render_template('./profesor/p-agregar-video.html')
 
-@app.route('/profesor/agregar/video', methods=['GET', 'POST'])
-def p_agregar_video():
+@app.route('/agregar/video/profesor/', methods=['POST'])
+def agregar_video():
     if request.method == 'POST':
-        _titulo = request.form['titulo-video']
-        _materia = request.form['materia-video']
-        _insertar = request.form['insertar-video']
+        titulo = request.form['titulo-video']
+        materia = request.form['materia-video']
+        url_video = request.form['insertar-video']
         
-        sql = 'INSERT INTO videos (titulo, id_seccion_curso, id_asignatura, video) VALUES (%s, 2, %s, %s)'
-        datos = (_titulo, _materia, _insertar)
+        id_asignatura = 2401  # Cambia esto si necesitas un valor dinámico
+        id_curso = 1  # Cambia esto si necesitas un valor dinámico
+
+        sql = '''
+        INSERT INTO videos (titulo, id_curso, id_asignatura, video)
+        VALUES (%s, %s, %s, %s)
+        '''
+        datos = (titulo, id_curso, id_asignatura, url_video)
         
         connection = pymysql.connect(
             host='localhost',
@@ -1023,15 +1070,18 @@ def p_agregar_video():
             password='',
             database='jes'
         )
+        cursor = connection.cursor()
+        try:
+            cursor.execute(sql, datos)
+            connection.commit()
+        except Exception as e:
+            print(f"Error: {e}")
+            connection.rollback()
+        finally:
+            cursor.close()
+            connection.close()
         
-        cursor = connection.cursor(pymysql.cursors.DictCursor)
-        cursor.execute(sql, datos)
-        connection.commit()
-        cursor.close()
-        
-        return redirect(url_for('p_refuerzo_videos'))
-    return render_template('./profesor/p-agregar-video.html')
-    
+        return redirect('/profesor/refuerzo/videos/')
 
 @app.route('/profesor/materiales/')
 def p_material_estudio():
