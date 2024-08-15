@@ -508,7 +508,8 @@ header {
 
 .tabla-horario {
     width: 100%;
-    min-height: 330px;
+    min-height: fit-content;
+    max-height: 330px;
     background-color: #00000025;
     backdrop-filter: blur(10px);
     box-shadow: 0 4px 8px #0005;
@@ -2677,6 +2678,16 @@ textarea.editable {
     bottom: 0;
 }
 
+/* tabla admin */
+.tabla-admin {
+    min-height: 240px;
+}
+
+
+.tabla-admin table {
+    min-height: fit-content;
+    max-height: 330px;
+}
 
 /* Movil */
 

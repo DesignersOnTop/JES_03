@@ -112,18 +112,57 @@ def home_estudiante():
             calificaciones.id_estudiante = %s
     """, (estudiante_id,))
     calificaciones = cursor.fetchall()
-
-    # horario estudiante
-    cursor.execute("SELECT * FROM horario WHERE id_estudiante = %s", (estudiante_id,))
-    horarios = cursor.fetchall()
-
+    
     # asistencias estudiante
-    cursor.execute("SELECT * FROM asistencias WHERE id_estudiante = %s", (estudiante_id,))
+    cursor.execute("SELECT Sect_Oct, Nov_Dic, Ene_Feb, Marz_Abril, May_Jun, Total_de_asistencias FROM asistencias WHERE id_estudiante = %s", (estudiante_id,))
+
     asistencias = cursor.fetchall()
+
+    # Inicializar contadores para las asistencias y los días de clase
+    total_asistencias = 0
+    total_periodos = 0
+    total_registros = len(asistencias)
+
+    # Sumar todas las asistencias y los días de clase
+    for asistencia in asistencias:
+        total_asistencias += (
+            int(asistencia['Sect_Oct']) +
+            int(asistencia['Nov_Dic']) +
+            int(asistencia['Ene_Feb']) +
+            int(asistencia['Marz_Abril']) +
+            int(asistencia['May_Jun'])
+        )
+        total_periodos += 5 * int(asistencia['Total_de_asistencias'])
+
+    # Calcular el porcentaje de asistencia
+    if total_periodos > 0:
+        porcentaje_asistencia = (total_asistencias / total_periodos) * 100
+    else:
+        porcentaje_asistencia = 0
+    
+    # horario estudiante
+    sql = ("SELECT h.hora, d.dia, a.nom_asignatura  FROM horario AS hor JOIN hora AS h ON hor.id_hora = h.id_hora JOIN dias AS d ON hor.id_dias = d.id_dias JOIN asignaturas AS a ON hor.id_asignatura = a.id_asignatura JOIN estudiantes AS e ON hor.id_curso = e.id_curso WHERE e.id_estudiante = %s ORDER BY h.id_hora, d.id_dias")
+    
+    cursor.execute(sql,estudiante_id)
+    
+    horarios = cursor.fetchall()
+    
+    horario_por_hora = {}
+
+    for horario in horarios:
+        hora = horario['hora']
+        dia = horario['dia']
+        asignatura = horario['nom_asignatura']
+        
+        if hora not in horario_por_hora:
+            horario_por_hora[hora] = {"Lunes": "", "Martes": "", "Miércoles": "", "Jueves": "", "Viernes": ""}
+        
+        horario_por_hora[hora][dia] = asignatura
+
 
     cursor.close()
 
-    return render_template('estudiante/e-home.html', calificaciones=calificaciones, horarios=horarios, asistencias=asistencias, estudiante=estudiante)
+    return render_template('estudiante/e-home.html', calificaciones=calificaciones, horario_por_hora=horario_por_hora, porcentaje=porcentaje_asistencia, estudiante=estudiante)
 
 
 @app.route('/estudiante/perfil/')

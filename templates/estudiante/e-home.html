@@ -41,7 +41,7 @@
                     <circle class="background-circular" cx="16.92" cy="16.92" r="15.92"></circle>
                     <circle class="progreso-circular" cx="16.92" cy="16.92" r="15.92"></circle>
                 </svg>
-                <span class="porcentaje">90%</span>
+                <span class="porcentaje">{{ porcentaje }}%</span>
             </div>
             <div class="asistencia-h">
                 <h3>Asistencia</h3>
@@ -123,54 +123,16 @@
                             <th>Jueves</th>
                             <th>Viernes</th>
                         </tr>
+                        {% for hora, dias in horario_por_hora.items() %}
                         <tr>
-                            <td>7:00</td>
-                            <td>Matemáticas</td>
-                            <td>L. Española</td>
-                            <td>Naturales</td>
-                            <td>Sociales</td>
-                            <td>Artes</td>
+                            <td>{{ hora }}</td>
+                            <td>{{ dias['Lunes'] }}</td>
+                            <td>{{ dias['Martes'] }}</td>
+                            <td>{{ dias['Miércoles'] }}</td>
+                            <td>{{ dias['Jueves'] }}</td>
+                            <td>{{ dias['Viernes'] }}</td>
                         </tr>
-                        <tr>
-                            <td>8:00</td>
-                            <td>Sociales</td>
-                            <td>Artes</td>
-                            <td>Ed. Física</td>
-                            <td>Matemáticas</td>
-                            <td>Naturales</td>
-                        </tr>
-                        <tr>
-                            <td>9:00</td>
-                            <td>RE</td>
-                            <td>C</td>
-                            <td>R</td>
-                            <td>E</td>
-                            <td>O</td>
-                        </tr>
-                        <tr>
-                            <td>10:00</td>
-                            <td>Inglés</td>
-                            <td>Religión</td>
-                            <td>Inglés</td>
-                            <td>Informática</td>
-                            <td>Sociales</td>
-                        </tr>
-                        <tr>
-                            <td>11:00</td>
-                            <td>Informática</td>
-                            <td>Matemáticas</td>
-                            <td>Sociales</td>
-                            <td>Ed. Física</td>
-                            <td>L. Española</td>
-                        </tr>
-                        <tr>
-                            <td>12:00</td>
-                            <td>Religión</td>
-                            <td>Sociales</td>
-                            <td>Artes</td>
-                            <td>Inglés</td>
-                            <td>Matemáticas</td>
-                        </tr>
+                        {% endfor %}
                     </table>
                 </div>
             </article>
