@@ -73,8 +73,8 @@
                                     <td>{{ profesor.id_profesor }}</td>
                                     <td>{{ profesor.nombre }}</td>
                                     <td>{{ profesor.apellido }}</td>
-                                    <td>{{ profesor.id_asignatura }}</td>
-                                    <td class="ver-estudiante-p"><a href="/admin/reportes-profesor/" class="ver-recurso"><figure><img src="{{ url_for('static', filename='imagenes/iconos/angle-small-right.svg') }}" alt="ver-estudiante"></figure></a></td>
+                                    <td>{{ profesor.nom_asignatura }}</td>
+                                    <td class="ver-estudiante-p"><a href="/admin/reportes-profesor/{{ profesor.id_profesor }}" class="ver-recurso"><figure><img src="{{ url_for('static', filename='imagenes/iconos/angle-small-right.svg') }}" alt="ver-estudiante"></figure></a></td>
                                 </tr>
                                 {% endfor %}
                             </table>

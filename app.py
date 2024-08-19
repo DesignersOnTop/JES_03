@@ -548,29 +548,33 @@ def a_materias():
 def a_asignar_profesores():
     return render_template('./admin/a-agregar-profesor-cursos.html')
 
-@app.route('/admin/agregar-materias')
+@app.route('/admin/agregar_materias/')
 def a_agg_materias():
     return render_template('./admin/a-agg-materias.html')
 
-@app.route('/admin/subir_materia', methods = ['POST'])
+@app.route('/admin/subir_materia/', methods = ['POST'])
 def subir_materia():
-    nom_asignatura = request.form["nom_asignatura"]
-
+    connection = pymysql.connect(
+            host='localhost',
+            user='root',
+            password='',
+            database='jes'
+        )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
+    
+    nom_asignatura = request.form.get("nom_asignatura")
+    
     datos = (nom_asignatura)
     
     sql = '''INSERT INTO `asignaturas` (`id_asignatura`, `nom_asignatura`) VALUES (NULL, %s,)'''
-
-    connection = pymysql.connect(
-        host='localhost',
-        user='root',
-        password='',
-        database='jes'
-    )
     
-    cursor = connection.cursor(pymysql.cursors.DictCursor)
     cursor.execute(sql,datos)
     connection.commit()
+
     cursor.close()
+    connection.close()
+
     return redirect('/admin/materias/')
 
 @app.route('/admin/eliminar_materia/<int:id_asignatura>', methods = ['POST'])
@@ -585,6 +589,7 @@ def eliminar_materia(id_asignatura):
     cursor = connection.cursor(pymysql.cursors.DictCursor)
 
     cursor.execute('DELETE FROM asignaturas WHERE id_asignatura = %s', (id_asignatura))
+    connection.commit()
 
     return redirect('/admin/materias/')
 
@@ -599,7 +604,7 @@ def a_reportes():
     
     cursor = connection.cursor(pymysql.cursors.DictCursor)
 
-    cursor.execute('SELECT * FROM profesores')
+    cursor.execute('SELECT * FROM profesores JOIN asignaturas on asignaturas.id_asignatura = profesores.id_asignatura')
     profesores = cursor.fetchall()
 
     cursor.close()
@@ -607,8 +612,8 @@ def a_reportes():
 
     return render_template('./admin/a-reporte-curso.html', profesores=profesores)
 
-@app.route('/admin/reportes-profesor/')
-def a_reporte_profesor():
+@app.route('/admin/reportes-profesor/<int:id_profesor_asignado>')
+def a_reporte_profesor(id_profesor_asignado):
     connection = pymysql.connect(
         host='localhost',
         user='root',
@@ -618,12 +623,19 @@ def a_reporte_profesor():
 
     cursor = connection.cursor(pymysql.cursors.DictCursor)
 
-    cursor.execute('SELECT * FROM reporte_profesor WHERE id_profesor-asignado = %s')
+    sql_reporte = ('SELECT * FROM reporte_profesor WHERE id_profesor_asignado = %s')
+
+    cursor.execute(sql_reporte, (id_profesor_asignado,))
+    reportes = cursor.fetchall()
+
+    sql_profesor = ('SELECT * FROM profesores WHERE id_profesor = %s')
+    cursor.execute(sql_profesor, (id_profesor_asignado,))
+    profesor = cursor.fetchone()
 
     connection.close()
     cursor.close()
     
-    return render_template('./admin/a-reporte-profesor.html')
+    return render_template('./admin/a-reporte-profesor.html', reportes=reportes, profesor=profesor)
 
 @app.route('/admin/perfil/')
 def a_perfil():
@@ -646,6 +658,18 @@ def a_perfil():
 
 @app.route('/admin/reportes-calificacion/')
 def a_reporte_calificaciones():
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
+
+    connection.close()
+    cursor.close()
+
     return render_template('./admin/a-calificaciones-reporte.html')
 
 @app.route('/admin/reportes-asistencias/')
@@ -704,7 +728,7 @@ def agregar_estudiante():
     connection.commit()
     cursor.close()
 
-    return redirect('/admin/curso/')
+    return redirect('/home/admin/')
 
 @app.route('/editar_estudiante/<int:id>', methods=['GET'])
 def editar_estudiante(id):
@@ -911,7 +935,7 @@ def eliminar_profesores():
 
 @app.route('/admin/profesores/')
 def a_cursos_profesor():
-    sql = 'SELECT id_profesor, nombre, apellido, cedula, id_asignatura FROM profesores'
+    sql = 'SELECT * FROM profesores JOIN asignaturas on asignaturas.id_asignatura = profesores.id_asignatura'
 
     connection = pymysql.connect(
         host='localhost',
@@ -1263,7 +1287,7 @@ def reporte():
             calificacion_path = None
 
         sql = '''
-        INSERT INTO reporte_profesor ( id_profesor-asignado, asistencia, calificaciones)
+        INSERT INTO reporte_profesor ( id_profesor_asignado, asistencia, calificaciones)
         VALUES (%s, %s, %s)
         '''
         datos = (id_profesor_asignado, asistencia_path, calificacion_path)
