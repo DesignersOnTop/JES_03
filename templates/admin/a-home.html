@@ -39,13 +39,13 @@
                     </a>
                 </article>
                 <article class="material-container">
-                    <a href="/admin/materias">
+                    <a href="/admin/materias/">
                         <figure class="material-figure"><img src="{{ url_for('static', filename='imagenes/iconos/capas.svg') }}" alt="perfil-estudiante"></figure>
-                        <h2>Materias</h2>                        
+                        <h2>Asignaturas</h2>                        
                     </a>
                 </article>
                 <article class="calendario-container">
-                    <a href="/admin/reportes">
+                    <a href="/admin/reportes/">
                         <h2>Reportes de los cursos</h2> 
                         <figure><img src="{{ url_for('static', filename='imagenes/iconos/calendario-reloj.svg') }}" alt="recordatorio"></figure>
                     </a>
@@ -59,7 +59,7 @@
                 <div class="ca-ho-scroll">
                     <article class="tabla-centrar tabla-calificacion-centrar">                        
                         <div class="cabecera-tabla-estudiantes-a cabecera-profesor-a">
-                            <a href="#" class="agg-es-pro">Agregar</a>
+                            <a href="/admin/registro/estudiante/" class="agg-es-pro">Agregar</a>
                             <form action="#">
                                 <input type="search" id="buscar-estudiantes" placeholder="Buscar estudiante...">
                             </form>
@@ -84,7 +84,7 @@
                                         <td>{{ estudiante.nombre }}</td>
                                         <td>{{ estudiante.apellidos }}</td>
                                         <td>{{ estudiante.fecha_nacimiento }}</td>
-                                        <td>{{ estudiante.id_curso }}</td>
+                                        <td>{{ estudiante.nombre_curso }}</td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>
@@ -93,7 +93,7 @@
                     </article>
                     <article class="tabla-centrar tabla-horario-centrar">
                         <div class="cabecera-tabla-estudiantes-a cabecera-profesor-a">
-                            <a href="#" class="agg-es-pro">Agregar</a>
+                            <a href="/admin/registro/profesor/" class="agg-es-pro">Agregar</a>
                             <form action="#">
                                 <input type="search" id="buscar-profesores" placeholder="Buscar profesor...">
                             </form>
@@ -118,7 +118,7 @@
                                         <td>{{ profesor.nombre }}</td>
                                         <td>{{ profesor.apellido }}</td>
                                         <td>{{ profesor.cedula }}</td>
-                                        <td>{{ profesor.id_asignatura }}</td>
+                                        <td>{{ profesor.nom_asignatura }}</td>
                                     </tr>
                                     {% endfor %}                                
                                 </tbody>

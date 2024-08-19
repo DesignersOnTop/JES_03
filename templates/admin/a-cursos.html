@@ -58,7 +58,7 @@
                                 <img src="{{ url_for('static', filename='imagenes/recursos/Auditorio-img-fondo.jpg') }}" alt="imagen-fondo-estudio">
                             </figure>
                             <div class="link-material">
-                                <a href="/admin/curso/">Entrar</a>                         
+                                <a href="{{ url_for('mostrar_estudiantes', id_curso=curso.nombre) }}">Entrar</a>                   
                             </div>
                         </div>
                     </article>

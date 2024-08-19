@@ -1026,7 +1026,7 @@ header {
     color: transparent;
     z-index: -3;
     left: 100%;
-    display: none;
+    /* display: none; */
 }
 
 .botones-curso a {
@@ -1618,15 +1618,6 @@ header {
     position: relative;
     /* left: 6%; */
 }
-
-/* .dato-report input[type='file'] {
-    display: none;
-} */
-
-/*----------------------------------------------------- */
-/* .imagen-de-fondo-curso input {
-    display: none;
-} */
 
 .imagen-de-fondo-curso {
     display: flex;
@@ -2318,10 +2309,6 @@ textarea.editable {
 
 #registro-modal .subir-imagen-registro {
     text-align: center;
-}
-
-#registro-modal .subir-imagen-registro input[type="file"] {
-    display: none;
 }
 
 #registro-modal .subir-imagen-registro .btn-subir-imagen {

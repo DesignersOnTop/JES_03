@@ -53,17 +53,17 @@
                         </form>                        
                     </div>
                 </div>
-                {% for asignatura in asignaturas %}
+                {% for materia in materias %}
                 <article class="contenedor-material">                           
                     <div class="materia-del-material">
-                        <h3>{{ asignaturas.nom_asignatura }}</h3>
+                        <h3>{{ materia.nom_asignatura }}</h3>
                     </div>
                     <div class="contenido-material">
                         <figure class="fondo-material-estudio">
                             <img src="{{ url_for('static', filename='imagenes/recursos/Auditorio-img-fondo.jpg') }}" alt="imagen-fondo-estudio">
                         </figure>
                         <div class="link-material">
-                            <form action="{{ url_for('eliminar_materia', materia_id=materia[0]) }}" method="post">
+                            <form action="{{ url_for('eliminar_materia', id_asignatura=materia['id_asignatura']) }}" method="post">
                                 <button type="submit">Eliminar</button>
                             </form>                       
                         </div>

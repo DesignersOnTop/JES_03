@@ -31,23 +31,12 @@
     </header>
     <main class="main-curso-material" id="main-curso-admin">
         <section class="cursos-admin">
-            <article class="profesor-principal">
-                <div class="imagen-profesor-principal">
-                    <figure>
-                        <img src="{{ url_for('static', filename='imagenes/recursos/perfil-masculino-2.jpg') }}" alt="profesor">
-                    </figure>
-                </div>
-                <div class="descripcion-profesor-admin">
-                    <h2>Profesor Principal</h2>
-                    <h3>Manuel Perez Maldonado</h3>
-                </div>
-            </article>
             <article class="tabla-curso-estudiantes">
                 <div class="cabecera-tabla-estudiantes-a cabecera-curso-admin">
                     <a href="/admin/profesores">Profesores</a>
                     <!-- <h2 class="titulo-curso">Estudiantes</h2> -->
                     <div class="lado-derecho-curso-cabecera">
-                        <a href="/admin/registro/estudiante">agregar</a>
+                        <!-- <a href="/admin/registro/estudiante">agregar</a> -->
                         <a href="/admin/horario">Horario</a>
                     </div>
                 </div>
@@ -63,17 +52,12 @@
                         </tr>
                         {% for estudiante in estudiantes %}
                         <tr class="fila-calificacion">
-                            <td>{{ estudiantes.id_estudiante }}</td>
-                            <td>{{ estudiantes.nombre }}</td>
-                            <td>{{ estudiantes.apellidos }}</td>
-                            <td>{{ estudiantes.fecha_nacimiento }}</td>
-                            <td>{{ estudiantes.curso }}</td>
-                            <td>{{ estudiantes.genero }}</td>
-                            <!-- <td><a href="{{ url_for('editar_estudiante', id=estudiante.id_estudiante) }}"><figure><img src="{{ url_for('static', filename='imagenes/iconos/editar.svg') }}" alt="editar-profesor"  class="btn-editar"></figure></a></td>
-                            <form action="{{ url_for('eliminar_estudiante') }}"method="POST"style="display:inline;">
-                                <input type="hidden" name="id_estudiante" value="{{ estudiantes.id_estudiante }}">
-                                <button type="submit" class="btn-eliminar">Eliminar</button>
-                            </form> -->
+                            <td>{{ estudiante.id_estudiante }}</td>
+                            <td>{{ estudiante.nombre }}</td>
+                            <td>{{ estudiante.apellidos }}</td>
+                            <td>{{ estudiante.fecha_nacimiento }}</td>
+                            <td>{{ estudiante.curso }}</td>
+                            <td>{{ estudiante.genero }}</td>
                         </tr>
                         {% endfor %}
                     </table>
