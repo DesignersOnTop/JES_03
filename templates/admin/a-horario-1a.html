@@ -34,13 +34,14 @@
             <section class="section-horario-admin">
                 <div class="cabecera-agg-refuerzo cabecera-libro" id="cabecera-horario-admin">
                     <div class="cabecera-flex">
-                        <a href="/admin/curso" class="regresar-libro-video">Regresar</a>                        
+                        <a href="/admin/cursos/" class="regresar-libro-video">Regresar</a>                        
                         <h1 class="titulo-refuerzo titulo-libro">1ro - A</h1>
                     </div>
                 </div>
                 <article class="admin-horario">
                     <div id="scroll-horario-admin">
-                        <table class="tabla-horario tabla-horario-a" id="t-admin-horario">
+                        <form action="/admin/guardar_horario/" method="post">
+                            <table class="tabla-horario tabla-horario-a" id="t-admin-horario">
                             <tr class="tabla-cabecera">
                                 <th>Horas</th>
                                 <th>Lunes</th>
@@ -51,19 +52,19 @@
                             </tr>
                             <tr>
                                 <td>7:00</td>
-                                <td><input type="text" value="Matem&aacute;ticas"></td>
-                                <td><input type="text" value="L. Española"></td>
-                                <td><input type="text" value="Naturales"></td>
-                                <td><input type="text" value="Sociales"></td>
-                                <td><input type="text" value="Artes"></td>
+                                <td><input type="text" name="horario[7:00][Lunes]" value="Matem&aacute;ticas"></td>
+                                <td><input type="text" name="horario[7:00][Martes]" value="L. Española"></td>
+                                <td><input type="text" name="horario[7:00][Miercoles]" value="Naturales"></td>
+                                <td><input type="text" name="horario[7:00][Jueves]" value="Sociales"></td>
+                                <td><input type="text" name="horario[7:00][Viernes]" value="Artes"></td>
                             </tr>
                             <tr>
                                 <td>8:00</td>
-                                <td><input type="text" value="Sociales"></td>
-                                <td><input type="text" value="Artes"></td>
-                                <td><input type="text" value="Ed. Física"></td>
-                                <td><input type="text" value="Matemáticas"></td>
-                                <td><input type="text" value="Naturales"></td>
+                                <td><input type="text" name="horario[8:00][Lunes]" value="Sociales"></td>
+                                <td><input type="text" name="horario[8:00][Martes]" value="Artes"></td>
+                                <td><input type="text" name="horario[8:00][Miercoles]" value="Ed. Física"></td>
+                                <td><input type="text" name="horario[8:00][Jueves]" value="Matemáticas"></td>
+                                <td><input type="text" name="horario[8:00][Viernes]" value="Naturales"></td>
                             </tr>
                             <tr>
                                 <td>9:00</td>
@@ -75,30 +76,31 @@
                             </tr>
                             <tr>
                                 <td>10:00</td>
-                                <td><input type="text" value="Inglés"></td>
-                                <td><input type="text" value="Religión"></td>
-                                <td><input type="text" value="Inglés"></td>
-                                <td><input type="text" value="Informática"></td>
-                                <td><input type="text" value="Sociales"></td>
+                                <td><input type="text" name="horario[10:00][Lunes]" value="Inglés"></td>
+                                <td><input type="text" name="horario[10:00][Martes]" value="Religión"></td>
+                                <td><input type="text" name="horario[10:00][Miercoles]" value="Inglés"></td>
+                                <td><input type="text" name="horario[10:00][Jueves]" value="Informática"></td>
+                                <td><input type="text" name="horario[10:00][Viernes]" value="Sociales"></td>
                             </tr>
                             <tr>
                                 <td>11:00</td>
-                                <td><input type="text" value="Informática"></td>
-                                <td><input type="text" value="Matemáticas"></td>
-                                <td><input type="text" value="Sociales"></td>
-                                <td><input type="text" value="Ed. Física"></td>
-                                <td><input type="text" value="L. Española"></td>
+                                <td><input type="text" name="horario[11:00][Lunes]" value="Informática"></td>
+                                <td><input type="text" name="horario[11:00][Martes]" value="Matemáticas"></td>
+                                <td><input type="text" name="horario[11:00][Miercoles]" value="Sociales"></td>
+                                <td><input type="text" name="horario[11:00][Jueves]" value="Ed. Física"></td>
+                                <td><input type="text" name="horario[11:00][Viernes]" value="L. Española"></td>
                             </tr>
                             <tr>
                                 <td>12:00</td>
-                                <td><input type="text" value="Religión"></td>
-                                <td><input type="text" value="Sociales"></td>
-                                <td><input type="text" value="Artes"></td>
-                                <td><input type="text" value="Inglés"></td>
-                                <td><input type="text" value="Matemáticas"></td>
+                                <td><input type="text" name="horario[12:00][Lunes]" value="Religión"></td>
+                                <td><input type="text" name="horario[12:00][Martes]" value="Sociales"></td>
+                                <td><input type="text" name="horario[12:00][Miercoles]" value="Artes"></td>
+                                <td><input type="text" name="horario[12:00][Jueves]" value="Inglés"></td>
+                                <td><input type="text" name="horario[12:00][Viernes]" value="Matemáticas"></td>
                             </tr>
-                            <button type="submit"></button>
-                        </table>
+                            <button type="submit">Guardar</button>
+                            </table>
+                        </form>
                     </div>
                 </article>
             </section>

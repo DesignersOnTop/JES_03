@@ -33,24 +33,8 @@
         <main class="main-container">
             <section class="section-materiales">
                 <div class="cabecera-agg-material">
-                    <div class="cabecera-materiales-flex">
+                    <div class="cabecera-materiales-flex form-agg-material">
                         <h2 class="titulo-material">Materias</h2>
-                        <form action="/admin/subir_materia/" class="form-agg-material">                            
-                            <select name="cursos" id="cursos">
-                                <option value="cursos" disabled>Cursos</option>
-                                <option value="1ro">1ro</option>
-                                <option value="2do">2do</option>
-                                <option value="3ro">3ro</option>
-                                <option value="4to">4to</option>
-                                <option value="5to">5to</option>
-                                <option value="6to">6to</option>
-                            </select>                 
-                            <select name="ver-clases-enviada" id="ver-clases-enviada">
-                                <option value="secciones" disabled>Secciones</option>
-                                <option value="s-a">A</option>
-                                <option value="s-b">B</option>
-                            </select>
-                        </form>                        
                     </div>
                 </div>
                 {% for materia in materias %}

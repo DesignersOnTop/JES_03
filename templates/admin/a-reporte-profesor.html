@@ -43,22 +43,18 @@
                     </figure>
                 </div>
                 <div class="descripcion-profesor-admin">
-                    <h2>{{ profesor.id_asignatura }}</h2>
+                    <h2>{{ profesor.nom_asignatura }}</h2>
                     <h3>{{ profesor.nombre }}</h3>
                 </div>
             </article>
             <article class="tabla-curso-estudiantes" id="article-reporte-profesor">
                 <table class="tabla-asistencia tabla-admin-e" id="tabla-reporte-profesor">
                     <tr>
-                        <th>Fecha</th>
-                        <th>Ciclo</th>
-                        <th>Califiacion</th>
+                        <th>Calificaci&oacute;n</th>
                         <th>Asistencia</th>
                     </tr>
-                    {% for reportes in reporte_profesor %}
+                    {% for reporte in reportes %}
                     <tr class="fila-calificacion">
-                        <td>{{ reportes.fecha }}</td>
-                        <td>{{ reportes.ciclo }}</td>
                         <td class="ver-estudiante-p"><a href="/admin/reportes-calificacion/" class="ver-recurso"><figure><img src="{{ url_for('static', filename='imagenes/iconos/angle-small-right.svg') }}" alt="ver-estudiante"></figure></a></td>
                         <td class="ver-estudiante-p"><a href="/admin/reportes-asistencias/" class="ver-recurso"><figure><img src="{{ url_for('static', filename='imagenes/iconos/angle-small-right.svg') }}" alt="ver-estudiante"></figure></a></td>
                     </tr>

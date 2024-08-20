@@ -585,12 +585,18 @@ def eliminar_materia(id_asignatura):
         password='',
         database='jes'
     )
-    
+
     cursor = connection.cursor(pymysql.cursors.DictCursor)
 
-    cursor.execute('DELETE FROM asignaturas WHERE id_asignatura = %s', (id_asignatura))
+    cursor.execute('DELETE FROM profesores WHERE id_asignatura = %s', (id_asignatura,))
+
+    cursor.execute('DELETE FROM asignaturas WHERE id_asignatura = %s', (id_asignatura,))
+
     connection.commit()
 
+    cursor.close()
+    connection.close()
+    
     return redirect('/admin/materias/')
 
 @app.route('/admin/reportes/')
@@ -624,16 +630,15 @@ def a_reporte_profesor(id_profesor_asignado):
     cursor = connection.cursor(pymysql.cursors.DictCursor)
 
     sql_reporte = ('SELECT * FROM reporte_profesor WHERE id_profesor_asignado = %s')
-
     cursor.execute(sql_reporte, (id_profesor_asignado,))
     reportes = cursor.fetchall()
 
-    sql_profesor = ('SELECT * FROM profesores WHERE id_profesor = %s')
+    sql_profesor = ('SELECT * FROM profesores JOIN asignaturas on asignaturas.id_asignatura = profesores.id_asignatura WHERE id_profesor = %s')
     cursor.execute(sql_profesor, (id_profesor_asignado,))
     profesor = cursor.fetchone()
 
-    connection.close()
     cursor.close()
+    connection.close()
     
     return render_template('./admin/a-reporte-profesor.html', reportes=reportes, profesor=profesor)
 
@@ -969,10 +974,47 @@ def a_cursos_estudiantes():
     cursor.close()
     return render_template('./admin/a-estudiante-1_a.html')
 
-@app.route('/admin/horario/')
+@app.route('/admin/horario/', methods = ['GET'])
 def a_horario_profesor():
     return render_template('./admin/a-horario-1a.html')
 
+@app.route('/admin/guardar_horario/', methods = ['POST'])
+def guardar_horario():
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
+
+    horario = request.form.get("horario")
+
+    if horario:
+        schedule_data = {}
+        for time_slot, days in horario.items():
+            schedule_data[time_slot] = days
+
+        connection.commit()
+
+        cursor.close()
+        connection.close()
+    
+    return redirect('/home/admin/')
+
+def guardar_calendario(schedule_data):
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
+
+    for time_slot, days in schedule_data.items():
+        
 # =========================================================
 
 # APARTADO DEL PROFESORES EN PYTHON Smailyn 
