@@ -11,32 +11,68 @@
     <div class="body-container">
         <main class="main-container main-curso-material">            
             <section class="modals-container agregar-material-section">
-                <form action="{{ url_for('agregar_libro') }}" method="post" enctype="multipart/form-data">
+                <form action="{{ url_for('p_agregar_libro') }}" method="post" enctype="multipart/form-data">
                     <fieldset class="agregar-material-fieldset p-agregar-libro-fieldset">
-                        <legend>Agregar libro de refuerzo 1ro - A</legend>
+                        <legend>Agregar libro de refuerzo</legend>
+                        
                         <div class="imagen-de-fondo-curso">
                             <label for="fondo-material">Portada</label>
                             <input type="file" id="fondo-material" name="portada_libro">
                         </div>
+            
                         <div class="dato-material info-material">
-                            <label for="nombre-material">Titulo del libro</label>
+                            <label for="nombre-material">Título del libro</label>
                             <input type="text" id="nombre-material" name="titulo-libro">
                         </div>
-                        <div class="dato-material dato-valor-material">
-                            <label for="valor-material">Materia</label>
-                            <input type="text" id="valor-material" name="materia-libro">
+            
+                        <div class="dato-material">
+                            <label for="curso">Curso</label>
+                            <select id="curso" name="curso-libro">
+                                <option value="1ro-A">1ro-A</option>
+                                <option value="1ro-B">1ro-B</option>
+                                <option value="2do-A">2do-A</option>
+                                <option value="2do-B">2do-B</option>
+                                <option value="3ro-A">3ro-A</option>
+                                <option value="3ro-B">3ro-B</option>
+                                <option value="4to-A">4to-A</option>  
+                                <option value="4to-B">4to-B</option>  
+                                <option value="5to-A">5to-A</option> 
+                                <option value="5to-B">5to-B</option> 
+                                <option value="6to-A">6to-A</option> 
+                                <option value="6to-B">6to-B</option>  
+
+                            </select>
                         </div>
+            
+                        <div class="dato-material">
+                            <label for="asignatura">Materia</label>
+                            <select id="asignatura" name="materia-libro">
+                                <option value="Lengua Española">Lengua Española</option> 
+                                <option value="Matematicas">Matematicas</option> 
+                                <option value="Ciencias Sociales">Ciencias Sociales</option> 
+                                <option value="Ciencias Naturales">Ciencias Naturales</option> 
+                                <option value="Ingles">Ingles</option> 
+                                <option value="Frances">Frances</option> 
+                                <option value="Educacion Fisica">Educacion Fisica</option> 
+                                <option value="Arte ">Arte </option> 
+                                <option value="Formacion Humana">Formacion Humana</option> 
+                                
+                            </select>
+                        </div>
+            
                         <div class="dato-material">
                             <label for="recurso-de-estudio">Subir libro</label>
                             <input type="file" id="recurso-de-estudio" name="subir-libro">
                         </div>
                     </fieldset>                        
+            
                     <div class="botones-agg-material">
-                            <input type="submit" value="Enviar">
-                            <input type="reset" value="Rehacer">
+                        <input type="submit" value="Enviar">
+                        <input type="reset" value="Rehacer">
                     </div>
                 </form>
             </section>
+            
         </main>
     </div>
     <script src="{{ url_for('static', filename='js/menu-profesor-a.js') }}"></script>

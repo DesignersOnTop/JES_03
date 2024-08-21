@@ -1013,7 +1013,7 @@ def guardar_calendario(schedule_data):
     
     cursor = connection.cursor(pymysql.cursors.DictCursor)
 
-    for time_slot, days in schedule_data.items():
+    # for time_slot, days in schedule_data.items():
         
 # =========================================================
 
@@ -1153,6 +1153,8 @@ def p_agregar_libro():
     if request.method == 'POST':
         portada = request.files.get('portada_libro')
         titulo = request.form.get('titulo-libro')
+        curso = request.form.get('curso-libro')
+        materia = request.form.get('materia-libro')
         libro = request.files.get('subir-libro')
         
         # Procesar portada
@@ -1167,12 +1169,7 @@ def p_agregar_libro():
         else:
             nuevoNombre = None
         
-        id_curso = 1  # Asumimos que el curso es fijo
-        
-        # Usar la lista de asignaturas predefinidas
-        asignaturas = ASIGNATURAS
-        
-        # Insertar en la base de datos para cada asignatura en la lista
+        # Conexión a la base de datos
         connection = pymysql.connect(
             host='localhost',
             user='root',
@@ -1182,17 +1179,38 @@ def p_agregar_libro():
         cursor = connection.cursor(pymysql.cursors.DictCursor)
         
         try:
-            sql = '''
-            INSERT INTO libros (id_asignatura, id_curso, titulo, subir_libro, portada)
-            VALUES (%s, %s, %s, %s, %s)
-            '''
-            for id_asignatura in asignaturas:
+            # Verificar que el curso y la asignatura existen
+            cursor.execute('SELECT id_curso FROM cursos WHERE nombre = %s', (curso,))
+            curso_result = cursor.fetchone()
+            
+            cursor.execute('SELECT id_asignatura FROM asignaturas WHERE nom_asignatura = %s', (materia,))
+            asignatura_result = cursor.fetchone()
+            
+            if curso_result and asignatura_result:
+                id_curso = curso_result['id_curso']
+                id_asignatura = asignatura_result['id_asignatura']
+                
+                # Insertar el libro en la base de datos
+                sql = '''
+                INSERT INTO libros (id_asignatura, id_curso, titulo, subir_libro, portada)
+                VALUES (%s, %s, %s, %s, %s)
+                '''
                 datos = (id_asignatura, id_curso, titulo, nuevoNombre, portada_nombre)
                 cursor.execute(sql, datos)
-            connection.commit()
+                connection.commit()
+                flash("Libro agregado correctamente.")
+            else:
+                # Manejo del caso donde no se encuentra el curso o la asignatura
+                if not curso_result:
+                    flash(f"El curso '{curso}' no existe. Por favor, verifica el nombre.")
+                if not asignatura_result:
+                    flash(f"La asignatura '{materia}' no existe. Por favor, verifica el nombre.")
+        
         except Exception as e:
             print(f"Error: {e}")
             connection.rollback()
+            flash("Hubo un error al agregar el libro.")
+        
         finally:
             cursor.close()
             connection.close()
@@ -1200,6 +1218,9 @@ def p_agregar_libro():
         return redirect('/profesor/refuerzo/libros/')
     
     return render_template('p-agregar-libro.html')
+
+
+
 @app.route('/profesor/agregar/video/')
 def p_agregar():
     return render_template('./profesor/p-agregar-video.html')
