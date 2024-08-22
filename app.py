@@ -1122,17 +1122,17 @@ def eliminar_video(id):
         database='jes'
     )
     cursor = connection.cursor()
-    try:
-        cursor.execute(sql, (id,))
-        connection.commit()
-    except Exception as e:
-        print(f"Error: {e}")
-        connection.rollback()
-    finally:
-        cursor.close()
-        connection.close()
     
-    return redirect('/profesor/refuerzo/videos/')
+    cursor.execute(sql, (id,))
+    connection.commit()
+
+    # Verificamos si se eliminó alguna fila
+    if cursor.rowcount > 0:
+        connection.close()
+        return redirect('/profesor/refuerzo/videos/')
+    else:
+        connection.rollback()
+        connection.close()
 
 @app.route('/profesor/agregar/libros/')
 def agregar_libro():
@@ -1168,47 +1168,40 @@ def p_agregar_libro():
         )
         cursor = connection.cursor(pymysql.cursors.DictCursor)
         
-        try:
-            # Verificar que el curso y la asignatura existen
-            cursor.execute('SELECT id_curso FROM cursos WHERE nombre = %s', (curso,))
-            curso_result = cursor.fetchone()
-            
-            cursor.execute('SELECT id_asignatura FROM asignaturas WHERE nom_asignatura = %s', (materia,))
-            asignatura_result = cursor.fetchone()
-            
-            if curso_result and asignatura_result:
-                id_curso = curso_result['id_curso']
-                id_asignatura = asignatura_result['id_asignatura']
-                
-                # Insertar el libro en la base de datos
-                sql = '''
-                INSERT INTO libros (id_asignatura, id_curso, titulo, subir_libro, portada)
-                VALUES (%s, %s, %s, %s, %s)
-                '''
-                datos = (id_asignatura, id_curso, titulo, nuevoNombre, portada_nombre)
-                cursor.execute(sql, datos)
-                connection.commit()
-                flash("Libro agregado correctamente.")
-            else:
-                # Manejo del caso donde no se encuentra el curso o la asignatura
-                if not curso_result:
-                    flash(f"El curso '{curso}' no existe. Por favor, verifica el nombre.")
-                if not asignatura_result:
-                    flash(f"La asignatura '{materia}' no existe. Por favor, verifica el nombre.")
+        # Verificar que el curso y la asignatura existen
+        cursor.execute('SELECT id_curso FROM cursos WHERE nombre = %s', (curso,))
+        curso_result = cursor.fetchone()
         
-        except Exception as e:
-            print(f"Error: {e}")
+        cursor.execute('SELECT id_asignatura FROM asignaturas WHERE nom_asignatura = %s', (materia,))
+        asignatura_result = cursor.fetchone()
+        
+        if curso_result and asignatura_result:
+            id_curso = curso_result['id_curso']
+            id_asignatura = asignatura_result['id_asignatura']
+            
+            # Insertar el libro en la base de datos
+            sql = '''
+            INSERT INTO libros (id_asignatura, id_curso, titulo, subir_libro, portada)
+            VALUES (%s, %s, %s, %s, %s)
+            '''
+            datos = (id_asignatura, id_curso, titulo, nuevoNombre, portada_nombre)
+            cursor.execute(sql, datos)
+            connection.commit()
+            flash("Libro agregado correctamente.")
+        else:
+            # Manejo del caso donde no se encuentra el curso o la asignatura
+            if not curso_result:
+                flash(f"El curso '{curso}' no existe. Por favor, verifica el nombre.")
+            if not asignatura_result:
+                flash(f"La asignatura '{materia}' no existe. Por favor, verifica el nombre.")
             connection.rollback()
-            flash("Hubo un error al agregar el libro.")
         
-        finally:
-            cursor.close()
-            connection.close()
+        cursor.close()
+        connection.close()
         
         return redirect('/profesor/refuerzo/libros/')
     
     return render_template('p-agregar-libro.html')
-
 
 
 @app.route('/profesor/agregar/video/')
@@ -1238,17 +1231,20 @@ def agregar_video():
             database='jes'
         )
         cursor = connection.cursor()
-        try:
-            cursor.execute(sql, datos)
-            connection.commit()
-        except Exception as e:
-            print(f"Error: {e}")
-            connection.rollback()
-        finally:
+
+        # Ejecutar la consulta y verificar si fue exitosa
+        cursor.execute(sql, datos)
+        connection.commit()
+        
+        if cursor.rowcount > 0:
             cursor.close()
             connection.close()
-        
-        return redirect('/profesor/refuerzo/videos/')
+            return redirect('/profesor/refuerzo/videos/')
+        else:
+            connection.rollback()
+            
+            cursor.close()
+            connection.close()
 
 @app.route('/profesor/materiales/')
 def p_material_estudio():
@@ -1317,7 +1313,7 @@ def reporte():
         asistencia = request.files.get('report-asistencia')
         calificacion = request.files.get('report-calificacion')
         
-        id_profesor_asignado = 1 
+        id_profesor_asignado = 1  # ID del profesor asignado
 
         # Verifica si se ha subido un archivo de asistencia y si tiene una extensión permitida.
         if asistencia and allowed_file(asistencia.filename):
@@ -1327,7 +1323,6 @@ def reporte():
             asistencia.save(asistencia_path)
             print(f"Archivo de asistencia guardado en: {asistencia_path}")
         else:
-            # Si no se subió un archivo válido, se establece la ruta como None.
             asistencia_path = None
 
         # Repite el mismo proceso para el archivo de calificación.
@@ -1340,7 +1335,7 @@ def reporte():
             calificacion_path = None
 
         sql = '''
-        INSERT INTO reporte_profesor ( id_profesor_asignado, asistencia, calificaciones)
+        INSERT INTO reporte_profesor (id_profesor_asignado, asistencia, calificaciones)
         VALUES (%s, %s, %s)
         '''
         datos = (id_profesor_asignado, asistencia_path, calificacion_path)
@@ -1352,19 +1347,23 @@ def reporte():
             database='jes'
         )
         cursor = connection.cursor()
-        try:
-            cursor.execute(sql, datos)
-            connection.commit()
-        except pymysql.MySQLError as e:
-            print(f"Error en la base de datos: {e}")
-            connection.rollback()
-        finally:
+
+        # Ejecutar la consulta e intentar realizar la inserción en la base de datos
+        cursor.execute(sql, datos)
+        connection.commit()
+        
+        if cursor.rowcount > 0:
             cursor.close()
             connection.close()
+            return redirect('/home/profesor/')
+        else:
+            connection.rollback()
+            
+            cursor.close()
+            connection.close()
+            
+    return render_template('p-report-a.html')
 
-        return redirect('/home/profesor/') 
-    
-    return render_template('p-report-a.html')  
     
 @app.route('/profesor/perfil/estudiante/')
 def p_perfil_e():
