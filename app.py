@@ -537,20 +537,40 @@ def a_materias():
 
     cursor = connection.cursor(pymysql.cursors.DictCursor)
     cursor.execute('SELECT * FROM asignaturas')
-    materias = cursor.fetchall()
+    asignaturas = cursor.fetchall()
 
     cursor.close()
     connection.close()
 
-    return render_template('./admin/a-materias.html', materias=materias)
+    return render_template('./admin/a-materias.html', asignaturas=asignaturas)
 
 @app.route('/admin/asignar-profesores/')
 def a_asignar_profesores():
     return render_template('./admin/a-agregar-profesor-cursos.html')
 
-@app.route('/admin/agregar_materias/')
+@app.route('/admin/agregar_materias/', methods = ['POST', 'GET'])
 def a_agg_materias():
-    return render_template('./admin/a-agg-materias.html')
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
+
+    sql_asignaturas = ('SELECT * FROM asignaturas')
+    cursor.execute(sql_asignaturas)
+    asignaturas = cursor.fetchall()
+
+    sql_curso = ('SELECT * FROM asignatura_curso')
+    cursor.execute(sql_curso)
+    curso = cursor.fetchall()
+
+    cursor.close()
+    connection.close()
+
+    return render_template('./admin/a-agg-materias.html', asignaturas=asignaturas, curso=curso)
 
 @app.route('/admin/subir_materia/', methods = ['POST'])
 def subir_materia():
@@ -735,8 +755,8 @@ def agregar_estudiante():
 
     return redirect('/home/admin/')
 
-@app.route('/editar_estudiante/<int:id>', methods=['GET'])
-def editar_estudiante(id):
+@app.route('/editar_estudiante/<int:id_estudiante>', methods=['GET'])
+def editar_estudiante(id_estudiante):
     connection = pymysql.connect(
         host='localhost',
         user='root',
@@ -745,17 +765,19 @@ def editar_estudiante(id):
     )
     
     cursor = connection.cursor(pymysql.cursors.DictCursor)
-    cursor.execute("SELECT * FROM estudiantes WHERE id = %s", (id))
+    cursor.execute("SELECT * FROM estudiantes WHERE id_estudiante = %s", (id_estudiante,))
     estudiante = cursor.fetchone()
+
     cursor.close()
+    connection.close()
 
     if estudiante:
         return render_template('./admin/a-editar-datos-estudiantes.html', estudiante=estudiante)
     else:
         return "Estudiante no encontrado", 404
     
-@app.route('/editar_profesor/<int:id>', methods=['GET'])
-def editar_profesor(id):
+@app.route('/editar_profesor/<int:id_profesor>', methods=['GET'])
+def editar_profesor(id_profesor):
     connection = pymysql.connect(
         host='localhost',
         user='root',
@@ -764,12 +786,12 @@ def editar_profesor(id):
     )
     
     cursor = connection.cursor(pymysql.cursors.DictCursor)
-    cursor.execute("SELECT * FROM profesores WHERE id = %s", (id))
+    cursor.execute("SELECT * FROM profesores WHERE id_profesor = %s", (id_profesor,))
     profesor = cursor.fetchone()
     cursor.close()
 
     if profesor:
-        return render_template('./admin/a-editar-datos-profesores.html', profesor = profesor)
+        return render_template('./admin/a-editar-datos-profesores.html', profesor=profesor)
     else:
         return "Profesor no encontrado", 404
 
@@ -885,37 +907,44 @@ def agregar_profesores():
 
 @app.route('/admin/actualizar_profesor', methods=['POST'])
 def actualizar_profesor():
-    id_profesor = request.form["id_profesor"]
-    id_asignatura = request.form["id_asignatura"]
-    nombre = request.form["nombre"]
-    apellidos = request.form["apellidos"]
-    direccion = request.form["direccion"]
-    cedula = request.form["cedula"]
-    genero = request.form["genero"]
-    correo = request.form["email"]
-    telefono = request.form["telefono"]
-    matricula = request.form["matricula"]
-    imagen_perfil = request.files["imagen_perfil"].filename
-    contrasena = request.form["contrasena"]
+    id_asignatura = request.form.get("id_asignatura")
+    nombre = request.form.get("nombre")
+    apellidos = request.form.get("apellidos")
+    direccion = request.form.get("direccion")
+    cedula = request.form.get("cedula")
+    genero = request.form.get("genero")
+    correo = request.form.get("email")
+    telefono = request.form.get("telefono")
+    matricula = request.form.get("matricula")
+    imagen_perfil = request.files.get("imagen_perfil")
+    contraseña = request.form.get("contraseña")
+    id_profesor = request.form.get("id_profesor")
 
-    sql =  '''UPDATE profesores SET id_asignatura = %s, nombre = %s, apellido = %s, direccion = %s, cedula = %s, genero = %s, correo = %s, telefono = %s, matricula = %s,imagen_perfil = %s, contraseña = %s WHERE id_profesor = %s'''
-    
-    datos = (id_asignatura, nombre, apellidos, direccion, cedula, genero, correo, telefono, matricula,imagen_perfil, contrasena)
+    imagen_perfil_path = None
+
+    if imagen_perfil and imagen_perfil.filename:
+        imagen_perfil_path = f"static/documentos/{imagen_perfil.filename}"
+        imagen_perfil.save(imagen_perfil_path)
 
     connection = pymysql.connect(
-        host='localhost',
-        user='root',
-        password='',
-        database='jes'
-    )
-    
+            host='localhost',
+            user='root',
+            password='',
+            database='jes'
+        )
+        
     cursor = connection.cursor(pymysql.cursors.DictCursor)
-    cursor.execute(sql, datos)
+
+    sql =  '''UPDATE profesores SET id_asignatura = %s, nombre = %s, apellido = %s, direccion = %s, cedula = %s, genero = %s, email = %s, telefono = %s, matricula = %s, imagen_perfil = %s, contraseña = %s WHERE id_profesor = %s'''
+
+    cursor.execute(sql, (id_asignatura, nombre, apellidos, direccion, cedula, genero, correo, telefono, matricula, imagen_perfil, contraseña, id_profesor))
 
     connection.commit()
-    cursor.close()
 
-    return redirect('/home/admin/')
+    cursor.close()
+    connection.close()
+
+    return redirect('/admin/profesores/')
 
 @app.route('/admin/eliminar_profesor', methods = ['POST'])
 def eliminar_profesores():
