@@ -12,16 +12,6 @@
         <section class="modals-container">
             <div class="agg-materias-container">
                 <h1 class="titulo-agg-materia">Agregar materia</h1>
-                <div class="materias-existente">
-                    {% for asignatura in asignaturas %}
-                    <article class="article-material-existente">
-                        <figure class="materia-imagen">
-                            <img src="{{ url_for('static', filename='imagenes/star8k.jpg') }}" alt="imagen-materia">
-                        </figure>
-                        <h4>{{ asignatura.nom_asignatura }}</h4>
-                    </article>
-                    {% endfor %}
-                </div>
                 <article class="agregar-material-contenido">
                     <form action="/admin/subir_materia/" method="post" enctype="multipart/form-data">
                         <div class="materia-dato dato-img-materia">

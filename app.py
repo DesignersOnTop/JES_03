@@ -546,6 +546,15 @@ def a_materias():
 
 @app.route('/admin/asignar-profesores/')
 def a_asignar_profesores():
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
+
     return render_template('./admin/a-agregar-profesor-cursos.html')
 
 @app.route('/admin/agregar_materias/', methods = ['POST', 'GET'])
@@ -587,7 +596,7 @@ def subir_materia():
     
     datos = (nom_asignatura)
     
-    sql = '''INSERT INTO `asignaturas` (`id_asignatura`, `nom_asignatura`) VALUES (NULL, %s,)'''
+    sql = '''INSERT INTO `asignaturas` (`id_asignatura`, `nom_asignatura`) VALUES (NULL, %s)'''
     
     cursor.execute(sql,datos)
     connection.commit()
@@ -1003,9 +1012,24 @@ def a_cursos_estudiantes():
     cursor.close()
     return render_template('./admin/a-estudiante-1_a.html')
 
-@app.route('/admin/horario/', methods = ['GET'])
+@app.route('/admin/horario/<int:id_horario>', methods = ['GET'])
 def a_horario_profesor():
-    return render_template('./admin/a-horario-1a.html')
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
+
+    cursor.execute('SELECT * FROM horario JOIN cursos')
+    horario = cursor.fetchall()
+
+    cursor.close()
+    connection.close()
+
+    return render_template('./admin/a-horario-1a.html', horario=horario)
 
 @app.route('/admin/guardar_horario/', methods = ['POST'])
 def guardar_horario():
