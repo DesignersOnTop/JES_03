@@ -1561,11 +1561,11 @@ header {
     padding: 2px 10px;
 }
 
-.dato-material select {
+/* .dato-material select {
     padding: 4px 20px;
     margin-bottom: 5px;
     max-width: 20%;
-}
+} */
 
 .dato-material textarea {
     resize:vertical;
