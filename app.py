@@ -1024,11 +1024,7 @@ def p_perfil():
 
 @app.route('/profesor/refuerzo/libros/')
 def p_refuerzo_libros():
-    return render_template('./profesor/p-refuerzo-libros.html')
-
-
-@app.route('/profesor/refuerzo/libros/', methods=['GET'])
-def listar_libros():
+    
     connection = pymysql.connect(
         host='localhost',
         user='root',
@@ -1037,12 +1033,13 @@ def listar_libros():
     )
     
     cursor = connection.cursor(pymysql.cursors.DictCursor)
-    cursor.execute('SELECT * FROM libros')
+    cursor.execute('SELECT *, asignaturas.nom_asignatura FROM libros JOIN asignaturas ON asignaturas.id_asignatura = libros.id_asignatura')
     libros = cursor.fetchall()
     cursor.close()
     connection.close()
     
-    return render_template('p-refuerzo-libros.html', libros=libros)
+    return render_template('./profesor/p-refuerzo-libros.html', libros=libros)
+
 
 @app.route('/profesor/eliminar/libro/<int:id_libro>', methods=['POST'])
 def eliminar_libro(id_libro):
@@ -1052,8 +1049,8 @@ def eliminar_libro(id_libro):
         password='',
         database='jes'
     )
-
-    cursor = connection.cursor()
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
+    
     cursor.execute('DELETE FROM libros WHERE id_libro = %s', (id_libro,))
     connection.commit()
     
@@ -1064,13 +1061,11 @@ def eliminar_libro(id_libro):
     return redirect('/profesor/refuerzo/libros/')
 
 
-@app.route('/profesor/refuerzo/libros/nombre_libro')
-def p_libro_refuerzo():
-    return render_template('./profesor/p-libro-refuerzo.html')
-
-
-@app.route('/ver_libro/<int:id_libro>', methods=['GET'])
-def ver_libro(id_libro):
+@app.route('/ver_libro/', methods=['GET'])
+def ver_libro():
+    
+    id_libro = request.args.get('id_libro')
+    
     connection = pymysql.connect(
         host='localhost',
         user='root',
@@ -1084,12 +1079,7 @@ def ver_libro(id_libro):
     cursor.close()
     connection.close()
     
-    if libro:
-        archivo = libro['subir_libro']
-        return render_template('p-libro-refuerzo.html', archivo=archivo, libros=libro)
-    else:
-        flash("El libro solicitado no existe.")
-        return redirect('/profesor/refuerzo/libros/')
+    return render_template('./profesor/p-libro-refuerzo.html', libro=libro)
 
 @app.route('/profesor/refuerzo/videos/')
 def p_refuerzo_videos():
@@ -1113,8 +1103,11 @@ def mostrar_videos():
     
     return render_template('p-refuerzo-videos.html', videos=videos)
 
-@app.route('/eliminar/video/<int:id>', methods=['POST'])
-def eliminar_video(id):
+@app.route('/eliminar/video/', methods=['POST'])
+def eliminar_video():
+    
+    
+    id_libro = request.form.get('id_libro')
     sql = 'DELETE FROM videos WHERE id = %s'
     
     connection = pymysql.connect(
@@ -1125,20 +1118,14 @@ def eliminar_video(id):
     )
     cursor = connection.cursor()
     
-    cursor.execute(sql, (id,))
+    cursor.execute(sql, (id_libro,))
     connection.commit()
 
-    # Verificamos si se eliminó alguna fila
-    if cursor.rowcount > 0:
-        connection.close()
-        return redirect('/profesor/refuerzo/videos/')
-    else:
-        connection.rollback()
-        connection.close()
+    return redirect('/profesor/refuerzo/videos/')
 
 @app.route('/profesor/agregar/libros/')
 def agregar_libro():
-    return render_template('/profesor/p-agregar-libro.html')
+    return render_template('./profesor/p-agregar-libro.html')
 
 @app.route('/profesor/agregar/libros/', methods=['GET', 'POST'])
 def p_agregar_libro():
@@ -1191,8 +1178,8 @@ def p_agregar_libro():
             id_asignatura = asignatura_result['id_asignatura']
             
             sql = '''
-            INSERT INTO libros (id_asignatura, id_curso, titulo, subir_libro, portada)
-            VALUES (%s, %s, %s, %s, %s)
+            INSERT INTO libros (id_libro, id_asignatura, id_curso, titulo, subir_libro, portada)
+            VALUES (NULL, %s, %s, %s, %s, %s)
             '''
 
             datos = (id_asignatura, id_curso, titulo, nuevoNombre, portada_nombre)
