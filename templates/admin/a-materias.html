@@ -36,8 +36,11 @@
                     <div class="cabecera-materiales-flex form-agg-material">
                         <h2 class="titulo-material">Materias</h2>
                     </div>
+                    <div>
+                        <a href="/admin/agregar_materias/">Agregar Materias</a>
+                    </div>
                 </div>
-                {% for materia in materias %}
+                {% for materia in asignaturas %}
                 <article class="contenedor-material">                           
                     <div class="materia-del-material">
                         <h3>{{ materia.nom_asignatura }}</h3>

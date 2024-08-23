@@ -55,7 +55,7 @@
                             <td>{{ profesor.apellido }}</td>
                             <td>{{ profesor.cedula }}</td>
                             <td>{{ profesor.nom_asignatura }}</td>
-                            <td><a href="/admin/registro/profesor/"><figure><img src="{{ url_for('static', filename='imagenes/iconos/editar.svg') }}" alt="editar-profesor"></figure></a></td>
+                            <td><a href="{{ url_for('editar_profesor', id_profesor=profesor.id_profesor) }}"><figure><img src="{{ url_for('static', filename='imagenes/iconos/editar.svg') }}" alt="editar-profesor"></figure></a></td>
                             <td>
                                 <form action="{{ url_for('eliminar_profesores') }}" method="POST" style="display:inline;">
                                     <input type="hidden" name="id_profesor" value="{{ profesor.id_profesor }}">

@@ -33,9 +33,9 @@
         <section class="cursos-admin">
             <article class="tabla-curso-estudiantes">
                 <div class="cabecera-tabla-estudiantes-a cabecera-curso-admin">
-                    <a href="/admin/profesores">Profesores</a>
+                    <a href="/admin/profesores/">Profesores</a>
                     <div class="lado-derecho-curso-cabecera">
-                        <a href="/admin/horario">Horario</a>
+                        <a href="/admin/horario/">Horario</a>
                     </div>
                 </div>
                 <div class="scroll-tabla-container-admin">
@@ -56,6 +56,23 @@
                             <td>{{ estudiante.fecha_nacimiento }}</td>
                             <td>{{ estudiante.curso }}</td>
                             <td>{{ estudiante.genero }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                    <!-- Tabla para visualizar los profesores asignados al curso -->
+                    <table id="tabla-estudiantes-admin">
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Asignatura</th>
+                        </tr>
+                        {% for profesor in profesores %}
+                        <tr class="fila-calificacion">
+                            <td>{{ profesor.id_profesor }}</td>
+                            <td>{{ profesor.nombre }}</td>
+                            <td>{{ profesor.apellido }}</td>
+                            <td>{{ profesor.id_asignatura }}</td>
                         </tr>
                         {% endfor %}
                     </table>
