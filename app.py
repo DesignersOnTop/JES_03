@@ -1106,7 +1106,6 @@ def mostrar_videos():
 @app.route('/eliminar/video/', methods=['POST'])
 def eliminar_video():
     
-    
     id_libro = request.form.get('id_libro')
     sql = 'DELETE FROM videos WHERE id = %s'
     
@@ -1127,78 +1126,56 @@ def eliminar_video():
 def agregar_libro():
     return render_template('./profesor/p-agregar-libro.html')
 
-@app.route('/profesor/agregar/libros/', methods=['GET', 'POST'])
+@app.route('/agregar/libro/', methods=['POST'])
 def p_agregar_libro():
-    if request.method == 'POST':
-        portada = request.files.get('portada-libro')
-        titulo = request.form.get('titulo-libro')
-        curso = request.form.get('curso-libro')
-        materia = request.form.get('materia-libro')
-        libro = request.files.get('subir-libro')
-        
-        if portada and portada.filename:
-            tiempo = datetime.now()
-            horaActual = tiempo.strftime('%Y%H%M%S')
-            portada_nombre = horaActual + "_" + portada.filename
-            portada.save(os.path.join(app.config['UPLOAD_FOLDER'], portada_nombre))
-        else:
-            portada_nombre = None
-        
-        if libro and allowed_file(libro.filename):
-            tiempo = datetime.now()
-            horaActual = tiempo.strftime('%Y%H%M%S')
-            nuevoNombre = horaActual + "_" + libro.filename
-            libro.save(os.path.join(app.config['UPLOAD_FOLDER'], nuevoNombre))
-        else:
-            flash('Archivo no permitido o no proporcionado.')
-            return redirect(request.url)  # Redirige para corregir el error
-
-        connection = pymysql.connect(
-            host='localhost',
-            user='root',
-            password='',
-            database='jes'
-        )
-        
-        cursor = connection.cursor(pymysql.cursors.DictCursor)
-        
-        cursor.execute('SELECT id_curso FROM cursos WHERE nombre = %s', (curso,))
-        curso_result = cursor.fetchone()
-
-        sql_cursos = 'SELECT * FROM cursos'
-        cursor.execute(sql_cursos)
-
-        cursos = cursor.fetchall()
-        
-        cursor.execute('SELECT id_asignatura FROM asignaturas WHERE nom_asignatura = %s', (materia,))
-        asignatura_result = cursor.fetchone()
-        
-        if curso_result and asignatura_result:
-            id_curso = curso_result['id_curso']
-            id_asignatura = asignatura_result['id_asignatura']
-            
-            sql = '''
-            INSERT INTO libros (id_libro, id_asignatura, id_curso, titulo, subir_libro, portada)
-            VALUES (NULL, %s, %s, %s, %s, %s)
-            '''
-
-            datos = (id_asignatura, id_curso, titulo, nuevoNombre, portada_nombre)
-            cursor.execute(sql, datos)
-            connection.commit()
-            flash("Libro agregado correctamente.")
-        else:
-            if not curso_result:
-                flash(f"El curso '{curso}' no existe. Por favor, verifica el nombre.")
-            if not asignatura_result:
-                flash(f"La asignatura '{materia}' no existe. Por favor, verifica el nombre.")
-            connection.rollback()
-        
-        cursor.close()
-        connection.close()
-        
-        return redirect('/profesor/refuerzo/libros/')
+    # Conectar a la base de datos
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    cursor = connection.cursor()
     
-    return render_template('p-agregar-libro.html', cursos=cursos)
+    # Obtener los datos del formulario
+    titulo = request.form.get('titulo_libro')
+    curso = request.form.get('curso_libro')
+    materia = request.form.get('materia_libro')
+    
+    # Manejar los archivos
+    portada_libro = request.files.get('portada_libro')
+    subir_libro = request.files.get('subir_libro')
+    
+    # Guardar los archivos de manera segura
+    portada_filename = secure_filename(portada_libro.filename)
+    libro_filename = secure_filename(subir_libro.filename)
+    
+    # Definir la ruta de almacenamiento
+    portada_path = os.path.join('static/imagenes/recursos', portada_filename)
+    libro_path = os.path.join('static/documentos', libro_filename)
+    
+    # Guardar los archivos en el servidor
+    portada_libro.save(portada_path)
+    subir_libro.save(libro_path)
+    
+    # Consulta SQL para insertar los datos
+    sql = '''
+        INSERT INTO libros (titulo, id_curso, id_asignatura, subir_libro, portada)
+        VALUES (%s, %s, %s, %s, %s)
+    '''
+    
+    # Ejecutar la consulta
+    cursor.execute(sql, (titulo, curso, materia, libro_path, portada_path))
+    connection.commit()
+    
+    # Cerrar la conexión
+    cursor.close()
+    connection.close()
+
+    # Redireccionar después de la inserción
+    return redirect('/profesor/refuerzo/libros/')
+
+    # return render_template('p-agregar-libro.html', cursos=cursos)
 
 
 @app.route('/profesor/agregar/video/')
