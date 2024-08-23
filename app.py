@@ -2,7 +2,7 @@ import os
 import pymysql
 from flask import Flask, render_template, request, redirect, session, send_from_directory, url_for, flash
 from werkzeug.utils import secure_filename
-from datetime import datetime
+from datetime import datetime #para asegurar nombres de archivos seguros
 # from flask_mysqldb import MySQL
 # import MySQLdb.cursors
 # Crear la aplicación
@@ -17,14 +17,12 @@ app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'jes'
 
-# Carpeta para subir los archivos, fotos, pdf, etc.
-UPLOAD_FOLDER = '/static/documentos'  
-if not os.path.exists(UPLOAD_FOLDER):
-    os.makedirs(UPLOAD_FOLDER)
+
 
 # Configurar la carpeta de carga
 app.config['UPLOAD_FOLDER'] = os.path.join(app.root_path, 'static', 'documentos')
-app.config['ALLOWED_EXTENSIONS'] = {'pdf', 'doc', 'docx', 'xlsx', 'xls'}
+app.config['ALLOWED_EXTENSIONS'] = {'pdf', 'doc', 'docx', 'xlsx', 'xls'} #verificará si el archivo tiene una extensión permitida.
+
 
 # Esta función verifica si un archivo tiene una extensión permitida.
 def allowed_file(filename):
@@ -1015,7 +1013,7 @@ def guardar_calendario(schedule_data):
         
 # =========================================================
 
-# APARTADO DEL PROFESORES EN PYTHON Smailyn 
+# APARTADO DEL PROFESORES Smailyn
 @app.route('/home/profesor/')
 def p_home():
     return render_template('./profesor/p-home-a.html')
@@ -1028,8 +1026,9 @@ def p_perfil():
 def p_refuerzo_libros():
     return render_template('./profesor/p-refuerzo-libros.html')
 
-@app.route('/profesor/refuerzo/libros/')
-def lista_libro():
+
+@app.route('/profesor/refuerzo/libros/', methods=['GET'])
+def listar_libros():
     connection = pymysql.connect(
         host='localhost',
         user='root',
@@ -1041,6 +1040,7 @@ def lista_libro():
     cursor.execute('SELECT * FROM libros')
     libros = cursor.fetchall()
     cursor.close()
+    connection.close()
     
     return render_template('p-refuerzo-libros.html', libros=libros)
 
@@ -1068,7 +1068,8 @@ def eliminar_libro(id_libro):
 def p_libro_refuerzo():
     return render_template('./profesor/p-libro-refuerzo.html')
 
-@app.route('/ver/libro/<int:id_libro>')
+
+@app.route('/ver_libro/<int:id_libro>', methods=['GET'])
 def ver_libro(id_libro):
     connection = pymysql.connect(
         host='localhost',
@@ -1081,13 +1082,14 @@ def ver_libro(id_libro):
     cursor.execute('SELECT * FROM libros WHERE id_libro = %s', (id_libro,))
     libro = cursor.fetchone()
     cursor.close()
-
-    if libro:
+    connection.close()
     
-        archivo = libro.get('subir_libro')
-        return render_template('p-libro-refuerzo.html', libro=libro, archivo=archivo)
+    if libro:
+        archivo = libro['subir_libro']
+        return render_template('p-libro-refuerzo.html', archivo=archivo, libros=libro)
     else:
-        return 'Libro no encontrado', 404
+        flash("El libro solicitado no existe.")
+        return redirect('/profesor/refuerzo/libros/')
 
 @app.route('/profesor/refuerzo/videos/')
 def p_refuerzo_videos():
@@ -1141,36 +1143,45 @@ def agregar_libro():
 @app.route('/profesor/agregar/libros/', methods=['GET', 'POST'])
 def p_agregar_libro():
     if request.method == 'POST':
-        portada = request.files.get('portada_libro')
+        portada = request.files.get('portada-libro')
         titulo = request.form.get('titulo-libro')
         curso = request.form.get('curso-libro')
         materia = request.form.get('materia-libro')
         libro = request.files.get('subir-libro')
         
-        # Procesar portada
-        portada_nombre = portada.filename if portada and portada.filename else None
+        if portada and portada.filename:
+            tiempo = datetime.now()
+            horaActual = tiempo.strftime('%Y%H%M%S')
+            portada_nombre = horaActual + "_" + portada.filename
+            portada.save(os.path.join(app.config['UPLOAD_FOLDER'], portada_nombre))
+        else:
+            portada_nombre = None
         
-        # Procesar archivo del libro
-        if libro and libro.filename:
+        if libro and allowed_file(libro.filename):
             tiempo = datetime.now()
             horaActual = tiempo.strftime('%Y%H%M%S')
             nuevoNombre = horaActual + "_" + libro.filename
             libro.save(os.path.join(app.config['UPLOAD_FOLDER'], nuevoNombre))
         else:
-            nuevoNombre = None
-        
-        # Conexión a la base de datos
+            flash('Archivo no permitido o no proporcionado.')
+            return redirect(request.url)  # Redirige para corregir el error
+
         connection = pymysql.connect(
             host='localhost',
             user='root',
             password='',
             database='jes'
         )
+        
         cursor = connection.cursor(pymysql.cursors.DictCursor)
         
-        # Verificar que el curso y la asignatura existen
         cursor.execute('SELECT id_curso FROM cursos WHERE nombre = %s', (curso,))
         curso_result = cursor.fetchone()
+
+        sql_cursos = 'SELECT * FROM cursos'
+        cursor.execute(sql_cursos)
+
+        cursos = cursor.fetchall()
         
         cursor.execute('SELECT id_asignatura FROM asignaturas WHERE nom_asignatura = %s', (materia,))
         asignatura_result = cursor.fetchone()
@@ -1179,17 +1190,16 @@ def p_agregar_libro():
             id_curso = curso_result['id_curso']
             id_asignatura = asignatura_result['id_asignatura']
             
-            # Insertar el libro en la base de datos
             sql = '''
             INSERT INTO libros (id_asignatura, id_curso, titulo, subir_libro, portada)
             VALUES (%s, %s, %s, %s, %s)
             '''
+
             datos = (id_asignatura, id_curso, titulo, nuevoNombre, portada_nombre)
             cursor.execute(sql, datos)
             connection.commit()
             flash("Libro agregado correctamente.")
         else:
-            # Manejo del caso donde no se encuentra el curso o la asignatura
             if not curso_result:
                 flash(f"El curso '{curso}' no existe. Por favor, verifica el nombre.")
             if not asignatura_result:
@@ -1201,7 +1211,7 @@ def p_agregar_libro():
         
         return redirect('/profesor/refuerzo/libros/')
     
-    return render_template('p-agregar-libro.html')
+    return render_template('p-agregar-libro.html', cursos=cursos)
 
 
 @app.route('/profesor/agregar/video/')
