@@ -1299,12 +1299,13 @@ def p_agregar_libro():
     libro_filename = secure_filename(subir_libro.filename)
     
     # Definir la ruta de almacenamiento
-    portada_path = os.path.join('static/imagenes/recursos', portada_filename)
-    libro_path = os.path.join('static/documentos', libro_filename)
+    portada_path = os.path.join('./static/imagenes/recursos', portada_filename)
+    libro_path = os.path.join('./static/documentos', libro_filename)
     
     # Guardar los archivos en el servidor
     portada_libro.save(portada_path)
     subir_libro.save(libro_path)
+    
     
     # Consulta SQL para insertar los datos
     sql = '''
