@@ -1290,22 +1290,27 @@ def p_agregar_libro():
     curso = request.form.get('curso_libro')
     materia = request.form.get('materia_libro')
     
+    print(f"Titulo: {titulo}, Curso: {curso}, Materia: {materia}")  # Agregado para depuración
+    
     # Manejar los archivos
     portada_libro = request.files.get('portada_libro')
     subir_libro = request.files.get('subir_libro')
     
-    # Guardar los archivos de manera segura
-    portada_filename = secure_filename(portada_libro.filename)
-    libro_filename = secure_filename(subir_libro.filename)
-    
-    # Definir la ruta de almacenamiento
-    portada_path = os.path.join('./static/imagenes/recursos', portada_filename)
-    libro_path = os.path.join('./static/documentos', libro_filename)
-    
-    # Guardar los archivos en el servidor
-    portada_libro.save(portada_path)
-    subir_libro.save(libro_path)
-    
+    if portada_libro and subir_libro:
+        # Guardar los archivos de manera segura
+        portada_filename = secure_filename(portada_libro.filename)
+        libro_filename = secure_filename(subir_libro.filename)
+        
+        # Definir la ruta de almacenamiento
+        portada_path = os.path.join('./static/imagenes/recursos', portada_filename)
+        libro_path = os.path.join('./static/documentos', libro_filename)
+        
+        # Guardar los archivos en el servidor
+        portada_libro.save(portada_path)
+        subir_libro.save(libro_path)
+    else:
+        portada_path = ''
+        libro_path = ''
     
     # Consulta SQL para insertar los datos
     sql = '''
@@ -1380,18 +1385,29 @@ def p_agregar_material():
 @app.route('/profesor/agregar/material', methods=['GET', 'POST'])
 def agregar_material():
     if request.method == 'POST':
-        fondo_material = request.files['fondo-material']
-        nombre_material = request.form['nombre-material']
-        recurso_de_estudio = request.files['recurso-de-estudio']
-        descripcion_material = request.form['descripcion-material']
+        fondo_material = request.files.get('fondo-material')
+        nombre_material = request.form.get('nombre-material')
+        recurso_de_estudio = request.files.get('recurso-de-estudio')
+        descripcion_material = request.form.get('con-material')
+
+        if not fondo_material or not recurso_de_estudio:
+            return "Faltan archivos o datos en el formulario", 400
 
         tiempo = datetime.now()
         horaActual = tiempo.strftime('%Y%H%M%S')
         nombreArchivo = horaActual + "_" + secure_filename(recurso_de_estudio.filename)
         recurso_de_estudio.save(os.path.join(app.config['UPLOAD_FOLDER'], nombreArchivo))
         
-        sql = "INSERT INTO material_estudio (id_curso, id_asignatura, titulo, fondo, material, descripcion) VALUES (2, %s, %s, %s, %s, %s)"
-        datos = (nombre_material, secure_filename(fondo_material.filename), nombreArchivo, descripcion_material)
+        fondo_nombre_archivo = secure_filename(fondo_material.filename)
+        if fondo_material:
+            fondo_material.save(os.path.join(app.config['UPLOAD_FOLDER'], fondo_nombre_archivo))
+        
+        id_asignatura = 2401  # Cambia este valor si es necesario, asegúrate de que exista en la tabla `asignaturas`
+        sql = """
+            INSERT INTO material_estudio (id_curso, id_asignatura, titulo, material_subido, fondo, descripcion) 
+            VALUES (1, %s, %s, %s, %s, %s)
+        """
+        datos = (id_asignatura, nombre_material, nombreArchivo, fondo_nombre_archivo, descripcion_material)
         
         connection = pymysql.connect(
             host='localhost',
@@ -1405,8 +1421,55 @@ def agregar_material():
         connection.commit()
         cursor.close()
 
-        return redirect(url_for('p-refuerzo-libros'))
-    return render_template('./profesor/p-agregar-material.html')
+        return redirect(url_for('p_material_estudio'))
+    return render_template('profesor/p-agregar-material.html')
+
+
+@app.route('/profesor/ver/material', methods=['GET']) 
+def ver_material(): 
+ 
+    connection = pymysql.connect( 
+        host='localhost', 
+        user='root', 
+        password='', 
+        database='jes' 
+    ) 
+     
+    cursor = connection.cursor(pymysql.cursors.DictCursor) 
+     
+    # Ejecutar la consulta para obtener todos los materiales de estudio 
+    sql = "SELECT * FROM material_estudio" 
+    cursor.execute(sql) 
+    materiales = cursor.fetchall() 
+    cursor.close() 
+    connection.close() 
+     
+    # Renderizar la plantilla con los materiales obtenidos 
+    return render_template('./profesor/p-recurso-estudio.html', materiales=materiales)
+
+@app.route('/profesor/material_estudio')
+def material_estudio():
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
+    
+    cursor.execute("SELECT * FROM material_estudio")
+    materiales = cursor.fetchall()
+    
+    # Imprime los datos en la consola para verificar que no están vacíos
+    print(materiales)
+    
+    cursor.close()
+    connection.close()
+    
+    return render_template('p-material_estudio.html', materiales=materiales)
+
+
 
 @app.route('/profesor/recurso/estudio/')
 def p_recurso_estudio():
