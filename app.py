@@ -1435,16 +1435,17 @@ def ver_material():
         database='jes' 
     ) 
      
+     
+    print("Iniciando p_material_estudio...") 
     cursor = connection.cursor(pymysql.cursors.DictCursor) 
      
-    # Ejecutar la consulta para obtener todos los materiales de estudio 
     sql = "SELECT * FROM material_estudio" 
     cursor.execute(sql) 
     materiales = cursor.fetchall() 
     cursor.close() 
     connection.close() 
+    print(materiales)
      
-    # Renderizar la plantilla con los materiales obtenidos 
     return render_template('./profesor/p-recurso-estudio.html', materiales=materiales)
 
 @app.route('/profesor/material_estudio')
@@ -1458,7 +1459,8 @@ def material_estudio():
     
     cursor = connection.cursor(pymysql.cursors.DictCursor)
     
-    cursor.execute("SELECT * FROM material_estudio")
+    sql = ("SELECT * FROM material_estudio")
+    cursor.execute(sql)
     materiales = cursor.fetchall()
     
     # Imprime los datos en la consola para verificar que no están vacíos
@@ -1468,7 +1470,6 @@ def material_estudio():
     connection.close()
     
     return render_template('p-material_estudio.html', materiales=materiales)
-
 
 
 @app.route('/profesor/recurso/estudio/')

@@ -48,10 +48,10 @@
                             <img src="{{ url_for('static', filename=material.fondo) }}" alt="imagen-fondo-estudio"> 
                         </figure> 
                         <div class="link-material"> 
-                            <form action="{{ url_for('ver_material', id_material=material['id_asignatura']) }}" method="post"> 
+                            <form action="{{ url_for('ver_material', id_material=material_subido) }}" method="post">
                                 <button type="submit">ver material</button> 
                             </form> 
-                            <a href="/profesor/recurso/estudio/{{ material.id_material }}">ver material</a>                             
+                                                      
                         </div> 
                     </div> 
                 </article> 
