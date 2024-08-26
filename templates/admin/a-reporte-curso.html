@@ -38,22 +38,11 @@
                                 <h2 class="titulo-material">Reporte de Estudio</h2>
                                 <form action="#" class="form-agg-material" id="form-a-reporte-curso">
                                     <select name="seccion-cursos" id="seccion-cursos">
-                                        <optgroup label="Seccion-A">
+                                        <optgroup>
                                             <option value="" selected disabled>cursos</option>
-                                            <option value="1ro">1ro</option>
-                                            <option value="2do">2do</option>
-                                            <option value="3ro">3ro</option>
-                                            <option value="4to">4to</option>
-                                            <option value="5to">5to</option>
-                                            <option value="6to">6to</option>
-                                        </optgroup>
-                                        <optgroup label="Seccion-B">
-                                            <option value="1ro">1ro</option>
-                                            <option value="2do">2do</option>
-                                            <option value="3ro">3ro</option>
-                                            <option value="4to">4to</option>
-                                            <option value="5to">5to</option>
-                                            <option value="6to">6to</option>
+                                            {% for curso in cursos %}
+                                            <option value="{{ curso.id }}">{{ curso.nombre }}</option>
+                                            {% endfor %}
                                         </optgroup>
                                     </select>                               
                                 </form>                        

@@ -22,16 +22,19 @@
             <div id="profesorList">
                 <!-- Lista para mostrar los profesores -->
             </div>
-            <button id="addProfesorBtn" class="btn">Agregar</button>
-        </div>
-        <div id="assignmentForm" style="display:none;">
-            <h3>Asignar Profesor</h3>
-            <form>
-                <input type="hidden" id="selectedProfesorId">
-                <label for="cursosSelect">Curso:</label>
-                <select id="cursosSelect"></select>
-                <button type="submit">Asignar</button>
-            </form>
+            <div id="assignmentForm" style="display:none;">
+                <h3>Asignar Profesor</h3>
+                <form onsubmit="manejarAsignacion(event)">
+                    <input type="hidden" id="selectedProfesorId">
+                    <label for="cursosSelect">Curso:</label>
+                    <select id="cursosSelect">
+                        {% for curso in cursos %}
+                        <option value="{{ curso.id_curso }}">{{ curso.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit">Asignar</button>
+                </form>
+            </div>
         </div>
     </div>
 </main>

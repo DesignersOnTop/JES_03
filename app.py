@@ -1,6 +1,6 @@
 import os
 import pymysql
-from flask import Flask, render_template, request, redirect, session, send_from_directory, url_for, flash
+from flask import Flask, render_template, request, redirect, session, send_from_directory, url_for, flash, jsonify
 from werkzeug.utils import secure_filename
 from datetime import datetime #para asegurar nombres de archivos seguros
 # from flask_mysqldb import MySQL
@@ -543,72 +543,6 @@ def mostrar_estudiantes(id_curso):
 
     return render_template('./admin/a-curso.html', estudiantes=estudiantes, profesores=profesores)
 
-@app.route('/admin/buscarProfesores', methods = ['GET'])
-def buscarProfesor():
-    option = request.args.get('option')
-    query = request.args.get('query')
-
-    connection = pymysql.connect(
-        host='localhost',
-        user='root',
-        password='',
-        database='jes'
-    )
-    
-    cursor = connection.cursor(pymysql.cursors.DictCursor)
-    
-    # Se hace una validación: en el primer if buscará si la opción que elegimos es materia, de ahí buscara en la base de datos en la tabla asignaturas (es donde están registradas todas las materias).
-
-    # En el segundo buscará especificamente por la matricula del profesor (una busqueda más directa y precisa).
-
-    # Por último en el ELSE ya que no encontrará mostrará a todos pero sin parametros.
-
-    if option == 'materia':
-        sql = "SELECT * FROM profesores WHERE id_asignatura LIKE %s"
-        param = f"%{query}%"
-    elif option == 'matricula':
-        sql = "SELECT * FROM profesores WHERE matricula LIKE %s"
-        param = f"%{query}%"
-    else:
-        sql = "SELECT * FROM profesores"
-        param = None
-
-    cursor.execute(sql, (param,) if param else None)
-    profesores = cursor.fetchall()
-
-    sql_cursos = 'SELECT * FROM cursos'
-    cursor.execute(sql_cursos)
-    cursos = cursor.fetchall()
-
-    cursor.close()
-    connection.close()
-
-    return profesores, cursos
-
-@app.route('/admin/asignarProfesor', methods=['POST'])
-def asignarProfesor():
-    data = request.get_json()
-    id_profesor = data.get('id_profesor')
-    id_curso = data.get('id_curso')
-
-    connection = pymysql.connect(
-        host='localhost',
-        user='root',
-        password='',
-        database='jes'
-    )
-    
-    cursor = connection.cursor()
-
-    sql = "INSERT INTO profesor_asignado (id_profesor, id_curso) VALUES (%s, %s)"
-    cursor.execute(sql, (id_profesor, id_curso))
-    connection.commit()
-
-    cursor.close()
-    connection.close()
-    
-    return redirect('admin/cursos/')
-
 @app.route('/admin/materias/')
 def a_materias():
     connection = pymysql.connect(
@@ -638,7 +572,70 @@ def a_asignar_profesores():
 
     cursor = connection.cursor(pymysql.cursors.DictCursor)
 
-    return render_template('./admin/a-agregar-profesor-cursos.html')
+    sql_cursos = 'SELECT * FROM cursos'
+    cursor.execute(sql_cursos)
+    cursos = cursor.fetchall()
+
+    sql_profesor = 'SELECT * FROM profesores'
+    cursor.execute(sql_profesor)
+    profesores = cursor.fetchall()
+
+    cursor.close()
+    connection.close()
+
+    return render_template('./admin/a-agregar-profesor-cursos.html', cursos=cursos, profesores=profesores)
+
+@app.route('/admin/buscar-profesores')
+def search_profesores():
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
+
+    search_option = request.args.get('searchOption')
+    query = request.args.get('query')
+
+    if search_option == 'asignatura':
+        cursor.execute('SELECT * FROM profesores WHERE id_asignatura = %s', (query,))
+    elif search_option == 'matricula':
+        cursor.execute('SELECT * FROM profesores WHERE matricula = %s', (query,))
+    else:
+        cursor.execute('SELECT * FROM profesores')
+
+    profesores = cursor.fetchall()
+
+    cursor.close()
+    connection.close()
+
+    return jsonify(profesores)
+
+@app.route('/admin/asignar-profesor', methods = ['POST'])
+def asignar_profesor():
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
+
+    data = request.get_json()
+    id_profesor = data['profesorId']
+    id_curso = data['cursoId']
+
+    cursor.execute('INSERT INTO profesor_asignado (id_profesor_asignado, id_profesor, id_curso) VALUES (NULL, %s, %s)', (id_profesor, id_curso))
+    connection.commit()
+    response = 'success'
+
+    cursor.close()
+    connection.close()
+
+    return redirect('/home/admin/')
 
 @app.route('/admin/agregar_materias/', methods = ['POST', 'GET'])
 def a_agg_materias():
@@ -725,10 +722,13 @@ def a_reportes():
     cursor.execute('SELECT * FROM profesores JOIN asignaturas on asignaturas.id_asignatura = profesores.id_asignatura')
     profesores = cursor.fetchall()
 
+    cursor.execute('SELECT * FROM cursos')
+    cursos = cursor.fetchall()
+
     cursor.close()
     connection.close()
 
-    return render_template('./admin/a-reporte-curso.html', profesores=profesores)
+    return render_template('./admin/a-reporte-curso.html', profesores=profesores, cursos=cursos)
 
 @app.route('/admin/reportes-profesor/<int:id_profesor_asignado>')
 def a_reporte_profesor(id_profesor_asignado):
@@ -747,12 +747,12 @@ def a_reporte_profesor(id_profesor_asignado):
 
     sql_profesor = ('SELECT * FROM profesores JOIN asignaturas on asignaturas.id_asignatura = profesores.id_asignatura WHERE id_profesor = %s')
     cursor.execute(sql_profesor, (id_profesor_asignado,))
-    profesor = cursor.fetchone()
+    profesores = cursor.fetchone()
 
     cursor.close()
     connection.close()
     
-    return render_template('./admin/a-reporte-profesor.html', reportes=reportes, profesor=profesor)
+    return render_template('./admin/a-reporte-profesor.html', reportes=reportes, profesores=profesores)
 
 @app.route('/admin/perfil/')
 def a_perfil():
@@ -1101,7 +1101,7 @@ def a_cursos_estudiantes():
 
     estudiantes = cursor.fetchall()
     cursor.close()
-    return render_template('./admin/a-estudiante-1_a.html')
+    return render_template('./admin/a-estudiante-1_a.html', estudiantes=estudiantes)
 
 @app.route('/admin/horario/<int:id_horario>', methods = ['GET'])
 def a_horario_profesor():
