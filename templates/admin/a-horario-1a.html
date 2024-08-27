@@ -50,56 +50,19 @@
                                 <th>Jueves</th>
                                 <th>Viernes</th>
                             </tr>
+                            {% for hora, dias in horarios|groupby('hora') %}
                             <tr>
-                                <td>7:00</td>
-                                <td><input type="text" name="horario[7:00][Lunes]" value="Matem&aacute;ticas"></td>
-                                <td><input type="text" name="horario[7:00][Martes]" value="L. Española"></td>
-                                <td><input type="text" name="horario[7:00][Miercoles]" value="Naturales"></td>
-                                <td><input type="text" name="horario[7:00][Jueves]" value="Sociales"></td>
-                                <td><input type="text" name="horario[7:00][Viernes]" value="Artes"></td>
+                                <td>{{ hora }}</td>
+                                {% for dia in ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'] %}
+                                <td>
+                                    <input type="text" name="horario[{{ hora }}][{{ dia }}]" 
+                                    value="{{ dias.get(dia, '') }}">
+                                </td>
+                                {% endfor %}
                             </tr>
-                            <tr>
-                                <td>8:00</td>
-                                <td><input type="text" name="horario[8:00][Lunes]" value="Sociales"></td>
-                                <td><input type="text" name="horario[8:00][Martes]" value="Artes"></td>
-                                <td><input type="text" name="horario[8:00][Miercoles]" value="Ed. Física"></td>
-                                <td><input type="text" name="horario[8:00][Jueves]" value="Matemáticas"></td>
-                                <td><input type="text" name="horario[8:00][Viernes]" value="Naturales"></td>
-                            </tr>
-                            <tr>
-                                <td>9:00</td>
-                                <td>RE</td>
-                                <td>C</td>
-                                <td>R</td>
-                                <td>E</td>
-                                <td>O</td>
-                            </tr>
-                            <tr>
-                                <td>10:00</td>
-                                <td><input type="text" name="horario[10:00][Lunes]" value="Inglés"></td>
-                                <td><input type="text" name="horario[10:00][Martes]" value="Religión"></td>
-                                <td><input type="text" name="horario[10:00][Miercoles]" value="Inglés"></td>
-                                <td><input type="text" name="horario[10:00][Jueves]" value="Informática"></td>
-                                <td><input type="text" name="horario[10:00][Viernes]" value="Sociales"></td>
-                            </tr>
-                            <tr>
-                                <td>11:00</td>
-                                <td><input type="text" name="horario[11:00][Lunes]" value="Informática"></td>
-                                <td><input type="text" name="horario[11:00][Martes]" value="Matemáticas"></td>
-                                <td><input type="text" name="horario[11:00][Miercoles]" value="Sociales"></td>
-                                <td><input type="text" name="horario[11:00][Jueves]" value="Ed. Física"></td>
-                                <td><input type="text" name="horario[11:00][Viernes]" value="L. Española"></td>
-                            </tr>
-                            <tr>
-                                <td>12:00</td>
-                                <td><input type="text" name="horario[12:00][Lunes]" value="Religión"></td>
-                                <td><input type="text" name="horario[12:00][Martes]" value="Sociales"></td>
-                                <td><input type="text" name="horario[12:00][Miercoles]" value="Artes"></td>
-                                <td><input type="text" name="horario[12:00][Jueves]" value="Inglés"></td>
-                                <td><input type="text" name="horario[12:00][Viernes]" value="Matemáticas"></td>
-                            </tr>
-                            <button type="submit">Guardar</button>
+                            {% endfor %}
                             </table>
+                            <button type="submit">Guardar</button>
                         </form>
                     </div>
                 </article>

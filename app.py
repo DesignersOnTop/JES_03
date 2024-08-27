@@ -634,9 +634,6 @@ def asignar_profesor():
     id_profesor = request.form.get('id_profesor')
     id_curso = request.form.get('id_curso')
 
-    print("ID Profesor recibido:", id_profesor)  # Verificar el ID recibido
-    print("ID Curso recibido:", id_curso)  # Verificar el ID del curso recibido
-
     cursor.execute('INSERT INTO profesor_asignado (id_profesor_asignado, id_profesor, id_curso) VALUES (NULL, %s, %s)', (id_profesor, id_curso))
     connection.commit()
 
@@ -1115,8 +1112,8 @@ def a_cursos_estudiantes():
     cursor.close()
     return render_template('./admin/a-estudiante-1_a.html', estudiantes=estudiantes)
 
-@app.route('/admin/horario/<int:id_horario>', methods = ['GET'])
-def a_horario_profesor():
+@app.route('/admin/horario/')
+def horario():
     connection = pymysql.connect(
         host='localhost',
         user='root',
@@ -1125,51 +1122,63 @@ def a_horario_profesor():
     )
     
     cursor = connection.cursor(pymysql.cursors.DictCursor)
+    query = '''
+        SELECT 
+            h.id_hora,
+            h.id_dias,
+            d.dia AS dia,  -- Cambiado a 'dia'
+            hora.hora AS hora,
+            a.asignatura AS asignatura
+        FROM horario h
+        JOIN hora ON h.id_hora = hora.id_hora
+        JOIN dias d ON h.id_dias = d.id_dias
+        JOIN asignaturas a ON h.id_asignatura = a.id_asignatura
+        ORDER BY hora.hora, d.id_dias
+        '''
+    cursor.execute(query)
+    horarios = cursor.fetchall()
+    connection.close()
+    return render_template('horario.html', horarios=horarios)
 
-    cursor.execute('SELECT * FROM horario JOIN cursos')
-    horario = cursor.fetchall()
 
-    cursor.close()
+@app.route('/admin/guardar_horario/', methods=['POST'])
+def guardar_horario():
+    horario_data = request.form.to_dict(flat=False)
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
+    with connection.cursor() as cursor:
+        for hora, asignaturas in horario_data.items():
+            if hora.startswith('horario['):
+                hora = hora.split('[')[1].split(']')[0]
+                for dia, asignatura in zip(['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes'], asignaturas):
+                    # Suponiendo que aquí también se realiza una conversión a IDs
+                    cursor.execute(
+                        '''
+                        UPDATE horario
+                        SET id_asignatura = (
+                            SELECT id_asignatura FROM asignaturas WHERE asignatura = %s
+                        )
+                        WHERE id_hora = (
+                            SELECT id_hora FROM hora WHERE hora = %s
+                        ) AND id_dias = (
+                            SELECT id_dias FROM dias WHERE dia = %s
+                        )
+                        ''',
+                        (asignatura, hora, dia)
+                    )
+    connection.commit()
     connection.close()
 
-    return render_template('./admin/a-horario-1a.html', horario=horario)
+    flash('Horario actualizado exitosamente!')
+    return redirect(url_for('horario'))
 
-@app.route('/admin/guardar_horario/', methods = ['POST'])
-def guardar_horario():
-    connection = pymysql.connect(
-        host='localhost',
-        user='root',
-        password='',
-        database='jes'
-    )
-    
-    cursor = connection.cursor(pymysql.cursors.DictCursor)
 
-    horario = request.form.get("horario")
-
-    if horario:
-        schedule_data = {}
-        for time_slot, days in horario.items():
-            schedule_data[time_slot] = days
-
-        connection.commit()
-
-        cursor.close()
-        connection.close()
-    
-    return redirect('/home/admin/')
-
-def guardar_calendario(schedule_data):
-    connection = pymysql.connect(
-        host='localhost',
-        user='root',
-        password='',
-        database='jes'
-    )
-    
-    cursor = connection.cursor(pymysql.cursors.DictCursor)
-
-    # for time_slot, days in schedule_data.items():
         
 # =========================================================
 
