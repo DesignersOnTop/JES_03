@@ -4,6 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const span = document.getElementsByClassName("close")[0];
     const searchBtn = document.getElementById("searchBtn");
     const profesorList = document.getElementById("profesorList");
+    const assignmentForm = document.getElementById("assignmentForm");
+    const selectedProfesorIdInput = document.getElementById("selectedProfesorId");
+    const searchInput = document.getElementById("searchInput");
   
     // Abrir el modal
     btn.onclick = function() {
@@ -45,32 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Mostrar el formulario de asignación
     window.mostrarFormularioAsignacion = (id) => {
         assignmentForm.style.display = 'block';
-        selectedProfesorIdInput.value = id;
+        selectedProfesorIdInput.value = id; 
+        console.log("ID Profesor asignado:", id); // Verificar el ID
     };
-
-    // Manejar la asignación del profesor al curso
-    window.manejarAsignacion = (event) => {
-    event.preventDefault();
-    const profesorId = selectedProfesorIdInput.value;
-    const cursoId = document.getElementById('cursosSelect').value;
-
-        fetch('/admin/asignar-profesor', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ profesorId, cursoId }),
-    })
-    .then(response => response.text())
-    .then(result => {
-        console.log('Respuesta del servidor:', result);
-        if (result === 'success') {
-            alert('Profesor asignado al curso exitosamente.');
-            assignmentForm.style.display = 'none';
-            searchInput.value = '';
-            searchBtn.click();
-        } else {
-            alert('Error al asignar el profesor.');
-        }
-    })
 });

@@ -20,9 +20,6 @@
                 </div>
                 <nav class="nav-container">
                     <ul>
-                        <li class="nav-perfil">
-                            <a href="/admin/perfil" class="li-perfil"><figure><img src="{{ url_for('static', filename='imagenes/recursos/perfil-masculino-3.jpg') }}" alt="perfil"></figure></a>
-                        </li>
                         <li class="nav-menu-home">
                             <a href="#" class="menu"><figure><img src="{{ url_for('static', filename='imagenes/iconos/menu.svg') }}" alt="menu"></figure></a>
                         </li>
@@ -38,16 +35,16 @@
                         <figure><img src="{{ url_for('static', filename='imagenes/iconos/formulario.svg') }}" alt="refuerzo-de-clase-img"></figure>                     
                     </a>
                 </article>
+                <article class="calendario-container">
+                    <a href="/admin/reportes/">
+                        <h2>{{admin.nombre_admin}} {{a_apellido}}</h2> 
+                        <figure><img src="{{ url_for('static', filename='{{admin.a_img_perfil}}') }}" alt="recordatorio"></figure>
+                    </a>
+                </article>
                 <article class="material-container">
                     <a href="/admin/materias/">
                         <figure class="material-figure"><img src="{{ url_for('static', filename='imagenes/iconos/capas.svg') }}" alt="perfil-estudiante"></figure>
                         <h2>Asignaturas</h2>                        
-                    </a>
-                </article>
-                <article class="calendario-container">
-                    <a href="/admin/reportes/">
-                        <h2>Reportes de los cursos</h2> 
-                        <figure><img src="{{ url_for('static', filename='imagenes/iconos/calendario-reloj.svg') }}" alt="recordatorio"></figure>
                     </a>
                 </article>
             </section>

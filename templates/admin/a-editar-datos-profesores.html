@@ -11,9 +11,10 @@
     <main id="registro-modal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <form action="{{ url_for('actualizar_profesor') }}" method="post" class="form-container">
+            <form action="/admin/actualizar_profesor" method="post" class="form-container">
                 <fieldset>
                     <legend>Editar Perfil de Profesor</legend>
+                    <input type="hidden" name="id_profesor" value="{{ profesor.id_profesor }}">
                     <div class="form-group">
                         <div class="subir-imagen-registro">
                             <div class="imagen-registro-preview" id="preview">

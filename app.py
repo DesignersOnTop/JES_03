@@ -57,6 +57,7 @@ def Index():
     
 @app.route('/login', methods=['POST'])
 def login():
+    session.clear()
     matricula = request.form['matricula-sesion']
     password = request.form['pass-sesion']
     
@@ -66,7 +67,7 @@ def login():
         password='',
         database='jes'
     )
-    
+
     cursor = connection.cursor(pymysql.cursors.DictCursor)
     
     # Verificación de estudiantes
@@ -93,7 +94,6 @@ def login():
         session['role'] = 'admin'
         return redirect('/home/admin/')
     return redirect('/')
-
 # HOME ESTUDIANTE
 @app.route('/home/estudiante/', methods=['GET'])
 def home_estudiante():
@@ -466,13 +466,16 @@ def e_videos(titulo):
 
 @app.route('/home/admin/')
 def a_home():
+
     connection = pymysql.connect(
         host='localhost',
         user='root',
         password='',
         database='jes'
     )
-    
+
+    id_admin = session['user_id']
+
     cursor = connection.cursor(pymysql.cursors.DictCursor)
     # Estudiantes
     cursor.execute('SELECT *, cursos.nombre AS nombre_curso FROM estudiantes JOIN cursos on cursos.id_curso = estudiantes.id_curso')
@@ -480,9 +483,13 @@ def a_home():
     # Profesores
     cursor.execute('SELECT * FROM profesores JOIN asignaturas on asignaturas.id_asignatura = profesores.id_asignatura')
     profesores = cursor.fetchall()
+
+    #admin
+    cursor.execute('SELECT a_img_perfil, nombre_admin, a_apellido FROM admin WHERE id_admin = %s',(id_admin,))
+    admin = cursor.fetchone()
     # Cerrar la conexion para seguridad
     cursor.close()
-    return render_template('./admin/a-home.html', estudiantes=estudiantes, profesores=profesores)
+    return render_template('./admin/a-home.html', estudiantes=estudiantes, profesores=profesores, admin=admin)
 
 @app.route('/admin/cursos/')
 def a_cursos():
@@ -561,29 +568,29 @@ def a_materias():
 
     return render_template('./admin/a-materias.html', asignaturas=asignaturas)
 
-@app.route('/admin/asignar-profesores/')
-def a_asignar_profesores():
-    connection = pymysql.connect(
-        host='localhost',
-        user='root',
-        password='',
-        database='jes'
-    )
+# @app.route('/admin/asignar-profesores/', methods=['GET'])
+# def a_asignar_profesores():
+#     connection = pymysql.connect(
+#         host='localhost',
+#         user='root',
+#         password='',
+#         database='jes'
+#     )
 
-    cursor = connection.cursor(pymysql.cursors.DictCursor)
+#     cursor = connection.cursor(pymysql.cursors.DictCursor)
 
-    sql_cursos = 'SELECT * FROM cursos'
-    cursor.execute(sql_cursos)
-    cursos = cursor.fetchall()
+#     sql_cursos = 'SELECT * FROM cursos'
+#     cursor.execute(sql_cursos)
+#     cursos = cursor.fetchall()
 
-    sql_profesor = 'SELECT * FROM profesores'
-    cursor.execute(sql_profesor)
-    profesores = cursor.fetchall()
+#     sql_profesor = 'SELECT * FROM profesores'
+#     cursor.execute(sql_profesor)
+#     profesores = cursor.fetchall()
 
-    cursor.close()
-    connection.close()
+#     cursor.close()
+#     connection.close()
 
-    return render_template('./admin/a-agregar-profesor-cursos.html', cursos=cursos, profesores=profesores)
+#     return render_template('./admin/a-agregar-profesor-cursos.html', cursos=cursos, profesores=profesores)
 
 @app.route('/admin/buscar-profesores')
 def search_profesores():
@@ -613,7 +620,7 @@ def search_profesores():
 
     return jsonify(profesores)
 
-@app.route('/admin/asignar-profesor', methods = ['POST'])
+@app.route('/admin/asignar-profesor', methods=['POST'])
 def asignar_profesor():
     connection = pymysql.connect(
         host='localhost',
@@ -624,18 +631,19 @@ def asignar_profesor():
 
     cursor = connection.cursor(pymysql.cursors.DictCursor)
 
-    data = request.get_json()
-    id_profesor = data['profesorId']
-    id_curso = data['cursoId']
+    id_profesor = request.form.get('id_profesor')
+    id_curso = request.form.get('id_curso')
+
+    print("ID Profesor recibido:", id_profesor)  # Verificar el ID recibido
+    print("ID Curso recibido:", id_curso)  # Verificar el ID del curso recibido
 
     cursor.execute('INSERT INTO profesor_asignado (id_profesor_asignado, id_profesor, id_curso) VALUES (NULL, %s, %s)', (id_profesor, id_curso))
     connection.commit()
-    response = 'success'
 
     cursor.close()
     connection.close()
 
-    return redirect('/home/admin/')
+    return redirect('/admin/profesores/')
 
 @app.route('/admin/agregar_materias/', methods = ['POST', 'GET'])
 def a_agg_materias():
@@ -1005,7 +1013,7 @@ def agregar_profesores():
     
     return redirect('/home/admin/')
 
-@app.route('/admin/actualizar_profesor', methods=['POST'])
+@app.route('/admin/actualizar_profesor', methods = ['POST'])
 def actualizar_profesor():
     connection = pymysql.connect(
                 host='localhost',
@@ -1018,7 +1026,7 @@ def actualizar_profesor():
 
     id_asignatura = request.form.get("id_asignatura")
     nombre = request.form.get("nombre")
-    apellidos = request.form.get("apellidos")
+    apellidos = request.form.get("apellido")
     direccion = request.form.get("direccion")
     cedula = request.form.get("cedula")
     genero = request.form.get("genero")
@@ -1069,7 +1077,6 @@ def eliminar_profesores():
 
 @app.route('/admin/profesores/')
 def a_cursos_profesor():
-    sql = 'SELECT * FROM profesores JOIN asignaturas on asignaturas.id_asignatura = profesores.id_asignatura'
 
     connection = pymysql.connect(
         host='localhost',
@@ -1078,12 +1085,17 @@ def a_cursos_profesor():
         database='jes'
     )
     
-    cursor = connection.cursor(pymysql.cursors.DictCursor)
+    cursor = connection.cursor(pymysql.cursors.DictCursor)    
+    sql = 'SELECT * FROM profesores JOIN asignaturas on asignaturas.id_asignatura = profesores.id_asignatura'
     cursor.execute(sql)
-
     profesores = cursor.fetchall()
+
+    sql_cursos = 'SELECT * FROM cursos'
+    cursor.execute(sql_cursos)
+    cursos = cursor.fetchall()
+
     cursor.close()
-    return render_template('./admin/a-profesor-1_a.html', profesores=profesores)
+    return render_template('./admin/a-profesor-1_a.html', profesores=profesores, cursos=cursos)
 
 @app.route('/admin/estudiantes')
 def a_cursos_estudiantes():
