@@ -1231,25 +1231,58 @@ def eliminar_libro():
     return redirect('/profesor/refuerzo/libros/')
 
 
-@app.route('/ver_libro/', methods=['GET'])
-def ver_libro():
-    
-    id_libro = request.args.get('id_libro')
-    
+# Ruta para subir archivos
+@app.route('/subir_libro', methods=['POST'])
+def subir_libro():
     connection = pymysql.connect(
         host='localhost',
         user='root',
         password='',
         database='jes'
     )
+    cursor = connection.cursor()
+
+    file = request.files['file']
     
-    cursor = connection.cursor(pymysql.cursors.DictCursor)
-    cursor.execute('SELECT * FROM libros WHERE id_libro = %s', (id_libro,))
-    libro = cursor.fetchone()
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        
+        cursor.execute('INSERT INTO libros (subir_libro) VALUES (%s)', (filename,))
+        connection.commit()
+    
     cursor.close()
     connection.close()
     
-    return render_template('./profesor/p-libro-refuerzo.html', libro=libro)
+    return redirect(url_for('p-refuerzo-libros'))
+
+# Ruta para ver archivos
+@app.route('/ver_libro', methods=['GET'])
+def ver_libro():
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
+
+    id_libro = request.args.get('id_libro')
+    
+    cursor.execute('SELECT subir_libro FROM libros WHERE id_libro = %s', (id_libro,))
+    libro = cursor.fetchone()
+    
+    cursor.close()
+    connection.close()
+
+    if libro:
+        filepath = os.path.join(app.config['UPLOAD_FOLDER'], libro['subir_libro'])
+        if os.path.exists(filepath):
+            return send_from_directory(app.config['UPLOAD_FOLDER'], libro['subir_libro'])
+        else:
+            return "Archivo no encontrado", 404
+
+    return "Archivo no encontrado", 404
 
 
 @app.route('/profesor/refuerzo/videos/')
