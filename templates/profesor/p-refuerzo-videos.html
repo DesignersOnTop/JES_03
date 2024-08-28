@@ -54,20 +54,23 @@
                         </thead>
                         <tbody>
                             {% for video in videos %}
-                            <tr>
-                                <td>{{ video.titulo }}</td>
-                                <td>{{ video.id_asignatura }}</td>
-                                <td>
-                                    
-                                    <a href="{{ video.url }}" target="_blank"><button>Link</button></a>
-                                </td>
-                                <td>
-                                    <form action="/profesor/eliminar/video/{{ video.id_videos }}" method="post" style="display:inline;">
-                                        <button type="submit">Eliminar</button>
-                                    </form>
-                                </td>
-                            </tr>
-                            {% endfor %}
+                                <tr>
+                                    <td>{{ video.titulo }}</td>
+                                    <td>{{ video.nom_asignatura }}</td>
+                                    <td>
+                                        <a href="{{ url_for('refuerzo_videos', id=videos.id_videos) }}">
+                                            <button type="button">ver</button>
+                                        </a>
+                                    </td>
+                                   <td>
+                                        <form action="/profesor/eliminar/video/" method="post" style="display:inline;">
+                                            <input type="hidden" name="id_videos" value="{{ video.id_videos }}">
+                                            <button type="submit">Eliminar</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                        </tbody>
                 </article>
             </section><td>
         </main>

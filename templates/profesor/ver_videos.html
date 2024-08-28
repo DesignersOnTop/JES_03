@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video: {{ video.titulo }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+</head>
+<body>
+    <div class="body-container">
+        <header>
+            <h1>Visualizar Video</h1>
+        </header>
+        <main>
+            <h2>{{ video.titulo }}</h2>
+            <video controls width="100%" height="auto">
+                <source src="{{ url_for('static', filename=video.video) }}" type="video/mp4">
+                Tu navegador no soporta la etiqueta de video.
+            </video>
+            <br>
+            <a href="/profesor/refuerzo/videos/">Regresar a la lista de videos</a>
+        </main>
+    </div>
+</body>
+</html>

@@ -452,7 +452,7 @@ def e_videos(titulo):
     cursor.execute('''
         SELECT videos.*, asignaturas.nom_asignatura
         FROM videos
-        JOIN asignaturas ON videos.id_asignatura = asignaturas.id_asignatura
+        JOIN asignaturas ON videos.id_asignatura = asignaturadminas.id_asignatura
         WHERE videos.titulo = %s
     ''', (titulo,))
     
@@ -1256,9 +1256,14 @@ def subir_libro():
     
     return redirect(url_for('p-refuerzo-libros'))
 
-# Ruta para ver archivos
+#Ruta para ver archivos
+
 @app.route('/ver_libro', methods=['GET'])
 def ver_libro():
+    id_libro = request.args.get('id_libro')
+    if not id_libro:
+        return "ID de libro no proporcionado", 400
+
     connection = pymysql.connect(
         host='localhost',
         user='root',
@@ -1267,31 +1272,33 @@ def ver_libro():
     )
     cursor = connection.cursor(pymysql.cursors.DictCursor)
 
-    id_libro = request.args.get('id_libro')
-    
     cursor.execute('SELECT subir_libro FROM libros WHERE id_libro = %s', (id_libro,))
     libro = cursor.fetchone()
-    
+
     cursor.close()
     connection.close()
 
     if libro:
-        filepath = os.path.join(app.config['UPLOAD_FOLDER'], libro['subir_libro'])
-        if os.path.exists(filepath):
-            return send_from_directory(app.config['UPLOAD_FOLDER'], libro['subir_libro'])
+        filename = libro['subir_libro']
+        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        if os.path.exists(filepath) and allowed_file(filename):
+            return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
         else:
-            return "Archivo no encontrado", 404
+            return "Archivo no encontrado o tipo de archivo no permitido", 404
 
     return "Archivo no encontrado", 404
 
-
-@app.route('/profesor/refuerzo/videos/')
+@app.route('/profesor/video/')
 def p_refuerzo_videos():
-    return render_template('./profesor/p-refuerzo-videos.html')
+
+    id_video = request.args.get('id_videos')
+    titulo = request.args.get('titulo')
+
+    return render_template('./profesor/p-video.html')
 
 @app.route('/profesor/refuerzo/videos/')
 def mostrar_videos():
-    sql = 'SELECT * FROM videos'
+    sql = 'SELECT *, nom_asignatura FROM videos JOIN asignaturas ON asignaturas.id_asignatura = videos.id_asignatura'
     
     connection = pymysql.connect(
         host='localhost',
@@ -1305,7 +1312,29 @@ def mostrar_videos():
     cursor.close()
     connection.close()
     
-    return render_template('p-refuerzo-videos.html', videos=videos)
+    return render_template('./profesor/p-refuerzo-videos.html', videos=videos)
+
+@app.route('/profesor/ver/video/<int:id_video>')
+def refuerzo_videos(id_video):
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
+    
+    # Obtener la información del video desde la base de datos
+    cursor.execute('SELECT titulo, video FROM videos WHERE id_videos = %s', (id_video,))
+    video = cursor.fetchone()
+    
+    cursor.close()
+    connection.close()
+    
+    if video:
+        return render_template('profesor/p-video.html', video=video)
+    else:
+        return "Video no encontrado", 404
 
 @app.route('/profesor/eliminar/video/', methods=['POST'])
 def eliminar_video():
@@ -1321,7 +1350,7 @@ def eliminar_video():
 
     id_videos = request.form.get('id_videos')
 
-    cursor.execute('DELETE FROM libros WHERE id_videos = %s', (id_videos,))
+    cursor.execute('DELETE FROM videos WHERE id_videos = %s', (id_videos,))
 
     connection.commit()
     

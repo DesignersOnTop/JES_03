@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-08-2024 a las 06:06:14
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Tiempo de generación: 28-08-2024 a las 22:41:46
+-- Versión del servidor: 10.1.37-MariaDB
+-- Versión de PHP: 7.2.13
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -29,15 +30,15 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admin` (
   `id_admin` int(11) NOT NULL,
-  `nombre_admin` varchar(40) NOT NULL,
-  `a_apellido` varchar(40) NOT NULL,
-  `a_email` varchar(140) NOT NULL,
-  `a_genero` char(10) NOT NULL,
-  `a_direccion` text NOT NULL,
-  `a_telefono` char(14) NOT NULL,
-  `a_img_perfil` varchar(255) NOT NULL,
-  `matricula` varchar(20) NOT NULL,
-  `contraseña` varchar(40) NOT NULL
+  `nombre_admin` varchar(40) COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `a_apellido` varchar(40) COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `a_email` varchar(140) COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `a_genero` char(10) COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `a_direccion` text COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `a_telefono` char(14) COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `a_img_perfil` varchar(255) COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `matricula` varchar(20) COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `contraseña` varchar(40) COLLATE utf8mb4_spanish2_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
 
 --
@@ -55,7 +56,7 @@ INSERT INTO `admin` (`id_admin`, `nombre_admin`, `a_apellido`, `a_email`, `a_gen
 
 CREATE TABLE `asignaturas` (
   `id_asignatura` int(11) NOT NULL,
-  `nom_asignatura` varchar(20) NOT NULL
+  `nom_asignatura` varchar(20) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -95,11 +96,11 @@ CREATE TABLE `asistencias` (
   `id_estudiante` int(11) NOT NULL,
   `id_curso` int(11) NOT NULL,
   `id_asignatura` int(11) NOT NULL,
-  `Sect_Oct` char(4) NOT NULL,
-  `Nov_Dic` char(4) NOT NULL,
-  `Ene_Feb` char(4) NOT NULL,
-  `Marz_Abril` char(4) NOT NULL,
-  `May_Jun` char(4) NOT NULL,
+  `Sect_Oct` char(4) COLLATE utf8_spanish_ci NOT NULL,
+  `Nov_Dic` char(4) COLLATE utf8_spanish_ci NOT NULL,
+  `Ene_Feb` char(4) COLLATE utf8_spanish_ci NOT NULL,
+  `Marz_Abril` char(4) COLLATE utf8_spanish_ci NOT NULL,
+  `May_Jun` char(4) COLLATE utf8_spanish_ci NOT NULL,
   `Total_de_asistencias` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -137,7 +138,7 @@ INSERT INTO `calificaciones` (`id_calificacion`, `id_estudiante`, `id_asignatura
 
 CREATE TABLE `cursos` (
   `id_curso` int(11) NOT NULL,
-  `nombre` varchar(30) NOT NULL
+  `nombre` varchar(30) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -166,7 +167,7 @@ INSERT INTO `cursos` (`id_curso`, `nombre`) VALUES
 
 CREATE TABLE `dias` (
   `id_dias` int(11) NOT NULL,
-  `dia` varchar(10) NOT NULL
+  `dia` varchar(10) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -189,16 +190,16 @@ INSERT INTO `dias` (`id_dias`, `dia`) VALUES
 CREATE TABLE `estudiantes` (
   `id_estudiante` int(11) NOT NULL,
   `id_curso` int(11) NOT NULL,
-  `matricula` char(10) NOT NULL,
-  `nombre` varchar(30) NOT NULL,
-  `apellidos` varchar(50) NOT NULL,
-  `direccion` text NOT NULL,
+  `matricula` char(10) COLLATE utf8_spanish_ci NOT NULL,
+  `nombre` varchar(30) COLLATE utf8_spanish_ci NOT NULL,
+  `apellidos` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `direccion` text COLLATE utf8_spanish_ci NOT NULL,
   `fecha_nacimiento` date NOT NULL,
-  `genero` varchar(10) NOT NULL,
-  `email` varchar(50) NOT NULL,
-  `telefono` char(12) NOT NULL,
-  `imagen_perfil` varchar(255) NOT NULL,
-  `contraseña` varchar(30) NOT NULL
+  `genero` varchar(10) COLLATE utf8_spanish_ci NOT NULL,
+  `email` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `telefono` char(12) COLLATE utf8_spanish_ci NOT NULL,
+  `imagen_perfil` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
+  `contraseña` varchar(30) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -216,7 +217,7 @@ INSERT INTO `estudiantes` (`id_estudiante`, `id_curso`, `matricula`, `nombre`, `
 
 CREATE TABLE `hora` (
   `id_hora` int(11) NOT NULL,
-  `hora` varchar(12) NOT NULL
+  `hora` varchar(12) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -262,9 +263,9 @@ CREATE TABLE `libros` (
   `id_libro` int(11) NOT NULL,
   `id_asignatura` int(11) NOT NULL,
   `id_curso` int(11) NOT NULL,
-  `titulo` varchar(60) NOT NULL,
-  `subir_libro` varchar(255) NOT NULL,
-  `portada` varchar(255) NOT NULL
+  `titulo` varchar(60) COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `subir_libro` varchar(255) COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `portada` varchar(255) COLLATE utf8mb4_spanish2_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
 
 --
@@ -272,7 +273,8 @@ CREATE TABLE `libros` (
 --
 
 INSERT INTO `libros` (`id_libro`, `id_asignatura`, `id_curso`, `titulo`, `subir_libro`, `portada`) VALUES
-(1, 2408, 1, 'Don quijote', '', 'https://static.arteinformado.com/resources/app/docs/profesional/75/185475/obras/308.d._quijote_y_sancho_en_el_camino.jpg');
+(8, 2407, 5, 'Otra prueba ', './static/documentos\\NPM.docx', './static/imagenes/recursos\\abstract-hexagon-pattern-background-medical-and-science-concept-and-structure-molecule-and-communication-free-vector.jpg'),
+(9, 2408, 6, 'Otra prueba ', './static/documentos\\Pregunta_1.docx', './static/imagenes/recursos\\1000144224.jpg');
 
 -- --------------------------------------------------------
 
@@ -283,10 +285,10 @@ INSERT INTO `libros` (`id_libro`, `id_asignatura`, `id_curso`, `titulo`, `subir_
 CREATE TABLE `material_estudio` (
   `id_material` int(11) NOT NULL,
   `id_curso` int(11) NOT NULL,
-  `titulo` varchar(60) NOT NULL,
-  `material_subido` varchar(255) NOT NULL,
-  `fondo` varchar(255) NOT NULL,
-  `descripcion` text NOT NULL,
+  `titulo` varchar(60) COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `material_subido` varchar(255) COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `fondo` varchar(255) COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `descripcion` text COLLATE utf8mb4_spanish2_ci NOT NULL,
   `id_asignatura` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
 
@@ -295,7 +297,8 @@ CREATE TABLE `material_estudio` (
 --
 
 INSERT INTO `material_estudio` (`id_material`, `id_curso`, `titulo`, `material_subido`, `fondo`, `descripcion`, `id_asignatura`) VALUES
-(1, 1, 'Investigacion', '', '', 'Ciencia de la Naturales es una asignatura que se enfoca en comprender los procesos y fenómenos que ocurren en nuestro entorno natural. Los estudiantes aprenden sobre la estructura y funcionamiento de los seres vivos, las sustancias químicas que componen el mundo, las fuerzas físicas y los procesos geológicos que modelan nuestro planeta.', 2404);
+(1, 1, 'Investigacion', '', '', 'Ciencia de la Naturales es una asignatura que se enfoca en comprender los procesos y fenómenos que ocurren en nuestro entorno natural. Los estudiantes aprenden sobre la estructura y funcionamiento de los seres vivos, las sustancias químicas que componen el mundo, las fuerzas físicas y los procesos geológicos que modelan nuestro planeta.', 2404),
+(3, 1, 'Practica', '2024161656_INSERT.rtf', '3454d146dfc6a79132fba1e100a87423.jpg', 'Hola desde el curso ', 2401);
 
 -- --------------------------------------------------------
 
@@ -306,16 +309,16 @@ INSERT INTO `material_estudio` (`id_material`, `id_curso`, `titulo`, `material_s
 CREATE TABLE `profesores` (
   `id_profesor` int(11) NOT NULL,
   `id_asignatura` int(11) NOT NULL,
-  `matricula` char(10) NOT NULL,
-  `nombre` varchar(50) NOT NULL,
-  `apellido` varchar(50) NOT NULL,
-  `direccion` text NOT NULL,
-  `cedula` char(14) NOT NULL,
-  `genero` varchar(10) NOT NULL,
-  `email` varchar(50) NOT NULL,
-  `telefono` char(12) NOT NULL,
-  `contraseña` varchar(20) NOT NULL,
-  `imagen_perfil` varchar(600) NOT NULL
+  `matricula` char(10) COLLATE utf8_spanish_ci NOT NULL,
+  `nombre` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `apellido` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `direccion` text COLLATE utf8_spanish_ci NOT NULL,
+  `cedula` char(14) COLLATE utf8_spanish_ci NOT NULL,
+  `genero` varchar(10) COLLATE utf8_spanish_ci NOT NULL,
+  `email` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `telefono` char(12) COLLATE utf8_spanish_ci NOT NULL,
+  `contraseña` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
+  `imagen_perfil` varchar(600) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -324,7 +327,6 @@ CREATE TABLE `profesores` (
 
 INSERT INTO `profesores` (`id_profesor`, `id_asignatura`, `matricula`, `nombre`, `apellido`, `direccion`, `cedula`, `genero`, `email`, `telefono`, `contraseña`, `imagen_perfil`) VALUES
 (10011, 2401, 'p001', 'Juan', ' Gonzalez Perez', 'calle la española #233', '001-1234567-1', 'Masculino', 'juangonzales@gmail.com', '809-458-1265', 'juan123', 'https://th.bing.com/th/id/R.88eb21cb4e3694341e75bbac7a265ffb?rik=GoCReAF3TNW6yQ&riu=http%3a%2f%2fwww.misimagenesde.com%2fwp-content%2fuploads%2f2011%2f01%2fimagenes-de-personas.jpg&ehk=n6NLhejqcpA8k7ZO9wqa7PSmXl2m9Pg7Q46wXW50UaU%3d&risl=&pid=ImgRaw&r=0'),
-(10012, 2402, 'p002', 'Maria', 'Lopez Garcia', '', '002-2345678-2', 'Femenino', 'mARIlopez@gmail.com', '809-234-5678', 'maria123', ''),
 (10013, 2403, 'p003', 'Carlos', 'Dominguez Fernandez', '', '003-3456789-3', 'Masculino', 'carlos.dominguezfernandez@gmail.com', '809-345-6789', 'carlos123', ''),
 (10014, 2404, 'p004', 'Ana', 'Sanchez Ruiz', '', '004-4567890-4', 'Femenino', 'anaruiz@gmail.com', '809-456-7890', 'ana123', ''),
 (10015, 2405, 'p005', 'Luis Mario ', 'Martinez Gomez', '', '005-5678901-5', 'Masculino', 'luismartinez@gmail.com', '809-567-8901', 'luismario123', ''),
@@ -361,8 +363,8 @@ INSERT INTO `profesor_asignado` (`id_profesor_asignado`, `id_profesor`, `id_curs
 CREATE TABLE `reporte_profesor` (
   `id_report` int(11) NOT NULL,
   `id_profesor_asignado` int(11) NOT NULL,
-  `asistencia` varchar(600) NOT NULL,
-  `calificaciones` varchar(600) NOT NULL
+  `asistencia` varchar(600) COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `calificaciones` varchar(600) COLLATE utf8mb4_spanish2_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
 
 --
@@ -382,7 +384,7 @@ CREATE TABLE `tareas_estudiante` (
   `id_tarea` int(11) NOT NULL,
   `id_estudiante` int(11) NOT NULL,
   `id_curso` int(11) NOT NULL,
-  `tarea` varchar(300) NOT NULL
+  `tarea` varchar(300) COLLATE utf8mb4_spanish2_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
 
 -- --------------------------------------------------------
@@ -392,20 +394,21 @@ CREATE TABLE `tareas_estudiante` (
 --
 
 CREATE TABLE `videos` (
-  `id` int(11) NOT NULL,
-  `titulo` varchar(60) NOT NULL,
+  `id_videos` int(11) NOT NULL,
+  `titulo` varchar(60) COLLATE utf8mb4_spanish2_ci NOT NULL,
   `id_curso` int(11) NOT NULL,
   `id_asignatura` int(11) NOT NULL,
-  `video` text NOT NULL
+  `video` text COLLATE utf8mb4_spanish2_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
 
 --
 -- Volcado de datos para la tabla `videos`
 --
 
-INSERT INTO `videos` (`id`, `titulo`, `id_curso`, `id_asignatura`, `video`) VALUES
+INSERT INTO `videos` (`id_videos`, `titulo`, `id_curso`, `id_asignatura`, `video`) VALUES
 (2, 'Don quijote', 1, 2408, '<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/ir6A-Ns5Em8?si=y-I8_Uain9fbW5vZ\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>'),
-(3, 'La naturaleza', 1, 2404, '<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/j6LunB9d2Bo?si=JaIb5RaXyWx1I_-p\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>');
+(3, 'La naturaleza', 1, 2404, '<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/j6LunB9d2Bo?si=JaIb5RaXyWx1I_-p\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>'),
+(4, 'Prueba ', 1, 2401, '<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/jZcVZdIno_o?si=Z06W8iAr6Kt7E-Pm\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>');
 
 --
 -- Índices para tablas volcadas
@@ -535,7 +538,7 @@ ALTER TABLE `tareas_estudiante`
 -- Indices de la tabla `videos`
 --
 ALTER TABLE `videos`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`id_videos`),
   ADD KEY `id_curso` (`id_curso`),
   ADD KEY `id_asignatura` (`id_asignatura`);
 
@@ -553,7 +556,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT de la tabla `asignaturas`
 --
 ALTER TABLE `asignaturas`
-  MODIFY `id_asignatura` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2410;
+  MODIFY `id_asignatura` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2409;
 
 --
 -- AUTO_INCREMENT de la tabla `asignatura_curso`
@@ -565,7 +568,7 @@ ALTER TABLE `asignatura_curso`
 -- AUTO_INCREMENT de la tabla `asistencias`
 --
 ALTER TABLE `asistencias`
-  MODIFY `id_asistencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_asistencia` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `calificaciones`
@@ -607,19 +610,19 @@ ALTER TABLE `horario`
 -- AUTO_INCREMENT de la tabla `libros`
 --
 ALTER TABLE `libros`
-  MODIFY `id_libro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_libro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `material_estudio`
 --
 ALTER TABLE `material_estudio`
-  MODIFY `id_material` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_material` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `profesores`
 --
 ALTER TABLE `profesores`
-  MODIFY `id_profesor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10021;
+  MODIFY `id_profesor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10019;
 
 --
 -- AUTO_INCREMENT de la tabla `profesor_asignado`
@@ -631,13 +634,13 @@ ALTER TABLE `profesor_asignado`
 -- AUTO_INCREMENT de la tabla `tareas_estudiante`
 --
 ALTER TABLE `tareas_estudiante`
-  MODIFY `id_tarea` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_tarea` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `videos`
 --
 ALTER TABLE `videos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_videos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restricciones para tablas volcadas
