@@ -1210,8 +1210,8 @@ def p_refuerzo_libros():
     return render_template('./profesor/p-refuerzo-libros.html', libros=libros)
 
 
-@app.route('/profesor/eliminar/libro/<int:id_libro>', methods=['POST'])
-def eliminar_libro(id_libro):
+@app.route('/profesor/eliminar/libro/', methods=['POST'])
+def eliminar_libro():
     connection = pymysql.connect(
         host='localhost',
         user='root',
@@ -1219,6 +1219,8 @@ def eliminar_libro(id_libro):
         database='jes'
     )
     cursor = connection.cursor(pymysql.cursors.DictCursor)
+
+    id_libro = request.form.get('id_libro')
     
     cursor.execute('DELETE FROM libros WHERE id_libro = %s', (id_libro,))
     connection.commit()
@@ -1226,7 +1228,6 @@ def eliminar_libro(id_libro):
     cursor.close()
     connection.close()
     
-    flash("Libro eliminado correctamente.")
     return redirect('/profesor/refuerzo/libros/')
 
 
@@ -1250,6 +1251,7 @@ def ver_libro():
     
     return render_template('./profesor/p-libro-refuerzo.html', libro=libro)
 
+
 @app.route('/profesor/refuerzo/videos/')
 def p_refuerzo_videos():
     return render_template('./profesor/p-refuerzo-videos.html')
@@ -1272,11 +1274,8 @@ def mostrar_videos():
     
     return render_template('p-refuerzo-videos.html', videos=videos)
 
-@app.route('/eliminar/video/', methods=['POST'])
+@app.route('/profesor/eliminar/video/', methods=['POST'])
 def eliminar_video():
-    
-    id_libro = request.form.get('id_libro')
-    sql = 'DELETE FROM videos WHERE id = %s'
     
     connection = pymysql.connect(
         host='localhost',
@@ -1284,10 +1283,17 @@ def eliminar_video():
         password='',
         database='jes'
     )
-    cursor = connection.cursor()
-    
-    cursor.execute(sql, (id_libro,))
+
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
+
+    id_videos = request.form.get('id_videos')
+
+    cursor.execute('DELETE FROM libros WHERE id_videos = %s', (id_videos,))
+
     connection.commit()
+    
+    cursor.close()
+    connection.close()
 
     return redirect('/profesor/refuerzo/videos/')
 
@@ -1297,7 +1303,7 @@ def agregar_libro():
 
 @app.route('/agregar/libro/', methods=['POST'])
 def p_agregar_libro():
-    # Conectar a la base de datos
+   
     connection = pymysql.connect(
         host='localhost',
         user='root',
@@ -1313,35 +1319,42 @@ def p_agregar_libro():
     
     print(f"Titulo: {titulo}, Curso: {curso}, Materia: {materia}")  # Agregado para depuración
     
-    # Manejar los archivos
-    portada_libro = request.files.get('portada_libro')
-    subir_libro = request.files.get('subir_libro')
+    # Obtener el id_asignatura correspondiente a la materia
+    cursor.execute('SELECT id_asignatura FROM asignaturas WHERE nom_asignatura = %s', (materia,))
+    id_asignatura = cursor.fetchone()
     
-    if portada_libro and subir_libro:
-        # Guardar los archivos de manera segura
-        portada_filename = secure_filename(portada_libro.filename)
-        libro_filename = secure_filename(subir_libro.filename)
+    if id_asignatura:
+        id_asignatura = id_asignatura[0]  # Extraer el id_asignatura del resultado
+    
+        # Manejar los archivos
+        portada_libro = request.files.get('portada_libro')
+        subir_libro = request.files.get('subir_libro')
         
-        # Definir la ruta de almacenamiento
-        portada_path = os.path.join('./static/imagenes/recursos', portada_filename)
-        libro_path = os.path.join('./static/documentos', libro_filename)
+        if portada_libro and subir_libro:
+            # Guardar los archivos de manera segura
+            portada_filename = secure_filename(portada_libro.filename)
+            libro_filename = secure_filename(subir_libro.filename)
+            
+            # Definir la ruta de almacenamiento
+            portada_path = os.path.join('./static/imagenes/recursos', portada_filename)
+            libro_path = os.path.join('./static/documentos', libro_filename)
+            
+            # Guardar los archivos en el servidor
+            portada_libro.save(portada_path)
+            subir_libro.save(libro_path)
+        else:
+            portada_path = ''
+            libro_path = ''
         
-        # Guardar los archivos en el servidor
-        portada_libro.save(portada_path)
-        subir_libro.save(libro_path)
-    else:
-        portada_path = ''
-        libro_path = ''
-    
-    # Consulta SQL para insertar los datos
-    sql = '''
-        INSERT INTO libros (titulo, id_curso, id_asignatura, subir_libro, portada)
-        VALUES (%s, %s, %s, %s, %s)
-    '''
-    
-    # Ejecutar la consulta
-    cursor.execute(sql, (titulo, curso, materia, libro_path, portada_path))
-    connection.commit()
+        # Consulta SQL para insertar los datos
+        sql = '''
+            INSERT INTO libros (id_libro, titulo, id_curso, id_asignatura, subir_libro, portada)
+            VALUES (NULL, %s, %s, %s, %s, %s)
+        '''
+        
+        # Ejecutar la consulta
+        cursor.execute(sql, (titulo, curso, id_asignatura, libro_path, portada_path))
+        connection.commit()
     
     # Cerrar la conexión
     cursor.close()
@@ -1349,8 +1362,6 @@ def p_agregar_libro():
 
     # Redireccionar después de la inserción
     return redirect('/profesor/refuerzo/libros/')
-
-    # return render_template('p-agregar-libro.html', cursos=cursos)
 
 
 @app.route('/profesor/agregar/video/')
