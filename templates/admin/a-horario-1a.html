@@ -35,32 +35,31 @@
                 <div class="cabecera-agg-refuerzo cabecera-libro" id="cabecera-horario-admin">
                     <div class="cabecera-flex">
                         <a href="/admin/cursos/" class="regresar-libro-video">Regresar</a>                        
-                        <h1 class="titulo-refuerzo titulo-libro">{{ cursos.nombre }}</h1>
+                        <h1 class="titulo-refuerzo titulo-libro">{{ curso.nombre }}</h1>
                     </div>
                 </div>
                 <article class="admin-horario">
                     <div id="scroll-horario-admin">
                         <form action="/admin/guardar_horario/" method="post">
+                            <input type="hidden" name="id_curso" value="{{ curso.id_curso }}">
                             <table class="tabla-horario tabla-horario-a" id="t-admin-horario">
-                            <tr class="tabla-cabecera">
-                                <th>Horas</th>
-                                <th>Lunes</th>
-                                <th>Martes</th>
-                                <th>Miércoles</th>
-                                <th>Jueves</th>
-                                <th>Viernes</th>
-                            </tr>
-                            {% for hora, dias in horarios|groupby('hora') %}
-                            <tr>
-                                <td>{{ hora }}</td>
-                                {% for dia in ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'] %}
-                                <td>
-                                    <input type="text" name="horario[{{ hora }}][{{ dia }}]" 
-                                    value="{{ dias.get(dia, '') }}">
-                                </td>
+                                <tr class="tabla-cabecera">
+                                    <th>Horas</th>
+                                    {% for dia in dias %}
+                                    <th>{{ dia.dia }}</th>
+                                    {% endfor %}
+                                </tr>
+                                {% for hora in horas %}
+                                <tr>
+                                    <td>{{ hora.hora }}</td>
+                                    {% for dia in dias %}
+                                    <td>
+                                        <input type="text" name="horario[{{ hora.hora }}][{{ dia.dia }}]" 
+                                               value="{{ horarios.get(hora.hora, {}).get(dia.dia, '') }}">
+                                    </td>
+                                    {% endfor %}
+                                </tr>
                                 {% endfor %}
-                            </tr>
-                            {% endfor %}
                             </table>
                             <button type="submit">Guardar</button>
                         </form>

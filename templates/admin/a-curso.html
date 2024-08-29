@@ -35,7 +35,7 @@
                 <div class="cabecera-tabla-estudiantes-a cabecera-curso-admin">
                     <a href="/admin/profesores/">Profesores</a>
                     <div class="lado-derecho-curso-cabecera">
-                        <a href="/admin/horario/">Horario</a>
+                        <a href="{{ url_for('horario', id_curso=curso.id_curso) }}">Horario</a>
                     </div>
                 </div>
                 <div class="scroll-tabla-container-admin">

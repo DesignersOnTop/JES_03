@@ -48,12 +48,12 @@
                     </tr>
                     {% for estudiante in estudiantes %}
                     <tr class="fila-calificacion">
-                        <td>{{ estudiantes.id_estudiante }}</td>
-                        <td>{{ estudiantes.nombre }}</td>
-                        <td>{{ estudiantes.apellido }}</td>
-                        <td>{{ estudiantes.fecha_nacimiento }}</td>
-                        <td>{{ estudiantes.id_curso }}</td>
-                        <td><a href="/admin/registro/estudiante/"><figure><img src="{{ url_for('static', filename='imagenes/iconos/editar.svg') }}" alt="editar-profesor" class="btn-editar"></figure></a></td>
+                        <td>{{ estudiante.id_estudiante }}</td>
+                        <td>{{ estudiante.nombre }}</td>
+                        <td>{{ estudiante.apellido }}</td>
+                        <td>{{ estudiante.fecha_nacimiento }}</td>
+                        <td>{{ estudiante.id_curso }}</td>
+                        <td><a href="{{ url_for('editar_estudiante', id_estudiante=estudiante.id_estudiante) }}"><figure><img src="{{ url_for('static', filename='imagenes/iconos/editar.svg') }}" alt="editar-profesor" class="btn-editar"></figure></a></td>
                         <form action="{{ url_for('eliminar_estudiante') }}" method="POST"style="display:inline;">
                             <input type="hidden" name="id_profesor" value="{{ profesores.id_profesor }}">
                             <button type="submit" class="btn-eliminar">Eliminar</button>
