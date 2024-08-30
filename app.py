@@ -1286,6 +1286,32 @@ def mostrar_estudiantes(id_curso):
 
     return render_template('./admin/a-curso.html', curso=curso, estudiantes=estudiantes, profesores=profesores, id_curso=id_curso, cursos=cursos, profesor=profesor)
 
+@app.route('/eliminar/profesor/curso/', methods = ['POST'])
+def eliminar_profesor_curso():
+    id_profesor = request.form.get('id_profesor')
+    id_curso = request.form.get('id_curso')
+    
+    if id_profesor and id_curso:
+        eliminar_relacion(id_profesor, id_curso)
+    
+    return redirect('/admin/cursos')
+
+def eliminar_relacion(id_profesor, id_curso):
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
+    
+    cursor.execute('DELETE FROM profesor_asignado WHERE id_profesor = %s AND id_curso = %s', (id_profesor, id_curso,))
+    connection.commit()
+
+    cursor.close()
+    connection.close()
+
 @app.route('/admin/materias/')
 def a_materias():
     connection = pymysql.connect(
@@ -1860,6 +1886,7 @@ def horario(id_curso):
             h.id_dias,
             d.dia AS dia,
             hora.hora AS hora,
+            a.id_asignatura AS id_asignatura,
             a.nom_asignatura AS asignatura
         FROM horario h
         JOIN hora ON h.id_hora = hora.id_hora
@@ -1879,6 +1906,10 @@ def horario(id_curso):
     cursor.execute('SELECT * FROM hora')
     horas = cursor.fetchall()
 
+    # Obtener todas las asignaturas
+    cursor.execute('SELECT * FROM asignaturas')
+    asignaturas = cursor.fetchall()
+
     # Organizar los datos del horario en un diccionario
     horarios = {}
     for row in rows:
@@ -1886,25 +1917,24 @@ def horario(id_curso):
         dia = row['dia']
         if hora not in horarios:
             horarios[hora] = {}
-        horarios[hora][dia] = row['asignatura']
+        horarios[hora][dia] = row['id_asignatura']
 
     cursor.close()
     connection.close()
 
-    return render_template('./admin/a-horario-1a.html', curso=curso, horarios=horarios, dias=dias, horas=horas)
+    return render_template('./admin/a-horario-1a.html', curso=curso, horarios=horarios, dias=dias, horas=horas, asignaturas=asignaturas)
 
 
-@app.route('/admin/guardar_horario/', methods = ['POST'])
+@app.route('/admin/guardar_horario/', methods=['POST'])
 def guardar_horario():
     id_curso_str = request.form.get('id_curso')
     if id_curso_str is None:
         return "Error: id_curso no proporcionado", 400
 
-    if id_curso_str.isdigit():
-        id_curso = int(id_curso_str)
-    else:
+    if not id_curso_str.isdigit():
         return "Error: id_curso inválido", 400
 
+    id_curso = int(id_curso_str)
     horario_data = request.form.to_dict(flat=False)
 
     connection = pymysql.connect(
@@ -1916,8 +1946,11 @@ def guardar_horario():
     )
     
     cursor = connection.cursor()
+
+    # Eliminar horarios existentes para el curso
     cursor.execute('DELETE FROM horario WHERE id_curso = %s', (id_curso,))
 
+    # Insertar nuevos horarios
     for key, values in horario_data.items():
         if key.startswith('horario['):
             hora = key.split('[')[1].split(']')[0]
@@ -1925,27 +1958,28 @@ def guardar_horario():
             asignatura = values[0]
             
             if asignatura:
+                # Obtener ID de hora
                 cursor.execute('SELECT id_hora FROM hora WHERE hora = %s', (hora,))
                 id_hora_result = cursor.fetchone()
-                if id_hora_result:
-                    id_hora = id_hora_result['id_hora']
-                else:
+                if not id_hora_result:
                     continue
+                id_hora = id_hora_result['id_hora']
 
+                # Obtener ID de día
                 cursor.execute('SELECT id_dias FROM dias WHERE dia = %s', (dia,))
                 id_dias_result = cursor.fetchone()
-                if id_dias_result:
-                    id_dias = id_dias_result['id_dias']
-                else:
+                if not id_dias_result:
                     continue
+                id_dias = id_dias_result['id_dias']
 
-                cursor.execute('SELECT id_asignatura FROM asignaturas WHERE nom_asignatura = %s', (asignatura,))
+                # Obtener ID de asignatura
+                cursor.execute('SELECT id_asignatura FROM asignaturas WHERE id_asignatura = %s', (asignatura,))
                 id_asignatura_result = cursor.fetchone()
-                if id_asignatura_result:
-                    id_asignatura = id_asignatura_result['id_asignatura']
-                else:
+                if not id_asignatura_result:
                     continue
+                id_asignatura = id_asignatura_result['id_asignatura']
 
+                # Insertar nuevo horario
                 cursor.execute('''
                     INSERT INTO horario (id_curso, id_hora, id_dias, id_asignatura)
                     VALUES (%s, %s, %s, %s)
@@ -1955,7 +1989,7 @@ def guardar_horario():
     cursor.close()
     connection.close()
     
-    return redirect('/admin/cursos/')
+    return redirect(url_for('horario', id_curso=id_curso))
 
 @app.route('/admin/perfil/estudiante/<int:id_estudiante>')
 def a_perfil_e(id_estudiante):

@@ -86,9 +86,9 @@
                                         <td>
                                             <form action="{{ url_for('eliminar_estudiantes') }}" method="POST" style="display:inline;">
                                                 <input type="hidden" name="id_estudiante" value="{{ estudiante.id_estudiante }}">
-                                                <button type="submit" class="btn-eliminar">Eliminar</button>
+                                                <button type="submit" class="btn-eliminar btn-eliminar-corto">Eliminar</button>
                                             </form>
-                                                <a href="{{url_for('editar_estudiante', id_estudiante = estudiante.id_estudiante)}}" class="btn-editar">editar</a>
+                                                <a href="{{url_for('editar_estudiante', id_estudiante = estudiante.id_estudiante)}}" class="btn-editar"><img src="../../static/imagenes/iconos/lapiz-editar.svg" alt=""></a>
                                         </td>
                                     </tr>
                                     {% endfor %}
@@ -128,9 +128,9 @@
                                         <td>
                                             <form action="{{ url_for('eliminar_profesores') }}" method="POST" style="display:inline;">
                                                 <input type="hidden" name="id_profesor" value="{{ profesor.id_profesor }}">
-                                                <button type="submit" class="btn-eliminar">Eliminar</button>
+                                                <button type="submit" class="btn-eliminar btn-eliminar-corto">Eliminar</button>
                                             </form>
-                                            <a href="{{ url_for('editar_profesor', id_profesor=profesor.id_profesor) }}" class="btn-editar">editar</a>
+                                            <a href="{{ url_for('editar_profesor', id_profesor=profesor.id_profesor) }}" class="btn-editar"><img src="../../static/imagenes/iconos/lapiz-editar.svg" alt=""></a>
                                         </td>
                                     </tr>
                                     {% endfor %}                     

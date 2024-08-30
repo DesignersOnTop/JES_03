@@ -54,8 +54,15 @@
                                     <td>{{ hora.hora }}</td>
                                     {% for dia in dias %}
                                     <td>
-                                        <input type="text" name="horario[{{ hora.hora }}][{{ dia.dia }}]" 
-                                               value="{{ horarios.get(hora.hora, {}).get(dia.dia, '') }}">
+                                        <select name="horario[{{ hora.hora }}][{{ dia.dia }}]">
+                                            <option value="" {% if horarios.get(hora.hora, {}).get(dia.dia, '') == '' %}selected{% endif %}>----</option>
+                                            {% for asignatura in asignaturas %}
+                                            <option value="{{ asignatura.id_asignatura }}" 
+                                                    {% if horarios.get(hora.hora, {}).get(dia.dia, '') == asignatura.id_asignatura %}selected{% endif %}>
+                                                {{ asignatura.nom_asignatura }}
+                                            </option>
+                                            {% endfor %}
+                                        </select>
                                     </td>
                                     {% endfor %}
                                 </tr>

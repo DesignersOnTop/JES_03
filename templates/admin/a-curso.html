@@ -65,7 +65,7 @@
                                     <td>{{ estudiante.fecha_nacimiento }}</td>
                                     <td>{{ curso.nombre}}</td>
                                     <td>{{ estudiante.genero }}</td>
-                                    <td><a href="{{url_for('a_perfil_e', id_estudiante=estudiante.id_estudiante)}}">ver</a></td>
+                                    <td><a href="{{url_for('a_perfil_e', id_estudiante=estudiante.id_estudiante)}}"><img src="../../static/imagenes/iconos/usuario.svg" alt="icono-perfil"></a></td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
@@ -100,12 +100,13 @@
                                     <td>{{ profesor.apellido }}</td>
                                     <td>{{ profesor.asignatura }}</td>
                                     <td>
-                                        <form action="/eliminar/profesor/curso/">
-                                            <input type="hidden" value="idk">
-                                            <button type="submit">Desvincular</button>
+                                        <form action="/eliminar/profesor/curso/" method="post">
+                                            <input type="hidden" name="id_profesor" value="{{ profesor.id_profesor }}">
+                                            <input type="hidden" name="id_curso" value="{{ id_curso }}">
+                                            <button class="btn-eliminar" type="submit">Desvincular</button>
                                         </form>
                                     </td>
-                                        <td><a href="{{url_for('a_perfil_p', id_profesor=profesor.id_profesor)}}">ver</a></td>
+                                        <td><a href="{{url_for('a_perfil_p', id_profesor=profesor.id_profesor)}}"><img src="../../static/imagenes/iconos/usuario.svg" alt="icono-perfil"></a></td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
