@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-08-2024 a las 22:41:46
+-- Tiempo de generación: 29-08-2024 a las 22:27:02
 -- Versión del servidor: 10.1.37-MariaDB
 -- Versión de PHP: 7.2.13
 
@@ -46,7 +46,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id_admin`, `nombre_admin`, `a_apellido`, `a_email`, `a_genero`, `a_direccion`, `a_telefono`, `a_img_perfil`, `matricula`, `contraseña`) VALUES
-(1, 'Jhon Mike', 'Peña Ramos', 'jhonmip2@gmail.com', 'Masculino', 'Calle 16 de Agosto #01', '809-101-0000', 'https://plus.unsplash.com/premium_photo-1671656349322-41de944d259b?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'a-0002231', 'admin2330');
+(1, 'Jhon Mike', 'Peña Ramos', 'jhonmip2@gmail.com', 'Masculino', 'Calle 16 de Agosto #01', '809-101-0000', 'https://plus.unsplash.com/premium_photo-1671656349322-41de944d259b?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'a-0223', 'admin2330');
 
 -- --------------------------------------------------------
 
@@ -71,7 +71,8 @@ INSERT INTO `asignaturas` (`id_asignatura`, `nom_asignatura`) VALUES
 (2405, 'Ingles'),
 (2406, 'Frances'),
 (2407, 'Educacion Fisica'),
-(2408, 'Arte ');
+(2408, 'Arte '),
+(2409, 'Formacion Humana');
 
 -- --------------------------------------------------------
 
@@ -104,6 +105,16 @@ CREATE TABLE `asistencias` (
   `Total_de_asistencias` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `asistencias`
+--
+
+INSERT INTO `asistencias` (`id_asistencia`, `id_estudiante`, `id_curso`, `id_asignatura`, `Sect_Oct`, `Nov_Dic`, `Ene_Feb`, `Marz_Abril`, `May_Jun`, `Total_de_asistencias`) VALUES
+(1, 2, 1, 2404, '90', '90', '90', '90', '90', 90),
+(2, 2, 1, 2403, '90', '0', '0', '0', '0', 0),
+(3, 2, 1, 2401, '100', '100', '100', '100', '100', 100),
+(4, 4, 7, 2401, '100', '100', '100', '100', '100', 100);
+
 -- --------------------------------------------------------
 
 --
@@ -113,22 +124,24 @@ CREATE TABLE `asistencias` (
 CREATE TABLE `calificaciones` (
   `id_calificacion` int(11) NOT NULL,
   `id_estudiante` int(11) NOT NULL,
+  `id_curso` int(11) NOT NULL,
   `id_asignatura` int(11) NOT NULL,
   `C1` int(11) NOT NULL,
   `C2` int(11) NOT NULL,
   `C3` int(11) NOT NULL,
   `C4` int(11) NOT NULL,
-  `C. Final` int(11) NOT NULL
+  `c_final` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `calificaciones`
 --
 
-INSERT INTO `calificaciones` (`id_calificacion`, `id_estudiante`, `id_asignatura`, `C1`, `C2`, `C3`, `C4`, `C. Final`) VALUES
-(1, 2, 2403, 100, 100, 100, 100, 100),
-(2, 2, 2404, 100, 100, 90, 89, 95),
-(3, 2, 2405, 99, 91, 96, 97, 96);
+INSERT INTO `calificaciones` (`id_calificacion`, `id_estudiante`, `id_curso`, `id_asignatura`, `C1`, `C2`, `C3`, `C4`, `c_final`) VALUES
+(4, 2, 1, 2401, 100, 100, 100, 100, 100),
+(5, 3, 1, 2401, 100, 100, 100, 100, 100),
+(6, 2, 1, 2405, 100, 100, 100, 100, 100),
+(7, 4, 7, 2401, 90, 90, 90, 90, 90);
 
 -- --------------------------------------------------------
 
@@ -207,7 +220,9 @@ CREATE TABLE `estudiantes` (
 --
 
 INSERT INTO `estudiantes` (`id_estudiante`, `id_curso`, `matricula`, `nombre`, `apellidos`, `direccion`, `fecha_nacimiento`, `genero`, `email`, `telefono`, `imagen_perfil`, `contraseña`) VALUES
-(2, 1, 'e-9990', 'Albiery', 'Rodriguez', 'calle 16 de agosto #1', '2010-10-19', 'masculino', 'albieryr@gmail.com', '8095889924', 'https://images.unsplash.com/photo-1521119989659-a83eee488004?q=80&w=1923&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'estudiante123');
+(2, 1, 'e-9990', 'Albiery', 'Rodriguez', 'calle 16 de agosto #1', '2010-10-19', 'masculino', 'albieryr@gmail.com', '8095889924', 'https://images.unsplash.com/photo-1521119989659-a83eee488004?q=80&w=1923&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'e123'),
+(3, 1, 'e-2233', 'Laura', 'Cabrera Francisco', 'calle del sol #255', '2008-05-10', 'Femenino', 'lauracab@gmail.com', '809-962-1230', 'https://lh3.googleusercontent.com/a-/ALV-UjVmN0uFLFH2SzY_MoAhbEeeOL91d_XQBSgfBjSrEDiLUxtfEMLY=s88-w88-h88-c-k-no', 'lau222'),
+(4, 7, 'e200', 'Juana', 'Ramirez pena', 'calle su casa detras de su casa #223', '2008-05-10', 'Femenino', 'juanitab@gmail.com', '809-889-9966', 'https://media.istockphoto.com/id/1369508766/es/foto/hermosa-mujer-latina-exitosa-sonriendo.jpg?s=1024x1024&w=is&k=20&c=u-FgO_3r1SklPbUn37R4DgJ0GQ4FeZPHr2Pj0ta_V7g=', 'juana122');
 
 -- --------------------------------------------------------
 
@@ -239,7 +254,6 @@ INSERT INTO `hora` (`id_hora`, `hora`) VALUES
 
 CREATE TABLE `horario` (
   `id_horario` int(11) NOT NULL,
-  `id_estudiante` int(11) NOT NULL,
   `id_hora` int(11) NOT NULL,
   `id_curso` int(11) NOT NULL,
   `id_asignatura` int(11) NOT NULL,
@@ -250,8 +264,13 @@ CREATE TABLE `horario` (
 -- Volcado de datos para la tabla `horario`
 --
 
-INSERT INTO `horario` (`id_horario`, `id_estudiante`, `id_hora`, `id_curso`, `id_asignatura`, `id_dias`) VALUES
-(1, 2, 1, 1, 2403, 100);
+INSERT INTO `horario` (`id_horario`, `id_hora`, `id_curso`, `id_asignatura`, `id_dias`) VALUES
+(2, 1, 1, 2403, 100),
+(3, 1, 1, 2402, 101),
+(4, 2, 1, 2401, 100),
+(5, 2, 1, 2404, 101),
+(6, 2, 1, 2406, 102),
+(7, 2, 1, 2405, 103);
 
 -- --------------------------------------------------------
 
@@ -273,8 +292,7 @@ CREATE TABLE `libros` (
 --
 
 INSERT INTO `libros` (`id_libro`, `id_asignatura`, `id_curso`, `titulo`, `subir_libro`, `portada`) VALUES
-(8, 2407, 5, 'Otra prueba ', './static/documentos\\NPM.docx', './static/imagenes/recursos\\abstract-hexagon-pattern-background-medical-and-science-concept-and-structure-molecule-and-communication-free-vector.jpg'),
-(9, 2408, 6, 'Otra prueba ', './static/documentos\\Pregunta_1.docx', './static/imagenes/recursos\\1000144224.jpg');
+(3, 2401, 1, 'EL PATO', 'libro_20240826135302_Que-es-una-base-de-datos-NoSQL.pdf', 'portada_20240826135302_astronaut-4k-8k-hd-wallpaper-preview.jpg');
 
 -- --------------------------------------------------------
 
@@ -287,7 +305,6 @@ CREATE TABLE `material_estudio` (
   `id_curso` int(11) NOT NULL,
   `titulo` varchar(60) COLLATE utf8mb4_spanish2_ci NOT NULL,
   `material_subido` varchar(255) COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `fondo` varchar(255) COLLATE utf8mb4_spanish2_ci NOT NULL,
   `descripcion` text COLLATE utf8mb4_spanish2_ci NOT NULL,
   `id_asignatura` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
@@ -296,9 +313,10 @@ CREATE TABLE `material_estudio` (
 -- Volcado de datos para la tabla `material_estudio`
 --
 
-INSERT INTO `material_estudio` (`id_material`, `id_curso`, `titulo`, `material_subido`, `fondo`, `descripcion`, `id_asignatura`) VALUES
-(1, 1, 'Investigacion', '', '', 'Ciencia de la Naturales es una asignatura que se enfoca en comprender los procesos y fenómenos que ocurren en nuestro entorno natural. Los estudiantes aprenden sobre la estructura y funcionamiento de los seres vivos, las sustancias químicas que componen el mundo, las fuerzas físicas y los procesos geológicos que modelan nuestro planeta.', 2404),
-(3, 1, 'Practica', '2024161656_INSERT.rtf', '3454d146dfc6a79132fba1e100a87423.jpg', 'Hola desde el curso ', 2401);
+INSERT INTO `material_estudio` (`id_material`, `id_curso`, `titulo`, `material_subido`, `descripcion`, `id_asignatura`) VALUES
+(1, 1, 'Investigacion', '', 'Ciencia de la Naturales es una asignatura que se enfoca en comprender los procesos y fenómenos que ocurren en nuestro entorno natural. Los estudiantes aprenden sobre la estructura y funcionamiento de los seres vivos, las sustancias químicas que componen el mundo, las fuerzas físicas y los procesos geológicos que modelan nuestro planeta.', 2404),
+(2, 1, 'Investigacion', '', 'LOSSSSSSSSSSSSSSSSSSSSSSSSSS', 2401),
+(3, 1, 'Investigacion II', 'Evaluacion_Final_BD_NoSQL_2024.pdf', 'la lengua espanola es la lengua que habla español', 2401);
 
 -- --------------------------------------------------------
 
@@ -318,7 +336,7 @@ CREATE TABLE `profesores` (
   `email` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `telefono` char(12) COLLATE utf8_spanish_ci NOT NULL,
   `contraseña` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
-  `imagen_perfil` varchar(600) COLLATE utf8_spanish_ci NOT NULL
+  `imagen_perfil` varchar(255) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -327,6 +345,7 @@ CREATE TABLE `profesores` (
 
 INSERT INTO `profesores` (`id_profesor`, `id_asignatura`, `matricula`, `nombre`, `apellido`, `direccion`, `cedula`, `genero`, `email`, `telefono`, `contraseña`, `imagen_perfil`) VALUES
 (10011, 2401, 'p001', 'Juan', ' Gonzalez Perez', 'calle la española #233', '001-1234567-1', 'Masculino', 'juangonzales@gmail.com', '809-458-1265', 'juan123', 'https://th.bing.com/th/id/R.88eb21cb4e3694341e75bbac7a265ffb?rik=GoCReAF3TNW6yQ&riu=http%3a%2f%2fwww.misimagenesde.com%2fwp-content%2fuploads%2f2011%2f01%2fimagenes-de-personas.jpg&ehk=n6NLhejqcpA8k7ZO9wqa7PSmXl2m9Pg7Q46wXW50UaU%3d&risl=&pid=ImgRaw&r=0'),
+(10012, 2402, 'p002', 'Maria', 'Lopez Garcia', '', '002-2345678-2', 'Femenino', 'mARIlopez@gmail.com', '809-234-5678', 'maria123', ''),
 (10013, 2403, 'p003', 'Carlos', 'Dominguez Fernandez', '', '003-3456789-3', 'Masculino', 'carlos.dominguezfernandez@gmail.com', '809-345-6789', 'carlos123', ''),
 (10014, 2404, 'p004', 'Ana', 'Sanchez Ruiz', '', '004-4567890-4', 'Femenino', 'anaruiz@gmail.com', '809-456-7890', 'ana123', ''),
 (10015, 2405, 'p005', 'Luis Mario ', 'Martinez Gomez', '', '005-5678901-5', 'Masculino', 'luismartinez@gmail.com', '809-567-8901', 'luismario123', ''),
@@ -352,7 +371,8 @@ CREATE TABLE `profesor_asignado` (
 
 INSERT INTO `profesor_asignado` (`id_profesor_asignado`, `id_profesor`, `id_curso`) VALUES
 (1, 10011, 1),
-(2, 10014, 1);
+(2, 10014, 1),
+(3, 10011, 7);
 
 -- --------------------------------------------------------
 
@@ -362,17 +382,10 @@ INSERT INTO `profesor_asignado` (`id_profesor_asignado`, `id_profesor`, `id_curs
 
 CREATE TABLE `reporte_profesor` (
   `id_report` int(11) NOT NULL,
-  `id_profesor_asignado` int(11) NOT NULL,
+  `id_profesor-asignado` int(11) NOT NULL,
   `asistencia` varchar(600) COLLATE utf8mb4_spanish2_ci NOT NULL,
   `calificaciones` varchar(600) COLLATE utf8mb4_spanish2_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
-
---
--- Volcado de datos para la tabla `reporte_profesor`
---
-
-INSERT INTO `reporte_profesor` (`id_report`, `id_profesor_asignado`, `asistencia`, `calificaciones`) VALUES
-(0, 2, 'asrafasf', 'asfasfasf');
 
 -- --------------------------------------------------------
 
@@ -382,6 +395,7 @@ INSERT INTO `reporte_profesor` (`id_report`, `id_profesor_asignado`, `asistencia
 
 CREATE TABLE `tareas_estudiante` (
   `id_tarea` int(11) NOT NULL,
+  `id_material` int(11) NOT NULL,
   `id_estudiante` int(11) NOT NULL,
   `id_curso` int(11) NOT NULL,
   `tarea` varchar(300) COLLATE utf8mb4_spanish2_ci NOT NULL
@@ -394,7 +408,7 @@ CREATE TABLE `tareas_estudiante` (
 --
 
 CREATE TABLE `videos` (
-  `id_videos` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `titulo` varchar(60) COLLATE utf8mb4_spanish2_ci NOT NULL,
   `id_curso` int(11) NOT NULL,
   `id_asignatura` int(11) NOT NULL,
@@ -405,10 +419,11 @@ CREATE TABLE `videos` (
 -- Volcado de datos para la tabla `videos`
 --
 
-INSERT INTO `videos` (`id_videos`, `titulo`, `id_curso`, `id_asignatura`, `video`) VALUES
+INSERT INTO `videos` (`id`, `titulo`, `id_curso`, `id_asignatura`, `video`) VALUES
 (2, 'Don quijote', 1, 2408, '<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/ir6A-Ns5Em8?si=y-I8_Uain9fbW5vZ\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>'),
 (3, 'La naturaleza', 1, 2404, '<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/j6LunB9d2Bo?si=JaIb5RaXyWx1I_-p\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>'),
-(4, 'Prueba ', 1, 2401, '<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/jZcVZdIno_o?si=Z06W8iAr6Kt7E-Pm\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>');
+(4, 'Diptongos', 1, 2401, '<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/mvmYv3iYsq4?si=TWrpcwbHc6ug9vLC\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>'),
+(6, 'triptongo', 1, 2401, '<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/QWAg_1m47ao?si=jHayMOs1EySjPDI4\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>');
 
 --
 -- Índices para tablas volcadas
@@ -449,7 +464,8 @@ ALTER TABLE `asistencias`
 ALTER TABLE `calificaciones`
   ADD PRIMARY KEY (`id_calificacion`),
   ADD KEY `id_estudiante` (`id_estudiante`),
-  ADD KEY `id_asignatura` (`id_asignatura`);
+  ADD KEY `id_asignatura` (`id_asignatura`),
+  ADD KEY `id_curso` (`id_curso`);
 
 --
 -- Indices de la tabla `cursos`
@@ -485,8 +501,7 @@ ALTER TABLE `horario`
   ADD KEY `id_cursos` (`id_curso`),
   ADD KEY `id_asignaturas` (`id_asignatura`),
   ADD KEY `id_dias` (`id_dias`),
-  ADD KEY `id_curso_seccion` (`id_curso`),
-  ADD KEY `id_estudiante` (`id_estudiante`);
+  ADD KEY `id_curso_seccion` (`id_curso`);
 
 --
 -- Indices de la tabla `libros`
@@ -524,7 +539,7 @@ ALTER TABLE `profesor_asignado`
 --
 ALTER TABLE `reporte_profesor`
   ADD PRIMARY KEY (`id_report`),
-  ADD KEY `id_profesor-asignado` (`id_profesor_asignado`);
+  ADD KEY `id_profesor-asignado` (`id_profesor-asignado`);
 
 --
 -- Indices de la tabla `tareas_estudiante`
@@ -532,13 +547,14 @@ ALTER TABLE `reporte_profesor`
 ALTER TABLE `tareas_estudiante`
   ADD PRIMARY KEY (`id_tarea`),
   ADD KEY `id_estudiante` (`id_estudiante`),
-  ADD KEY `id_curso` (`id_curso`);
+  ADD KEY `id_curso` (`id_curso`),
+  ADD KEY `id_material` (`id_material`);
 
 --
 -- Indices de la tabla `videos`
 --
 ALTER TABLE `videos`
-  ADD PRIMARY KEY (`id_videos`),
+  ADD PRIMARY KEY (`id`),
   ADD KEY `id_curso` (`id_curso`),
   ADD KEY `id_asignatura` (`id_asignatura`);
 
@@ -556,7 +572,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT de la tabla `asignaturas`
 --
 ALTER TABLE `asignaturas`
-  MODIFY `id_asignatura` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2409;
+  MODIFY `id_asignatura` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2410;
 
 --
 -- AUTO_INCREMENT de la tabla `asignatura_curso`
@@ -568,13 +584,13 @@ ALTER TABLE `asignatura_curso`
 -- AUTO_INCREMENT de la tabla `asistencias`
 --
 ALTER TABLE `asistencias`
-  MODIFY `id_asistencia` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_asistencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `calificaciones`
 --
 ALTER TABLE `calificaciones`
-  MODIFY `id_calificacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_calificacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `cursos`
@@ -592,7 +608,7 @@ ALTER TABLE `dias`
 -- AUTO_INCREMENT de la tabla `estudiantes`
 --
 ALTER TABLE `estudiantes`
-  MODIFY `id_estudiante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_estudiante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `hora`
@@ -604,13 +620,13 @@ ALTER TABLE `hora`
 -- AUTO_INCREMENT de la tabla `horario`
 --
 ALTER TABLE `horario`
-  MODIFY `id_horario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_horario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `libros`
 --
 ALTER TABLE `libros`
-  MODIFY `id_libro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_libro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `material_estudio`
@@ -628,7 +644,7 @@ ALTER TABLE `profesores`
 -- AUTO_INCREMENT de la tabla `profesor_asignado`
 --
 ALTER TABLE `profesor_asignado`
-  MODIFY `id_profesor_asignado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_profesor_asignado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `tareas_estudiante`
@@ -640,7 +656,7 @@ ALTER TABLE `tareas_estudiante`
 -- AUTO_INCREMENT de la tabla `videos`
 --
 ALTER TABLE `videos`
-  MODIFY `id_videos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Restricciones para tablas volcadas
@@ -666,7 +682,8 @@ ALTER TABLE `asistencias`
 --
 ALTER TABLE `calificaciones`
   ADD CONSTRAINT `calificaciones_ibfk_1` FOREIGN KEY (`id_asignatura`) REFERENCES `asignaturas` (`id_asignatura`),
-  ADD CONSTRAINT `calificaciones_ibfk_2` FOREIGN KEY (`id_estudiante`) REFERENCES `estudiantes` (`id_estudiante`);
+  ADD CONSTRAINT `calificaciones_ibfk_2` FOREIGN KEY (`id_estudiante`) REFERENCES `estudiantes` (`id_estudiante`),
+  ADD CONSTRAINT `calificaciones_ibfk_3` FOREIGN KEY (`id_curso`) REFERENCES `cursos` (`id_curso`);
 
 --
 -- Filtros para la tabla `estudiantes`
@@ -681,7 +698,6 @@ ALTER TABLE `horario`
   ADD CONSTRAINT `horario_ibfk_1` FOREIGN KEY (`id_hora`) REFERENCES `hora` (`id_hora`),
   ADD CONSTRAINT `horario_ibfk_2` FOREIGN KEY (`id_dias`) REFERENCES `dias` (`id_dias`),
   ADD CONSTRAINT `horario_ibfk_4` FOREIGN KEY (`id_asignatura`) REFERENCES `asignaturas` (`id_asignatura`),
-  ADD CONSTRAINT `horario_ibfk_6` FOREIGN KEY (`id_estudiante`) REFERENCES `estudiantes` (`id_estudiante`),
   ADD CONSTRAINT `horario_ibfk_7` FOREIGN KEY (`id_curso`) REFERENCES `cursos` (`id_curso`);
 
 --
@@ -715,14 +731,15 @@ ALTER TABLE `profesor_asignado`
 -- Filtros para la tabla `reporte_profesor`
 --
 ALTER TABLE `reporte_profesor`
-  ADD CONSTRAINT `reporte_profesor_ibfk_1` FOREIGN KEY (`id_profesor_asignado`) REFERENCES `profesor_asignado` (`id_profesor_asignado`);
+  ADD CONSTRAINT `reporte_profesor_ibfk_1` FOREIGN KEY (`id_profesor-asignado`) REFERENCES `profesor_asignado` (`id_profesor_asignado`);
 
 --
 -- Filtros para la tabla `tareas_estudiante`
 --
 ALTER TABLE `tareas_estudiante`
   ADD CONSTRAINT `tareas_estudiante_ibfk_1` FOREIGN KEY (`id_estudiante`) REFERENCES `estudiantes` (`id_estudiante`),
-  ADD CONSTRAINT `tareas_estudiante_ibfk_2` FOREIGN KEY (`id_curso`) REFERENCES `cursos` (`id_curso`);
+  ADD CONSTRAINT `tareas_estudiante_ibfk_2` FOREIGN KEY (`id_curso`) REFERENCES `cursos` (`id_curso`),
+  ADD CONSTRAINT `tareas_estudiante_ibfk_3` FOREIGN KEY (`id_material`) REFERENCES `material_estudio` (`id_material`);
 
 --
 -- Filtros para la tabla `videos`

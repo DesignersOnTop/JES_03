@@ -24,14 +24,6 @@
                                 <label for="nom-materia">Nombre de la materia</label>
                                 <input type="text" id="nom-materia" name="nom_asignatura" required>         
                             </div>
-                            <div class="materia-dato">
-                                <label for="curso-materia">Curso</label>
-                                <select name="asignatura_curso" id="curso-materia" required>
-                                    {% for x in curso %}
-                                    <option value="{{ x.id }}">{{ x.id_curso }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div> 
                         </div>
                         <button type="submit">Subir Materia</button>
                     </form>

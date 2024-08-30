@@ -71,6 +71,7 @@
                                         <th>Apellido</th>
                                         <th>F. Nacimiento</th>
                                         <th>Curso</th>
+                                        <th>Acción</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tbody-estudiantes">
@@ -82,6 +83,13 @@
                                         <td>{{ estudiante.apellidos }}</td>
                                         <td>{{ estudiante.fecha_nacimiento }}</td>
                                         <td>{{ estudiante.nombre_curso }}</td>
+                                        <td>
+                                            <form action="{{ url_for('eliminar_estudiantes') }}" method="POST" style="display:inline;">
+                                                <input type="hidden" name="id_estudiante" value="{{ estudiante.id_estudiante }}">
+                                                <button type="submit" class="btn-eliminar">Eliminar</button>
+                                            </form>
+                                                <a href="{{url_for('editar_estudiante', id_estudiante = estudiante.id_estudiante)}}" class="btn-editar">editar</a>
+                                        </td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>
@@ -90,7 +98,7 @@
                     </article>
                     <article class="tabla-centrar tabla-horario-centrar">
                         <div class="cabecera-tabla-estudiantes-a cabecera-profesor-a">
-                            <a href="/admin/registro/profesor/" class="agg-es-pro">Agregar</a>
+                            <a href="/admin/registro/profesor/" id="agg-profesor-btn" class="agg-es-pro">Agregar</a>
                             <form action="#">
                                 <input type="search" id="buscar-profesores" placeholder="Buscar profesor...">
                             </form>
@@ -105,6 +113,7 @@
                                         <th>Apellido</th>
                                         <th>Ced&uacute;la</th>
                                         <th>Asignatura</th>
+                                        <th>Acción</th>
                                     </tr>                                
                                 </thead>
                                 <tbody id="tbody-profesores">
@@ -116,8 +125,15 @@
                                         <td>{{ profesor.apellido }}</td>
                                         <td>{{ profesor.cedula }}</td>
                                         <td>{{ profesor.nom_asignatura }}</td>
+                                        <td>
+                                            <form action="{{ url_for('eliminar_profesores') }}" method="POST" style="display:inline;">
+                                                <input type="hidden" name="id_profesor" value="{{ profesor.id_profesor }}">
+                                                <button type="submit" class="btn-eliminar">Eliminar</button>
+                                            </form>
+                                            <a href="{{ url_for('editar_profesor', id_profesor=profesor.id_profesor) }}" class="btn-editar">editar</a>
+                                        </td>
                                     </tr>
-                                    {% endfor %}                                
+                                    {% endfor %}                     
                                 </tbody>
                             </table>
                         </div>

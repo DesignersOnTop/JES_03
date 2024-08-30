@@ -8,7 +8,7 @@
     <link rel="icon" href="{{ url_for('static', filename='imagenes/recursos/logo-jes.png') }}">
 </head>
 <body>
-    <main id="registro-modal" class="modal">
+    <main class="modals-container" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
             <form action="/admin/actualizar_profesor" method="post" enctype="multipart/form-data" class="form-container">
@@ -71,5 +71,6 @@
         </div>
     </main>
     <script src="../../static/js/a-visualizar_imagenes.js"></script>
+    <script src="{{ url_for('static', filename='js/perfil.js') }}"></script>
 </body>
 </html>
