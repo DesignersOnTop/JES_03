@@ -14,17 +14,17 @@ app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'jes'
+#-----------------------------------------------------
 
 # Para guardar archivos en la carpeta documentos
-app.config['UPLOAD_FOLDER'] = os.path.join(os.path.dirname(__file__), 'static', 'documentos')
+app.config['UPLOAD_FOLDER'] = 'static/documentos'
 
-# Crear la carpeta si no existe
-if not os.path.exists(app.config['UPLOAD_FOLDER']):
-    os.makedirs(app.config['UPLOAD_FOLDER'])
-#-----------------------------------------------------
-    
+def normalize_path(path):
+    return path.replace('\\', '/')
+
 @app.route('/uploads/<path:filename>')
 def download_file(filename):
+    filename = normalize_path(filename)
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 @app.route('/')
@@ -1625,14 +1625,20 @@ def editar_estudiante(id_estudiante):
     )
     
     cursor = connection.cursor(pymysql.cursors.DictCursor)
+
+
     cursor.execute("SELECT * FROM estudiantes WHERE id_estudiante = %s", (id_estudiante,))
     estudiante = cursor.fetchone()
+    
+    # Obtener todos los cursos
+    cursor.execute("SELECT id_curso, nombre FROM cursos")
+    cursos = cursor.fetchall()
 
     cursor.close()
     connection.close()
 
     if estudiante:
-        return render_template('./admin/a-editar-datos-estudiante.html', estudiante=estudiante)
+        return render_template('./admin/a-editar-datos-estudiante.html', estudiante=estudiante, cursos=cursos)
     else:
         return "Estudiante no encontrado", 404
     
@@ -1678,7 +1684,9 @@ def actualizar_estudiantes():
     direccion = request.form.get("direccion")
     matricula = request.form.get("matricula")
     contraseña = request.form.get("contraseña")
-
+    
+    
+    
     # Obtén la ruta actual de la imagen de perfil
     cursor.execute('SELECT imagen_perfil FROM estudiantes WHERE id_estudiante = %s', (id_estudiante,))
     old_image_path = cursor.fetchone().get('imagen_perfil')
@@ -1699,17 +1707,17 @@ def actualizar_estudiantes():
         # Elimina la imagen antigua si existe
         if old_image_path and os.path.exists(old_image_path):
             os.remove(old_image_path)
-
     # Aqui indicamos lo que se cambiará y donde lo hará
-    sql =  '''UPDATE estudiantes SET nombre = %s, apellidos = %s, fecha_nacimiento = %s, genero = %s, curso = %s, correo = %s, telefono = %s, direccion = %s, matricula = %s, contraseña = %s WHERE id_estudiante = %s'''
+    
+    sql =  '''UPDATE estudiantes SET nombre = %s, apellidos = %s, fecha_nacimiento = %s, genero = %s, id_curso = %s, email = %s, telefono = %s, direccion = %s, imagen_perfil = %s, matricula = %s, contraseña = %s WHERE id_estudiante = %s'''
 
-    cursor.execute(sql, (id_estudiante, id_curso, nombre, apellidos, fecha_nacimiento, genero, correo, telefono, imagen_perfil_path, direccion, matricula, contraseña))
+    cursor.execute(sql, (nombre, apellidos, fecha_nacimiento, genero, id_curso, correo, telefono, direccion, imagen_perfil_path, matricula, contraseña, id_estudiante))
 
     connection.commit()
     cursor.close()
     connection.close()
 
-    return redirect('/admin/cursos/')
+    return redirect('/home/admin/')
 
 @app.route('/admin/eliminar_estudiantes', methods = ['POST'])
 def eliminar_estudiantes():
@@ -2009,7 +2017,7 @@ def a_perfil_e(id_estudiante):
         """, (id_estudiante,))
     estudiante = cursor.fetchone()
 
-    return render_template('./profesor/p-perfil-e.html', estudiante=estudiante)
+    return render_template('./admin/a-perfil-e.html', estudiante=estudiante)
 
 @app.route('/admin/perfil/profesor/<int:id_profesor>')
 def a_perfil_p(id_profesor):
