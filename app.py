@@ -16,15 +16,10 @@ app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'jes'
 #-----------------------------------------------------
 
-# Para guardar archivos en la carpeta documentos
 app.config['UPLOAD_FOLDER'] = 'static/documentos'
-
-def normalize_path(path):
-    return path.replace('\\', '/')
 
 @app.route('/uploads/<path:filename>')
 def download_file(filename):
-    filename = normalize_path(filename)
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 @app.route('/')
@@ -94,19 +89,16 @@ def home_estudiante():
         # Usamos DictCursor para que los resultados se devuelvan como diccionarios.
     cursor = connection.cursor(pymysql.cursors.DictCursor)
 
-        # obtener la imagen de perfil del estudiante
-        # utilizando su ID almacenado en la sesión.
+    # Obtener la imagen de perfil del estudiante utilizando su ID almacenado en la sesión.
     cursor.execute("SELECT imagen_perfil FROM estudiantes WHERE id_estudiante = %s", (estudiante_id,))
-    
-        # Obtenemos el resultado.
-    estudiante = cursor.fetchone()
+    perfil = cursor.fetchone()
+    imagen_perfil = perfil.get('imagen_perfil') if perfil else None
 
     # calificacion estudiante
     cursor.execute("""
         SELECT 
-            calificaciones.id_estudiante,   # Seleccionamos el ID del estudiante.
-            asignaturas.nom_asignatura AS nom_asignatura, 
-                # Selecionamos el nombre de la asignatura y lo renombramos como 'nom_asignatura'.
+            calificaciones.id_estudiante,
+            asignaturas.nom_asignatura AS nom_asignatura,
             calificaciones.C1,
             calificaciones.C2,
             calificaciones.C3,
@@ -116,10 +108,8 @@ def home_estudiante():
             calificaciones  
         JOIN 
             asignaturas ON calificaciones.id_asignatura = asignaturas.id_asignatura
-                # Unimos la tabla 'asignaturas' usando el ID de la asignatura.
         WHERE 
             calificaciones.id_estudiante = %s
-                # Los resultados para incluir solo las calificaciones del estudiante cuyo ID es igual a 'estudiante_id'.
     """, (estudiante_id,))
     calificaciones = cursor.fetchall()
     
@@ -127,30 +117,32 @@ def home_estudiante():
     #  Obtener las asistencias del estudiante.
     cursor.execute("SELECT Sect_Oct, Nov_Dic, Ene_Feb, Marz_Abril, May_Jun, Total_de_asistencias FROM asistencias WHERE id_estudiante = %s", (estudiante_id,))
 
-        # Recuperamos los registros de asistencias y los almacenamos en 'asistencias'.
+    # Recuperamos los registros de asistencias y los almacenamos en 'asistencias'.
     asistencias = cursor.fetchall()
 
-        # Creamos variables para calcular.
     total_asistencias = 0
     total_periodos = 0
-    total_registros = len(asistencias)
-
+    
     for asistencia in asistencias:
-        total_asistencias += (
-                # Sumamos las asistencias en los distintos periodos.
-            int(asistencia['Sect_Oct']) +
-            int(asistencia['Nov_Dic']) +
-            int(asistencia['Ene_Feb']) +
-            int(asistencia['Marz_Abril']) +
-            int(asistencia['May_Jun'])
-        )
-             # Calculamos el total de periodos multiplicando por 5 y el total de asistencias posibles.
-        total_periodos += 5 * int(asistencia['Total_de_asistencias'])
-            # Calculamos el porcentaje de asistencia si el total de periodos es mayor a 0.
-    if total_periodos > 0:
-        porcentaje_asistencia = (total_asistencias / total_periodos) * 100
-    else:
-        porcentaje_asistencia = 0 # Si no hay periodos, el porcentaje es 0.
+        # Convertir los campos a enteros, tratando valores nulos como 0
+        sect_oct = int(asistencia['Sect_Oct'] or 0)
+        nov_dic = int(asistencia['Nov_Dic'] or 0)
+        ene_feb = int(asistencia['Ene_Feb'] or 0)
+        marz_abril = int(asistencia['Marz_Abril'] or 0)
+        may_jun = int(asistencia['May_Jun'] or 0)
+        total_asistencias_periodo = int(asistencia['Total_de_asistencias'] or 0)
+
+        # Sumar las asistencias de todos los períodos
+        total_asistencias += sect_oct + nov_dic + ene_feb + marz_abril + may_jun
+        
+        # Sumar el total de asistencias posibles (para calcular el porcentaje)
+        total_periodos += 5 * total_asistencias_periodo
+    
+    # Calcular el porcentaje de asistencia
+    porcentaje_asistencia = (total_asistencias / total_periodos * 100) if total_periodos > 0 else 0
+    
+    # Asegurarse de que el porcentaje esté en el rango de 0 a 100
+    porcentaje_asistencia = min(max(porcentaje_asistencia, 0), 100)
 
     
     # horario estudiante ( Se unen varias tablas para obtener la H , D y el nombre de la asignatura )
@@ -175,15 +167,15 @@ def home_estudiante():
         
          # Si la hora no está en el diccionario, iniciamos un diccionario vacío para cada día de la semana.
         if hora not in horario_por_hora:
-            horario_por_hora[hora] = {"Lunes": "", "Martes": "", "Miércoles": "", "Jueves": "", "Viernes": ""}
+            horario_por_hora[hora] = {"Lunes": "", "Martes": "", "Miercoles": "", "Jueves": "", "Viernes": ""}
         
                # Asignamos la asignatura al día correspondiente en el horario.
         horario_por_hora[hora][dia] = asignatura
 
-
     cursor.close()
 
-    return render_template('estudiante/e-home.html', calificaciones=calificaciones, horario_por_hora=horario_por_hora, porcentaje=porcentaje_asistencia, estudiante=estudiante)
+
+    return render_template('estudiante/index.html', calificaciones=calificaciones, horario_por_hora=horario_por_hora, porcentaje=porcentaje_asistencia, perfil=imagen_perfil)
 
 
 @app.route('/estudiante/perfil/')
@@ -246,15 +238,34 @@ def e_material():
     if request.method == 'POST':
         materia_seleccionada = request.form.get('materias-agg')
 
-        # Buscar materiales para la asignatura seleccionada
+        if materia_seleccionada:
+            # Buscar materiales para la asignatura seleccionada
+            cursor.execute('''
+                SELECT material_estudio.*, asignaturas.nom_asignatura
+                FROM material_estudio
+                JOIN estudiantes ON material_estudio.id_curso = estudiantes.id_curso
+                JOIN asignaturas ON material_estudio.id_asignatura = asignaturas.id_asignatura
+                WHERE material_estudio.id_asignatura = %s AND estudiantes.id_estudiante = %s''', (materia_seleccionada, estudiante_id))
+            materiales = cursor.fetchall()
+        else:
+            # Obtener todos los materiales si no se selecciona una asignatura específica
+            cursor.execute('''
+                SELECT material_estudio.*, asignaturas.nom_asignatura
+                FROM material_estudio
+                JOIN estudiantes ON material_estudio.id_curso = estudiantes.id_curso
+                JOIN asignaturas ON material_estudio.id_asignatura = asignaturas.id_asignatura
+                WHERE estudiantes.id_estudiante = %s''', (estudiante_id,))
+            materiales = cursor.fetchall()
+    else:
+        # Obtener todos los materiales si no se realizó una búsqueda
         cursor.execute('''
             SELECT material_estudio.*, asignaturas.nom_asignatura
             FROM material_estudio
             JOIN estudiantes ON material_estudio.id_curso = estudiantes.id_curso
             JOIN asignaturas ON material_estudio.id_asignatura = asignaturas.id_asignatura
-            WHERE material_estudio.id_asignatura = %s AND estudiantes.id_estudiante = %s''', (materia_seleccionada, estudiante_id))
+            WHERE estudiantes.id_estudiante = %s''', (estudiante_id,))
         materiales = cursor.fetchall()
-
+    
     cursor.close()
     
     return render_template('./estudiante/e-material_estudio.html', asignaturas=asignaturas, materiales=materiales)
@@ -287,7 +298,22 @@ def ver_materia(titulo):
     ''', (titulo,))
     material = cursor.fetchone()
 
-    cursor.execute('SELECT profesores.nombre AS pnom, profesores.apellido AS pape FROM `profesor_asignado` JOIN profesores ON profesores.id_profesor = profesor_asignado.id_profesor JOIN estudiantes ON estudiantes.id_curso = profesor_asignado.id_curso WHERE estudiantes.id_curso = %s AND profesores.id_asignatura = %s', (curso, asignatura))
+    cursor.execute('''
+        SELECT 
+            profesores.nombre AS pnom, 
+            profesores.apellido AS pape, 
+            profesores.imagen_perfil 
+        FROM 
+            profesor_asignado 
+        JOIN 
+            profesores ON profesores.id_profesor = profesor_asignado.id_profesor 
+        JOIN 
+            estudiantes ON estudiantes.id_curso = profesor_asignado.id_curso 
+        WHERE 
+            estudiantes.id_curso = %s 
+        AND 
+            profesores.id_asignatura = %s
+    ''', (curso, asignatura))
 
     prof = cursor.fetchone()
 
@@ -535,7 +561,7 @@ def p_home():
     cursor.close()
     connection.close()
 
-    return render_template('./profesor/p-home-a.html', estudiantes=estudiantes, asistencias=asistencias, calificaciones=calificaciones, perfil=perfil, curso_seleccionado=curso_seleccionado, cursos=cursos)
+    return render_template('./profesor/index.html', estudiantes=estudiantes, asistencias=asistencias, calificaciones=calificaciones, perfil=perfil, curso_seleccionado=curso_seleccionado, cursos=cursos)
 
 
 
@@ -1237,7 +1263,7 @@ def a_home():
     admin = cursor.fetchone()
     # Cerrar la conexion para seguridad
     cursor.close()
-    return render_template('./admin/a-home.html', estudiantes=estudiantes, profesores=profesores, admin=admin)
+    return render_template('./admin/index.html', estudiantes=estudiantes, profesores=profesores, admin=admin)
 
 @app.route('/admin/cursos/')
 def a_cursos():
@@ -1605,7 +1631,7 @@ def a_formulario_registro_e():
 
     return render_template('./admin/a-formulario-registro-e.html', cursos=cursos)
 
-@app.route('/admin/agregar_estudiantes', methods = ['POST'])
+@app.route('/admin/agregar_estudiantes', methods=['POST'])
 def agregar_estudiante():
     connection = pymysql.connect(
         host='localhost',
@@ -1613,12 +1639,11 @@ def agregar_estudiante():
         password='',
         database='jes',
         connect_timeout=60
-
     )
     
     cursor = connection.cursor(pymysql.cursors.DictCursor)
 
-    # Insertar estudiantes
+    # Obtener datos del formulario
     id_curso = request.form.get("id_curso")
     matricula = request.form.get("matricula")
     nombre = request.form.get("nombre")
@@ -1628,14 +1653,25 @@ def agregar_estudiante():
     genero = request.form.get("genero")
     correo = request.form.get("email")
     telefono = request.form.get("telefono")
-    imagen_perfil = request.files.get("imagen_perfil")
     contrasena = request.form.get("contrasena")
+    
+    imagen_perfil = request.files.get("imagen_perfil")
+    imagen_perfil_filename = None
 
-    sql = 'INSERT INTO `estudiantes` (`id_estudiante`,`id_curso`, `matricula`, `nombre`, `apellidos`, `direccion`, `fecha_nacimiento`, `genero`, `email`, `telefono`, `imagen_perfil`, `contraseña`) VALUES (NULL, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
+    if imagen_perfil:
+        imagen_perfil_filename = secure_filename(imagen_perfil.filename)
+        imagen_perfil.save(os.path.join(app.config['UPLOAD_FOLDER'], imagen_perfil_filename))
+    
+    # Insertar datos en la base de datos
+    sql = '''
+        INSERT INTO `estudiantes` 
+        (`id_estudiante`, `id_curso`, `matricula`, `nombre`, `apellidos`, `direccion`, `fecha_nacimiento`, `genero`, `email`, `telefono`, `imagen_perfil`, `contraseña`) 
+        VALUES 
+        (NULL, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+    '''
 
-    datos = (id_curso, matricula, nombre, apellidos, direccion, fecha_nacimiento, genero, correo, telefono, imagen_perfil, contrasena)
-
-    cursor.execute(sql,datos)
+    datos = (id_curso, matricula, nombre, apellidos, direccion, fecha_nacimiento, genero, correo, telefono, imagen_perfil_filename, contrasena)
+    cursor.execute(sql, datos)
 
     connection.commit()
     cursor.close()
@@ -1688,18 +1724,17 @@ def editar_profesor(id_profesor):
     else:
         return "Profesor no encontrado", 404
 
-@app.route('/admin/actualizar_estudiantes/', methods = ['POST'])
+@app.route('/admin/actualizar_estudiantes/', methods=['POST'])
 def actualizar_estudiantes():
     connection = pymysql.connect(
-            host='localhost',
-            user='root',
-            password='',
-            database='jes'
-        )
-        
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
+    
     cursor = connection.cursor(pymysql.cursors.DictCursor)
 
-    # Actualizar estudiantes
     id_estudiante = request.form.get("id_estudiante")
     id_curso = request.form.get("id_curso")
     nombre = request.form.get("nombre")
@@ -1712,31 +1747,25 @@ def actualizar_estudiantes():
     matricula = request.form.get("matricula")
     contraseña = request.form.get("contraseña")
     
-    
-    
-    # Obtén la ruta actual de la imagen de perfil
     cursor.execute('SELECT imagen_perfil FROM estudiantes WHERE id_estudiante = %s', (id_estudiante,))
     old_image_path = cursor.fetchone().get('imagen_perfil')
-    
+
     imagen_perfil = request.files.get("imagen_perfil")
     
-    # Se usa la imagen vieja por defecto
     imagen_perfil_path = old_image_path
 
     if imagen_perfil and imagen_perfil.filename:
-        # Asegurar de que el archivo sea seguro y no tenga caracteres no permitidos
-        filename = imagen_perfil.filename
-        imagen_perfil_path = os.path.join('static', 'documentos', filename)
+        filename = secure_filename(imagen_perfil.filename)
+        imagen_perfil_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         
-        # Guarda la nueva imagen
         imagen_perfil.save(imagen_perfil_path)
 
-        # Elimina la imagen antigua si existe
-        if old_image_path and os.path.exists(old_image_path):
-            os.remove(old_image_path)
-    # Aqui indicamos lo que se cambiará y donde lo hará
-    
-    sql =  '''UPDATE estudiantes SET nombre = %s, apellidos = %s, fecha_nacimiento = %s, genero = %s, id_curso = %s, email = %s, telefono = %s, direccion = %s, imagen_perfil = %s, matricula = %s, contraseña = %s WHERE id_estudiante = %s'''
+        if old_image_path and os.path.exists(os.path.join(app.config['UPLOAD_FOLDER'], old_image_path)):
+            os.remove(os.path.join(app.config['UPLOAD_FOLDER'], old_image_path))
+
+    sql = '''UPDATE estudiantes 
+             SET nombre = %s, apellidos = %s, fecha_nacimiento = %s, genero = %s, id_curso = %s, email = %s, telefono = %s, direccion = %s, imagen_perfil = %s, matricula = %s, contraseña = %s 
+             WHERE id_estudiante = %s'''
 
     cursor.execute(sql, (nombre, apellidos, fecha_nacimiento, genero, id_curso, correo, telefono, direccion, imagen_perfil_path, matricula, contraseña, id_estudiante))
 
@@ -1847,28 +1876,24 @@ def actualizar_profesor():
     # Obtén la ruta actual de la imagen de perfil
     cursor.execute('SELECT imagen_perfil FROM profesores WHERE id_profesor = %s', (id_profesor,))
     old_image_path = cursor.fetchone().get('imagen_perfil')
-    
+
     imagen_perfil = request.files.get("imagen_perfil")
     
-    # Se usa la imagen vieja por defecto
-    imagen_perfil_path = old_image_path  
+    imagen_perfil_path = old_image_path
 
     if imagen_perfil and imagen_perfil.filename:
-        # Asegurar de que el archivo sea seguro y no tenga caracteres no permitidos
-        filename = imagen_perfil.filename
-        imagen_perfil_path = os.path.join('static', 'documentos', filename)
+        filename = secure_filename(imagen_perfil.filename)
+        imagen_perfil_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         
-        # Guarda la nueva imagen
         imagen_perfil.save(imagen_perfil_path)
 
-        # Elimina la imagen antigua si existe
-        if old_image_path and os.path.exists(old_image_path):
-            os.remove(old_image_path)
+        if old_image_path and os.path.exists(os.path.join(app.config['UPLOAD_FOLDER'], old_image_path)):
+            os.remove(os.path.join(app.config['UPLOAD_FOLDER'], old_image_path))
 
     sql = '''UPDATE profesores 
-             SET id_asignatura = %s, nombre = %s, apellido = %s, direccion = %s, cedula = %s, genero = %s, 
-                 email = %s, telefono = %s, matricula = %s, imagen_perfil = %s, contraseña = %s 
-             WHERE id_profesor = %s'''
+        SET id_asignatura = %s, nombre = %s, apellido = %s, direccion = %s, cedula = %s, genero = %s, email = %s, telefono = %s, matricula = %s, imagen_perfil = %s, contraseña = %s 
+        WHERE id_profesor = %s
+    '''
 
     cursor.execute(sql, (id_asignatura, nombre, apellidos, direccion, cedula, genero, correo, telefono, matricula, imagen_perfil_path, contraseña, id_profesor))
 
@@ -1876,7 +1901,7 @@ def actualizar_profesor():
     cursor.close()
     connection.close()
 
-    return redirect('/admin/profesores/')
+    return redirect('/home/admin/')
 
 @app.route('/admin/eliminar_profesor', methods = ['POST'])
 def eliminar_profesores():

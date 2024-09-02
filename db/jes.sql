@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-08-2024 a las 22:27:02
+-- Tiempo de generación: 02-09-2024 a las 21:20:15
 -- Versión del servidor: 10.1.37-MariaDB
 -- Versión de PHP: 7.2.13
 
@@ -220,7 +220,7 @@ CREATE TABLE `estudiantes` (
 --
 
 INSERT INTO `estudiantes` (`id_estudiante`, `id_curso`, `matricula`, `nombre`, `apellidos`, `direccion`, `fecha_nacimiento`, `genero`, `email`, `telefono`, `imagen_perfil`, `contraseña`) VALUES
-(2, 1, 'e-9990', 'Albiery', 'Rodriguez', 'calle 16 de agosto #1', '2010-10-19', 'masculino', 'albieryr@gmail.com', '8095889924', 'https://images.unsplash.com/photo-1521119989659-a83eee488004?q=80&w=1923&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'e123'),
+(2, 1, 'e-9990', 'Albiery', 'Rodriguez', 'calle 16 de agosto #1', '2010-10-19', 'masculino', 'albieryr@gmail.com', '8095889924', 'static/documentos\\boy11.jpg', 'e123'),
 (3, 1, 'e-2233', 'Laura', 'Cabrera Francisco', 'calle del sol #255', '2008-05-10', 'Femenino', 'lauracab@gmail.com', '809-962-1230', 'https://lh3.googleusercontent.com/a-/ALV-UjVmN0uFLFH2SzY_MoAhbEeeOL91d_XQBSgfBjSrEDiLUxtfEMLY=s88-w88-h88-c-k-no', 'lau222'),
 (4, 7, 'e200', 'Juana', 'Ramirez pena', 'calle su casa detras de su casa #223', '2008-05-10', 'Femenino', 'juanitab@gmail.com', '809-889-9966', 'https://media.istockphoto.com/id/1369508766/es/foto/hermosa-mujer-latina-exitosa-sonriendo.jpg?s=1024x1024&w=is&k=20&c=u-FgO_3r1SklPbUn37R4DgJ0GQ4FeZPHr2Pj0ta_V7g=', 'juana122');
 
@@ -265,12 +265,16 @@ CREATE TABLE `horario` (
 --
 
 INSERT INTO `horario` (`id_horario`, `id_hora`, `id_curso`, `id_asignatura`, `id_dias`) VALUES
-(2, 1, 1, 2403, 100),
-(3, 1, 1, 2402, 101),
-(4, 2, 1, 2401, 100),
-(5, 2, 1, 2404, 101),
-(6, 2, 1, 2406, 102),
-(7, 2, 1, 2405, 103);
+(91, 1, 1, 2401, 100),
+(92, 1, 1, 2402, 101),
+(93, 1, 1, 2408, 102),
+(94, 1, 1, 2402, 103),
+(95, 1, 1, 2409, 104),
+(96, 2, 1, 2401, 100),
+(97, 2, 1, 2404, 101),
+(98, 2, 1, 2409, 102),
+(99, 2, 1, 2405, 103),
+(100, 2, 1, 2402, 104);
 
 -- --------------------------------------------------------
 
@@ -372,7 +376,8 @@ CREATE TABLE `profesor_asignado` (
 INSERT INTO `profesor_asignado` (`id_profesor_asignado`, `id_profesor`, `id_curso`) VALUES
 (1, 10011, 1),
 (2, 10014, 1),
-(3, 10011, 7);
+(3, 10011, 7),
+(4, 10016, 1);
 
 -- --------------------------------------------------------
 
@@ -620,7 +625,7 @@ ALTER TABLE `hora`
 -- AUTO_INCREMENT de la tabla `horario`
 --
 ALTER TABLE `horario`
-  MODIFY `id_horario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_horario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 
 --
 -- AUTO_INCREMENT de la tabla `libros`
@@ -644,7 +649,7 @@ ALTER TABLE `profesores`
 -- AUTO_INCREMENT de la tabla `profesor_asignado`
 --
 ALTER TABLE `profesor_asignado`
-  MODIFY `id_profesor_asignado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_profesor_asignado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `tareas_estudiante`

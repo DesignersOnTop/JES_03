@@ -37,6 +37,7 @@
                         <h2 class="titulo-material">Material de estudio</h2>
                         <form action="/estudiante/material/" method="POST" class="form-agg-material">
                             <select name="materias-agg" id="materias-agg">
+                                <option value="">Mostrar Todos</option>
                                 {% for asignatura in asignaturas %}
                                 <option value="{{ asignatura.id_asignatura }}">{{ asignatura.nom_asignatura }}</option>
                                 {% endfor %}
@@ -62,7 +63,7 @@
                     </div>
                 </article>
                 {% else %}
-                    <p>Selecciona la materia de la cual quieres buscar el material</p>
+                    <p class="material-mensaje">No se encuentra ningún material disponible en este momento....</p>
                 {% endfor %}
             </section>
         </main>

@@ -2,7 +2,7 @@ const menu = document.querySelector('.menu');
 
 menu.addEventListener('click',() => {
     Swal.fire({
-        html: '<nav><ul class="ul-eme"><li class="li-eme"><a href="p-home-a.html" class="a-eme home-eme">Home</a></li><li class="li-eme"><a href="/" class="a-eme cerrar-eme">Cerrar Sesion</a></li></ul></nav>',
+        html: '<nav><ul class="ul-eme"><li class="li-eme"><a href="/profesor/perfil" class="a-eme home-eme">Perfil</a></li><li class="li-eme"><a href="/home/profesor/" class="a-eme home-eme">Home</a></li><li class="li-eme"><a href="/profesor/refuerzo/libros/" class="a-eme home-eme">Refuerzo de clase</a></li><li class="li-eme"><a href="/profesor/materiales/" class="a-eme home-eme">Material de estudio</a></li><li class="li-eme"><a href="/" class="a-eme cerrar-eme">Cerrar Sesion</a></li></ul></nav>',
         backdrop: true,
         customClass: {
             popup: 'emergente-class classes-eme',
