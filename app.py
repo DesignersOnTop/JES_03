@@ -233,7 +233,7 @@ def e_material():
     
     # las asignaturas disponibles
     cursor.execute('''
-    SELECT asignaturas.id_asignatura, asignaturas.nom_asignatura
+    SELECT DISTINCT asignaturas.id_asignatura, asignaturas.nom_asignatura
     FROM asignaturas
     JOIN material_estudio ON asignaturas.id_asignatura = material_estudio.id_asignatura
     JOIN estudiantes ON estudiantes.id_curso = material_estudio.id_curso
