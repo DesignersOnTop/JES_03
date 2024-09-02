@@ -74,83 +74,110 @@ def login():
 # HOME ESTUDIANTE
 @app.route('/home/estudiante/', methods=['GET'])
 def home_estudiante():
+        # Verificamos si el usuario ha iniciado sesión y su rol.
     if 'user_id' not in session or session.get('role') != 'estudiante':
+        # Si no ha iniciado sesión o no es un estudiante, lo redirigimos a la página principal.
         return redirect('/')
 
+        # Si el usuario es un estudiante, obtenemos su ID desde la sesión.
     estudiante_id = session['user_id']
 
+        # Nos conectamos a la base de datos MySQL.
     connection = pymysql.connect(
-        host='localhost',
-        user='root',
-        password='',
-        database='jes'
+        host='localhost',  # Dirección del servidor MySQL (local en este caso).
+        user='root',       # Nombre de usuario.
+        password='',      
+        database='jes'   
     )
     
+        # Creamos un cursor que nos permitirá ejecutar las consultas.
+        # Usamos DictCursor para que los resultados se devuelvan como diccionarios.
     cursor = connection.cursor(pymysql.cursors.DictCursor)
 
+        # obtener la imagen de perfil del estudiante
+        # utilizando su ID almacenado en la sesión.
     cursor.execute("SELECT imagen_perfil FROM estudiantes WHERE id_estudiante = %s", (estudiante_id,))
+    
+        # Obtenemos el resultado.
     estudiante = cursor.fetchone()
 
     # calificacion estudiante
     cursor.execute("""
         SELECT 
-            calificaciones.id_estudiante,
-            asignaturas.nom_asignatura AS nom_asignatura,
+            calificaciones.id_estudiante,   # Seleccionamos el ID del estudiante.
+            asignaturas.nom_asignatura AS nom_asignatura, 
+                # Selecionamos el nombre de la asignatura y lo renombramos como 'nom_asignatura'.
             calificaciones.C1,
             calificaciones.C2,
             calificaciones.C3,
             calificaciones.C4,
             calificaciones.c_final
         FROM 
-            calificaciones
+            calificaciones  
         JOIN 
             asignaturas ON calificaciones.id_asignatura = asignaturas.id_asignatura
+                # Unimos la tabla 'asignaturas' usando el ID de la asignatura.
         WHERE 
             calificaciones.id_estudiante = %s
+                # Los resultados para incluir solo las calificaciones del estudiante cuyo ID es igual a 'estudiante_id'.
     """, (estudiante_id,))
     calificaciones = cursor.fetchall()
     
-    # asistencias estudiante
+    
+    #  Obtener las asistencias del estudiante.
     cursor.execute("SELECT Sect_Oct, Nov_Dic, Ene_Feb, Marz_Abril, May_Jun, Total_de_asistencias FROM asistencias WHERE id_estudiante = %s", (estudiante_id,))
 
+        # Recuperamos los registros de asistencias y los almacenamos en 'asistencias'.
     asistencias = cursor.fetchall()
 
+        # Creamos variables para calcular.
     total_asistencias = 0
     total_periodos = 0
     total_registros = len(asistencias)
 
     for asistencia in asistencias:
         total_asistencias += (
+                # Sumamos las asistencias en los distintos periodos.
             int(asistencia['Sect_Oct']) +
             int(asistencia['Nov_Dic']) +
             int(asistencia['Ene_Feb']) +
             int(asistencia['Marz_Abril']) +
             int(asistencia['May_Jun'])
         )
+             # Calculamos el total de periodos multiplicando por 5 y el total de asistencias posibles.
         total_periodos += 5 * int(asistencia['Total_de_asistencias'])
-
+            # Calculamos el porcentaje de asistencia si el total de periodos es mayor a 0.
     if total_periodos > 0:
         porcentaje_asistencia = (total_asistencias / total_periodos) * 100
     else:
-        porcentaje_asistencia = 0
+        porcentaje_asistencia = 0 # Si no hay periodos, el porcentaje es 0.
+
     
-    # horario estudiante
+    # horario estudiante ( Se unen varias tablas para obtener la H , D y el nombre de la asignatura )
     sql = ("SELECT h.hora, d.dia, a.nom_asignatura  FROM horario AS hor JOIN hora AS h ON hor.id_hora = h.id_hora JOIN dias AS d ON hor.id_dias = d.id_dias JOIN asignaturas AS a ON hor.id_asignatura = a.id_asignatura JOIN estudiantes AS e ON hor.id_curso = e.id_curso WHERE e.id_estudiante = %s ORDER BY h.id_hora, d.id_dias")
     
+        # En la consulta estamos buscando la hora en la que se imparte la clase, Día de la semana y el nombre de la asignatura. Se toma la informacion de la tabla horario y se usan los JOIN para unir las tablas y obtener la info, con el id correspondiente al estudiante y se ordena por h y d.
+        
     cursor.execute(sql,estudiante_id)
+        # Ejecutamos la consulta usando el id del estudiante.
     
     horarios = cursor.fetchall()
-    
+        # Obtenemos todos los registros devueltos por la consulta y los almacenamos.
+
+        # Creamos un diccionario para organizar el horario. 
     horario_por_hora = {}
 
+        # cada registro de horario obtenido, extraemos la hora, dia y nombre de la asignatura actual 
     for horario in horarios:
         hora = horario['hora']
         dia = horario['dia']
         asignatura = horario['nom_asignatura']
         
+         # Si la hora no está en el diccionario, iniciamos un diccionario vacío para cada día de la semana.
         if hora not in horario_por_hora:
             horario_por_hora[hora] = {"Lunes": "", "Martes": "", "Miércoles": "", "Jueves": "", "Viernes": ""}
         
+               # Asignamos la asignatura al día correspondiente en el horario.
         horario_por_hora[hora][dia] = asignatura
 
 
