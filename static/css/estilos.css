@@ -1394,6 +1394,8 @@ header {
 .titulo-libro {
     font-size: 18px;
     color: #fff;
+    position: relative;
+    top: 6px;
 }
 
 .cabecera-agg-refuerzo a:nth-of-type(1) {
@@ -1416,7 +1418,7 @@ header {
     content: url(../imagenes/iconos/flecha-regresar.svg);
     position: relative;
     right: 5px;
-    top: 4px;
+    top: 5px;
 }
 
 .cabecera-libro a {
@@ -2304,6 +2306,21 @@ textarea.editable {
     text-align: left;
 }
 
+.form-group-arreglado {
+    display: inline-block;
+    margin: 20px;
+}
+
+.form-group-arreglado input {
+    border: none;
+    background-color: transparent;
+}
+
+.form-group-arreglado select {
+    background-color: transparent;
+    border: none;
+}
+
 #registro-modal .form-group label {
     font-weight: bold;
     display: block;
@@ -2834,6 +2851,34 @@ textarea.editable {
 
 #btn-curso-submit {
     color: #ffc83da2;
+}
+
+.tabla-desvincular td form {
+    position: relative;
+    top: 7px;
+}
+
+.td-horario-corto {
+    background-color: transparent;
+    border: none;
+    color: #FFF;
+}
+
+.td-horario-corto option {
+    background-color: black;
+}
+
+.btn-guardar-horario-corto {
+    background-color: #00000083;
+    border: 1px solid #ffc83d83;
+    border-radius: 2px;
+    color: #FFF;
+    position: relative;
+    /* bottom: 22%; */
+    margin-top: 4px;
+    left: 43.5%;
+    z-index: 2;
+    padding: 3px 36px;
 }
 
 /* Movil */

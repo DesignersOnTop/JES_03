@@ -51,10 +51,10 @@
                                 </tr>
                                 {% for hora in horas %}
                                 <tr>
-                                    <td>{{ hora.hora }}</td>
+                                    <td class="td-horario-corto">{{ hora.hora }}</td>
                                     {% for dia in dias %}
-                                    <td>
-                                        <select name="horario[{{ hora.hora }}][{{ dia.dia }}]">
+                                    <td class="td-horario-corto">
+                                        <select name="horario[{{ hora.hora }}][{{ dia.dia }}]" class="td-horario-corto">
                                             <option value="" {% if horarios.get(hora.hora, {}).get(dia.dia, '') == '' %}selected{% endif %}>----</option>
                                             {% for asignatura in asignaturas %}
                                             <option value="{{ asignatura.id_asignatura }}" 
@@ -68,7 +68,7 @@
                                 </tr>
                                 {% endfor %}
                             </table>
-                            <button type="submit">Guardar</button>
+                            <button type="submit" class="btn-guardar-horario-corto">Guardar</button>
                         </form>
                     </div>
                 </article>

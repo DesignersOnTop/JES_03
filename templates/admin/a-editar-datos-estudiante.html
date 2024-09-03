@@ -23,7 +23,7 @@
                             <div class="imagen-registro-preview" id="preview">
                                 <!-- Previsualización de imagen -->
                                 <img src="{{ url_for('download_file', filename=estudiante.imagen_perfil) }}"
-                                    alt="Imagen de perfil" id="currentImage">
+                                    alt="" id="currentImage">
                             </div>
                             <label for="subir-imagen" class="btn-subir-imagen" id="btnSubirImagen">Subir Imagen</label>
                             <input type="file" id="subir-imagen" name="imagen_perfil" accept="image/*" onchange="previewImage(event)">

@@ -515,6 +515,9 @@ def e_videos(titulo):
 # APARTADO DEL PROFESORES
 @app.route('/home/profesor/', methods=['GET', 'POST'])
 def p_home():
+    if 'user_id' not in session or session.get('role') != 'profesor':
+        return redirect('/')
+
     id_profesor = session['user_id']
     
     connection = pymysql.connect(
@@ -799,6 +802,8 @@ def p_refuerzo_libros():
 
 @app.route('/ver/libro/')
 def ver_libro():
+    if 'user_id' not in session or session.get('role') != 'profesor':
+        return redirect('/')
 
     id_libro = request.args.get('id_libro')
 
@@ -997,6 +1002,9 @@ def p_agg_video():
 
 @app.route('/p/agregar/video/', methods=['POST'])
 def p_agregar():
+    if 'user_id' not in session or session.get('role') != 'profesor':
+        return redirect('/')
+    
     id_profesor = session['user_id']
     curso_seleccionado = session['curso_seleccionado']
 
@@ -1026,6 +1034,9 @@ def p_agregar():
 
 @app.route('/profesor/materiales/')
 def p_material_estudio():
+    if 'user_id' not in session or session.get('role') != 'profesor':
+        return redirect('/')
+    
     id_profesor = session.get('user_id')
     curso_seleccionado = session['curso_seleccionado']
 
@@ -1067,6 +1078,9 @@ def p_material_estudio():
 @app.route('/profesor/agregar/material/')
 def agregar_material():
 
+    if 'user_id' not in session or session.get('role') != 'profesor':
+        return redirect('/')
+
     curso_seleccionado = session['curso_seleccionado']
 
     connection = pymysql.connect(
@@ -1087,6 +1101,10 @@ def agregar_material():
 
 @app.route('/agregar/material/', methods=['POST'])
 def p_agg_material():
+
+    if 'user_id' not in session or session.get('role') != 'profesor':
+        return redirect('/')
+
     connection = pymysql.connect(
         host='localhost',
         user='root',
@@ -1127,6 +1145,10 @@ def p_agg_material():
 
 @app.route('/profesor/recurso/estudio/')
 def p_recurso_estudio():
+
+    if 'user_id' not in session or session.get('role') != 'profesor':
+        return redirect('/')
+
     id_profesor = session['user_id']
     id_estudio = request.args.get('id_estudio')
 
@@ -1151,6 +1173,10 @@ def p_recurso_estudio():
 
 @app.route('/eliminar/recurso/estudio/', methods=['POST'])
 def eliminar_recurso_p():
+
+    if 'user_id' not in session or session.get('role') != 'profesor':
+        return redirect('/')
+
     connection = pymysql.connect(
         host='localhost',
         user='root',
@@ -1172,6 +1198,9 @@ def eliminar_recurso_p():
 @app.route('/profesor/material/subido/')
 def p_material_de_curso_subido():
 
+    if 'user_id' not in session or session.get('role') != 'profesor':
+        return redirect('/')
+    
     material = request.args.get('material')
 
     connection = pymysql.connect(
@@ -1194,6 +1223,10 @@ def p_material_de_curso_subido():
 
 @app.route('/profesor/clases/enviadas/')
 def p_clases_enviadas():
+
+    if 'user_id' not in session or session.get('role') != 'profesor':
+        return redirect('/')
+
     id_estudio = request.args.get('id_estudio')
     curso_seleccionado = session['curso_seleccionado']
     id_profesor = session['user_id']
@@ -1224,6 +1257,10 @@ def p_clases_enviadas():
 
 @app.route('/profesor/tarea/estudiante/')
 def p_tarea_e():
+
+    if 'user_id' not in session or session.get('role') != 'profesor':
+        return redirect('/')
+
     id_material =  request.args.get('id_material')
     id_estudiante =  request.args.get('id_estudiante')
 
@@ -1246,6 +1283,10 @@ def p_tarea_e():
 
 @app.route('/profesor/perfil/estudiante/<int:id_estudiante>')
 def p_perfil_e(id_estudiante):
+
+    if 'user_id' not in session or session.get('role') != 'profesor':
+        return redirect('/')
+
     connection = pymysql.connect(
             host='localhost',
             user='root',
@@ -1268,6 +1309,9 @@ def p_perfil_e(id_estudiante):
 
 @app.route('/home/admin/')
 def a_home():
+
+    if 'user_id' not in session or session.get('role') != 'admin':
+        return redirect('/')
 
     connection = pymysql.connect(
         host='localhost',
@@ -1296,6 +1340,10 @@ def a_home():
 
 @app.route('/admin/cursos/')
 def a_cursos():
+
+    if 'user_id' not in session or session.get('role') != 'admin':
+        return redirect('/')
+
     connection = pymysql.connect(
         host='localhost',
         user='root',
@@ -1333,6 +1381,10 @@ def getCursos():
 
 @app.route('/admin/curso/<int:id_curso>', methods = ['GET'])
 def mostrar_estudiantes(id_curso):
+
+    if 'user_id' not in session or session.get('role') != 'admin':
+        return redirect('/')
+
     connection = pymysql.connect(
         host='localhost',
         user='root',
@@ -1351,9 +1403,6 @@ def mostrar_estudiantes(id_curso):
     cursor.execute('SELECT * FROM cursos WHERE id_curso = %s', (id_curso,))
     curso = cursor.fetchone()
 
-    # sql_curso = ('SELECT * FROM asignatura_curso')
-    # cursor.execute(sql_curso)
-    # cursos = cursor.fetchall()
 
     sql_cursos = 'SELECT * FROM cursos'
     cursor.execute(sql_cursos)
@@ -1370,6 +1419,10 @@ def mostrar_estudiantes(id_curso):
 
 @app.route('/eliminar/profesor/curso/', methods = ['POST'])
 def eliminar_profesor_curso():
+
+    if 'user_id' not in session or session.get('role') != 'admin':
+        return redirect('/')
+
     id_profesor = request.form.get('id_profesor')
     id_curso = request.form.get('id_curso')
     
@@ -1396,6 +1449,10 @@ def eliminar_relacion(id_profesor, id_curso):
 
 @app.route('/admin/materias/')
 def a_materias():
+
+    if 'user_id' not in session or session.get('role') != 'admin':
+        return redirect('/')
+
     connection = pymysql.connect(
         host='localhost',
         user='root',
@@ -1414,6 +1471,10 @@ def a_materias():
 
 @app.route('/admin/asignar-profesores/', methods=['GET'])
 def a_asignar_profesores():
+
+    if 'user_id' not in session or session.get('role') != 'admin':
+        return redirect('/')
+
     connection = pymysql.connect(
         host='localhost',
         user='root',
@@ -1438,6 +1499,10 @@ def a_asignar_profesores():
 
 @app.route('/admin/buscar-profesores')
 def search_profesores():
+
+    if 'user_id' not in session or session.get('role') != 'admin':
+        return redirect('/')
+
     connection = pymysql.connect(
         host='localhost',
         user='root',
@@ -1466,7 +1531,10 @@ def search_profesores():
 
 @app.route('/admin/asignar-profesor', methods=['POST'])
 def asignar_profesor():
-    
+
+    if 'user_id' not in session or session.get('role') != 'admin':
+        return redirect('/')    
+
     connection = pymysql.connect(
         host='localhost',
         user='root',
@@ -1489,6 +1557,10 @@ def asignar_profesor():
 
 @app.route('/admin/agregar_materias/', methods = ['POST', 'GET'])
 def a_agg_materias():
+
+    if 'user_id' not in session or session.get('role') != 'admin':
+        return redirect('/')
+
     connection = pymysql.connect(
         host='localhost',
         user='root',
@@ -1513,6 +1585,10 @@ def a_agg_materias():
 
 @app.route('/admin/subir_materia/', methods = ['POST'])
 def subir_materia():
+
+    if 'user_id' not in session or session.get('role') != 'admin':
+        return redirect('/')
+
     connection = pymysql.connect(
             host='localhost',
             user='root',
@@ -1538,6 +1614,10 @@ def subir_materia():
 
 @app.route('/admin/eliminar_materia/<int:id_asignatura>', methods = ['POST'])
 def eliminar_materia(id_asignatura):
+
+    if 'user_id' not in session or session.get('role') != 'admin':
+        return redirect('/')
+
     connection = pymysql.connect(
         host='localhost',
         user='root',
@@ -1560,6 +1640,10 @@ def eliminar_materia(id_asignatura):
 
 @app.route('/admin/reportes/')
 def a_reportes():
+
+    if 'user_id' not in session or session.get('role') != 'admin':
+        return redirect('/')
+
     connection = pymysql.connect(
         host='localhost',
         user='root',
@@ -1582,6 +1666,10 @@ def a_reportes():
 
 @app.route('/admin/reportes-profesor/<int:id_profesor_asignado>')
 def a_reporte_profesor(id_profesor_asignado):
+
+    if 'user_id' not in session or session.get('role') != 'admin':
+        return redirect('/')
+
     connection = pymysql.connect(
         host='localhost',
         user='root',
@@ -1606,6 +1694,10 @@ def a_reporte_profesor(id_profesor_asignado):
 
 @app.route('/admin/perfil/')
 def a_perfil():
+
+    if 'user_id' not in session or session.get('role') != 'admin':
+        return redirect('/')
+
     sql = 'SELECT nombre_admin, matricula, a_email, a_genero, a_direccion, a_telefono, a_img_perfil FROM admin'
 
     connection = pymysql.connect(
@@ -1625,6 +1717,10 @@ def a_perfil():
 
 @app.route('/admin/reportes-calificacion/')
 def a_reporte_calificaciones():
+
+    if 'user_id' not in session or session.get('role') != 'admin':
+        return redirect('/')
+
     connection = pymysql.connect(
         host='localhost',
         user='root',
@@ -1641,10 +1737,18 @@ def a_reporte_calificaciones():
 
 @app.route('/admin/reportes-asistencias/')
 def a_reportes_asistencia():
+
+    if 'user_id' not in session or session.get('role') != 'admin':
+        return redirect('/')
+
     return render_template('./admin/a-asistencia-reporte.html')
 
 @app.route('/admin/registro/estudiante/')
 def a_formulario_registro_e():
+
+    if 'user_id' not in session or session.get('role') != 'admin':
+        return redirect('/')
+        
     connection = pymysql.connect(
         host='localhost',
         user='root',
@@ -1662,6 +1766,10 @@ def a_formulario_registro_e():
 
 @app.route('/admin/agregar_estudiantes', methods=['POST'])
 def agregar_estudiante():
+
+    if 'user_id' not in session or session.get('role') != 'admin':
+        return redirect('/')
+
     connection = pymysql.connect(
         host='localhost',
         user='root',
@@ -1709,6 +1817,10 @@ def agregar_estudiante():
 
 @app.route('/admin/editar_estudiante/<int:id_estudiante>', methods=['GET'])
 def editar_estudiante(id_estudiante):
+
+    if 'user_id' not in session or session.get('role') != 'admin':
+        return redirect('/')
+
     connection = pymysql.connect(
         host='localhost',
         user='root',
@@ -1734,8 +1846,12 @@ def editar_estudiante(id_estudiante):
     else:
         return "Estudiante no encontrado", 404
     
-@app.route('/editar_profesor/<int:id_profesor>', methods=['GET'])
+@app.route('/editar_profesor/<int:id_profesor>', methods = ['GET'])
 def editar_profesor(id_profesor):
+
+    if 'user_id' not in session or session.get('role') != 'admin':
+        return redirect('/')
+
     connection = pymysql.connect(
         host='localhost',
         user='root',
@@ -1746,15 +1862,22 @@ def editar_profesor(id_profesor):
     cursor = connection.cursor(pymysql.cursors.DictCursor)
     cursor.execute("SELECT * FROM profesores WHERE id_profesor = %s", (id_profesor,))
     profesor = cursor.fetchone()
+
+    cursor.execute('SELECT * FROM asignaturas')
+    asignaturas = cursor.fetchall()
     cursor.close()
 
     if profesor:
-        return render_template('./admin/a-editar-datos-profesores.html', profesor=profesor)
+        return render_template('./admin/a-editar-datos-profesores.html', profesor=profesor, asignaturas=asignaturas)
     else:
         return "Profesor no encontrado", 404
 
 @app.route('/admin/actualizar_estudiantes/', methods=['POST'])
 def actualizar_estudiantes():
+
+    if 'user_id' not in session or session.get('role') != 'admin':
+        return redirect('/')
+
     connection = pymysql.connect(
         host='localhost',
         user='root',
@@ -1806,12 +1929,16 @@ def actualizar_estudiantes():
 
 @app.route('/admin/eliminar_estudiantes', methods = ['POST'])
 def eliminar_estudiantes():
+
+    if 'user_id' not in session or session.get('role') != 'admin':
+        return redirect('/')
+
     connection = pymysql.connect(
-            host='localhost',
-            user='root',
-            password='',
-            database='jes'
-        )
+        host='localhost',
+        user='root',
+        password='',
+        database='jes'
+    )
         
     cursor = connection.cursor(pymysql.cursors.DictCursor)
 
@@ -1827,6 +1954,10 @@ def eliminar_estudiantes():
 
 @app.route('/admin/registro/profesor/')
 def a_formulario_registro_p():
+
+    if 'user_id' not in session or session.get('role') != 'admin':
+        return redirect('/')
+
     connection = pymysql.connect(
         host='localhost',
         user='root',
@@ -1846,6 +1977,10 @@ def a_formulario_registro_p():
 
 @app.route('/admin/agregar_profesores', methods = ['POST'])
 def agregar_profesores():
+
+    if 'user_id' not in session or session.get('role') != 'admin':
+        return redirect('/')
+
     connection = pymysql.connect(
         host='localhost',
         user='root',
@@ -1882,6 +2017,10 @@ def agregar_profesores():
 
 @app.route('/admin/actualizar_profesor', methods=['POST'])
 def actualizar_profesor():
+
+    if 'user_id' not in session or session.get('role') != 'admin':
+        return redirect('/')
+
     connection = pymysql.connect(
         host='localhost',
         user='root',
@@ -1934,6 +2073,10 @@ def actualizar_profesor():
 
 @app.route('/admin/eliminar_profesor', methods = ['POST'])
 def eliminar_profesores():
+
+    if 'user_id' not in session or session.get('role') != 'admin':
+        return redirect('/')
+
     connection = pymysql.connect(
         host='localhost',
         user='root',
@@ -1955,6 +2098,10 @@ def eliminar_profesores():
 
 @app.route('/admin/horario/<int:id_curso>')
 def horario(id_curso):
+
+    if 'user_id' not in session or session.get('role') != 'admin':
+        return redirect('/')
+
     connection = pymysql.connect(
         host='localhost',
         user='root',
@@ -2016,6 +2163,10 @@ def horario(id_curso):
 
 @app.route('/admin/guardar_horario/', methods=['POST'])
 def guardar_horario():
+
+    if 'user_id' not in session or session.get('role') != 'admin':
+        return redirect('/')
+
     id_curso_str = request.form.get('id_curso')
     if id_curso_str is None:
         return "Error: id_curso no proporcionado", 400
@@ -2082,6 +2233,11 @@ def guardar_horario():
 
 @app.route('/admin/perfil/estudiante/<int:id_estudiante>')
 def a_perfil_e(id_estudiante):
+
+    if 'user_id' not in session or session.get('role') != 'admin':
+        return redirect('/')
+
+    
     connection = pymysql.connect(
             host='localhost',
             user='root',
@@ -2102,6 +2258,10 @@ def a_perfil_e(id_estudiante):
 
 @app.route('/admin/perfil/profesor/<int:id_profesor>')
 def a_perfil_p(id_profesor):
+
+    if 'user_id' not in session or session.get('role') != 'admin':
+        return redirect('/')
+
     connection = pymysql.connect(
             host='localhost',
             user='root',
