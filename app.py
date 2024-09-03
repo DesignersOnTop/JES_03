@@ -934,7 +934,7 @@ def agregar_libro():
         libro_path = os.path.join(app.config['UPLOAD_FOLDER'], libro_filename)
         libro.save(libro_path)
 
-    cursor.execute(" INSERT INTO libros (id_libro, id_asignatura, id_curso, titulo, subir_libro, portada) VALUES (%s, %s, %s, %s, %s, %s)", ('NULL', id_asignatura, curso_seleccionado, titulo, libro_filename, portada_filename))
+    cursor.execute(" INSERT INTO libros (id_libro, id_asignatura, id_curso, titulo, subir_libro, portada) VALUES (NULL, %s, %s, %s, %s, %s)", (id_asignatura, curso_seleccionado, titulo, libro_filename, portada_filename))
 
     connection.commit()
     cursor.close()

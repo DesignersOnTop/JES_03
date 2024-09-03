@@ -1301,6 +1301,7 @@ header {
     background-color: #ffc83d11;
 }
 
+
 .tabla-asistencia td input {
     color: #FFF;
     background: none;
@@ -2697,6 +2698,11 @@ textarea.editable {
     border: none;
 }
 
+.ver-corto figure {
+    width: fit-content;
+    padding: 5px 20px;
+}
+
 .figure-ver-estudiante {
     margin: 0 auto;
 }
@@ -2789,6 +2795,11 @@ textarea.editable {
     width: fit-content;
     height: fit-content;
     padding: 4px;
+}
+
+.btn-eliminar-video {
+    position: relative;
+    bottom: 4px;
 }
 
 /* Perfiles el home */
