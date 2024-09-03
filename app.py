@@ -79,7 +79,7 @@ def home_estudiante():
 
         # Nos conectamos a la base de datos MySQL.
     connection = pymysql.connect(
-        host='localhost',  # Dirección del servidor MySQL (local en este caso).
+        host='localhost',  # Dirección del servidor MySQL.
         user='root',       # Nombre de usuario.
         password='',      
         database='jes'   
@@ -89,7 +89,7 @@ def home_estudiante():
         # Usamos DictCursor para que los resultados se devuelvan como diccionarios.
     cursor = connection.cursor(pymysql.cursors.DictCursor)
 
-    # Obtener la imagen de perfil del estudiante utilizando su ID almacenado en la sesión.
+        # Obtener la imagen de perfil del estudiante utilizando su ID almacenado en la sesión.
     cursor.execute("SELECT imagen_perfil FROM estudiantes WHERE id_estudiante = %s", (estudiante_id,))
     perfil = cursor.fetchone()
     imagen_perfil = perfil.get('imagen_perfil') if perfil else None
@@ -98,7 +98,6 @@ def home_estudiante():
     cursor.execute("""
         SELECT 
             calificaciones.id_estudiante,
-            asignaturas.nom_asignatura AS nom_asignatura,
             calificaciones.C1,
             calificaciones.C2,
             calificaciones.C3,
@@ -110,14 +109,17 @@ def home_estudiante():
             asignaturas ON calificaciones.id_asignatura = asignaturas.id_asignatura
         WHERE 
             calificaciones.id_estudiante = %s
-    """, (estudiante_id,))
+
+    """, (estudiante_id,)) # parametro para ejecutar la consulta.
     calificaciones = cursor.fetchall()
+    
+        # Seleccionamos el ID del estudiante y las calificaciones. Unimos la tabla calificaciones con la tabla asignaturas para obtener informacion relacionada con asignaturas y sacamos los resultados solo del estudiante que coincida con el ID. 
     
     
     #  Obtener las asistencias del estudiante.
     cursor.execute("SELECT Sect_Oct, Nov_Dic, Ene_Feb, Marz_Abril, May_Jun, Total_de_asistencias FROM asistencias WHERE id_estudiante = %s", (estudiante_id,))
 
-    # Recuperamos los registros de asistencias y los almacenamos en 'asistencias'.
+        # Esta consulta recupera las asistencias del estudiante para diferentes períodos y los registros obtenidos se almacenan en la variable "Asistencia".
     asistencias = cursor.fetchall()
 
     total_asistencias = 0
@@ -148,7 +150,7 @@ def home_estudiante():
     # horario estudiante ( Se unen varias tablas para obtener la H , D y el nombre de la asignatura )
     sql = ("SELECT h.hora, d.dia, a.nom_asignatura  FROM horario AS hor JOIN hora AS h ON hor.id_hora = h.id_hora JOIN dias AS d ON hor.id_dias = d.id_dias JOIN asignaturas AS a ON hor.id_asignatura = a.id_asignatura JOIN estudiantes AS e ON hor.id_curso = e.id_curso WHERE e.id_estudiante = %s ORDER BY h.id_hora, d.id_dias")
     
-        # En la consulta estamos buscando la hora en la que se imparte la clase, Día de la semana y el nombre de la asignatura. Se toma la informacion de la tabla horario y se usan los JOIN para unir las tablas y obtener la info, con el id correspondiente al estudiante y se ordena por h y d.
+        # En la consulta estamos buscando la hora en la que se imparte las clase, Día de la semana y el nombre de la asignatura. Se toma la informacion de la tabla horario y se usan los JOIN para unir las tablas y obtener la informacion, con el id correspondiente al estudiante y se ordena por h y d.
         
     cursor.execute(sql,estudiante_id)
         # Ejecutamos la consulta usando el id del estudiante.
@@ -174,10 +176,9 @@ def home_estudiante():
 
     cursor.close()
 
-
     return render_template('estudiante/index.html', calificaciones=calificaciones, horario_por_hora=horario_por_hora, porcentaje=porcentaje_asistencia, perfil=imagen_perfil)
 
-
+# Perfil 
 @app.route('/estudiante/perfil/')
 def e_perfil():
     if 'user_id' not in session or session.get('role') != 'estudiante':
@@ -193,9 +194,12 @@ def e_perfil():
     )
     
     cursor = connection.cursor(pymysql.cursors.DictCursor)
+    
+        # Obtener informacion del perfil y recuperamos los resultados.
     cursor.execute('SELECT * FROM `estudiantes` WHERE id_estudiante = %s', (estudiante_id,))
     perfil = cursor.fetchall()
     
+        # Consulta para obtener el nombre del curso y recupamos el nombre.
     cursor.execute('''
     SELECT cursos.nombre
     FROM estudiantes
@@ -207,6 +211,7 @@ def e_perfil():
     
     return render_template('./estudiante/e-perfil.html', perfil=perfil[0], curso=curso)
 
+# Material del estudiante
 @app.route('/estudiante/material/', methods=['GET', 'POST'])
 def e_material():
     if 'user_id' not in session or session.get('role') != 'estudiante':
@@ -231,13 +236,16 @@ def e_material():
     JOIN estudiantes ON estudiantes.id_curso = material_estudio.id_curso
     WHERE estudiantes.id_estudiante = %s''', (estudiante_id,))
     asignaturas = cursor.fetchall()
+        # Solo se ejecutara si el id estudiante es valido y recuperamos todas las asignaturas disponibles.
 
-    # materiales vacío
+    # Lista materiales vacía
     materiales = []
 
+        # Si el método de la solicitud es POST, significa que el usuario ha enviado un formulario.
     if request.method == 'POST':
         materia_seleccionada = request.form.get('materias-agg')
-
+        # Obtenemos la asignatura seleccionada del formulario.
+        
         if materia_seleccionada:
             # Buscar materiales para la asignatura seleccionada
             cursor.execute('''
@@ -265,11 +273,13 @@ def e_material():
             JOIN asignaturas ON material_estudio.id_asignatura = asignaturas.id_asignatura
             WHERE estudiantes.id_estudiante = %s''', (estudiante_id,))
         materiales = cursor.fetchall()
-    
+
+        # Cerramos el cursor para renderizar la plantilla con las asignaturas y materiales obtenidos.
     cursor.close()
     
     return render_template('./estudiante/e-material_estudio.html', asignaturas=asignaturas, materiales=materiales)
 
+# Ver materiales del estudiante.
 @app.route('/ver_materia/<titulo>/')
 def ver_materia(titulo):
     if 'user_id' not in session or session.get('role') != 'estudiante':
@@ -283,13 +293,13 @@ def ver_materia(titulo):
         password='',
         database='jes'
     )
-
+        # Parametros obtenidos desde la url 
     curso = request.args.get('curso')
     asignatura = request.args.get('asignatura') 
     
     cursor = connection.cursor(pymysql.cursors.DictCursor)
 
-    # Obtener detalles del material por título
+    # Obtener detalles del material basados por el título.
     cursor.execute('''
         SELECT material_estudio.*, asignaturas.nom_asignatura
         FROM material_estudio
@@ -317,16 +327,20 @@ def ver_materia(titulo):
 
     prof = cursor.fetchone()
 
+        # Obtiene el nombre, apellido y foto del profesor asignado, la información del profesor se une con las tablas profesor_asignado y estudiantes utilizando JOIN para obtener según el curso y la asignatura del  estudiante. Todo la informacion del profesor se almacenara en la variable prof. 
+        
     cursor.close()
-
+        # Cierre del cursor, Renderiza a la plantilla html pasando los detalles del material y el profesor.
     return render_template('estudiante/e-ver_materias.html', material=material, prof=prof)
 
+# Enviar tareas. 
 @app.route('/estudiante/enviar/tarea/', methods=['POST'])
 def enviar_tarea():
     if 'user_id' not in session or session.get('role') != 'estudiante':
         return redirect('/')
 
     estudiante_id = session['user_id']
+        #Se obtienen material y curso desde el formulario enviado por el usuario.
     material_id = request.form.get('material_id')
     curso = request.form.get('curso')
 
@@ -339,20 +353,28 @@ def enviar_tarea():
     
     cursor = connection.cursor(pymysql.cursors.DictCursor)
 
+        # Se verifica si el archivo fue subido correctamente. Si no se encuentra el archivo en request.files, se cierra el cursor de la base de datos y se muestra un mensaje de error.
     if 'subir-tarea' not in request.files:
         cursor.close()
         flash('No se ha subido ningún archivo')
         return redirect('/estudiante/material/')
 
+        # Si el archivo subido no tiene nombre (tarea.filename), se cierra el cursor y se muestra un mensaje indicando que no se seleccionó ningún archivo.
     tarea = request.files['subir-tarea']
     if tarea.filename == '':
         cursor.close()
         flash('No se seleccionó ningún archivo')
         return redirect('/estudiante/material/')
 
+        # Si se ha subido un archivo,
     if tarea:
+            # Asegurar que el nombre del archivo sea seguro.
         archivo_nombre = secure_filename(tarea.filename)
+        
+            # Construir la ruta completa donde se guardará el archivo en el servidor
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], archivo_nombre)
+        
+            # Guardar el archivo en la ubicación especificada
         tarea.save(file_path)
 
         cursor.execute('''
@@ -360,9 +382,11 @@ def enviar_tarea():
             VALUES (%s, %s, %s, %s)
         ''', (material_id, estudiante_id, curso, archivo_nombre))
 
+        # Confirmar para guardar los cambios
         connection.commit()
+        
+        # Cerrar 
         cursor.close()
-
         flash('Tarea enviada exitosamente')
         return redirect('/estudiante/material/')
 
@@ -370,6 +394,7 @@ def enviar_tarea():
     flash('Error al subir el archivo')
     return redirect('/estudiante/material/')
 
+# Rezuerzo libros.
 @app.route('/estudiante/refuerzo/libros/')
 def e_refuerzo_libros():
     if 'user_id' not in session or session.get('role') != 'estudiante':
@@ -386,6 +411,7 @@ def e_refuerzo_libros():
     
     cursor = connection.cursor(pymysql.cursors.DictCursor)
     
+        # Obtener los libros para el refuerzo.
     cursor.execute(
     '''
         SELECT libros.*, asignaturas.nom_asignatura
@@ -414,7 +440,7 @@ def e_libro(titulo):
     
     cursor = connection.cursor(pymysql.cursors.DictCursor)
 
-    # Obtener detalles del libro por título
+    # Obtener los detalles del libro según el título
     cursor.execute('''
         SELECT libros.*, asignaturas.nom_asignatura
         FROM libros
@@ -441,7 +467,8 @@ def e_refuerzo_videos():
     )
     
     cursor = connection.cursor(pymysql.cursors.DictCursor)
-    
+
+        # Obtener los videos de refuerzo asociados con el curso del estudiante
     cursor.execute(
         '''
         SELECT videos.*, asignaturas.nom_asignatura
@@ -469,7 +496,8 @@ def e_videos(titulo):
     )
     
     cursor = connection.cursor(pymysql.cursors.DictCursor)
-    
+
+         # Obtener los detalles del video por su título
     cursor.execute('''
         SELECT videos.*, asignaturas.nom_asignatura
         FROM videos
