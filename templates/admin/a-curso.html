@@ -40,7 +40,7 @@
                 <article class="tabla-centrar tabla-calificacion-centrar">
                     <div class="cabecera-tabla-estudiantes-a cabecera-profesor-a">
                         <form action="#">
-                            <input type="search" id="buscar-estudiantes" placeholder="Buscar estudiante..." class="agg-es-pro">
+                            <input type="search" id="buscar-estudiantes" placeholder="Buscar estudiante..." class="agg-es-pro agg-es-pro-corto">
                         </form>
                     </div>
                     <div class="tabla-admin">
@@ -56,7 +56,7 @@
                                     <th>Perfil</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="tbody-estudiantes">
                                 {% for estudiante in estudiantes %}
                                 <tr class="fila-calificacion">
                                     <td>{{ estudiante.id_estudiante }}</td>

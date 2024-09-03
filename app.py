@@ -102,9 +102,10 @@ def home_estudiante():
             calificaciones.C2,
             calificaciones.C3,
             calificaciones.C4,
-            calificaciones.c_final
+            calificaciones.c_final,
+            asignaturas.nom_asignatura
         FROM 
-            calificaciones  
+            calificaciones
         JOIN 
             asignaturas ON calificaciones.id_asignatura = asignaturas.id_asignatura
         WHERE 
@@ -2121,6 +2122,10 @@ def a_perfil_p(id_profesor):
         
 # =========================================================
 
+@app.route('/cerrar/session/')
+def cerra_sesion():
+    session.clear()
+    return redirect(url_for('Index'))
 
 if __name__ == '__main__':
     app.run(port = 3000, debug=True)

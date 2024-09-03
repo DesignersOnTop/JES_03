@@ -286,7 +286,7 @@ header {
 /* ------------------------------------------------------------------------------------- */
 
 .section-top-container {
-    background-color: transparent;
+    background-color: rgba(0, 0, 0, 0.120);
     backdrop-filter: blur(20px);
     border-radius: 10px;
     display: flex;
@@ -697,9 +697,9 @@ header {
 }
 
 .contenedor-material {
-    max-width: 30%;
-    width: 30%;
-    height: 190px;
+    max-width: 24%;
+    width: 24%;
+    height: 130px;
     border: 1px solid #ffc83d27;
     backdrop-filter: blur(10px);
     background-color: #00000013;
@@ -738,6 +738,10 @@ header {
     top: 0;
     left: 0;
     background-color: #000;
+}
+
+.material-estilo {
+    height: 160px;
 }
 
 .fondo-material-estudio{
@@ -838,7 +842,7 @@ header {
     background-color: transparent;
     color: white;
     padding: 5px;
-    border-radius: 5px;
+    border-radius:  5px 0 0 5px ;
     border: 1px solid rgba(255, 200, 61, 0.193);
     margin-left: 10px;
 }
@@ -1187,17 +1191,23 @@ header {
 }
 
 .seleccion-cursos-p select {
-    background-color: transparent;
-    /* background-color: #0000006b; */
+    background-color: rgba(0, 0, 0, 0.120);
     backdrop-filter: blur(20px);
     padding: 5px 10px;
-    border-radius: 10px;
+    border-radius: 10px 0  0 10px;
     border: 1px solid #ffc83d33;
     color: white;
 }
 
 .seleccion-cursos-p select option {
     background-color: #0000006e;
+}
+
+.seleccion-cursos-p button {
+    background-color: rgba(0, 0, 0, 0.120);
+    color: white;
+    border: 1px solid #ffc83d33;
+    padding: 6.5px 10px;
 }
 
 /* ADMIN */
@@ -1311,7 +1321,7 @@ header {
 }
 
 .tabla-asistencia th {
-    color: #ffc83d73;
+    color: #ffc83db9;
     text-align: center;
     padding: 10px;
 } 
@@ -1457,7 +1467,7 @@ header {
 }
 
 .libros-refuerzo th{
-    color:  #ffc83d85;
+    color: #ffc83db9;
     padding: 5px;
 }
 
@@ -2534,6 +2544,10 @@ textarea.editable {
     background-color: #ffc83d22;
 }
 
+/* .agg-es-pro-corto {
+    left: 280%;
+} */
+
 /* ====================== */
 #mainContent .btn {
     background-color: #cb940ab1;
@@ -2807,6 +2821,19 @@ textarea.editable {
     border-radius: 100%;
     width: 50px; 
     height: 50px;
+}
+
+/* botones */
+.btn-search-cabecera {
+    background-color: transparent;
+    color: white;
+    border: 1px solid rgba(255, 200, 61, 0.193);
+    padding: 6.2px 10px;
+    border-radius: 0px 10px 10px 0;
+}
+
+#btn-curso-submit {
+    color: #ffc83da2;
 }
 
 /* Movil */

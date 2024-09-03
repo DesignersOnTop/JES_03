@@ -42,12 +42,12 @@
                                 <option value="{{ asignatura.id_asignatura }}">{{ asignatura.nom_asignatura }}</option>
                                 {% endfor %}
                             </select>
-                            <button type="submit">Buscar</button>
+                            <button type="submit" class="btn-search-cabecera">Buscar</button>
                         </form>
                     </div>
                 </div>
                 {% for material in materiales %}
-                <article class="contenedor-material">                           
+                <article class="contenedor-material material-estilo">                           
                     <div class="materia-del-material">
                         <h3>{{ material.titulo }}</h3>
                     </div>
