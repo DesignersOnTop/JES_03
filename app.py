@@ -24,7 +24,7 @@ def download_file(filename):
 
 @app.route('/')
 def Index():
-    return render_template('index.html')
+    return render_template('index.html', error=False)
     
 @app.route('/login', methods=['POST'])
 def login():
@@ -63,7 +63,8 @@ def login():
         session['user_id'] = admin['id_admin']
         session['role'] = 'admin'
         return redirect('/home/admin/')
-    return redirect('/')
+    
+    return render_template('index.html', error=True)
 # # =========================================================
 
 # HOME ESTUDIANTE
