@@ -30,14 +30,14 @@
                 </nav>
             </div>
         </header>
-        <main class="main-container">
-            <section class="section-materiales section-p-material-estudio">
-                <div class="cabecera-agg-refuerzo" id="cabecera-material_estudio">
-                    <div class="cabecera-flex">
-                        <a href="/profesor/agregar/material/">Agregar</a>
-                        <h1 class="titulo-refuerzo titulo-libro">Material</h1>
-                    </div>
+        <main class="main-container">                
+            <div class="cabecera-agg-refuerzo cab-materiales-corto" id="cabecera-material_estudio">
+                <div class="cabecera-flex">
+                    <a href="/profesor/agregar/material/">Agregar</a>
+                    <h1 class="titulo-refuerzo titulo-libro">Material</h1>
                 </div>
+            </div>
+            <section class="section-materiales" id="libros-section">
                 {% for estudio in estudios %}
                 <article class="contenedor-material">                           
                     <div class="materia-del-material">

@@ -47,7 +47,7 @@
                     <input type="hidden" name="material_id" value="{{ material.id_material }}">
                     <article class="curso-descargar">
                         <h3><span class="display-none">Descargar</span> Archivo</h3>
-                        <a href="{{ url_for('static', filename=material.archivo_nombre) }}" download="{{ material.material_subido }}">Click</a>
+                        <a href="/static/documentos/{{material.material_subido}}" download="/static/documentos/{{material.material_subido}}">Click</a>
                     </article>
                     <article class="curso-subir-tarea">
                         <div id="previsualizacion"></div>
@@ -56,7 +56,7 @@
                     </article>
                     <div class="botones-curso botones-curso-p" >
                         <button type="button" id="btn-label">
-                            <label for="subir-tarea" id="subir-recurso-estudio"><span class="display-none">Subir </span>Tarea</label>    
+                            <label for="subir-tarea" id="subir-recurso-estudio">Subir<span class="display-none"> Tarea</span></label>    
                         </button>
                         <button type='submit' value="Enviar" id="btn-curso-submit">Enviar</button>
                     </div>

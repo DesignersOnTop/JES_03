@@ -32,7 +32,7 @@
         </header>
         <main class="main-container">
             <div class="cabecera-agg-material">
-                <div class="cabecera-materiales-flex" style="width: 80%; margin: 10px auto;">
+                <div class="cabecera-materiales-flex cab-materiales-corto">
                     <h2 class="titulo-material">Material de estudio</h2>
                     <form action="/estudiante/material/" method="POST" class="form-agg-material">
                         <select name="materias-agg" id="materias-agg">
@@ -45,9 +45,9 @@
                     </form>
                 </div>
             </div>
-            <section class="section-materiales section-margin-top" id="libros-section" style=" width: 74%; height: fit-content;">
+            <section class="section-materiales section-margin-top materiales-estudio" id="libros-section">
                 {% for material in materiales %}
-                <article class="contenedor-material material-estilo" style="position: relative; transform: translateX(-13%);">                           
+                <article class="contenedor-material material-estilo">                           
                     <div class="materia-del-material">
                         <h3>{{ material.titulo }}</h3>
                     </div>

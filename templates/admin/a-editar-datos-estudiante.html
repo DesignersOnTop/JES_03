@@ -22,26 +22,25 @@
                         <div class="subir-imagen-registro">
                             <div class="imagen-registro-preview" id="preview">
                                 <!-- Previsualización de imagen -->
-                                <img src="{{ url_for('download_file', filename=estudiante.imagen_perfil) }}"
-                                    alt="" id="currentImage">
+                                <img src="/{{estudiante.imagen_perfil}}" alt="imagen: {{estudiante.nombre}} {{estudiante.apellidos}}" id="currentImage">
                             </div>
                             <label for="subir-imagen" class="btn-subir-imagen" id="btnSubirImagen">Subir Imagen</label>
                             <input type="file" id="subir-imagen" name="imagen_perfil" accept="image/*" onchange="previewImage(event)">
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group form-group-arreglado">
                         <label for="nombre">Nombre:</label>
                         <input value="{{ estudiante.nombre }}" type="text" id="nombre" name="nombre" required>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group form-group-arreglado">
                         <label for="apellidos">Apellidos:</label>
                         <input value="{{ estudiante.apellidos }}" type="text" id="apellidos" name="apellidos" required>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group form-group-arreglado">
                         <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
                         <input value="{{ estudiante.fecha_nacimiento }}" type="text" id="fecha_nacimiento" name="fecha_nacimiento" required>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group form-group-arreglado">
                         <label for="curso">Curso:</label>
                         <input type="hidden" id="id_curso" name="id_curso" value="{{ estudiante.id_curso }}">
                         <select id="nombre_curso" name="nombre_curso" onchange="updateCursoId()">
@@ -52,32 +51,32 @@
                             {% endfor %}
                         </select>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group form-group-arreglado">
                         <label for="matricula">Matrícula:</label>
                         <input value="{{ estudiante.matricula }}" type="text" id="matricula" name="matricula" required>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group form-group-arreglado">
                         <label for="direccion">Direccion:</label>
                         <input value="{{ estudiante.direccion }}" type="text" id="direccion" name="direccion" required>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group form-group-arreglado">
                         <label for="genero">Genero:</label>
                         <input value="{{ estudiante.genero }}" type="text" id="genero" name="genero" required>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group form-group-arreglado">
                         <label for="email">Correo Electrónico:</label>
                         <input value="{{ estudiante.email }}" type="email" id="email" name="email" required>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group form-group-arreglado">
                         <label for="telefono">Telefono:</label>
                         <input value="{{ estudiante.telefono }}" type="tel" id="telefono" name="telefono" required>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group form-group-arreglado">
                         <label for="contrasena">Contraseña:</label>
                         <input value="{{ estudiante.contraseña }}" type="text" id="contraseña" name="contraseña"
                             required>
                     </div>
-                    <button type="submit" class="btn-guardar-cambios">Guardar Cambios</button>
+                    <button type="submit" class="btn-guardar-cambios guardar-cambios-corto">Guardar Cambios</button>
                 </fieldset>
             </form>
         </div>

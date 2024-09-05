@@ -58,7 +58,7 @@
                                     <th>Perfil</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="tbody-estudiantes">
                                 {% for estudiante in estudiantes %}
                                 <tr class="fila-calificacion">
                                     <td>{{ estudiante.id_estudiante }}</td>
@@ -67,8 +67,7 @@
                                     <td>{{ estudiante.fecha_nacimiento }}</td>
                                     <td>{{ curso.nombre}}</td>
                                     <td>{{ estudiante.genero }}</td>
-                                    <td><a href="{{url_for('a_perfil_e', id_estudiante=estudiante.id_estudiante)}}"><img
-                                                src="../../static/imagenes/iconos/usuario.svg" alt="icono-perfil"></a></td>
+                                    <td><a href="{{url_for('a_perfil_e', id_estudiante=estudiante.id_estudiante)}}"><img src="../../static/imagenes/iconos/usuario.svg" alt="icono-perfil"></a><td>
                                 </tr>
                                 {% endfor %}
                             </tbody>

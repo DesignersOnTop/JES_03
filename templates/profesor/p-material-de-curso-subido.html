@@ -12,7 +12,7 @@
 <body>
     <main class="main-container">
         <section class="modals-container modal-video">
-            <iframe src="{{ url_for('download_file', filename=material.material_subido) }}" frameborder="0"></iframe>
+            <iframe src="/static/documentos/{{material.material_subido}}" frameborder="0"></iframe>
         </section>
     </main>
     <script src="{{ url_for('static', filename='js/perfil.js') }}"></script>
