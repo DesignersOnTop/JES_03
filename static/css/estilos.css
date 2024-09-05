@@ -1024,7 +1024,7 @@ header {
     text-align: center;
 }
 
-#subir-recurso-estudio{
+/* #subir-recurso-estudio{
     position: absolute;
     bottom: 0%;
     right: 0;
@@ -1032,13 +1032,13 @@ header {
     background-color: #00000067;
     backdrop-filter: blur(20px);
     padding: 5px 0;
-}
+} */
 
-#subir-recurso-estudio:hover {
+/* #subir-recurso-estudio:hover {
     border: 1px solid #ffffff10;
     border-bottom: none;
     background-color: #0000007f;
-}
+} */
 
 .curso-subir-tarea [type='file']{
     position: absolute;
@@ -2849,7 +2849,7 @@ textarea.editable {
     border-radius: 0px 10px 10px 0;
 }
 
-#btn-curso-submit {
+#btn-curso-submit, #btn-label {
     color: #ffc83da2;
 }
 
