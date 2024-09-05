@@ -81,16 +81,7 @@
             </form>
         </div>
     </main>
-    <script>
-function updateCursoId() {
-    var select = document.getElementById("nombre_curso");
-    var selectedOption = select.options[select.selectedIndex];
-    var idCurso = selectedOption.value;
-    
-    // Actualiza el campo oculto con el id_curso seleccionado
-    document.getElementById("id_curso").value = idCurso;
-}
-</script>
+    <script src="{{ url_for('static', filename='js/select-editar-datos.js') }}"></script>
     <script src="../../static/js/a-visualizar_imagenes.js"></script>
     <script src="{{ url_for('static', filename='js/perfil.js') }}"></script>
 </body>

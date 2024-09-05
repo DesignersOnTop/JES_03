@@ -701,8 +701,8 @@ header {
     width: 20%;
     height: 130px;
     border: 1px solid #ffc83d27;
-    backdrop-filter: blur(2px);
-    background-color: #00000094;
+    backdrop-filter: blur(20px);
+    background-color: #0000003b;
     display: flex;
     flex-direction: row;
     margin-left: 0.5%;
@@ -764,9 +764,9 @@ header {
     height: fit-content;
 }
 
-.section-libros-refuerzo-e .fondo-material-estudio img  {
+/* .section-libros-refuerzo-e .fondo-material-estudio img  {
     opacity: 0.5;
-}
+} */
 
 #libros-section {
     justify-content: flex-start;
@@ -2714,7 +2714,7 @@ textarea.editable {
 }
 
 #cursos_cabcera {
-    width: 80%;
+    width: 68%;
 }
 
 /* tabla admin */
