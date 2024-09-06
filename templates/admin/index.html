@@ -83,7 +83,7 @@
                                         <td>{{ estudiante.apellidos }}</td>
                                         <td>{{ estudiante.fecha_nacimiento }}</td>
                                         <td>{{ estudiante.nombre_curso }}</td>
-                                        <td>
+                                        <td class="td-arreglar-corto">
                                             <form action="{{ url_for('eliminar_estudiantes') }}" method="POST" style="display:inline;">
                                                 <input type="hidden" name="id_estudiante" value="{{ estudiante.id_estudiante }}">
                                                 <button type="submit" class="btn-eliminar btn-eliminar-corto">Eliminar</button>
@@ -125,7 +125,7 @@
                                         <td>{{ profesor.apellido }}</td>
                                         <td>{{ profesor.cedula }}</td>
                                         <td>{{ profesor.nom_asignatura }}</td>
-                                        <td>
+                                        <td class="td-arreglar-corto">
                                             <form action="{{ url_for('eliminar_profesores') }}" method="POST" style="display:inline;">
                                                 <input type="hidden" name="id_profesor" value="{{ profesor.id_profesor }}">
                                                 <button type="submit" class="btn-eliminar btn-eliminar-corto">Eliminar</button>

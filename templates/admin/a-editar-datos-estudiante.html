@@ -18,7 +18,7 @@
                 <fieldset>
                     <legend>Editar Perfil del Estudiante</legend>
                     <input type="hidden" name="id_estudiante" value="{{ estudiante.id_estudiante }}">
-                    <div class="form-group">
+                    <div class="form-group form-group-img">
                         <div class="subir-imagen-registro">
                             <div class="imagen-registro-preview" id="preview">
                                 <!-- Previsualización de imagen -->
@@ -76,7 +76,7 @@
                         <input value="{{ estudiante.contraseña }}" type="text" id="contraseña" name="contraseña"
                             required>
                     </div>
-                    <button type="submit" class="btn-guardar-cambios guardar-cambios-corto">Guardar Cambios</button>
+                    <button type="submit" class="btn-guardar-cambios guardar-cambios-corto guardar-cambios-corto-responsive">Guardar Cambios</button>
                 </fieldset>
             </form>
         </div>

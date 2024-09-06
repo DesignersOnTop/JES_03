@@ -2901,8 +2901,8 @@ textarea.editable {
     color: #FFF;
     padding: 3px 15px;
     position: relative;
-    top: 70px;
-    right: 60px;
+    left: 80%;
+    display: flex;
 }
 
 /* arreglos para las paginas libros */
@@ -3440,9 +3440,66 @@ textarea.editable {
         margin: 0;
         top: 0;
         bottom: 20px;
-        left: 40%;
+        left: 30%;
     }
-}
+
+    /* Arreglos del admin */
+    .titulo-materias {
+        position: relative;
+        top: -2px;
+        left: 200px;
+    }
+
+    .agg-materias-btn {
+        margin: 2px 0 0 0;
+        margin-left: 30px;
+    }
+
+    .guardar-cambios-corto {
+        position: relative;
+        top: 40px;
+        left: 100px;
+    }
+
+    .guardar-cambios-corto-responsive {
+        position: relative;
+        right: 20%;
+        bottom: 30%;
+    }
+
+    .td-arreglar-corto {
+        display: flex;
+    }
+
+    .btn-eliminar-corto {
+        position: relative;
+        top: 30%;
+    }
+
+    .btn-guardar-cambios {
+        background-color: #00000025;
+        color: #fff;
+        border: 1px solid #ffc83d;
+        padding: 5px 15px;
+        margin: 0 50px 60px 0;
+    }
+
+    .form-group-img img {
+        border-radius: 100%;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .imagen-registro-preview {
+        margin: 0;
+        object-fit: cover;
+    }
+
+    .submit-registro {
+        margin-top: 10%;
+    }
+
 /* Tablet */
 
 @media screen and (min-width: 601px) and (max-width: 900px) {
@@ -3564,11 +3621,12 @@ textarea.editable {
 
 /* Pantalla grande */
 @media screen and (min-width: 901px) and (max-width: 1200px) {
-    /* Perfil */
-    .modal-perfil {
-        max-width: 80%;
-    }
-    #index-main {
-        width: 90%;
+        /* Perfil */
+        .modal-perfil {
+            max-width: 80%;
+        }
+        #index-main {
+            width: 90%;
+        }
     }
 }
