@@ -37,22 +37,22 @@
             </nav>
         </div>
     </header>
-    <main class="main-container">
-        <section class="section-materiales section-libros-refuerzo-e section-margin-top" id="libros-section">
-            <div class="cabecera-agg-material cabecera-agg-refuerzo">
-                <div class="cabecera-flex">
-                    <div class="contenedor-a-cabecera">
-                        <a href="#" id="recurrente-a-refuerzo">Libros</a>
-                        <a href="{{ url_for('e_refuerzo_videos') }}">Videos</a>
-                    </div>
-                    <h2 class="titulo-refuerzo titulo-none">Recursos de Estudio</h2>
+    <main class="main-container">            
+        <div class="cabecera-agg-material cabecera-agg-refuerzo" id="cabecera-libro-flex">
+            <div class="cabecera-flex">
+                <div class="contenedor-a-cabecera">
+                    <a href="#" id="recurrente-a-refuerzo">Libros</a>
+                    <a href="{{ url_for('e_refuerzo_videos') }}">Videos</a>
                 </div>
-                <form action="#">
-                    <input type="search" class="search-input" name="materias-refuerzo" id="materias-refuerzo" placeholder="Buscar libros...">
-                </form>
+                <h2 class="titulo-refuerzo titulo-none">Recursos de Estudio</h2>
             </div>
+            <form action="#">
+                <input type="search" class="search-input" name="materias-refuerzo" id="materias-refuerzo" placeholder="Buscar libros...">
+            </form>
+        </div>
+        <section class="section-materiales section-libros-refuerzo-e section-margin-top" id="libros-section">
             {% for libro in libros %}
-            <article class="contenedor-material con-ma-libro" data-nom-asignatura="{{ libro.nom_asignatura | lower }}"
+            <article class="contenedor-material con-ma-libro contenedor-libro" data-nom-asignatura="{{ libro.nom_asignatura | lower }}"
                 data-titulo="{{ libro.titulo | lower }}">
                 <div class="materia-del-material">
                     <h3>{{ libro.nom_asignatura }}</h3>

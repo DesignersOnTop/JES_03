@@ -683,29 +683,26 @@ header {
 /* ------------------------------------------------------------------------------------- */
 
 .section-materiales {
-    width: 80%;
-    height: fit-content;
     margin: 0 auto;
-    margin-top: 10px;
     border-radius: 6px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
     align-content: flex-start;
     gap: 5px;
     margin-top: 1%;
+    width: 80%;
 }
 
 .contenedor-material {
-    max-width: 20%;
-    width: 20%;
+    max-width: 24%;
+    width: 24%;
     height: 130px;
     border: 1px solid #ffc83d27;
     backdrop-filter: blur(20px);
     background-color: #0000003b;
     display: flex;
     flex-direction: row;
-    margin-left: 0.5%;
+    margin-left: 0.1%;
     overflow: hidden;
 }
 
@@ -716,9 +713,14 @@ header {
 
 .contenedor-corto {
     height: 140px;
-    max-width: 20%;
-    width: 20%;
+    max-width: 25%;
+    width: 25%;
 
+}
+
+.contenedor-libro {
+    width: 24%;
+    margin-left: 0.5%;
 }
 
 .materia-del-material h3 {
@@ -742,7 +744,15 @@ header {
 
 .material-estilo {
     height: 160px;
-    transform: translateX(-13%);
+}
+
+#section-material-p {
+    width: 80%;
+    justify-content: flex-start;
+}
+
+.p-material-estudio {
+
 }
 
 .fondo-material-estudio{
@@ -764,21 +774,20 @@ header {
     height: fit-content;
 }
 
-/* .section-libros-refuerzo-e .fondo-material-estudio img  {
-    opacity: 0.5;
-} */
 
 #libros-section {
     justify-content: flex-start;
 }
 
-/* #libros-section .cabecera-agg-material {
-    width: 92%;
-} */
 
-#libros-section .contenedor-material {
+#section-material {
     position: relative;
-    left: 3.4%;
+    left: 2%;
+}
+
+#section-material .contenedor-material {
+    position: relative;
+    right: 3%;
 }
 
 .contenido-material {
@@ -799,7 +808,6 @@ header {
     position: relative;
     top: 125%;
     right: 5%;
-    /* background-color: #000; */
 }
 
 .link-material a{
@@ -809,6 +817,11 @@ header {
     white-space: nowrap;
     position: relative;
     top: 10px;
+}
+
+#libros-section .contenedor-material {
+    position: relative;
+    margin-left: 0.3%;
 }
 
 .contenedor-material a:hover {
@@ -825,7 +838,6 @@ header {
 
 .con-ma-libro {
     height: 160px;
-    transform: translateX(3.5%);
 }
 
 /* ----------------------------------------------------------- */
@@ -899,10 +911,14 @@ header {
     top: 7px;
 }
 
-.section-p-refuerzo .cabecera-flex, .section-libros-refuerzo-e .cabecera-flex {
+.section-p-refuerzo .cabecera-flex, .cabecera-flex {
     position: relative;
     top: 33%;
     width: 55%;
+}
+
+#cabecera-libro-flex {
+    width: 80%;
 }
 
 /* ----------------------------------------------------------- */
@@ -933,6 +949,34 @@ header {
     right: 1%;
     margin-bottom: 1.4%;
     border: 1px solid rgba(255, 255, 255, 0.145);
+}
+
+.img-fondo-libro {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.img-fondo-libro label {
+    color: #ffc83d;
+}
+
+.info-material, .dato-video-url, .dato-matt {
+    display: flex;
+    flex-direction: column;
+}
+
+.info-material label, .dato-video-url label, .dato-matt label {
+    text-align: center;
+}
+
+.dato-video-url label {
+    margin-bottom: 2px;
+}
+
+.info-material input:last-of-type {
+    margin-bottom: 10px;
 }
 
 #img-fondo-enviadas {
@@ -1612,7 +1656,7 @@ header {
 }
 
 .dato-material label {
-    color: #ffc83d43;
+    color: #ffc83d;
 }
 
 #url-video {
@@ -2920,6 +2964,10 @@ textarea.editable {
     color: white;
 }
 
+#section-libros-e {
+    width: 80%;
+}
+
 /* ARREGLO DE CURSOS */
 
 .section-cursos-admin .contenedor_curso{
@@ -2941,8 +2989,11 @@ textarea.editable {
 #cabecera-material_estudio {
     margin: 0 auto;
     margin-top: 4%;
-    width: 68%;
+    width: 80%;
 }
+
+/*  */
+
 
 /* Movil */
 

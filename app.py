@@ -779,12 +779,37 @@ def p_refuerzo_libros():
         id_libro_a_eliminar = request.form.get('id_libro')
         if id_libro_a_eliminar:
             cursor.execute('''
-                DELETE FROM libros
+                SELECT subir_libro, portada
+                FROM libros
                 WHERE id_libro = %s AND id_curso = %s
             ''', (id_libro_a_eliminar, curso_seleccionado))
-            connection.commit()
+            libro = cursor.fetchone()
+            
+            if libro:
+                libro_filename = libro['subir_libro']
+                portada_filename = libro['portada']
+                
+                # Eliminar el archivo del sistema de archivos
+                if libro_filename:
+                    libro_path = os.path.join(app.config['UPLOAD_FOLDER'], libro_filename)
+                    if os.path.exists(libro_path):
+                        os.remove(libro_path)
+                
+                # Eliminar la portada del archivo
+                if portada_filename:
+                    portada_path = os.path.join(app.config['UPLOAD_FOLDER'], portada_filename)
+                    if os.path.exists(portada_path):
+                        os.remove(portada_path)
+
+                # Eliminar el libro de la base de datos
+                cursor.execute('''
+                    DELETE FROM libros
+                    WHERE id_libro = %s AND id_curso = %s
+                ''', (id_libro_a_eliminar, curso_seleccionado))
+                connection.commit()
+                
             return redirect('/profesor/refuerzo/libros/')
-    
+
     sql = """
         SELECT libros.*, asignaturas.nom_asignatura
         FROM libros

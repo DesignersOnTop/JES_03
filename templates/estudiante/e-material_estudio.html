@@ -32,7 +32,7 @@
         </header>
         <main class="main-container">
             <div class="cabecera-agg-material">
-                <div class="cabecera-materiales-flex cab-materiales-corto">
+                <div class="cabecera-materiales-flex cab-materiales-corto" id="cabecera-form">
                     <h2 class="titulo-material">Material de estudio</h2>
                     <form action="/estudiante/material/" method="POST" class="form-agg-material">
                         <select name="materias-agg" id="materias-agg">
@@ -45,7 +45,7 @@
                     </form>
                 </div>
             </div>
-            <section class="section-materiales section-margin-top materiales-estudio" id="libros-section">
+            <section class="section-materiales section-margin-top materiales-estudio" id="section-material">
                 {% for material in materiales %}
                 <article class="contenedor-material material-estilo">                           
                     <div class="materia-del-material">
@@ -58,7 +58,6 @@
                         <div class="link-material">
                             <h3>{{ material.nom_asignatura }}</h3>
                             <a href="{{ url_for('ver_materia', titulo=material.titulo, asignatura=material.id_asignatura, curso=material.id_curso, material=material.id_material) }}">ver</a>
-
                         </div>
                     </div>
                 </article>
