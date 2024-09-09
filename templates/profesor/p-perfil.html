@@ -9,45 +9,45 @@
 </head>
 <body>
     <main class="main-container">
-        <section class="modals-container">
-            <article class="modal-perfil">
-                <div class="perfil-izquierda">
-                    <h4 class="titulo-perfil">Profesor</h4>
-                    <figure class="perfil-estudiante perfil-profesor">
-                        <img src="/{{ perfil.imagen_perfil}}" alt="img-perfil">
-                    </figure>
-                </div>
-                <div class="perfil-derecho">
-                    <div class="perfil-derecha-arriba">
-                        <h2>{{perfil.nombre}} {{perfil.apellido}}</h2>
-                        <p>{{perfil.matricula}}</p>
+        <section class="modals-container modals-container-perfiles">
+                <article class="modal-perfil">
+                    <div class="perfil-izquierda">
+                        <h4 class="titulo-perfil">Profesor</h4>
+                        <figure class="perfil-estudiante perfil-profesor">
+                            <img src="/{{ perfil.imagen_perfil}}" alt="img-perfil">
+                        </figure>
                     </div>
-                    <div class="datos datos1">
-                        <h3>Email</h3>
-                        <p>{{perfil.email}}</p>
+                    <div class="perfil-derecho">
+                        <div class="perfil-derecha-arriba">
+                            <h2>{{perfil.nombre}} {{perfil.apellido}}</h2>
+                            <p>{{perfil.matricula}}</p>
+                        </div>
+                        <div class="datos datos1">
+                            <h3>Email</h3>
+                            <p>{{perfil.email}}</p>
+                        </div>
+                        <div class="datos">
+                            <h3>Cedula</h3>
+                            <p>{{perfil.cedula}}</p>
+                        </div>
+                        <div class="datos">
+                            <h3>Materia</h3>
+                            <p>{{perfil.nom_asignatura}}</p>
+                        </div>
+                        <div class="datos">
+                            <h3>Genero</h3>
+                            <p>{{perfil.genero}}</p>
+                        </div>
+                        <div class="datos">
+                            <h3>Dirección</h3>
+                            <p>{{perfil.direccion}}</p>
+                        </div>
+                        <div class="datos">
+                            <h3>Telefono</h3>
+                            <p>{{perfil.telefono}}</p>
+                        </div>
                     </div>
-                    <div class="datos">
-                        <h3>Cedula</h3>
-                        <p>{{perfil.cedula}}</p>
-                    </div>
-                    <div class="datos">
-                        <h3>Materia</h3>
-                        <p>{{perfil.nom_asignatura}}</p>
-                    </div>
-                    <div class="datos">
-                        <h3>Genero</h3>
-                        <p>{{perfil.genero}}</p>
-                    </div>
-                    <div class="datos">
-                        <h3>Dirección</h3>
-                        <p>{{perfil.direccion}}</p>
-                    </div>
-                    <div class="datos">
-                        <h3>Telefono</h3>
-                        <p>{{perfil.telefono}}</p>
-                    </div>
-                </div>
-            </article>
+                </article>
         </section>
     </main>
     <script src="{{ url_for('static', filename='js/perfil.js') }}"></script>

@@ -35,17 +35,19 @@
                 <div class="cabecera-materiales-flex cab-materiales-corto" id="cabecera-form">
                     <h2 class="titulo-material">Material de estudio</h2>
                     <form action="/estudiante/material/" method="POST" class="form-agg-material">
-                        <select name="materias-agg" id="materias-agg">
-                            <option value="">Mostrar Todos</option>
-                            {% for asignatura in asignaturas %}
-                            <option value="{{ asignatura.id_asignatura }}">{{ asignatura.nom_asignatura }}</option>
-                            {% endfor %}
-                        </select>
-                        <button type="submit" class="btn-search-cabecera">Buscar</button>
+                        <div id="materias-select">
+                            <select name="materias-agg" id="materias-agg">
+                                <option value="">Mostrar Todos</option>
+                                {% for asignatura in asignaturas %}
+                                <option value="{{ asignatura.id_asignatura }}">{{ asignatura.nom_asignatura }}</option>
+                                {% endfor %}
+                            </select>
+                            <button type="submit" class="btn-search-cabecera">Buscar</button>
+                        </div>
                     </form>
                 </div>
             </div>
-            <section class="section-materiales section-margin-top materiales-estudio" id="section-material">
+            <section class="section-materiales materiales-estudio" id="material-responsive">
                 {% for material in materiales %}
                 <article class="contenedor-material material-estilo">                           
                     <div class="materia-del-material">

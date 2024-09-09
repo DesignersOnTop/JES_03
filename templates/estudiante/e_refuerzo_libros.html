@@ -50,7 +50,7 @@
                 <input type="search" class="search-input" name="materias-refuerzo" id="materias-refuerzo" placeholder="Buscar libros...">
             </form>
         </div>
-        <section class="section-materiales section-libros-refuerzo-e section-margin-top" id="libros-section">
+        <section class="section-materiales section-libros-refuerzo-e section-margin-top" id="material-responsive">
             {% for libro in libros %}
             <article class="contenedor-material con-ma-libro contenedor-libro" data-nom-asignatura="{{ libro.nom_asignatura | lower }}"
                 data-titulo="{{ libro.titulo | lower }}">
