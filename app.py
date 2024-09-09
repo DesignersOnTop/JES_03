@@ -1352,8 +1352,11 @@ def a_home():
     #admin
     cursor.execute('SELECT a_img_perfil, nombre_admin, a_apellido FROM admin WHERE id_admin = %s',(id_admin,))
     admin = cursor.fetchone()
+
     # Cerrar la conexion para seguridad
     cursor.close()
+    connection.close()
+
     return render_template('./admin/index.html', estudiantes=estudiantes, profesores=profesores, admin=admin)
 
 @app.route('/admin/cursos/')
@@ -1362,18 +1365,22 @@ def a_cursos():
     if 'user_id' not in session or session.get('role') != 'admin':
         return redirect('/')
 
+    # Creamos la conexión con la base de datos
     connection = pymysql.connect(
         host='localhost',
         user='root',
         password='',
         database='jes'
     )
-    
+    # Definimos la conexión con cursor (será el que interactue con la base de datos)
     cursor = connection.cursor(pymysql.cursors.DictCursor)
 
+    # Hacemos una consulta la cual será llamar todo de la tabla cursos, así se verán todos los cursos
     cursor.execute('SELECT * FROM cursos')
+    # Usamos el fetchall para mostrar todo
     cursos = cursor.fetchall()
 
+    # Cerramos la conexión por seguridad
     cursor.close()
     connection.close()
 
@@ -1381,6 +1388,8 @@ def a_cursos():
 
 @app.route('/admin/getCursos', methods=['GET'])
 def getCursos():
+
+    # Este GET lo usaremos para que devuelva los datos de cursos en Json
     connection = pymysql.connect(
         host='localhost',
         user='root',
@@ -1400,6 +1409,8 @@ def getCursos():
 @app.route('/admin/curso/<int:id_curso>', methods = ['GET'])
 def mostrar_estudiantes(id_curso):
 
+    # Aquí se verán los cursos individualmente una vez entramos en ellos
+
     if 'user_id' not in session or session.get('role') != 'admin':
         return redirect('/')
 
@@ -1411,21 +1422,25 @@ def mostrar_estudiantes(id_curso):
     )
     
     cursor = connection.cursor(pymysql.cursors.DictCursor)
-
+    
+    # Hacemos una consulta la cual será que seleccione todos los campos de estudiante cuando el id_curso que tenga el estudiante sea el que realizé la acción (esto hará que aparezcan todos los estudiantes que están en ese curso)
     cursor.execute('SELECT * FROM estudiantes WHERE id_curso = %s', (id_curso,))
     estudiantes = cursor.fetchall()
 
+    # Aquí hacemos otra consulta renombrando algunos campos y uniendalas con otras tablas para así conseguir los datos de los profesores asignados a ese curso
     cursor.execute('''SELECT p.*, asignaturas.nom_asignatura AS asignatura FROM profesores p JOIN profesor_asignado pa ON p.id_profesor = pa.id_profesor JOIN asignaturas ON asignaturas.id_asignatura = p.id_asignatura WHERE pa.id_curso = %s''', (id_curso,))
     profesores = cursor.fetchall()
 
+    # Se hace la consulta llamando todos los campos del curso cuando sea el curso seleccionado se mostrará lo de ese curso
     cursor.execute('SELECT * FROM cursos WHERE id_curso = %s', (id_curso,))
     curso = cursor.fetchone()
 
-
+    # Se llama el fetchall para mostrar los cursos
     sql_cursos = 'SELECT * FROM cursos'
     cursor.execute(sql_cursos)
     cursos = cursor.fetchall()
 
+    # Se llama el fetchall para mostrar los profesores
     sql_profesor = 'SELECT * FROM profesores'
     cursor.execute(sql_profesor)
     profesor = cursor.fetchall()
@@ -1433,6 +1448,7 @@ def mostrar_estudiantes(id_curso):
     cursor.close()
     connection.close()
 
+    # Pasamos a la plantilla html los datos de cada uno que mostramos en el fetchall
     return render_template('./admin/a-curso.html', curso=curso, estudiantes=estudiantes, profesores=profesores, id_curso=id_curso, cursos=cursos, profesor=profesor)
 
 @app.route('/eliminar/profesor/curso/', methods = ['POST'])
@@ -1441,9 +1457,11 @@ def eliminar_profesor_curso():
     if 'user_id' not in session or session.get('role') != 'admin':
         return redirect('/')
 
+    # Aquí tomará como referencia el id_profesor y el id_curso que están relacionados
     id_profesor = request.form.get('id_profesor')
     id_curso = request.form.get('id_curso')
     
+    # Se hará una validación de si el profesor está asignado a ese curso
     if id_profesor and id_curso:
         eliminar_relacion(id_profesor, id_curso)
     
@@ -1459,7 +1477,9 @@ def eliminar_relacion(id_profesor, id_curso):
     
     cursor = connection.cursor(pymysql.cursors.DictCursor)
     
+    # Aquí se realizará la consulta de que en caso que el profesor y el curso estén relacionados con la validación anterior, esta se eliminará
     cursor.execute('DELETE FROM profesor_asignado WHERE id_profesor = %s AND id_curso = %s', (id_profesor, id_curso,))
+    # Guardamos los cambios
     connection.commit()
 
     cursor.close()
@@ -1479,12 +1499,16 @@ def a_materias():
     )
 
     cursor = connection.cursor(pymysql.cursors.DictCursor)
+
+    # Hacemos la consulta de seleccionar todos los campos de la tabla asignatura
     cursor.execute('SELECT * FROM asignaturas')
+    # Usamos el fetchall para mostrar el contenido
     asignaturas = cursor.fetchall()
 
     cursor.close()
     connection.close()
 
+    # Pasamos los contenidos obtenidos del fetchall a la plantilla html
     return render_template('./admin/a-materias.html', asignaturas=asignaturas)
 
 @app.route('/admin/asignar-profesores/', methods=['GET'])
@@ -1502,10 +1526,14 @@ def a_asignar_profesores():
 
     cursor = connection.cursor(pymysql.cursors.DictCursor)
 
+    # Hacemos una consulta seleccionando los compos de cursos
     sql_cursos = 'SELECT * FROM cursos'
+    # Ejecutamos la consulta
     cursor.execute(sql_cursos)
+    # Hacemos un fetchall para mostrar los contenidos obtenidos de la tabla cursos
     cursos = cursor.fetchall()
 
+    # Hacemos lo mismo con la tabla profesores
     sql_profesor = 'SELECT * FROM profesores'
     cursor.execute(sql_profesor)
     profesores = cursor.fetchall()
@@ -1513,6 +1541,7 @@ def a_asignar_profesores():
     cursor.close()
     connection.close()
 
+    # Pasamos los contenidos obtenidos de fetchall de profesores y cursos a la plantilla html
     return render_template('./admin/a-agregar-profesor-cursos.html', cursos=cursos, profesores=profesores)
 
 @app.route('/admin/buscar-profesores')
@@ -1530,9 +1559,11 @@ def search_profesores():
 
     cursor = connection.cursor(pymysql.cursors.DictCursor)
 
+    # Pasamos las variables search_option y query como argumentos para el JavaScript ya que este es el que hará la busqueda
     search_option = request.args.get('searchOption')
     query = request.args.get('query')
 
+    # Si el método de busqueda es por asignatura buscará en la tabla profesores todos los que tengan la asignatura introducida en el formulario. Si el método es por matricula, buscará a el profesor que tenga la matricula especificada en el formulario
     if search_option == 'asignatura':
         cursor.execute('SELECT * FROM profesores WHERE id_asignatura = %s', (query,))
     elif search_option == 'matricula':
@@ -1545,6 +1576,7 @@ def search_profesores():
     cursor.close()
     connection.close()
 
+    # Pasamos los datos en formato Json para que el JavaScript pueda trabajar con los datos
     return jsonify(profesores)
 
 @app.route('/admin/asignar-profesor', methods=['POST'])
@@ -1562,15 +1594,19 @@ def asignar_profesor():
 
     cursor = connection.cursor(pymysql.cursors.DictCursor)
 
+    # Tomará como referencia el id_profesor que busquemos y el id_curso a cual queramos asignarlo mediante el formulario
     id_profesor = request.form.get('id_profesor')
     id_curso = request.form.get('id_curso')
 
+    # Hacemos la consulta insertando en la tabla que relaciona el profesor con el curso asignado a el profesor que estamos insertando
     cursor.execute('INSERT INTO profesor_asignado (id_profesor_asignado, id_profesor, id_curso) VALUES (NULL, %s, %s)', (id_profesor, id_curso))
+    # Guardamos los cambios
     connection.commit()
 
     cursor.close()
     connection.close()
 
+    # Redireccionamos a la función que muestra el curso
     return redirect(url_for('mostrar_estudiantes', id_curso=id_curso))
 
 @app.route('/admin/agregar_materias/', methods = ['POST', 'GET'])
@@ -1588,10 +1624,14 @@ def a_agg_materias():
 
     cursor = connection.cursor(pymysql.cursors.DictCursor)
 
+    # Hacemos una consulta para mostrar todos los campos de asignaturas
     sql_asignaturas = ('SELECT * FROM asignaturas')
+    # Ejecutamos la consulta
     cursor.execute(sql_asignaturas)
+    # Hacemos un fetchall para mostrar los datos
     asignaturas = cursor.fetchall()
 
+    # Hacemos lo mismo con la tabla asignatura_curso
     sql_curso = ('SELECT * FROM asignatura_curso')
     cursor.execute(sql_curso)
     curso = cursor.fetchall()
@@ -1599,6 +1639,7 @@ def a_agg_materias():
     cursor.close()
     connection.close()
 
+    # Pasamos los datos obtenidos de los fetchall a la plantilla html
     return render_template('./admin/a-agg-materias.html', asignaturas=asignaturas, curso=curso)
 
 @app.route('/admin/subir_materia/', methods = ['POST'])
@@ -1616,13 +1657,17 @@ def subir_materia():
     
     cursor = connection.cursor(pymysql.cursors.DictCursor)
     
+    # Tomamos el nombre que asignamos en el formulario
     nom_asignatura = request.form.get("nom_asignatura")
-    
+    # Ese nombre lo pasamos a la variable datos
     datos = (nom_asignatura)
     
+    # Hacemos la consulta insertando la asignatura la cual el nombre será introducido en el formulario
     sql = '''INSERT INTO `asignaturas` (`id_asignatura`, `nom_asignatura`) VALUES (NULL, %s)'''
     
+    # Ejecutamos la consulta y le pasamos el nombre obtenido del formulario
     cursor.execute(sql,datos)
+    # Guardamos los cambios
     connection.commit()
 
     cursor.close()
@@ -1645,10 +1690,13 @@ def eliminar_materia(id_asignatura):
 
     cursor = connection.cursor(pymysql.cursors.DictCursor)
 
+    # Eliminamos la relación que está con la tabla profesores
     cursor.execute('DELETE FROM profesores WHERE id_asignatura = %s', (id_asignatura,))
 
+    # Eliminamos la asignatura la cual será la elegida por la acción
     cursor.execute('DELETE FROM asignaturas WHERE id_asignatura = %s', (id_asignatura,))
 
+    # Guardamos los cambios
     connection.commit()
 
     cursor.close()
@@ -1658,6 +1706,8 @@ def eliminar_materia(id_asignatura):
 
 @app.route('/admin/reportes/')
 def a_reportes():
+
+    # APARTADO ELIMINADO
 
     if 'user_id' not in session or session.get('role') != 'admin':
         return redirect('/')
@@ -1716,6 +1766,7 @@ def a_perfil():
     if 'user_id' not in session or session.get('role') != 'admin':
         return redirect('/')
 
+    # Hacemos la consulta seleccionando los datos a mostrar en la plantilla html del perfil del admin
     sql = 'SELECT nombre_admin, matricula, a_email, a_genero, a_direccion, a_telefono, a_img_perfil FROM admin'
 
     connection = pymysql.connect(
@@ -1726,11 +1777,15 @@ def a_perfil():
     )
     
     cursor = connection.cursor(pymysql.cursors.DictCursor)
+
+    # Ejecutamos la consulta
     cursor.execute(sql)
 
+    # Hacemos el fetchone para que solo se muestre la información pedida en la consulta
     admin = cursor.fetchone()
     cursor.close()
 
+    # Pasamos los datos del fetchone a la plantilla html
     return render_template('./admin/a-perfil.html', admin = admin)
 
 @app.route('/admin/reportes-calificacion/')
@@ -1775,11 +1830,15 @@ def a_formulario_registro_e():
     )
 
     cursor = connection.cursor(pymysql.cursors.DictCursor)
+
+    # Ejecutamos una consulta la cual permitirá ver los cursos a los cuales se podrá ingresar al estudiante
     cursor.execute('SELECT * FROM cursos')
+    # Hacemos un fetchall para poder visualizar los cursos
     cursos = cursor.fetchall()
     cursor.close()
     connection.close()
 
+    # Pasamos los datos del fetchall a la plantilla html
     return render_template('./admin/a-formulario-registro-e.html', cursos=cursos)
 
 @app.route('/admin/agregar_estudiantes', methods=['POST'])
@@ -1809,15 +1868,19 @@ def agregar_estudiante():
     correo = request.form.get("email")
     telefono = request.form.get("telefono")
     contrasena = request.form.get("contrasena")
-    
     imagen_perfil = request.files.get("imagen_perfil")
+
+    # Si no se introduce una imagen para el perfil se quedará vacia (None)
     imagen_perfil_filename = None
 
+    # Aquí haremos una validación por si hay una imagen introducida
     if imagen_perfil:
+        # Aquí se le asignará un nombre a la imagen
         imagen_perfil_filename = secure_filename(imagen_perfil.filename)
+        # Se guarda en la carpeta configurada para subir archivos de la app
         imagen_perfil.save(os.path.join(app.config['UPLOAD_FOLDER'], imagen_perfil_filename))
     
-    # Insertar datos en la base de datos
+    # Hacemos una consulta insertando todo lo establecido en el formulario de registro
     sql = '''
         INSERT INTO `estudiantes` 
         (`id_estudiante`, `id_curso`, `matricula`, `nombre`, `apellidos`, `direccion`, `fecha_nacimiento`, `genero`, `email`, `telefono`, `imagen_perfil`, `contraseña`) 
@@ -1825,11 +1888,15 @@ def agregar_estudiante():
         (NULL, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
     '''
 
+    # Aquí se indican los campos que se agregarán
     datos = (id_curso, matricula, nombre, apellidos, direccion, fecha_nacimiento, genero, correo, telefono, imagen_perfil_filename, contrasena)
+    # Ejecutamos la consulta y le pasamos los campos
     cursor.execute(sql, datos)
 
+    # Guardamos los cambios y cerramos la conexión
     connection.commit()
     cursor.close()
+    connection.close()
 
     return redirect('/home/admin/')
 
@@ -1848,17 +1915,20 @@ def editar_estudiante(id_estudiante):
     
     cursor = connection.cursor(pymysql.cursors.DictCursor)
 
-
+    # Seleccionamos todos los campos del estudiante seleccionado
     cursor.execute("SELECT * FROM estudiantes WHERE id_estudiante = %s", (id_estudiante,))
+    # Mostramos los datos de ese estudiante
     estudiante = cursor.fetchone()
     
     # Obtener todos los cursos
     cursor.execute("SELECT id_curso, nombre FROM cursos")
+    # Mostramos los cursos
     cursos = cursor.fetchall()
 
     cursor.close()
     connection.close()
 
+    # Hacemos una validación, si el estudiante existe abrirá el formulario para editar los datos, si no existe dará un error 404 indicando que no se encontró
     if estudiante:
         return render_template('./admin/a-editar-datos-estudiante.html', estudiante=estudiante, cursos=cursos)
     else:
@@ -1878,13 +1948,19 @@ def editar_profesor(id_profesor):
     )
     
     cursor = connection.cursor(pymysql.cursors.DictCursor)
+
+    # Ejecutamos una consulta que será que mustre todos los campos del profesor seleccionado
     cursor.execute("SELECT * FROM profesores WHERE id_profesor = %s", (id_profesor,))
+    # Mostramos los datos de ese profesor
     profesor = cursor.fetchone()
 
+    # Ejecutamos otra consulta que será seleccionando todos los campos de la tabla asignaturas
     cursor.execute('SELECT * FROM asignaturas')
+    # Mostramos todas las asignaturas con el fetchall
     asignaturas = cursor.fetchall()
     cursor.close()
 
+    # Hacemos una validación, si el profesor existe abrirá el formulario para editar los datos, si no existe dará un error 404 indicando que no se encontró
     if profesor:
         return render_template('./admin/a-editar-datos-profesores.html', profesor=profesor, asignaturas=asignaturas)
     else:
@@ -1905,6 +1981,7 @@ def actualizar_estudiantes():
     
     cursor = connection.cursor(pymysql.cursors.DictCursor)
 
+    # Obtenemos los datos introducidos en el formulario
     id_estudiante = request.form.get("id_estudiante")
     id_curso = request.form.get("id_curso")
     nombre = request.form.get("nombre")
@@ -1917,28 +1994,37 @@ def actualizar_estudiantes():
     matricula = request.form.get("matricula")
     contraseña = request.form.get("contraseña")
     
+    # Ejecutamos una consulta la cual es seleccionando la imagen del perfil del estudiante seleccionado
     cursor.execute('SELECT imagen_perfil FROM estudiantes WHERE id_estudiante = %s', (id_estudiante,))
+    # Se usará la imagen antigua para poder visualizarla antes de cambiarla
     old_image_path = cursor.fetchone().get('imagen_perfil')
 
+    # Se obtiene la nueva imagen del perfil
     imagen_perfil = request.files.get("imagen_perfil")
-    
+    # Se indica que la ruta de la imagen por defecto será la vieja hasta que se cambie
     imagen_perfil_path = old_image_path
 
+    # Se hace una validación de si hubo una imagen que se introdujo
     if imagen_perfil and imagen_perfil.filename:
+        # Se le asigna un nombre
         filename = secure_filename(imagen_perfil.filename)
+        # Busca la ruta de donde se guardan los archivos configurados en la app
         imagen_perfil_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        
+        # Guarda la imagen
         imagen_perfil.save(imagen_perfil_path)
-
+        # Se elimina la vieja o anterior
         if old_image_path and os.path.exists(os.path.join(app.config['UPLOAD_FOLDER'], old_image_path)):
             os.remove(os.path.join(app.config['UPLOAD_FOLDER'], old_image_path))
 
+    # Se hace la consulta actualizando los datos por los introducidos en el formulario
     sql = '''UPDATE estudiantes 
              SET nombre = %s, apellidos = %s, fecha_nacimiento = %s, genero = %s, id_curso = %s, email = %s, telefono = %s, direccion = %s, imagen_perfil = %s, matricula = %s, contraseña = %s 
              WHERE id_estudiante = %s'''
 
+    # Ejecutamos la consulta y le pasamos los datos obtenidos del formulario
     cursor.execute(sql, (nombre, apellidos, fecha_nacimiento, genero, id_curso, correo, telefono, direccion, imagen_perfil_path, matricula, contraseña, id_estudiante))
 
+    # Guardamos los cambios y cerramos la conexión
     connection.commit()
     cursor.close()
     connection.close()
@@ -1960,11 +2046,14 @@ def eliminar_estudiantes():
         
     cursor = connection.cursor(pymysql.cursors.DictCursor)
 
+    # Se toma como refencia el id_estudiante del estudiante seleccionado
     id_estudiante = request.form.get("id_estudiante")
 
+    # Ejecutamos una consulta eliminando al estudiantes el cual tiene el mismo id_estudiante
     cursor.execute('DELETE FROM estudiantes WHERE id_estudiante = %s', (id_estudiante,))
+    # Guardamos los cambios
     connection.commit()
-    
+    # Cerramos la conexión
     cursor.close()
     connection.close()
 
@@ -1984,13 +2073,19 @@ def a_formulario_registro_p():
     )
 
     cursor = connection.cursor(pymysql.cursors.DictCursor)
+
+    # Hacemos una consulta seleccionando los campos necesarios de la tabla asignaturas para poder asignarle una asignatura al profesor
     sql = 'SELECT id_asignatura, nom_asignatura FROM asignaturas'
 
+    # Ejecutamos la consulta
     cursor.execute(sql)
+    # Mostramos todos los datos de asignaturas
     asignaturas = cursor.fetchall()
+    # Cerramos la conexión
     cursor.close()
     connection.close()
 
+    # Pasamos los datos obtenidos del fetchall a la plantilla html
     return render_template('./admin/a-formulario-registro-p.html', asignaturas=asignaturas)
 
 @app.route('/admin/agregar_profesores', methods = ['POST'])
@@ -2009,7 +2104,7 @@ def agregar_profesores():
     
     cursor = connection.cursor(pymysql.cursors.DictCursor)
 
-    # Insertar profesores
+    # Obtenemos los datos del formulario
     id_asignatura = request.form.get("id_asignatura")
     matricula = request.form.get("matricula")
     nombre = request.form.get("nombre")
@@ -2022,12 +2117,16 @@ def agregar_profesores():
     imagen_perfil = request.files.get("imagen_perfil")
     contrasena = request.form.get("contrasena")
 
+    # Hacemos una consulta insertando a la tabla profesores
     sql = 'INSERT INTO `profesores` (`id_profesor`,`id_asignatura`, `matricula`, `nombre`, `apellido`, `direccion`, `cedula`, `genero`, `email`, `telefono`, `imagen_perfil`, `contraseña`) VALUES (NULL, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
 
+    # Creamos una variable que almacenará los datos puestos en el formulario
     datos = (id_asignatura, matricula, nombre, apellidos, direccion, cedula, genero, correo, telefono, imagen_perfil, contrasena)
 
+    # Ejecutamos la consulta y le pasamos los datos obtenidos del formulario
     cursor.execute(sql,datos)
     
+    # Guardamos los cambios y cerramos la conexión
     connection.commit()
     cursor.close()
     
@@ -2047,6 +2146,7 @@ def actualizar_profesor():
     )
     cursor = connection.cursor(pymysql.cursors.DictCursor)
 
+    # Obtenemos los datos del formulario
     id_asignatura = request.form.get("id_asignatura")
     nombre = request.form.get("nombre")
     apellidos = request.form.get("apellido")
@@ -2063,26 +2163,34 @@ def actualizar_profesor():
     cursor.execute('SELECT imagen_perfil FROM profesores WHERE id_profesor = %s', (id_profesor,))
     old_image_path = cursor.fetchone().get('imagen_perfil')
 
+    # Obtenemos la imagen introducida
     imagen_perfil = request.files.get("imagen_perfil")
     
+    # La ruta que tendrá por defecto será la vieja hasta que se cambie
     imagen_perfil_path = old_image_path
 
+    # Hacemos una validación si existe
     if imagen_perfil and imagen_perfil.filename:
+        # le asignamos un nombre
         filename = secure_filename(imagen_perfil.filename)
+        # Asignamos la ruta a la cual irá la cual está configurada en la app
         imagen_perfil_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        
+        # Guardamos la imagen
         imagen_perfil.save(imagen_perfil_path)
-
+        # Eliminamos la vieja o anterior
         if old_image_path and os.path.exists(os.path.join(app.config['UPLOAD_FOLDER'], old_image_path)):
             os.remove(os.path.join(app.config['UPLOAD_FOLDER'], old_image_path))
 
+    # Hacemos la consulta actualizando los datos del profesor seleccionado
     sql = '''UPDATE profesores 
         SET id_asignatura = %s, nombre = %s, apellido = %s, direccion = %s, cedula = %s, genero = %s, email = %s, telefono = %s, matricula = %s, imagen_perfil = %s, contraseña = %s 
         WHERE id_profesor = %s
     '''
 
+    # Ejecutamos la consulta y le pasamos los datos obtenidos del formulario
     cursor.execute(sql, (id_asignatura, nombre, apellidos, direccion, cedula, genero, correo, telefono, matricula, imagen_perfil_path, contraseña, id_profesor))
 
+    # Guardamos los cambios y cerramos la conexión
     connection.commit()
     cursor.close()
     connection.close()
@@ -2104,11 +2212,14 @@ def eliminar_profesores():
     
     cursor = connection.cursor(pymysql.cursors.DictCursor)
 
+    # Tomamos el id_profesor como referencia
     id_profesor = request.form.get('id_profesor')
 
+    # Ejecutamos una consulta eliminando el profesor seleccionado
     cursor.execute('DELETE FROM profesores WHERE id_profesor = %s', (id_profesor,)) 
+    # Guadamos los cambios
     connection.commit()
-
+    # Cerramos la conexión
     cursor.close()
     connection.close()
 
@@ -2131,6 +2242,7 @@ def horario(id_curso):
 
     # Obtener datos del curso
     cursor.execute('SELECT * FROM cursos WHERE id_curso = %s', (id_curso,))
+    # Mostramos los datos de ese curso
     curso = cursor.fetchone()
 
     # Obtener datos del horario
@@ -2149,6 +2261,8 @@ def horario(id_curso):
         WHERE h.id_curso = %s
         ORDER BY hora.hora, d.id_dias
     '''
+
+    # Ejecutamos la consulta y le pasamos el id_curso para referencia
     cursor.execute(query, (id_curso,))
     rows = cursor.fetchall()
 
@@ -2173,9 +2287,11 @@ def horario(id_curso):
             horarios[hora] = {}
         horarios[hora][dia] = row['id_asignatura']
 
+    # Cerramos la conexión
     cursor.close()
     connection.close()
 
+    # Pasamos los datos obtenidos de los fetchall a la plantilla html
     return render_template('./admin/a-horario-1a.html', curso=curso, horarios=horarios, dias=dias, horas=horas, asignaturas=asignaturas)
 
 
@@ -2185,6 +2301,7 @@ def guardar_horario():
     if 'user_id' not in session or session.get('role') != 'admin':
         return redirect('/')
 
+    # Hacemos validaciones para que se esté seguro que se pase correctamente el id_curso
     id_curso_str = request.form.get('id_curso')
     if id_curso_str is None:
         return "Error: id_curso no proporcionado", 400
@@ -2192,6 +2309,7 @@ def guardar_horario():
     if not id_curso_str.isdigit():
         return "Error: id_curso inválido", 400
 
+    # Aquí se indicará que el horario se trabajará como un diccionario
     id_curso = int(id_curso_str)
     horario_data = request.form.to_dict(flat=False)
 
@@ -2243,10 +2361,12 @@ def guardar_horario():
                     VALUES (%s, %s, %s, %s)
                 ''', (id_curso, id_hora, id_dias, id_asignatura))
 
+    # Guardamos los cambios y cerramos la conexión
     connection.commit()
     cursor.close()
     connection.close()
     
+    # Redireccionamos al horario pasandole el id_curso como referencia
     return redirect(url_for('horario', id_curso=id_curso))
 
 @app.route('/admin/perfil/estudiante/<int:id_estudiante>')
@@ -2264,14 +2384,17 @@ def a_perfil_e(id_estudiante):
         )
     cursor = connection.cursor(pymysql.cursors.DictCursor)
 
+    # Ejecutamos una consulta seleccionando los datos del estudiante seleccionado
     cursor.execute("""
             SELECT *, cursos.nombre AS nom_curso
             FROM estudiantes
             JOIN cursos ON cursos.id_curso = estudiantes.id_curso
             WHERE id_estudiante = %s
         """, (id_estudiante,))
+    # Mostramos los datos de ese estudiante
     estudiante = cursor.fetchone()
 
+    # Pasamos los datos de ese estudiante a la plantilla html
     return render_template('./admin/a-perfil-e.html', estudiante=estudiante)
 
 @app.route('/admin/perfil/profesor/<int:id_profesor>')
@@ -2288,14 +2411,17 @@ def a_perfil_p(id_profesor):
         )
     cursor = connection.cursor(pymysql.cursors.DictCursor)
 
+    # Ejecutamos una consulta seleccionando los datos del profesor seleccionado
     cursor.execute("""
             SELECT *, nom_asignatura
             FROM profesores
             JOIN asignaturas ON asignaturas.id_asignatura = profesores.id_asignatura
             WHERE id_profesor = %s
         """, (id_profesor,))
+    # Mostramos los datos de ese estudiante
     profesor = cursor.fetchone()
 
+    # Pasamos los datos de ese profesor a la plantilla html
     return render_template('./admin/a-perfil-p.html', profesor=profesor)
         
 # =========================================================

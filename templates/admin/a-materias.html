@@ -30,16 +30,16 @@
                 </nav>
             </div>
         </header>
-        <main class="main-container">
-            <section class="section-materiales">
-                <div class="cabecera-agg-material">
-                    <div class="cabecera-materiales-flex form-agg-material form-agg-material-corto">
-                        <h2 class="titulo-material titulo-materias">Materias</h2>
-                    </div>
-                    <div class="agg-es-pro agg-materias-btn">
-                        <a href="/admin/agregar_materias/">Agregar</a>
-                    </div>
+        <main class="main-container" id="materias-admin-main">               
+            <div class="cabecera-agg-material">
+                <div class="cabecera-materiales-flex form-agg-material form-agg-material-corto">
+                    <h2 class="titulo-material titulo-materias">Materias</h2>
                 </div>
+                <div class="agg-es-pro agg-materias-btn">
+                    <a href="/admin/agregar_materias/">Agregar</a>
+                </div>
+            </div>
+            <section class="section-materiales">
                 {% for materia in asignaturas %}
                 <article class="contenedor-material contenedor-corto">                           
                     <div class="materia-del-material">

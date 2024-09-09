@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,11 +8,13 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='imagenes/recursos/logo-jes.png') }}">
 </head>
+
 <body>
-    <main class="modals-container" class="modal">
-        <div class="modal-content">
+    <main class="modals-container modals-container-corto">
+        <section class="modal-content modal-editar-es-pro">
             <span class="close">&times;</span>
-            <form action="/admin/actualizar_profesor" method="post" enctype="multipart/form-data" class="form-container">
+            <form action="/admin/actualizar_profesor" method="post" enctype="multipart/form-data"
+                class="form-container form-container-corto">
                 <fieldset>
                     <legend>Editar Perfil de Profesor</legend>
                     <input type="hidden" name="id_profesor" value="{{ profesor.id_profesor }}">
@@ -19,66 +22,74 @@
                         <div class="subir-imagen-registro">
                             <div class="imagen-registro-preview" id="preview">
                                 <!-- Previsualización de imagen -->
-                                <img src="/{{ profesor.imagen_perfil }}" alt="imagen: {{profesor.nombre}} {{profesor.apellido}}" id="currentImage">
+                                <img src="/{{ profesor.imagen_perfil }}"
+                                    alt="imagen: {{profesor.nombre}} {{profesor.apellido}}" id="currentImage">
                             </div>
                             <label for="subir-imagen" class="btn-subir-imagen" id="btnSubirImagen">Subir Imagen</label>
-                            <input type="file" id="subir-imagen" name="imagen_perfil" accept="image/*" onchange="previewImage(event)">
+                            <input type="file" id="subir-imagen" name="imagen_perfil" accept="image/*"
+                                onchange="previewImage(event)">
                         </div>
                     </div>
-                    <div class="form-group form-group-arreglado">
-                        <label for="nombre">Nombre:</label>
-                        <input value="{{ profesor.nombre }}" type="text" id="nombre" name="nombre" required>
+                    <div class="arreglos-editar-datos">
+                        <div class="form-group form-group-arreglado">
+                            <label for="nombre">Nombre:</label>
+                            <input value="{{ profesor.nombre }}" type="text" id="nombre" name="nombre" required>
+                        </div>
+                        <div class="form-group form-group-arreglado">
+                            <label for="apellidos">Apellidos:</label>
+                            <input value="{{ profesor.apellido }}" type="text" id="apellidos" name="apellido" required>
+                        </div>
+                        <div class="form-group form-group-arreglado">
+                            <label for="matricula">Matrícula:</label>
+                            <input value="{{ profesor.matricula }}" type="text" id="matricula" name="matricula" required>
+                        </div>
+                        <div class="form-group form-group-arreglado">
+                            <label for="asignaturas">Asignaturas:</label>
+                            <input type="hidden" id="id_asignatura" name="id_asignatura" value="{{ profesor.id_asignatura }}">
+                            <select id="nombre_asignatura" name="nombre_asignatura" onchange="updateAsignaturaId()">
+                                {% for asignatura in asignaturas %}
+                                <option value="{{ asignatura.id_asignatura }}" {% if asignatura.id_asignatura==profesor.id_asignatura
+                                    %}selected{% endif %}>
+                                    {{ asignatura.nom_asignatura }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group form-group-arreglado">
+                            <label for="direccion">Direccion:</label>
+                            <input value="{{ profesor.direccion }}" type="text" id="direccion" name="direccion" required>
+                        </div>
+                        <div class="form-group form-group-arreglado">
+                            <label for="cedula">Cedula:</label>
+                            <input value="{{ profesor.cedula }}" type="text" id="cedula" name="cedula" required>
+                        </div>
+                        <div class="form-group form-group-arreglado">
+                            <label for="genero">Genero:</label>
+                            <input value="{{ profesor.genero }}" type="text" id="genero" name="genero" required>
+                        </div>
+                        <div class="form-group form-group-arreglado">
+                            <label for="email">Correo Electrónico:</label>
+                            <input value="{{ profesor.email }}" type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group form-group-arreglado">
+                            <label for="telefono">Telefono:</label>
+                            <input value="{{ profesor.telefono }}" type="tel" id="telefono" name="telefono" required>
+                        </div>
+                        <div class="form-group form-group-arreglado">
+                            <label for="contrasena">Contraseña:</label>
+                            <input value="{{ profesor.contraseña }}" type="text" id="contraseña" name="contraseña" required>
+                        </div>
                     </div>
-                    <div class="form-group form-group-arreglado">
-                        <label for="apellidos">Apellidos:</label>
-                        <input value="{{ profesor.apellido }}" type="text" id="apellidos" name="apellido" required>
-                    </div>
-                    <div class="form-group form-group-arreglado">
-                        <label for="matricula">Matrícula:</label>
-                        <input value="{{ profesor.matricula }}" type="text" id="matricula" name="matricula" required>
-                    </div>
-                    <div class="form-group form-group-arreglado">
-                        <label for="asignaturas">Asignaturas:</label>
-                        <input type="hidden" id="id_asignatura" name="id_asignatura" value="{{ profesor.id_asignatura }}">
-                        <select id="nombre_asignatura" name="nombre_asignatura" onchange="updateAsignaturaId()">
-                            {% for asignatura in asignaturas %}
-                            <option value="{{ asignatura.id_asignatura }}" {% if asignatura.id_asignatura == profesor.id_asignatura %}selected{% endif %}>
-                                {{ asignatura.nom_asignatura }}
-                            </option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="form-group form-group-arreglado">
-                        <label for="direccion">Direccion:</label>
-                        <input value="{{ profesor.direccion }}" type="text" id="direccion" name="direccion" required>
-                    </div>
-                    <div class="form-group form-group-arreglado">
-                        <label for="cedula">Cedula:</label>
-                        <input value="{{ profesor.cedula }}" type="text" id="cedula" name="cedula" required>
-                    </div>
-                    <div class="form-group form-group-arreglado">
-                        <label for="genero">Genero:</label>
-                        <input value="{{ profesor.genero }}" type="text" id="genero" name="genero" required>
-                    </div>
-                    <div class="form-group form-group-arreglado">
-                        <label for="email">Correo Electrónico:</label>
-                        <input value="{{ profesor.email }}" type="email" id="email" name="email" required>
-                    </div>
-                    <div class="form-group form-group-arreglado">
-                        <label for="telefono">Telefono:</label>
-                        <input value="{{ profesor.telefono }}" type="tel" id="telefono" name="telefono" required>
-                    </div>
-                    <div class="form-group form-group-arreglado">
-                        <label for="contrasena">Contraseña:</label>
-                        <input value="{{ profesor.contraseña }}" type="text" id="contraseña" name="contraseña" required>
-                    </div>
-                    <button type="submit" class="btn-guardar-cambios guardar-cambios-corto guardar-cambios-corto-responsive">Guardar Cambios</button>
+                    <button type="submit"
+                        class="btn-guardar-cambios guardar-cambios-corto guardar-cambios-corto-responsive">Guardar
+                        Cambios</button>
                 </fieldset>
             </form>
-        </div>
+        </section>
     </main>
     <script src="{{ url_for('static', filename='js/select-editar-datos.js') }}"></script>
     <script src="../../static/js/a-visualizar_imagenes.js"></script>
     <script src="{{ url_for('static', filename='js/perfil.js') }}"></script>
 </body>
+
 </html>
