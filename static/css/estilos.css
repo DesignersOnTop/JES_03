@@ -1138,15 +1138,6 @@ header {
 
 /* ---------------------------------------- */
 
-.c-curso-central {
-    /* border: 1px solid red; */
-    max-width: 78%;
-    background-color: #00000049;
-    backdrop-filter: blur(20px);
-    border: 1px solid #ffffff45;
-    color: white;
-}
-
 .informacion-profesor-material {
     display: flex;
     width: 100%;
@@ -1171,18 +1162,38 @@ header {
     border-radius: 100%;
 }
 
+.c-curso-central {
+    min-width: 77%;
+    width: 77%;
+    background-color: #00000049;
+    backdrop-filter: blur(20px);
+    border: 1px solid #ffffff45;
+    color: white;
+}
+
+.contenedor-material-curso {
+    height: 100%;
+    max-height: 500px;
+    width: 98%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .descripcion-material-curso {
     position: relative;
-    top: 5px;
     max-width: 90%;
-    max-height: 80%;
+    width: 96%;
+    max-height: 90%;
+    height: 100%;
     margin: 0 auto;
     background-color: #ffffff05;
     padding: 10px;
     border-radius: 5px;
-    margin-left: 3%;
-    text-align: center;
+    text-align: justify;
     padding-top: 15px;
+    overflow-y: auto;
 }
 
 .curso-main {
@@ -1190,11 +1201,6 @@ header {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-}
-
-.contenedor-material-curso {
-    display: flex;
-    height: 100%;
 }
 
 .nav-c-enlaces {
@@ -2989,8 +2995,19 @@ textarea.editable {
     width: 80%;
 }
 
-/*  */
+#btn-eliminar-mat {
+    width: fit-content;
+    padding: 3px 10px;
+}
 
+#main-material-profesor .titulo-libro {
+    top: 0;
+}
+
+
+#main-material-profesor #material-responsive {
+    width: 80%;
+}
 
 /* Movil */
 
@@ -3604,6 +3621,24 @@ textarea.editable {
         min-width: fit-content;
         padding: 0 15px;
     }
+
+    #ver-material-mobile {
+        width: 98%;
+        margin-top: 5%;
+    }
+
+    #ver-material-mobile section {
+        margin: 0 auto;
+        margin-left: 1%;
+    }
+
+    #ver-material-mobile .imagen-de-fondo-curso {
+        margin-left: 1%;
+    }
+
+    #main-material-profesor #material-responsive {
+        width: 98%;
+    }
 }
 
 /* Tablet */
@@ -3721,7 +3756,7 @@ textarea.editable {
     /* -========== */
     .section-materiales {
         width: 90%;
-        background-color: #000000;
+        /* background-color: #000000; */
     }
 
     .cab-materiales-corto {
@@ -3734,7 +3769,7 @@ textarea.editable {
     }
 
     .material-estilo {
-        min-width: 30%;
+        min-width: 32%;
     }
 
     .agregar-material-section form {
@@ -3750,6 +3785,25 @@ textarea.editable {
         padding: 0 15px;
     }
 
+    #main-libros .section-materiales {
+        width: 82%;
+    }
+
+    #main-libros #libro-contenido {
+        min-width: 31.5%;
+    }
+
+    #main-material-profesor .cabecera-flex {
+        width: 55%;
+    }
+
+    #main-material-profesor #material-responsive {
+        width: 80%;
+    }
+
+    #main-material-profesor #material-responsive .p-material-estudio {
+        min-width: 32%;
+    }
 
 }
 

@@ -37,7 +37,7 @@
             </nav>
         </div>
     </header>
-    <main class="main-container">            
+    <main class="main-container" id="main-libros">            
         <div class="cabecera-agg-material cabecera-agg-refuerzo" id="cabecera-libro-flex">
             <div class="cabecera-flex">
                 <div class="contenedor-a-cabecera">
@@ -53,7 +53,7 @@
         <section class="section-materiales section-libros-refuerzo-e section-margin-top" id="material-responsive">
             {% for libro in libros %}
             <article class="contenedor-material con-ma-libro contenedor-libro" data-nom-asignatura="{{ libro.nom_asignatura | lower }}"
-                data-titulo="{{ libro.titulo | lower }}">
+                data-titulo="{{ libro.titulo | lower }}" id="libro-contenido">
                 <div class="materia-del-material">
                     <h3>{{ libro.nom_asignatura }}</h3>
                 </div>

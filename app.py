@@ -335,16 +335,13 @@ def ver_materia(titulo):
         # Cierre del cursor, Renderiza a la plantilla html pasando los detalles del material y el profesor.
     return render_template('estudiante/e-ver_materias.html', material=material, prof=prof)
 
-# Enviar tareas. 
 @app.route('/estudiante/enviar/tarea/', methods=['POST'])
 def enviar_tarea():
     if 'user_id' not in session or session.get('role') != 'estudiante':
         return redirect('/')
 
     estudiante_id = session['user_id']
-        #Se obtienen material y curso desde el formulario enviado por el usuario.
     material_id = request.form.get('material_id')
-    curso = request.form.get('curso')
 
     connection = pymysql.connect(
         host='localhost',
@@ -355,41 +352,36 @@ def enviar_tarea():
     
     cursor = connection.cursor(pymysql.cursors.DictCursor)
 
-        # Se verifica si el archivo fue subido correctamente. Si no se encuentra el archivo en request.files, se cierra el cursor de la base de datos y se muestra un mensaje de error.
+    cursor.execute('SELECT id_curso FROM estudiantes WHERE id_estudiante = %s', (estudiante_id,))
+    curso = cursor.fetchone()
+
     if 'subir-tarea' not in request.files:
         cursor.close()
-        flash('No se ha subido ningún archivo')
         return redirect('/estudiante/material/')
 
-        # Si el archivo subido no tiene nombre (tarea.filename), se cierra el cursor y se muestra un mensaje indicando que no se seleccionó ningún archivo.
     tarea = request.files['subir-tarea']
     if tarea.filename == '':
         cursor.close()
-        flash('No se seleccionó ningún archivo')
         return redirect('/estudiante/material/')
 
-        # Si se ha subido un archivo,
     if tarea:
-            # Asegurar que el nombre del archivo sea seguro.
         archivo_nombre = secure_filename(tarea.filename)
-        
-            # Construir la ruta completa donde se guardará el archivo en el servidor
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], archivo_nombre)
-        
-            # Guardar el archivo en la ubicación especificada
         tarea.save(file_path)
 
-        cursor.execute('''
-            INSERT INTO tareas_estudiante (id_material, id_estudiante, id_curso, tarea)
-            VALUES (%s, %s, %s, %s)
-        ''', (material_id, estudiante_id, curso, archivo_nombre))
+        if curso:
+            id_curso = curso['id_curso']
+            cursor.execute('''
+                INSERT INTO tareas_estudiante (id_material, id_estudiante, id_curso, tarea)
+                VALUES (%s, %s, %s, %s)
+            ''', (material_id, estudiante_id, id_curso, archivo_nombre))
 
-        # Confirmar para guardar los cambios
-        connection.commit()
-        
-        # Cerrar 
+            connection.commit()
+            flash('Tarea enviada exitosamente')
+        else:
+            flash('Error al obtener el curso del estudiante')
+
         cursor.close()
-        flash('Tarea enviada exitosamente')
         return redirect('/estudiante/material/')
 
     cursor.close()

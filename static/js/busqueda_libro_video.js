@@ -4,8 +4,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     searchInput.addEventListener('input', function () {
         const query = this.value.toLowerCase();
-        if (document.querySelector('#libros-section')) {
-            const libros = document.querySelectorAll('#libros-section .contenedor-material');
+        if (document.querySelector('#material-responsive')) {
+            const libros = document.querySelectorAll('#material-responsive .contenedor-material');
             libros.forEach(function (libro) {
                 const nomAsignatura = libro.getAttribute('data-nom-asignatura');
                 const titulo = libro.getAttribute('data-titulo');
