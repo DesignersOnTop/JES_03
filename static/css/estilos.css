@@ -12,11 +12,11 @@ body {
     background-image: url(../imagenes/background\(BODY\)1.jpg);
 }
 
+/* estilos para index.html */
 /* estilos para problemas-al-iniciar.html y index.html */
 #index-main {
     background-color: rgba(0, 0, 0, 0.84);
-    min-width: 70%;
-    width: 70%;
+    width: 1100px;
     height: 560px;
     margin-top: 4%;
     margin-left: auto;
@@ -54,11 +54,11 @@ body {
 }
 
 .cara-de-jes h2, .cara-de-jes h3 {
-    margin-right: 10%;
+    margin-right: 60px;
 }
 
 .cara-de-jes-contenedor {
-    transform: translateY(-2%);
+    transform: translateY(-20px);
 }
 
 #inicio-de-sesion h1 {
@@ -84,17 +84,16 @@ body {
 }
 
 .cara-de-jes img {
-    transform: translateX(-16%);
+    transform: translateX(-40px);
 }
 
 #id, #id:focus, #id:active, 
 #password, #password:active, #password:focus {
-    width: 100%;
+    width: 320px;
     height: 45px;
     border-radius: 10px;
     padding-left: 60px;
     position: relative;
-    right: 10%;
     border: 1px solid #ffc83d2d;
     background-color: #00000054;
     font-size: 16px;
@@ -112,13 +111,13 @@ body {
 
 #introducir-id img {
     width: 60%;
-    transform: translateY(-30%) translateX(-75%);
+    transform: translateY(-10px) translateX(-5px);
 }
 
 #iniciar-sesion {
     padding: 14px 46px;
     border-radius: 10px;
-    background-color: black;
+    background-color: rgba(0, 0, 0, 0.597);
     color: white;
     font-weight: bold;
     font-size: 14px;
@@ -126,7 +125,6 @@ body {
     text-transform: uppercase;
     text-decoration: none;
     margin-top: 5%;
-    margin-left: 10%;
 }
 
 #iniciar-sesion:hover {
@@ -140,7 +138,7 @@ body {
     width: 35px;
     height: 40px;
     border-radius: inherit;
-    transform: translateX(-130%) translateY(6%);
+    transform: translateX(-25px) translateY(5px);
 }
 
 /* ------------------------------------------------------------------------------------- */
@@ -3070,9 +3068,7 @@ textarea.editable {
         left: 35px;
         width: 140px;
         height: 140px;
-        margin-top: 0;
-        margin-bottom: 10px;
-        transform: translateX(-30%);
+        margin-top: 10px;
     }
     .cara-de-jes h2, .cara-de-jes h3 {
         display: none;
@@ -3096,7 +3092,6 @@ textarea.editable {
 
     #iniciar-sesion {
         padding: 14px 20px;
-        margin-right: 5%;
     }
 
     #introducir-id img, #introducir-contraseña img {
@@ -3104,22 +3099,10 @@ textarea.editable {
         width:30px;
         height: 30px;
     }
-
     #introducir-contraseña, #introducir-id {
         width: 60%;
-        margin-right: 0;
-        margin-left: 2%;
+        margin-right: 60px;
     }
-
-    #introducir-id img{
-        transform: translateX(-90%) translateY(-32%);
-    }
-
-    #introducir-contraseña img {
-        transform: translateX(-155%) translateY(15%);
-    }
-
-    #iniciar-
 
     /* header*/
 
@@ -3609,7 +3592,19 @@ textarea.editable {
         margin-right: 5px;
     }
 
+    .agregar-material-section form {
+        width: 80%;
+    }
 
+    .agregar-material-fieldset {
+        width: 90%;
+    }
+
+    .img-fondo-libro {
+        min-width: fit-content;
+        padding: 0 15px;
+    }
+}
 
 /* Tablet */
 
@@ -3621,8 +3616,7 @@ textarea.editable {
     #index-main {
         background-color: rgba(0, 0, 0, 0.84);
         min-width: 80%;
-        width: 80%;
-        position: absolute;
+        width: 90%;
         height: 400px;
         margin-top: 7%;
         color: white;
@@ -3636,7 +3630,6 @@ textarea.editable {
         text-transform: uppercase;
     }
     #iniciar-sesion{
-        width: 50%;
         padding: 10px 10%;
         font-size: 14px;
         margin-top: 5%;
@@ -3645,7 +3638,7 @@ textarea.editable {
     #id, #id:focus, #id:active, 
     #password, #password:active, #password:focus
     {
-        width: 50%;
+        width: 90%;
         height: 40px;
         padding: 0;
         padding-left: 50px;
@@ -3673,10 +3666,6 @@ textarea.editable {
     }
     #introducir-id img {
         transform: translateX(-5px) translateY(-10px);
-    }
-
-    .cara-de-jes {
-        width: 50%;
     }
 
     /* perfil */
@@ -3732,19 +3721,58 @@ textarea.editable {
     /* -========== */
     .section-materiales {
         width: 90%;
+        background-color: #000000;
     }
+
+    .cab-materiales-corto {
+        width: 94%;
+    }
+
+
+    .cab-materiales-corto .titulo-material {
+        left: 45%;
+    }
+
+    .material-estilo {
+        min-width: 30%;
+    }
+
+    .agregar-material-section form {
+        width: 80%;
+    }
+
+    .agregar-material-fieldset {
+        width: 90%;
+    }
+
+    .img-fondo-libro {
+        min-width: fit-content;
+        padding: 0 15px;
+    }
+
 
 }
 
 /* Pantalla grande */
 @media screen and (min-width: 901px) and (max-width: 1200px) {
+
+        #index-main {
+            min-width: 70%;
+            width: 80%;
+        }
+
         /* Perfil */
         .modal-perfil {
             max-width: 80%;
         }
 
-        .index-login {
-            width: 80%;
+        #id, #id:focus, #id:active, 
+        #password, #password:active, #password:focus {
+            width: 84%;
         }
-    }
+
+        #iniciar-sesion {
+            padding: 10px 10%;
+        }
 }
+
