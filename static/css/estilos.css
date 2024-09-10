@@ -1633,8 +1633,8 @@ header {
 .dato-material textarea {
     resize:vertical;
     max-height: 80px;
-    max-width: 80%;
-    width: 80%; 
+    max-width: 120%;
+    width: 120%; 
     min-height: 80px;
 }
 
@@ -2872,7 +2872,7 @@ textarea.editable {
 #cabecera-material_estudio {
     margin: 0 auto;
     margin-top: 4%;
-    width: 80%;
+    width: 70%;
 }
 
 #btn-eliminar-mat {
@@ -2886,7 +2886,7 @@ textarea.editable {
 
 
 #main-material-profesor #material-responsive {
-    width: 80%;
+    width: 70%;
 }
 
 #main-libros .section-materiales {
@@ -3011,6 +3011,7 @@ textarea.editable {
     width: 20%;
     margin-left: 37%;
 }
+
 
 /* Movil */
 
@@ -3954,6 +3955,10 @@ textarea.editable {
     #titulo-materias-left {
         margin-left: 2%;
     } 
+
+    #main-material-profesor #cabecera-material_estudio {
+        width: 80%
+    }
 }
 
 /* Pantalla grande */

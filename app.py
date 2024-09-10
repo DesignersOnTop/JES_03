@@ -1288,16 +1288,16 @@ def p_clases_enviadas():
     cursor.execute('SELECT titulo FROM material_estudio WHERE  id_material = %s', (id_estudio,))
     titulo = cursor.fetchone()
 
+
     return render_template('./profesor/p-clases-enviada.html', curso=curso, estudiantes=estudiantes, asignatura = asignatura, titulo=titulo)
 
 @app.route('/profesor/tarea/estudiante/')
 def p_tarea_e():
-
     if 'user_id' not in session or session.get('role') != 'profesor':
         return redirect('/')
 
-    id_material =  request.args.get('id_material')
-    id_estudiante =  request.args.get('id_estudiante')
+    id_material = request.args.get('id_material')
+    id_estudiante = request.args.get('id_estudiante')
 
     connection = pymysql.connect(
         host='localhost',
@@ -1308,11 +1308,12 @@ def p_tarea_e():
 
     cursor = connection.cursor(pymysql.cursors.DictCursor)
 
-    cursor.execute('SELECT tarea FROM tareas_estudiante WHERE id_material =  %s AND id_estudiante = %s', (id_material, id_estudiante))
+    cursor.execute('SELECT * FROM tareas_estudiante WHERE id_material = %s AND id_estudiante = %s', (id_material, id_estudiante))
     tarea = cursor.fetchone()
 
-    cursor.execute('SELECT titulo FROM material_estudio WHERE id_material = %s',(id_material,))
+    cursor.execute('SELECT titulo FROM material_estudio WHERE id_material = %s', (id_material,))
     titulo = cursor.fetchone()
+
     return render_template('./profesor/p-tarea-e.html', tarea=tarea, titulo=titulo)
 
 
@@ -1625,39 +1626,6 @@ def asignar_profesor():
 
     # Redireccionamos a la función que muestra el curso
     return redirect(url_for('mostrar_estudiantes', id_curso=id_curso))
-
-@app.route('/admin/agregar_materias/', methods = ['POST', 'GET'])
-def a_agg_materias():
-
-    if 'user_id' not in session or session.get('role') != 'admin':
-        return redirect('/')
-
-    connection = pymysql.connect(
-        host='localhost',
-        user='root',
-        password='',
-        database='jes'
-    )
-
-    cursor = connection.cursor(pymysql.cursors.DictCursor)
-
-    # Hacemos una consulta para mostrar todos los campos de asignaturas
-    sql_asignaturas = ('SELECT * FROM asignaturas')
-    # Ejecutamos la consulta
-    cursor.execute(sql_asignaturas)
-    # Hacemos un fetchall para mostrar los datos
-    asignaturas = cursor.fetchall()
-
-    # Hacemos lo mismo con la tabla asignatura_curso
-    sql_curso = ('SELECT * FROM asignatura_curso')
-    cursor.execute(sql_curso)
-    curso = cursor.fetchall()
-
-    cursor.close()
-    connection.close()
-
-    # Pasamos los datos obtenidos de los fetchall a la plantilla html
-    return render_template('./admin/a-agg-materias.html', asignaturas=asignaturas, curso=curso)
 
 @app.route('/admin/subir_materia/', methods = ['POST'])
 def subir_materia():

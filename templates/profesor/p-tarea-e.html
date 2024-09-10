@@ -12,7 +12,7 @@
 <body>
     <main class="main-container">
         <section class="modals-container modal-video">
-            {{ tarea.tarea | safe if tarea else 'No hay tarea disponible' }}
+            <iframe src="/static/documentos/{{ tarea.tarea }}" frameborder="0"></iframe>
         </section>
     </main>
     <script src="{{ url_for('static', filename='js/perfil.js') }}"></script>

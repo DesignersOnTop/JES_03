@@ -53,9 +53,6 @@
                         </div>
                         <div class="contenedor-material-curso">
                             <div class="descripcion-material-curso">
-                                <figure class="descripcion-m-c-editar" style="cursor: pointer;">
-                                    <img src="{{ url_for('static', filename='imagenes/iconos/lapiz-editar.svg') }}" alt="editar">
-                                </figure>
                                 <div class="texto-limitador">
                                     <p id="texto-material-curso" class="editable">{{recurso.descripcion}}</p>                                    
                                 </div>
@@ -83,9 +80,6 @@
         </main>
     </div>
     <script src="{{ url_for('static', filename='js/menu-profesor-a.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/modificar-descripcion-curso.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="{{ url_for('static', filename='js/modal-material.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/material-subido-p.js') }}"></script>
 </body>
 </html>

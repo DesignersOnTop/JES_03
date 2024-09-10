@@ -61,7 +61,14 @@
                             <td>{{estudiante.matricula}}</td>
                             <td>{{estudiante.nombre}}</td>
                             <td>{{estudiante.apellidos}}</td>
-                            <td class="ver-estudiante-p"><a href="{{url_for('p_tarea_e', id_material = estudiante.id_tarea)}}" class="ver-recurso"><figure><img src="{{ url_for('static', filename='imagenes/iconos/angle-small-right.svg') }}" alt="ver-estudiante"></figure></a></td>
+                            <td class="ver-estudiante-p">
+                                <a href="{{ url_for('p_tarea_e', id_material=estudiante.id_material, id_estudiante=estudiante.id_estudiante) }}"
+                                    class="ver-recurso">
+                                    <figure>
+                                        <img src="{{ url_for('static', filename='imagenes/iconos/angle-small-right.svg') }}" alt="ver-estudiante">
+                                    </figure>
+                                </a>
+                            </td>
                         </tr>
                         {%endfor%}
                     </table>
@@ -70,8 +77,5 @@
     </main>
     <script src="{{ url_for('static', filename='js/menu-profesor-a.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="{{ url_for('static', filename='js/profesor-ver-estudiante-ver.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/ver-recurso-p.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/profesor-ver-estudiante-modal.js') }}"></script>
 </body>
 </html>
