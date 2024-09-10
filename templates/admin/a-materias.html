@@ -31,12 +31,15 @@
             </div>
         </header>
         <main class="main-container" id="materias-admin-main">               
-            <div class="cabecera-agg-material">
+            <div class="cabecera-agg-material cabecera-materias-admin">
                 <div class="cabecera-materiales-flex form-agg-material form-agg-material-corto">
-                    <h2 class="titulo-material titulo-materias">Materias</h2>
+                    <h2 class="titulo-material titulo-materias" id="titulo-materias-left">Materias</h2>
                 </div>
-                <div class="agg-es-pro agg-materias-btn">
-                    <a href="/admin/agregar_materias/">Agregar</a>
+                <div class="agg-materias-btn">
+                    <form action="/admin/subir_materia/" method="post" enctype="multipart/form-data">
+                        <input type="text" id="nom-materia" name="nom_asignatura" placeholder="Nombre de la asignatura....." required>
+                        <button type="submit" class="btn-search-cabecera">Agregar</button>                          
+                    </form>
                 </div>
             </div>
             <section class="section-materiales">

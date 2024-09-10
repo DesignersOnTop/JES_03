@@ -13,7 +13,6 @@ body {
 }
 
 /* estilos para index.html */
-/* estilos para problemas-al-iniciar.html y index.html */
 #index-main {
     background-color: rgba(0, 0, 0, 0.84);
     width: 1100px;
@@ -2729,18 +2728,19 @@ textarea.editable {
     top: 8px;
 }
 
-.agg-materias-btn {
-    /* margin-top: 10px; */
-    margin-left: 80px;
-    position: relative;
-    bottom: 44px;
-    width: fit-content;
-    text-align: center;
+.agg-materias-btn form input {
+    background-color: rgba(0, 0, 0, 0.274);
+    color: white;
+    padding: 5px;
+    border-radius: 5px 0 0 5px;
+    border: 1px solid rgba(255, 200, 61, 0.193);
 }
 
-.agg-materias-btn a {
-    text-decoration: none;
-    color: #FFF;
+.agg-materias-btn {
+    width: fit-content;
+    position: relative;
+    bottom: 40px;
+    left: 8%;
 }
 
 .btn-eliminar-materia {
@@ -2965,6 +2965,20 @@ textarea.editable {
 .arreglos-editar-datos {
     position: relative;
     left: 7%;
+}
+
+.agg-materias-btn button {
+    background-color: rgba(0, 0, 0, 0.274);
+}
+
+/* Arreglos en formulario de registro */
+#btn-registro {
+    min-width: 100%;
+}
+
+#btn-registro input {
+    width: 20%;
+    margin-left: 37%;
 }
 
 /* Movil */
@@ -3475,12 +3489,6 @@ textarea.editable {
         left: 200px;
     }
 
-    .agg-materias-btn {
-        margin: 2px 0 0 0;
-        margin-left: 30px;
-    }
-
-
     .td-arreglar-corto {
         display: flex;
     }
@@ -3660,7 +3668,29 @@ textarea.editable {
         position: relative;
         left: 32%;
         width: fit-content;
-}
+    }
+    
+    .agg-materias-btn {
+        left: 2%;
+    }
+
+    #titulo-materias-left {
+        position: relative;
+        left: 74%;
+    }
+
+    /* Arreglos en formulario de registro */
+    #btn-registro {
+        min-width: fit-content;
+        max-width: 70%;
+        margin-right: 60%;
+    }
+    
+    #btn-registro input {
+        min-width: 60%;
+        position: relative;
+        right: 10%;
+    }
 
 }
 
@@ -3886,6 +3916,13 @@ textarea.editable {
         margin-right: 2%;
     }
 
+    .agg-materias-btn {
+        left: 3%;
+    }
+
+    #titulo-materias-left {
+        margin-left: 2%;
+    } 
 }
 
 /* Pantalla grande */
