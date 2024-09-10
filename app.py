@@ -606,42 +606,51 @@ def p_home():
     return render_template('./profesor/index.html', estudiantes=estudiantes, asistencias=asistencias, calificaciones=calificaciones, perfil=perfil, curso_seleccionado=curso_seleccionado, cursos=cursos)
 
 
-
+# Apartado de perfil para el profesor
 @app.route('/profesor/perfil/')
 def p_perfil():
     if 'user_id' not in session or session.get('role') != 'profesor':
         return redirect('/')
     
+    # Obtiene el id del profesor desde la sesión
     id_profesor = session['user_id']
-    
+
+    # hacemos la conection a la base de datos
     connection = pymysql.connect(
         host='localhost',
         user='root',
         password='',
         database='jes'
     )
-    
     cursor = connection.cursor(pymysql.cursors.DictCursor)
+    # Hacemos la consulta
     cursor.execute('''
         SELECT profesores.*, asignaturas.nom_asignatura
         FROM profesores
         JOIN asignaturas ON asignaturas.id_asignatura = profesores.id_asignatura
         WHERE profesores.id_profesor = %s
     ''', (id_profesor,))
+    # Extraemos la informacion de la consulta
     perfil = cursor.fetchall()
     
+    # Cerramos el cursor y la conexión a la base de datos
+    connection.close()
     cursor.close()
+    # Pada la variable  perfil con toda la informacion cnecesario para la base de datos
     return render_template('./profesor/p-perfil.html', perfil=perfil[0])
 
+# Apartado de subir calificaciones
 @app.route('/home/profesor/asistencia/', methods=['POST'])
 def p_asistencia():
     if 'user_id' not in session or session.get('role') != 'profesor':
         return redirect('/')
 
+    # Obtenemos los datos de id_estudiante, curso_seleccionado asi como el id_profesor
     id_profesor = session['user_id']
     id_estudiante = request.form.get('id_estudiante')
     curso_seleccionado = session['curso_seleccionado']
 
+    # Obtenemos los datos de los form en los cuales estara la informacion a insertar
     sect_oct = request.form.get("sect_oct")
     nov_dic = request.form.get("nov_dic")
     ene_feb = request.form.get("ene_feb")
@@ -649,15 +658,16 @@ def p_asistencia():
     may_jun = request.form.get("may_jun")
     total_asistencias = request.form.get("total_asistencias")
 
+    # Conexion a la base de datos
     connection = pymysql.connect(
         host='localhost',
         user='root',
         password='',
         database='jes'
     )
-
     cursor = connection.cursor(pymysql.cursors.DictCursor)
 
+    # Hacemos la consulta
     cursor.execute('''
         SELECT asignaturas.id_asignatura
         FROM profesores
@@ -665,6 +675,7 @@ def p_asistencia():
         WHERE profesores.id_profesor = %s
     ''', (id_profesor,))
 
+    # Obtenemos los datos de la consulta
     asignatura = cursor.fetchone()
 
     id_asignatura = asignatura['id_asignatura']
@@ -696,9 +707,10 @@ def p_asistencia():
 
         cursor.execute(insertar, datos)
 
-
+    # cerramos conexion a la base de datos
     connection.commit()
     connection.close()
+    cursor.close()
 
     return redirect('/home/profesor/')
 
@@ -707,16 +719,19 @@ def p_calificaciones():
     if 'user_id' not in session or session.get('role') != 'profesor':
         return redirect('/')
 
+    # Obtenemos los datos de id_estudiante, curso_seleccionado asi como el id_profesor
     id_profesor = session['user_id']
     id_estudiante = request.form.get('id_estudiante')
     curso_seleccionado = session['curso_seleccionado']
 
+    # Extraemos los forms con la informacion de cada calificacion
     c1 = request.form.get("c1")
     c2 = request.form.get("c2")
     c3 = request.form.get("c3")
     c4 = request.form.get("c4")
     c_final = request.form.get("c_final")
 
+    # Conexion a la base de dato.
     connection = pymysql.connect(
         host='localhost',
         user='root',
@@ -726,6 +741,7 @@ def p_calificaciones():
 
     cursor = connection.cursor(pymysql.cursors.DictCursor)
 
+    # Hacemos la consulta
     cursor.execute('''
         SELECT asignaturas.id_asignatura
         FROM profesores
@@ -733,6 +749,7 @@ def p_calificaciones():
         WHERE profesores.id_profesor = %s
     ''', (id_profesor,))
 
+    # Obtenemos los datos de la consulta
     asignatura = cursor.fetchone()
     id_asignatura = asignatura['id_asignatura']
 
@@ -759,23 +776,30 @@ def p_calificaciones():
         INSERT INTO calificaciones (id_calificacion, id_estudiante, id_curso, id_asignatura, C1, C2, C3, C4, c_final)
         VALUES (NULL, %s, %s, %s, %s, %s, %s, %s, %s)
         """
+        # Insetamos los siguientes datos a la base de dato.
         datos = (id_estudiante, curso_seleccionado, id_asignatura, c1, c2, c3, c4, c_final)
         cursor.execute(insertar, datos)
 
+    # Guardamos los cambios en la base de datos y cerramos conexion
     connection.commit()
     connection.close()
+    cursor.close()
 
+    # Nos redirigimos al home del profesor
     return redirect('/home/profesor/')
 
 
+# Apartado libros del profesor
 @app.route('/profesor/refuerzo/libros/', methods=['GET', 'POST'])
 def p_refuerzo_libros():
     if 'user_id' not in session or session.get('role') != 'profesor':
         return redirect('/')
 
+    # Obtenemos los datos de session curso_seleccionado asi tambien como id_profesor
     curso_seleccionado = session['curso_seleccionado']
     id_profesor = session['user_id']
 
+    # Conexion a la base de datos
     connection = pymysql.connect(
         host='localhost',
         user='root',
@@ -784,6 +808,7 @@ def p_refuerzo_libros():
     )
     cursor = connection.cursor(pymysql.cursors.DictCursor)
 
+    # Si el metodo es post eliminamos el libro
     if request.method == 'POST':
         id_libro_a_eliminar = request.form.get('id_libro')
         if id_libro_a_eliminar:
@@ -819,6 +844,7 @@ def p_refuerzo_libros():
                 
             return redirect('/profesor/refuerzo/libros/')
 
+    # Hacemos la consulta para que muestre la informacion  de los libros si no hay metodo post
     sql = """
         SELECT libros.*, asignaturas.nom_asignatura
         FROM libros
@@ -827,8 +853,11 @@ def p_refuerzo_libros():
         WHERE libros.id_curso = %s AND profesores.id_profesor = %s
     """
     cursor.execute(sql, (curso_seleccionado, id_profesor))
+
+    # Obtenemos los datos de la consulta
     libros = cursor.fetchall()
     
+    # Cerramos conexion con la base de datos
     cursor.close()
     connection.close()
     
