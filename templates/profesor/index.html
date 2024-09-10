@@ -109,7 +109,7 @@
         <div id="modal-calificar-{{ estudiante.id_estudiante }}" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
-                <h2>Calificar del estudiante: {{ estudiante.nombre }} {{ estudiante.apellidos }}</h2>
+                <h2>Calificar del estudiante {{ estudiante.nombre }} {{ estudiante.apellidos }}</h2>
                 <form action="/home/profesor/calificaciones/" method="post">
                     <input type="hidden" name="id_estudiante" value="{{ estudiante.id_estudiante }}">
                     <input type="hidden" name="curso_seleccionado" value="{{ session.get('curso_seleccionado') }}">
@@ -128,7 +128,7 @@
                     <label for="c_final">C Final:</label>
                     <input type="text" name="c_final"
                         value="{{ calificaciones.get(estudiante.id_estudiante, {}).get('c_final', '') }}"><br>
-                    <button type="submit">Guardar Calificaciones</button>
+                    <button type="submit" id="btn-cali-asi">Guardar Calificaciones</button>
                 </form>
             </div>
         </div>
@@ -155,7 +155,7 @@
                         <input type="text" name="may_jun" value="{{ asistencia['May_Jun'] if 'May_Jun' in asistencia else '' }}"><br>
                         <label for="total_asistencias">Total de Asistencias:</label>
                         <input type="text" name="total_asistencias" value="{{ asistencia['Total_de_asistencias'] if 'Total_de_asistencias' in asistencia else '' }}"><br>
-                        <button type="submit">Guardar Asistencia</button>
+                        <button type="submit" id="btn-cali-asi">Guardar Asistencia</button>
                     </form>
                 </div>
             </div>
