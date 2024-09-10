@@ -501,6 +501,7 @@ def e_videos(titulo):
     
     video = cursor.fetchone()
     cursor.close()
+    connection.close()
     
     return render_template('./estudiante/e-video-clase.html', video = video)
 
@@ -508,11 +509,14 @@ def e_videos(titulo):
 # APARTADO DEL PROFESORES
 @app.route('/home/profesor/', methods=['GET', 'POST'])
 def p_home():
+    # Verifica si el usuario ha iniciado sesión y si su rol es 'profesor', de lo contrario lo redirige a la página de inicio
     if 'user_id' not in session or session.get('role') != 'profesor':
         return redirect('/')
 
+    # Obtiene el id del profesor de la sesión
     id_profesor = session['user_id']
     
+    # Conexión a la base de datos MySQL
     connection = pymysql.connect(
         host='localhost',
         user='root',
@@ -520,9 +524,10 @@ def p_home():
         database='jes'
     )
     
+    # Crea un cursor para ejecutar consultas con formato de diccionario
     cursor = connection.cursor(pymysql.cursors.DictCursor)
 
-    # Obtener el id_asignatura para el profesor
+    # Consulta para obtener el id_asignatura del profesor
     cursor.execute('''
         SELECT asignaturas.id_asignatura
         FROM profesores
@@ -530,9 +535,11 @@ def p_home():
         WHERE profesores.id_profesor = %s
     ''', (id_profesor,))
 
+    # Guarda el id_asignatura obtenido de la consulta
     asignatura = cursor.fetchone()
     id_asignatura = asignatura['id_asignatura']
 
+    # Consulta para obtener los cursos asignados al profesor
     cursor.execute("""
         SELECT DISTINCT c.id_curso, c.nombre
         FROM cursos c
@@ -541,15 +548,18 @@ def p_home():
     """, (id_profesor,))
     cursos = cursor.fetchall()
     
+    # Si se envía un formulario (método POST), se selecciona el curso del formulario y se guarda en la sesión
     if request.method == 'POST':
         curso_seleccionado = request.form.get('curso_seleccionado')
         session['curso_seleccionado'] = curso_seleccionado
     else:
+        # Si no se envía formulario (método GET), se toma el curso de la sesión o se selecciona el primero de la lista de cursos
         curso_seleccionado = session.get('curso_seleccionado')
         if not curso_seleccionado and cursos:
             curso_seleccionado = cursos[0]['id_curso'] if isinstance(cursos[0], dict) else cursos[0][0]
             session['curso_seleccionado'] = curso_seleccionado
     
+    # Consulta para obtener la lista de estudiantes del curso seleccionado
     cursor.execute("""
         SELECT estudiantes.id_estudiante, estudiantes.nombre, estudiantes.apellidos, estudiantes.matricula
         FROM estudiantes
@@ -557,6 +567,7 @@ def p_home():
     """, (curso_seleccionado,))
     estudiantes = cursor.fetchall()
 
+    # Consulta para obtener las asistencias de los estudiantes en el curso y asignatura seleccionados
     cursor.execute("""
         SELECT a.id_estudiante, a.Sect_Oct, a.Nov_Dic, a.Ene_Feb, a.Marz_Abril, a.May_Jun, a.Total_de_asistencias
         FROM asistencias AS a
@@ -564,28 +575,34 @@ def p_home():
     """, (curso_seleccionado, id_asignatura))
     asistencia = cursor.fetchall()
 
+    # Crea un diccionario donde las llaves son los id_estudiante y los valores son sus asistencias
     asistencias = {a['id_estudiante']: a for a in asistencia}
 
+    # Inicializa un diccionario para almacenar las calificaciones de los estudiantes
     calificaciones = {}
     for estudiante in estudiantes:
+        # Consulta para obtener las calificaciones de cada estudiante en el curso y asignatura seleccionados
         cursor.execute("""
             SELECT c1, c2, c3, c4, c_final
             FROM calificaciones
             WHERE id_estudiante = %s AND id_curso = %s AND id_asignatura = %s
         """, (estudiante['id_estudiante'], curso_seleccionado, id_asignatura))
         result = cursor.fetchone()
+        # Si se encuentran calificaciones, se agregan al diccionario; si no, se crean campos vacíos
         if result:
             calificaciones[estudiante['id_estudiante']] = result
         else:
             calificaciones[estudiante['id_estudiante']] = {'c1': '', 'c2': '', 'c3': '', 'c4': '', 'c_final': ''}
         
-    # Obtener el perfil del profesor
+    # Consulta para obtener el perfil del profesor (imagen, nombre y apellido)
     cursor.execute('SELECT imagen_perfil, nombre, apellido FROM profesores WHERE id_profesor = %s', (id_profesor,))  
     perfil = cursor.fetchone()
     
+    # Cierra el cursor y la conexión a la base de datos
     cursor.close()
     connection.close()
 
+    # Renderiza la plantilla HTML y pasa los datos de estudiantes, asistencias, calificaciones, perfil del profesor, curso seleccionado y lista de cursos
     return render_template('./profesor/index.html', estudiantes=estudiantes, asistencias=asistencias, calificaciones=calificaciones, perfil=perfil, curso_seleccionado=curso_seleccionado, cursos=cursos)
 
 

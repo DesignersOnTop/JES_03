@@ -2290,7 +2290,7 @@ textarea.editable {
 }
 
 /* admin: editar informacion profesor y estudiante */
-#registro-modal .modal {
+/* #registro-modal .modal {
     display: none; 
     position: fixed; 
     z-index: 1; 
@@ -2340,12 +2340,46 @@ textarea.editable {
 #registro-modal .form-group {
     width: 100%;
     max-width: 400px;
-    text-align: left;
+    text-align: left; }*/
+
+#section-editar fieldset{
+    width: 100%;
 }
 
-.form-group-arreglado {
-    display: inline-block;
-    margin: 15px;
+#section-editar form {
+    width: 60%;
+}
+
+#contenedor-flex-editar-usuario {
+    min-width: 80%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+
+#contenedor-flex-editar-usuario .form-group {
+    flex-basis: 35%;
+    position: relative;
+    left: 8%;
+}
+
+#contenedor-flex-editar-usuario .form-group-img {
+    min-width: 70%;
+}
+
+#btn-cambios {
+    width: 100%;
+    margin-top: 7%;
+    display: flex;
+}
+
+.btn-guardar-cambios {
+    background-color: #00000044;
+    color: white;
+    border: 1px solid #ffc83da5;
+    border-radius: 5px;
+    margin: 0 auto;
+    padding: 5px 20px;
 }
 
 .form-group-arreglado input {
@@ -2365,7 +2399,7 @@ textarea.editable {
 .form-group-arreglado select option {
     background-color: #000000;
 }
-
+/* 
 #registro-modal .form-group label {
     font-weight: bold;
     display: block;
@@ -2411,9 +2445,9 @@ textarea.editable {
     height: auto;
     display: block;
     margin: 10px auto;
-}
+} */
 
-#registro-modal .btn-guardar-cambios {
+/* #registro-modal .btn-guardar-cambios {
     background-color: #2196F3;
     color: white;
     padding: 10px 20px;
@@ -2429,7 +2463,7 @@ textarea.editable {
 
 #registro-modal .btn-guardar-cambios:focus {
     outline: none;
-}
+} */
 
 /* Correpcion de errores */
 
@@ -2906,17 +2940,6 @@ textarea.editable {
     left: 43.5%;
     z-index: 2;
     padding: 3px 36px;
-}
-
-.guardar-cambios-corto {
-    background-color: #00000083;
-    border: 1px solid #ffc83d83;
-    border-radius: 2px;
-    color: #FFF;
-    padding: 3px 15px;
-    position: relative;
-    left: 80%;
-    display: flex;
 }
 
 /* arreglos para las paginas libros */
@@ -3592,17 +3615,6 @@ textarea.editable {
         margin-left: 30px;
     }
 
-    .guardar-cambios-corto {
-        position: relative;
-        top: 40px;
-        left: 100px;
-    }
-
-    .guardar-cambios-corto-responsive {
-        position: relative;
-        right: 20%;
-        bottom: 30%;
-    }
 
     .td-arreglar-corto {
         display: flex;
@@ -3750,6 +3762,59 @@ textarea.editable {
     .modal-editar-es-pro {
         width: 100%;
     }
+
+    /* Arreglos editar perfil */
+
+    /* #contenedor-flex-editar-usuario {
+        min-width: 100%;        
+        justify-content: flex-start;
+    }
+    
+    #section-editar fieldset{
+        min-width: 100%;
+    }
+    
+    #section-editar form {
+        min-width: 80%;
+    }
+    
+    #contenedor-flex-editar-usuario {
+        min-width: 90%;
+    } */
+
+    
+    #section-editar {
+        width: 100%;
+    }
+
+    #section-editar form{
+        width: 90%;
+        margin-top: 4%;
+    }
+
+    #contenedor-flex-editar-usuario {
+        margin: 0 auto;
+        justify-content: flex-start;
+    }
+    
+    #contenedor-flex-editar-usuario .form-group {
+        position: relative;
+        left: 8%;
+        margin: 0;
+        margin-bottom: 3%;
+        margin-right: 2%;
+    }
+
+    #contenedor-flex-editar-usuario .form-group-img {
+        width: 100%;
+    }
+    
+    #contenedor-flex-editar-usuario #btn-cambios {
+       position: relative;
+       left: 32%;
+       width: fit-content;
+}
+
 }
 
 /* Tablet */
@@ -3951,9 +4016,29 @@ textarea.editable {
 
     /* Arreglos admin */
 
-    .guardar-cambios-corto-responsive {
-        left: 60%;
+    #contenedor-flex-editar-usuario {
+        min-width: 100%;        
+        justify-content: flex-start;
     }
+    
+    #section-editar fieldset{
+        min-width: 100%;
+    }
+    
+    #section-editar form {
+        min-width: 80%;
+    }
+    
+    #contenedor-flex-editar-usuario {
+        min-width: 90%;
+    }
+
+    #contenedor-flex-editar-usuario  .form-group {
+        position: relative;
+        left: 16%;
+        margin-right: 2%;
+    }
+
 }
 
 /* Pantalla grande */
@@ -3976,10 +4061,6 @@ textarea.editable {
 
     #iniciar-sesion {
         padding: 10px 10%;
-    }
-
-    .guardar-cambios-corto-responsive {
-        left: 65%;
     }
 
 }

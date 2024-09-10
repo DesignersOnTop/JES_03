@@ -10,27 +10,27 @@
 </head>
 
 <body>
-    <main class="modals-container modals-container-corto">
-        <section class="modal-content modal-editar-es-pro">
+    <main class="modals-container" id="modal-container-editar">
+        <section id="section-editar">
             <span class="close">&times;</span>
             <form action="/admin/actualizar_estudiantes/" method="post" enctype="multipart/form-data"
                 class="form-container form-container-corto">
                 <fieldset>
                     <legend>Editar Perfil del Estudiante</legend>
-                    <input type="hidden" name="id_estudiante" value="{{ estudiante.id_estudiante }}">
-                    <div class="form-group form-group-img">
-                        <div class="subir-imagen-registro">
-                            <div class="imagen-registro-preview" id="preview">
-                                <!-- Previsualización de imagen -->
-                                <img src="/{{estudiante.imagen_perfil}}"
-                                    alt="imagen: {{estudiante.nombre}} {{estudiante.apellidos}}" id="currentImage">
+                    <div id="contenedor-flex-editar-usuario">
+                        <input type="hidden" name="id_estudiante" value="{{ estudiante.id_estudiante }}">
+                        <div class="form-group form-group-img">
+                            <div class="subir-imagen-registro">
+                                <div class="imagen-registro-preview" id="preview">
+                                    <!-- Previsualización de imagen -->
+                                    <img src="/{{estudiante.imagen_perfil}}"
+                                        alt="imagen: {{estudiante.nombre}} {{estudiante.apellidos}}" id="currentImage">
+                                </div>
+                                <label for="subir-imagen" class="btn-subir-imagen" id="btnSubirImagen">Subir Imagen</label>
+                                <input type="file" id="subir-imagen" name="imagen_perfil" accept="image/*"
+                                    onchange="previewImage(event)">
                             </div>
-                            <label for="subir-imagen" class="btn-subir-imagen" id="btnSubirImagen">Subir Imagen</label>
-                            <input type="file" id="subir-imagen" name="imagen_perfil" accept="image/*"
-                                onchange="previewImage(event)">
                         </div>
-                    </div>
-                    <div class="arreglos-editar-datos">
                         <div class="form-group form-group-arreglado">
                             <label for="nombre">Nombre:</label>
                             <input value="{{ estudiante.nombre }}" type="text" id="nombre" name="nombre" required>
@@ -81,10 +81,10 @@
                             <input value="{{ estudiante.contraseña }}" type="text" id="contraseña" name="contraseña"
                                 required>
                         </div>
+                        <div id="btn-cambios">
+                            <button type="submit" class="btn-guardar-cambios">Guardar Cambios</button>                              
+                        </div>
                     </div>
-                    <button type="submit"
-                        class="btn-guardar-cambios guardar-cambios-corto guardar-cambios-corto-responsive">Guardar
-                        Cambios</button>
                 </fieldset>
             </form>
         </section>
