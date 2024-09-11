@@ -71,10 +71,10 @@
             <button class="btn-calificaciones btn-selected">Calificaciones</button>
             <button class="btn-horario">Horario</button>
         </div>
-        <div class="ca-ho-scroll">
+        <div class="ca-ho-scroll" id="horario-fixed">
             <article class="tabla-centrar tabla-calificacion-centrar">
-                <div id="e-scroll-calificacion">
-                    <table class="tabla-calificacion" id="">
+                <div class="e-scroll-calificacion">
+                    <table class="tabla-calificacion">
                         <tr class="tabla-cabecera">
                             <th>Calificaciones</th>
                             {% for calificacion in calificaciones %}
@@ -115,8 +115,8 @@
                 </div>
             </article>
             <article class="tabla-centrar tabla-horario-centrar">
-                <div id="e-scroll-horario">
-                    <table class="tabla-horario">
+                <div class="e-scroll-calificacion">
+                    <table class="tabla-horario" >
                         <tr class="tabla-cabecera">
                             <th>Horas</th>
                             <th>Lunes</th>

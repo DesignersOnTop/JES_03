@@ -722,6 +722,7 @@ header {
 .contenedor-libro {
     width: 24%;
     margin-left: 0.5%;
+    margin-bottom: 1%;
 }
 
 .materia-del-material h3 {
@@ -2332,17 +2333,17 @@ textarea.editable {
 /* 
 /* Correpcion de errores */
 
-#e-scroll-calificacion, #e-scroll-horario {
+.e-scroll-calificacion, #e-scroll-horario {
     overflow-x: scroll;
 }
 
-#e-scroll-calificacion::-webkit-scrollbar, #e-scroll-horario::-webkit-scrollbar {
+.e-scroll-calificacion::-webkit-scrollbar, #e-scroll-horario::-webkit-scrollbar {
     background-color: #00000005;
     height: 6px;
     padding-top: 2px;
 }
 
-#e-scroll-calificacion::-webkit-scrollbar-thumb, #e-scroll-horario::-webkit-scrollbar-thumb {
+.e-scroll-calificacion::-webkit-scrollbar-thumb, #e-scroll-horario::-webkit-scrollbar-thumb {
     background-color: #ffc83d5e;
 }
 
@@ -2376,7 +2377,7 @@ textarea.editable {
 
 /* admin-home-table */
 .tabla-admin {
-    max-height: 290px;
+    max-height: 300px;
     overflow: scroll;
 }
 
@@ -3013,6 +3014,17 @@ textarea.editable {
     margin-left: 37%;
 }
 
+/* Arreglos est profesor */
+
+#admin-fixed {
+    height: 350px;
+    max-height: 350px;
+}
+
+.tabla-ultimate {
+    height: 100%;
+    overflow: auto;
+}
 
 /* Movil */
 
@@ -3264,17 +3276,17 @@ textarea.editable {
         width: 100%;
     }
 
-    #e-scroll-calificacion {
+    .e-scroll-calificacion {
         overflow-x: scroll;
     }
 
-    #e-scroll-calificacion::-webkit-scrollbar, #e-scroll-horario::-webkit-scrollbar {
+    .e-scroll-calificacion::-webkit-scrollbar, #e-scroll-horario::-webkit-scrollbar {
         background-color: #00000005;
         height: 6px;
         padding-top: 2px;
     }
 
-    #e-scroll-calificacion::-webkit-scrollbar-thumb, #e-scroll-horario::-webkit-scrollbar-thumb {
+    .e-scroll-calificacion::-webkit-scrollbar-thumb, #e-scroll-horario::-webkit-scrollbar-thumb {
         background-color: #ffc83d5e;
     }
 
@@ -3729,6 +3741,14 @@ textarea.editable {
         padding: 6px 30%;
         position: relative;
         right: 20%;
+    }
+
+    #horario-fixed {
+        overflow: auto;
+    }
+
+    #horario-fixed {
+        max-height: none;
     }
 
 }

@@ -17,7 +17,7 @@
                         <div class="imagen-registro-preview" id="preview">
                         </div>
                         <label for="subir-imagen">Subir Imagen</label>
-                        <input type="file" id="subir-imagen" autocomplete="off" name='imagen_perfil'>
+                        <input type="file" id="subir-imagen" autocomplete="off" name='imagen_perfil' required>
                     </div>
                     <div class="formulario-de-registro">
                         <label for="nombre">Nombre:</label>
@@ -33,7 +33,7 @@
                     </div>
                     <div class="formulario-de-registro">
                         <label for="genero">G&eacute;nero:</label>
-                        <select id="genero" name="genero">
+                        <select id="genero" name="genero" required>
                             <option selected disabled>----------</option>
                             <option value="masculino">Masculino</option>
                             <option value="femenino">Femenino</option>
@@ -41,7 +41,7 @@
                     </div>                    
                     <div class="formulario-de-registro">
                         <label for="curso">Curso:</label>
-                        <select type="text" id="curso" name="id_curso">
+                        <select type="text" id="curso" name="id_curso" required>
                             <option selected disabled>Seleccionar</option>
                             {% for curso in cursos %}
                             <option value="{{ curso.id_curso }}">{{ curso.nombre }}</option>

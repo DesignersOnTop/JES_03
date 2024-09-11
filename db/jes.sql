@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Sep 11, 2024 at 05:25 AM
+-- Generation Time: Sep 11, 2024 at 07:27 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -119,7 +119,10 @@ INSERT INTO `asistencias` (`id_asistencia`, `id_estudiante`, `id_curso`, `id_asi
 (1, 2, 1, 2404, '90', '90', '90', '90', '90', 90),
 (2, 2, 1, 2403, '90', '0', '0', '0', '0', 0),
 (3, 2, 1, 2401, '100', '100', '100', '100', '100', 100),
-(4, 4, 7, 2401, '100', '100', '100', '100', '100', 100);
+(4, 4, 7, 2401, '100', '100', '100', '100', '100', 100),
+(5, 2, 1, 2408, '100', '100', '100', '100', '99', 100),
+(6, 2, 1, 2405, '100', '100', '100', '100', '100', 100),
+(7, 2, 1, 2414, '100', '100', '100', '100', '100', 100);
 
 -- --------------------------------------------------------
 
@@ -148,7 +151,10 @@ INSERT INTO `calificaciones` (`id_calificacion`, `id_estudiante`, `id_curso`, `i
 (5, 3, 1, 2401, 100, 100, 100, 100, 100),
 (6, 2, 1, 2405, 100, 100, 100, 100, 100),
 (7, 4, 7, 2401, 90, 90, 90, 90, 90),
-(8, 2, 1, 2404, 100, 90, 98, 97, 96);
+(8, 2, 1, 2404, 100, 90, 98, 97, 96),
+(9, 3, 1, 2404, 100, 99, 98, 97, 99),
+(10, 2, 1, 2414, 100, 100, 100, 100, 100),
+(11, 2, 1, 2403, 98, 99, 89, 96, 96);
 
 -- --------------------------------------------------------
 
@@ -251,7 +257,9 @@ INSERT INTO `estudiantes` (`id_estudiante`, `id_curso`, `matricula`, `nombre`, `
 (23, 11, 'e-1109', 'Ana', 'Gómez Sánchez', 'Calle del Rey, 19, Bilbao', '2006-01-18', 'femenino', 'ana.gomez@gmail.com', '829-555-2345', 'static/documentos\\girl9.jpg', 'Ana2006@#'),
 (24, 11, 'e-1110', 'Daniel', 'Martínez Ortega', 'Avenida del Norte, 34, Zaragoza', '2008-06-12', 'masculino', 'daniel.martinez01@gmail.com', '829-555-6789', 'static/documentos\\boy14.jpg', 'Dani2008!'),
 (25, 12, 'e-1111', 'Valeria', 'Castillo Morales', 'Calle del Sol, 50, Granada', '2009-10-25', 'femenino', 'valeria.castillo21@gmail.com', '849-555-3456', 'static/documentos\\girl21.jpg', 'Vale2009@'),
-(26, 12, 'e-1112', 'Roberto', 'Soto Fernández', 'Calle de la Luna, 3, Salamanca', '2005-04-30', 'masculino', 'roberto.soto888@gmail.com', '849-555-7890', 'static/documentos\\boy18.jpg', 'Rober2005!');
+(26, 12, 'e-1112', 'Roberto', 'Soto Fernández', 'Calle de la Luna, 3, Salamanca', '2005-04-30', 'masculino', 'roberto.soto888@gmail.com', '849-555-7890', 'static/documentos\\boy18.jpg', 'Rober2005!'),
+(27, 1, 'e-9963', 'Lisbeth', 'Perez Sosa', 'Calle 16 de agosto #233 la joya, Santiago', '2006-08-07', 'femenino', 'lisbebe@gmail.bet', '809-581-9924', 'static/documentos\\girl6.jpg', 'lis123'),
+(28, 1, 'e-7632', 'Buenarda', 'Cortez Peña', 'Calle del sol #40, Santiago', '2008-09-01', 'femenino', 'buena_yo@dobleclic.do', '809-267-9804', 'static/documentos\\girl17.jpg', 'buen22');
 
 -- --------------------------------------------------------
 
@@ -410,6 +418,20 @@ CREATE TABLE `libros` (
   `portada` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
 
+--
+-- Dumping data for table `libros`
+--
+
+INSERT INTO `libros` (`id_libro`, `id_asignatura`, `id_curso`, `titulo`, `subir_libro`, `portada`) VALUES
+(4, 2408, 1, 'La vida', 'libro_20240911021512_libro_arte.pdf', 'portada_20240911021512_star8k.jpg'),
+(5, 2408, 1, 'Pinceladas', 'libro_20240911021627_arte.pdf', 'portada_20240911021627_download_image_1711609602624.png'),
+(6, 2401, 1, 'Conversacion I', 'libro_20240911022213_libro_espan.pdf', 'portada_20240911022213_ft-espanolo.jpg'),
+(7, 2401, 1, 'Conversacion II', 'libro_20240911022236_esp_libro.pdf', 'portada_20240911022236_ft-espanolo.jpg'),
+(8, 2404, 1, 'Naturales I', 'libro_20240911022532_naturales.pdf', 'portada_20240911022532_naturaleza.jpg'),
+(9, 2405, 1, 'verb to be', 'libro_20240911022905_arte.pdf', 'portada_20240911022905_ft-ingles.jpg'),
+(10, 2403, 1, 'El planeta I', 'libro_20240911023431_sociales.pdf', 'portada_20240911023431_ft-cs.jpeg'),
+(11, 2403, 1, 'El planeta II', 'libro_20240911023517_sociales.pdf', 'portada_20240911023517_ft-cs.jpeg');
+
 -- --------------------------------------------------------
 
 --
@@ -430,7 +452,16 @@ CREATE TABLE `material_estudio` (
 --
 
 INSERT INTO `material_estudio` (`id_material`, `id_curso`, `titulo`, `material_subido`, `descripcion`, `id_asignatura`) VALUES
-(1, 1, 'Investigacion', '', 'Ciencia de la Naturales es una asignatura que se enfoca en comprender los procesos y fenómenos que ocurren en nuestro entorno natural. Los estudiantes aprenden sobre la estructura y funcionamiento de los seres vivos, las sustancias químicas que componen el mundo, las fuerzas físicas y los procesos geológicos que modelan nuestro planeta.', 2404);
+(4, 1, 'Investigacion I', 'ejemplo-espanol.pdf', 'Ciencia de la Naturales es una asignatura que se enfoca en comprender los procesos y fenómenos que ocurren en nuestro entorno natural. Los estudiantes aprenden sobre la estructura y funcionamiento de los seres vivos, las sustancias químicas que componen el mundo, las fuerzas físicas y los procesos geológicos que modelan nuestro planeta.', 2404),
+(5, 1, 'Investigacion II', 'pdf-de-ejemplo.pdf', 'Ecología y Medio Ambiente: Esta asignatura explora la interacción entre los organismos vivos y su entorno, abarcando tanto los aspectos bióticos como abióticos del ecosistema. Los estudiantes investigan cómo los factores ambientales, como el clima, el suelo y los recursos naturales, influyen en la vida de las plantas y los animales. También se analiza el impacto de las actividades humanas sobre los ecosistemas y se promueven estrategias para la conservación y el desarrollo sostenible.', 2404),
+(8, 1, 'Tarea I', 'libro_espan.pdf', 'Gramática y Redacción: En esta materia, los estudiantes se enfocan en el estudio de las reglas gramaticales que rigen el uso del español y en la mejora de sus habilidades de redacción. La asignatura cubre aspectos como la sintaxis, la morfología, la puntuación y la ortografía. Además, se trabajan técnicas para la elaboración de textos claros, coherentes y correctamente estructurados, tanto en la escritura creativa como en la académica y profesional.', 2401),
+(9, 1, 'Tarea II ', 'esp_libro.pdf', 'Literatura Española: Esta asignatura se centra en el estudio de las obras literarias escritas en español, abarcando diferentes géneros y épocas. Los estudiantes analizan textos de autores clásicos y contemporáneos, explorando temas como la narrativa, la poesía, el teatro y el ensayo. La materia promueve la comprensión profunda de los estilos literarios, el contexto histórico y cultural de las obras, y fomenta el desarrollo de habilidades críticas y de interpretación literaria.', 2401),
+(10, 9, 'Arte I', 'libro_arte.pdf', 'Historia del Arte: Esta asignatura explora la evolución del arte a lo largo de diferentes períodos y culturas. Los estudiantes analizan obras maestras, estilos artísticos y movimientos que han definido la expresión visual desde la antigüedad hasta la contemporaneidad. Se estudian aspectos como el contexto histórico, las técnicas empleadas y la influencia del arte en la sociedad. La materia fomenta una apreciación crítica del arte y su papel en la cultura global.', 2408),
+(11, 9, 'Arte ', 'libro_arte.pdf', 'Técnicas de Pintura y Dibujo: En esta materia, los estudiantes desarrollan habilidades prácticas en diversas técnicas de pintura y dibujo. Se exploran métodos tradicionales como el óleo, la acuarela y el carboncillo, así como técnicas más modernas como el collage y el arte digital. La asignatura se centra en la experimentación y la creatividad, permitiendo a los alumnos mejorar sus capacidades técnicas y expresivas a través de la práctica y el análisis de sus propias obras y las de otros artistas.', 2408),
+(12, 1, 'Arte III', 'arte.pdf', 'Técnicas de Pintura y Dibujo: En esta materia, los estudiantes desarrollan habilidades prácticas en diversas técnicas de pintura y dibujo. Se exploran métodos tradicionales como el óleo, la acuarela y el carboncillo, así como técnicas más modernas como el collage y el arte digital. La asignatura se centra en la experimentación y la creatividad, permitiendo a los alumnos mejorar sus capacidades técnicas y expresivas a través de la práctica y el análisis de sus propias obras y las de otros artistas.', 2408),
+(13, 1, 'Arte III', 'libro_arte.pdf', 'Historia del Arte: Esta asignatura explora la evolución del arte a lo largo de diferentes períodos y culturas. Los estudiantes analizan obras maestras, estilos artísticos y movimientos que han definido la expresión visual desde la antigüedad hasta la contemporaneidad. Se estudian aspectos como el contexto histórico, las técnicas empleadas y la influencia del arte en la sociedad. La materia fomenta una apreciación crítica del arte y su papel en la cultura global.', 2408),
+(14, 1, 'Tarea III ', 'libro_espan.pdf', 'Análisis Literario y Crítico: Esta asignatura se enfoca en el desarrollo de habilidades para analizar y evaluar obras literarias desde una perspectiva crítica. Los estudiantes aprenden a identificar y discutir elementos como la estructura narrativa, el desarrollo de personajes, los temas y los símbolos presentes en los textos. Además, se estudian diferentes enfoques críticos, como el formalismo, el estructuralismo y el postestructuralismo, para interpretar las obras de manera profunda y matizada.', 2401),
+(15, 1, 'Tarea IIII ', 'esp_libro.pdf', 'Lingüística y Sociolingüística: En esta materia, se exploran los aspectos fundamentales del lenguaje desde una perspectiva lingüística y sociolingüística. Los estudiantes investigan la estructura y el funcionamiento del español, incluyendo fonética, morfología y sintaxis, así como el uso del lenguaje en diferentes contextos sociales y culturales. La asignatura aborda temas como la variación dialectal, el bilingüismo y la influencia de factores sociales en el uso del idioma, promoviendo una comprensión integral de cómo el lenguaje refleja y afecta la identidad y la comunicación en diversas comunidades.', 2401);
 
 -- --------------------------------------------------------
 
@@ -524,7 +555,8 @@ INSERT INTO `profesor_asignado` (`id_profesor_asignado`, `id_profesor`, `id_curs
 (25, 10015, 1),
 (26, 10013, 1),
 (27, 10017, 1),
-(28, 10016, 1);
+(28, 10016, 1),
+(29, 10018, 1);
 
 -- --------------------------------------------------------
 
@@ -558,7 +590,10 @@ CREATE TABLE `tareas_estudiante` (
 --
 
 INSERT INTO `tareas_estudiante` (`id_tarea`, `id_material`, `id_estudiante`, `id_curso`, `tarea`) VALUES
-(1, 1, 2, 1, 'ejemplo-espanol.pdf');
+(2, 8, 2, 1, 'libro_espan.pdf'),
+(3, 8, 3, 1, 'esp_libro.pdf'),
+(4, 8, 28, 1, 'esp_libro.pdf'),
+(5, 8, 27, 1, 'esp_libro.pdf');
 
 -- --------------------------------------------------------
 
@@ -581,7 +616,8 @@ CREATE TABLE `videos` (
 INSERT INTO `videos` (`id`, `titulo`, `id_curso`, `id_asignatura`, `video`) VALUES
 (2, 'Don quijote', 1, 2408, '<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/ir6A-Ns5Em8?si=y-I8_Uain9fbW5vZ\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>'),
 (3, 'La naturaleza', 1, 2404, '<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/j6LunB9d2Bo?si=JaIb5RaXyWx1I_-p\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>'),
-(4, 'Diptongos', 1, 2401, '<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/mvmYv3iYsq4?si=TWrpcwbHc6ug9vLC\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>');
+(4, 'Diptongos', 1, 2401, '<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/mvmYv3iYsq4?si=TWrpcwbHc6ug9vLC\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>'),
+(7, 'Verb to be', 1, 2405, '<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/KRyK79yP0oA?si=yaV5h0NUPJqiEFx-\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>');
 
 --
 -- Indexes for dumped tables
@@ -742,13 +778,13 @@ ALTER TABLE `asignatura_curso`
 -- AUTO_INCREMENT for table `asistencias`
 --
 ALTER TABLE `asistencias`
-  MODIFY `id_asistencia` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_asistencia` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `calificaciones`
 --
 ALTER TABLE `calificaciones`
-  MODIFY `id_calificacion` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_calificacion` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `cursos`
@@ -766,7 +802,7 @@ ALTER TABLE `dias`
 -- AUTO_INCREMENT for table `estudiantes`
 --
 ALTER TABLE `estudiantes`
-  MODIFY `id_estudiante` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id_estudiante` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `hora`
@@ -784,13 +820,13 @@ ALTER TABLE `horario`
 -- AUTO_INCREMENT for table `libros`
 --
 ALTER TABLE `libros`
-  MODIFY `id_libro` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_libro` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `material_estudio`
 --
 ALTER TABLE `material_estudio`
-  MODIFY `id_material` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_material` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `profesores`
@@ -802,19 +838,19 @@ ALTER TABLE `profesores`
 -- AUTO_INCREMENT for table `profesor_asignado`
 --
 ALTER TABLE `profesor_asignado`
-  MODIFY `id_profesor_asignado` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id_profesor_asignado` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `tareas_estudiante`
 --
 ALTER TABLE `tareas_estudiante`
-  MODIFY `id_tarea` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_tarea` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `videos`
 --
 ALTER TABLE `videos`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables

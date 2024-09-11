@@ -17,7 +17,7 @@
                         <div class="imagen-registro-preview" id="preview">
                         </div>
                         <label for="subir-imagen">Subir Imagen</label>
-                        <input type="file" id="subir-imagen" autocomplete="off" name='imagen_perfil'>
+                        <input type="file" id="subir-imagen" autocomplete="off" name='imagen_perfil' required>
                     </div>
                     <div class="formulario-de-registro">
                         <label for="nombre">Nombre:</label>
@@ -33,7 +33,7 @@
                     </div>
                     <div class="formulario-de-registro">
                         <label for="genero">G&eacute;nero:</label>
-                        <select id="genero" name="genero">
+                        <select id="genero" name="genero" required>
                             <option selected disabled>Seleccionar</option>
                             <option value="masculino">Masculino</option>
                             <option value="femenino">Femenino</option>
@@ -41,7 +41,7 @@
                     </div>                    
                     <div class="formulario-de-registro formulario-asignatura">
                         <label for="asignatura">Asignatura:</label>
-                        <select name="id_asignatura" id="asignatura">
+                        <select name="id_asignatura" id="asignatura" required>
                             {% for asignatura in asignaturas %}
                             <option value="{{ asignatura.id_asignatura }}">{{ asignatura.nom_asignatura }}</option>
                             {% endfor %}
@@ -53,11 +53,11 @@
                     </div>
                     <div class="formulario-de-registro">
                         <label for="telefono">Teléfono:</label>
-                        <input type="tel" id="telefono" name="telefono">
+                        <input type="tel" id="telefono" name="telefono" required>
                     </div>
                     <div class="formulario-de-registro">
                         <label for="direccion">Dirección:</label>
-                        <input type="text" id="direccion" name="direccion">
+                        <input type="text" id="direccion" name="direccion" required>
                     </div>
                     <div class="formulario-de-registro">
                         <label for="matricula">Matricula:</label>
