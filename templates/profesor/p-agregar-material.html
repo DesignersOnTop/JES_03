@@ -16,15 +16,15 @@
                         <legend>Agregar Material {{curso.nombre}}</legend>
                         <div class="dato-material info-material" id="titulo-material">
                             <label for="nombre-material">Titulo del Material</label>
-                            <input type="text" id="nombre-material" name="titulo-material">
+                            <input type="text" id="nombre-material" name="titulo-material" required autocomplete="off">
                         </div>
                         <div class="dato-material dato-matt">
                             <label for="recurso-de-estudio">Subir Material</label>
-                            <input type="file" id="recurso-de-estudio"  name="recurso-de-estudio">
+                            <input type="file" id="recurso-de-estudio"  name="recurso-de-estudio" required>
                         </div>
                         <div class="dato-material dato-material-textarea">
                             <label for="con-material">Descripci&oacute;n del Material</label>
-                            <textarea id="con-material" name="descripcion_material"></textarea>
+                            <textarea id="con-material" name="descripcion_material" required></textarea>
                         </div>
                     </fieldset>
                     <div class="botones-agg-material">
