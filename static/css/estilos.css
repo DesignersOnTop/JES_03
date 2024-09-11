@@ -229,6 +229,7 @@ header {
 
 .jes-titulo {
     color: #ffc83d5e;
+    font-size: 18px;
 }    
 
 .header-container {
@@ -1102,7 +1103,7 @@ header {
 
 .botones-curso-p button{
     width: 80%;
-    color: rgba(255, 0, 0, 0.438);
+    color: rgba(255, 0, 0, 0.763);
     border-radius: 5px;
     background-color: #00000049;
     backdrop-filter: blur(20px);
@@ -2704,7 +2705,7 @@ textarea.editable {
     border: none;
     color: white;
     font-size: 12px;
-    border-bottom: 2px solid #fff;
+    border-bottom: 1px solid #fff;
 }
 
 .modal-content h2 {
@@ -2877,7 +2878,7 @@ textarea.editable {
 
 #btn-eliminar-mat {
     width: fit-content;
-    padding: 3px 10px;
+    padding: 6px 40px;
 }
 
 #main-material-profesor .titulo-libro {
@@ -3724,6 +3725,12 @@ textarea.editable {
         right: 10%;
     }
 
+    #btn-eliminar-mat {
+        padding: 6px 30%;
+        position: relative;
+        right: 20%;
+    }
+
 }
 
 /* Tablet */
@@ -3958,6 +3965,12 @@ textarea.editable {
 
     #main-material-profesor #cabecera-material_estudio {
         width: 80%
+    }
+
+    #btn-eliminar-mat {
+        padding: 6px 50%;
+        position: relative;
+        right: 40%;
     }
 }
 

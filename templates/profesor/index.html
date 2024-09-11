@@ -32,7 +32,7 @@
                 <form action="/home/profesor/" method="post">
                     <select name="curso_seleccionado" id="cursos">
                         {% for curso in cursos %}
-                            <option value="{{ curso.id_curso }}" {% if curso.id_curso == curso_seleccionado %}selected{% endif %}>{{ curso.nombre }}</option>
+                            <option value="{{ curso.id_curso }}" {% if curso.id_curso|string == curso_seleccionado|string %}selected{% endif %}>{{ curso.nombre }}</option>
                         {% endfor %}
                     </select>
                     <button type="submit">Seleccionar</button>

@@ -556,7 +556,7 @@ def p_home():
         # Si no se envía formulario (método GET), se toma el curso de la sesión o se selecciona el primero de la lista de cursos
         curso_seleccionado = session.get('curso_seleccionado')
         if not curso_seleccionado and cursos:
-            curso_seleccionado = cursos[0]['id_curso'] if isinstance(cursos[0], dict) else cursos[0][0]
+            curso_seleccionado = cursos[0]['id_curso']
             session['curso_seleccionado'] = curso_seleccionado
     
     # Consulta para obtener la lista de estudiantes del curso seleccionado
