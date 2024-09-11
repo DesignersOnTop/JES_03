@@ -667,7 +667,7 @@ def p_asistencia():
     )
     cursor = connection.cursor(pymysql.cursors.DictCursor)
 
-    # Hacemos la consulta
+   # Hacemos la consulta
     cursor.execute('''
         SELECT asignaturas.id_asignatura
         FROM profesores
@@ -677,10 +677,9 @@ def p_asistencia():
 
     # Obtenemos los datos de la consulta
     asignatura = cursor.fetchone()
-
     id_asignatura = asignatura['id_asignatura']
 
-    # esto se va usar para ver si el estudiante ya esta en la tabla para asi decidir si es un insert o un update
+    # Verificamos si el estudiante ya está en la tabla
     sql = """
     SELECT COUNT(*) AS count FROM asistencias
     WHERE id_estudiante = %s AND id_curso = %s AND id_asignatura = %s
@@ -689,25 +688,24 @@ def p_asistencia():
     resultado = cursor.fetchone()
 
     if resultado['count'] > 0:
-        # Si el estudiante habia tenido algun insertar previo entonces usara update
+        # Si el estudiante ya existe, usamos UPDATE
         update = """
         UPDATE asistencias
-        SET Sect_Oct = %s, Nov_Dic = %s, Ene_Feb = %s, Marz_Abril = %s, May_Jun = %s, Total_de_asistencias WHERE id_estudiante = %s AND id_curso = %s AND id_asignatura = %s
+        SET Sect_Oct = %s, Nov_Dic = %s, Ene_Feb = %s, Marz_Abril = %s, May_Jun = %s, Total_de_asistencias = %s
+        WHERE id_estudiante = %s AND id_curso = %s AND id_asignatura = %s
         """
-
         datos = (sect_oct, nov_dic, ene_feb, marz_abril, may_jun, total_asistencias, id_estudiante, curso_seleccionado, id_asignatura)
         cursor.execute(update, datos)
     else:
-        # Si el estudiante no habia tenido alguna inserccion entonces insertara
+        # Si el estudiante no existe, usamos INSERT
         insertar = """
         INSERT INTO asistencias (id_asistencia, id_estudiante, id_curso, id_asignatura, Sect_Oct, Nov_Dic, Ene_Feb, Marz_Abril, May_Jun, Total_de_asistencias)
         VALUES (NULL, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         """
         datos = (id_estudiante, curso_seleccionado, id_asignatura, sect_oct, nov_dic, ene_feb, marz_abril, may_jun, total_asistencias)
-
         cursor.execute(insertar, datos)
 
-    # cerramos conexion a la base de datos
+    # Cerramos la conexión a la base de datos
     connection.commit()
     connection.close()
     cursor.close()
