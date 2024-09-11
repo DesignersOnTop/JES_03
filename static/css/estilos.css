@@ -2941,7 +2941,7 @@ textarea.editable {
     bottom: 24px;
     min-height: fit-content;
     max-height: 438px;
-    overflow-y: hidden;
+    overflow: auto;
 }
 
 #materias-admin-main .section-materiales::-webkit-scrollbar {
