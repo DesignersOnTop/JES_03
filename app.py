@@ -1237,7 +1237,6 @@ def p_recurso_estudio():
 
 @app.route('/eliminar/recurso/estudio/', methods=['POST'])
 def eliminar_recurso_p():
-
     if 'user_id' not in session or session.get('role') != 'profesor':
         return redirect('/')
 
@@ -1250,12 +1249,21 @@ def eliminar_recurso_p():
 
     cursor = connection.cursor(pymysql.cursors.DictCursor)
 
-    id_material =  request.form.get('id_material')
+    id_material = request.form.get('id_material')
 
+    # Eliminar las tareas
+    cursor.execute('DELETE FROM tareas_estudiante WHERE id_material = %s', (id_material,))
+
+    # Luego eliminar el material de estudio
     cursor.execute('DELETE FROM material_estudio WHERE id_material = %s', (id_material,))
 
+    # Confirmar los cambios en la base de datos
     connection.commit()
+
+    # Cerrar el cursor y la conexión
     cursor.close()
+    connection.close()
+
     return redirect('/profesor/materiales/')
 
 
